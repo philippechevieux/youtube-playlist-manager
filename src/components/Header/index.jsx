@@ -5,10 +5,8 @@ import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import LogoutIcon from '@mui/icons-material/Logout'
-import AccountCircle from '@mui/icons-material/AccountCircle'
 import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
-import Avatar from '@mui/material/Avatar'
 
 import AvatarCustom from '../AvatarCustom'
 import './styles.css'
@@ -23,6 +21,7 @@ function Header({ googleAccountData, setGoogleAccountData }) {
         console.log('handleLogin', response)
         console.log(response.ht)
 
+        // TODO: changer pour : profileObj
         const googleAccountDataReceive = {
             firstName: response.ht['HU'],
             lastName: response.ht['YS'],
@@ -30,6 +29,7 @@ function Header({ googleAccountData, setGoogleAccountData }) {
             email: response.ht['St'],
             avatar: response.ht['kK'],
             googleId: response.ht['sT'],
+            accessToken: response.accessToken,
         }
 
         console.log('googleAccountDataReceive : ', googleAccountDataReceive)
@@ -105,6 +105,9 @@ function Header({ googleAccountData, setGoogleAccountData }) {
                         <GoogleLogin
                             clientId="232248135832-8f8h7mocgfdu17a7vpuul37pi5ugobt7.apps.googleusercontent.com"
                             buttonText="Login with Google"
+                            scope="https://www.googleapis.com/auth/youtube"
+                            responseType="permissions"
+                            prompt="select_account"
                             onSuccess={handleLogin}
                             onFailure={handleLoginFailure}
                             cookiePolicy="single_host_origin"

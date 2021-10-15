@@ -12,6 +12,8 @@ const BodyContent = styled.div`
 `
 
 function App() {
+    // TODO: mettre un cookie ou localstorage pour ne pas perdre les infos a chaque refresh de la page
+    // TODO: peut être utiliser un useContext pour googleAccountData ?
     const [googleAccountData, setGoogleAccountData] = useState(null)
 
     console.log('App : ', googleAccountData)
@@ -26,7 +28,7 @@ function App() {
                 ) : (
                     <Switch>
                         <Route exact path="/">
-                            <PlaylistList />
+                            <PlaylistList googleAccountData={googleAccountData} />
                         </Route>
                         <Route exact path="/playlist/:playlistid">
                             <PlaylistContent />
