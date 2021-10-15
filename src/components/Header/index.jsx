@@ -4,27 +4,45 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
+import LogoutIcon from '@mui/icons-material/Logout'
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import MenuItem from '@mui/material/MenuItem'
 import Menu from '@mui/material/Menu'
+import Avatar from '@mui/material/Avatar'
+
+import AvatarCustom from '../AvatarCustom'
+import './styles.css'
+
 import { GoogleLogin } from 'react-google-login'
 import { useState } from 'react'
 
-function Header({ token, setToken }) {
+function Header({ googleAccountData, setGoogleAccountData }) {
     const [anchorEl, setAnchorEl] = useState(null)
 
     const handleLogin = (response) => {
-        console.log(response)
-        setToken('2222')
+        console.log('handleLogin', response)
+        console.log(response.ht)
+
+        const googleAccountDataReceive = {
+            firstName: response.ht['HU'],
+            lastName: response.ht['YS'],
+            fullName: response.ht['Re'],
+            email: response.ht['St'],
+            avatar: response.ht['kK'],
+            googleId: response.ht['sT'],
+        }
+
+        console.log('googleAccountDataReceive : ', googleAccountDataReceive)
+
+        setGoogleAccountData(googleAccountDataReceive)
     }
 
     const handleLoginFailure = (response) => {
-        console.log(response)
-        setToken(null)
+        setGoogleAccountData(null)
     }
 
     const handleLogout = () => {
-        setToken(null)
+        setGoogleAccountData(null)
         setAnchorEl(null)
     }
 
@@ -46,7 +64,7 @@ function Header({ token, setToken }) {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Youtube Playlist Manager
                     </Typography>
-                    {token ? (
+                    {googleAccountData ? (
                         <div>
                             <IconButton
                                 size="large"
@@ -56,7 +74,7 @@ function Header({ token, setToken }) {
                                 onClick={handleMenu}
                                 color="inherit"
                             >
-                                <AccountCircle />
+                                <AvatarCustom googleAccountData={googleAccountData} size="md" />
                             </IconButton>
                             <Menu
                                 id="menu-appbar"
@@ -74,10 +92,12 @@ function Header({ token, setToken }) {
                                 onClose={handleClose}
                             >
                                 <MenuItem key="profil" onClick={handleClose}>
-                                    Mon profil
+                                    <AvatarCustom googleAccountData={googleAccountData} size="sm" />
+                                    <span className="header-menuitem-margin-left">Mon profil</span>
                                 </MenuItem>
                                 <MenuItem key="logout" onClick={handleLogout}>
-                                    Se déconnecter
+                                    <LogoutIcon />
+                                    <span className="header-menuitem-margin-left">Se déconnecter</span>
                                 </MenuItem>
                             </Menu>
                         </div>

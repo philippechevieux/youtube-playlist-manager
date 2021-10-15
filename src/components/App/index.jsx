@@ -12,14 +12,16 @@ const BodyContent = styled.div`
 `
 
 function App() {
-    const [token, setToken] = useState(null)
+    const [googleAccountData, setGoogleAccountData] = useState(null)
+
+    console.log('App : ', googleAccountData)
 
     return (
         <Router>
             <GlobalStyle />
-            <Header token={token} setToken={setToken} />
+            <Header googleAccountData={googleAccountData} setGoogleAccountData={setGoogleAccountData} />
             <BodyContent>
-                {!token ? (
+                {!googleAccountData ? (
                     <WaitingLoadingScreen />
                 ) : (
                     <Switch>
