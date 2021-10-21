@@ -6,12 +6,14 @@ import WaitingLoadingScreen from '../WaitingLoadingScreen/index'
 import PlaylistContent from './../../pages/PlaylistContent/index'
 import PlaylistList from './../../pages/PlaylistList/index'
 
+import './styles.css'
+
 function Body() {
     // Get googleAccountData context
     const { googleAccountData } = useContext(GoogleAccountDataContext)
 
     return (
-        <div>
+        <div className="body-container">
             {!googleAccountData ? (
                 <WaitingLoadingScreen />
             ) : (

@@ -4,7 +4,7 @@ export function getYoutubePlaylists(access_token) {
     const params = {
         part: 'snippet,contentDetails,id,localizations,player,snippet,status',
         mine: true,
-        maxResults: 50,
+        maxResults: 100,
     }
 
     return getApi(access_token, 'playlists', params)
@@ -24,7 +24,12 @@ function getApi(access_token, end_point, params) {
         headers: {
             'Content-Type': 'application/json',
         },
-    }).then((response) => {
-        return response.json()
     })
+        .then((response) => {
+            return response.json()
+        })
+        .catch((error) => {
+            //TODO : Ajouter une gection des erreurs
+            console.log('error', error)
+        })
 }

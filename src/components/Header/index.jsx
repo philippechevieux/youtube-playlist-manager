@@ -42,6 +42,7 @@ function Header() {
         setAnchorEl(null)
     }
 
+    //TODO: Fixed header
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">

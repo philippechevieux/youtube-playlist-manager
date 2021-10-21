@@ -5,11 +5,6 @@ const StyledGlobalStyle = createGlobalStyle`
     * {
         font-family: 'Trebuchet MS', Helvetica, sans-serif
     }
-
-    body {
-        background-color: #fff;
-        margin: 0;
-    }
 `
 
 function GlobalStyle() {
