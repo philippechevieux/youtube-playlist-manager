@@ -12,37 +12,25 @@ import AvatarCustom from '../AvatarCustom'
 import './styles.css'
 
 import { GoogleLogin } from 'react-google-login'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { GoogleAccountDataContext } from '../../utils/context/'
 
-function Header({ googleAccountData, setGoogleAccountData }) {
+function Header() {
+    // Get googleAccountData context
+    const { googleAccountData, saveGoogleAccountData } = useContext(GoogleAccountDataContext)
+
     const [anchorEl, setAnchorEl] = useState(null)
 
     const handleLogin = (response) => {
-        console.log('handleLogin', response)
-        console.log(response.ht)
-
-        // TODO: changer pour : profileObj
-        const googleAccountDataReceive = {
-            firstName: response.ht['HU'],
-            lastName: response.ht['YS'],
-            fullName: response.ht['Re'],
-            email: response.ht['St'],
-            avatar: response.ht['kK'],
-            googleId: response.ht['sT'],
-            accessToken: response.accessToken,
-        }
-
-        console.log('googleAccountDataReceive : ', googleAccountDataReceive)
-
-        setGoogleAccountData(googleAccountDataReceive)
+        saveGoogleAccountData(response)
     }
 
     const handleLoginFailure = (response) => {
-        setGoogleAccountData(null)
+        saveGoogleAccountData(null)
     }
 
     const handleLogout = () => {
-        setGoogleAccountData(null)
+        saveGoogleAccountData(null)
         setAnchorEl(null)
     }
 
@@ -74,7 +62,7 @@ function Header({ googleAccountData, setGoogleAccountData }) {
                                 onClick={handleMenu}
                                 color="inherit"
                             >
-                                <AvatarCustom googleAccountData={googleAccountData} size="md" />
+                                <AvatarCustom size="md" />
                             </IconButton>
                             <Menu
                                 id="menu-appbar"
@@ -92,7 +80,7 @@ function Header({ googleAccountData, setGoogleAccountData }) {
                                 onClose={handleClose}
                             >
                                 <MenuItem key="profil" onClick={handleClose}>
-                                    <AvatarCustom googleAccountData={googleAccountData} size="sm" />
+                                    <AvatarCustom size="sm" />
                                     <span className="header-menuitem-margin-left">Mon profil</span>
                                 </MenuItem>
                                 <MenuItem key="logout" onClick={handleLogout}>
