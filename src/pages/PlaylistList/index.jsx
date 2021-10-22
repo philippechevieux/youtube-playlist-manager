@@ -5,7 +5,9 @@ import { GoogleAccountDataContext } from '../../utils/context/index'
 import { Breadcrumbs, Typography } from '@mui/material'
 
 import './styles.css'
-import MosaicItem from '../../components/Playlist/MosaicItem'
+
+import MosaicMode from '../../components/Playlist/MosaicMode'
+import ListMode from '../../components/Playlist/ListMode'
 import HomeIcon from '@mui/icons-material/Home'
 
 function PlaylistList() {
@@ -41,7 +43,7 @@ function PlaylistList() {
                 </Breadcrumbs>
             </div>
 
-            {!playlistsListData ? <div>Rien</div> : <MosaicItem playlistsListData={playlistsListData} />}
+            {!playlistsListData ? <div>Rien</div> : <ListMode playlistsListData={playlistsListData} />}
         </div>
     )
 }

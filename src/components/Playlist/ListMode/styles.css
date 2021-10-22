@@ -1,0 +1,12 @@
+ul.list-container {
+    width: 60%;
+    margin: auto;
+}
+
+.list-item-text-margin {
+    margin-left: 20px;
+}
+
+.list-item-text-margin .primary {
+    font-weight: bold;
+}

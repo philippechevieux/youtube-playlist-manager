@@ -4,7 +4,7 @@ import IconButton from '@mui/material/IconButton'
 import ShareIcon from '@mui/icons-material/Share'
 import EditIcon from '@mui/icons-material/Edit'
 
-function MosaicItem({ playlistsListData }) {
+function MosaicMode({ playlistsListData }) {
     return (
         <Grid container direction="row" rowSpacing={4} columnSpacing={4} alignItems="flex-start">
             {playlistsListData.items?.map((PlaylistData, index) => (
@@ -39,4 +39,4 @@ function MosaicItem({ playlistsListData }) {
     )
 }
 
-export default MosaicItem
+export default MosaicMode

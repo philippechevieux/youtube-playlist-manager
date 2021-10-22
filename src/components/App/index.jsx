@@ -1,6 +1,7 @@
 import { BrowserRouter as Router } from 'react-router-dom'
 import { GoogleAccountDataProvider } from '../../utils/context/'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { CssBaseline } from '@mui/material'
 
 import React from 'react'
 import Header from '../Header'
@@ -21,6 +22,7 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
+            <CssBaseline />
             <Router>
                 <GlobalStyle />
                 <GoogleAccountDataProvider>
