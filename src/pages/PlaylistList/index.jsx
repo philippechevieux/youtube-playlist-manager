@@ -2,12 +2,11 @@ import { useEffect, useContext, useState } from 'react'
 import { getYoutubePlaylists } from '../../utils/api'
 import { GoogleAccountDataContext } from '../../utils/context/index'
 
-import { Card, CardActions, CardContent, CardMedia, Typography } from '@mui/material'
-import IconButton from '@mui/material/IconButton'
-import EditIcon from '@mui/icons-material/Edit'
-import ShareIcon from '@mui/icons-material/Share'
+import { Breadcrumbs, Typography } from '@mui/material'
 
 import './styles.css'
+import MosaicItem from '../../components/Playlist/MosaicItem'
+import HomeIcon from '@mui/icons-material/Home'
 
 function PlaylistList() {
     // Get googleAccountData context
@@ -29,38 +28,20 @@ function PlaylistList() {
 
     return (
         <div>
-            {!playlistsListData ? (
-                <div>Rien</div>
-            ) : (
-                <div className="card-container">
-                    {playlistsListData.items?.map((PlaylistData, index) => (
-                        <Card sx={{ maxWidth: 345 }}>
-                            <CardMedia
-                                component="img"
-                                height="194"
-                                image={PlaylistData.snippet.thumbnails.high.url}
-                                alt={PlaylistData.snippet.localized.title}
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="div">
-                                    {PlaylistData.snippet.localized.title}
-                                </Typography>
-                                <Typography variant="body2" color="text.secondary">
-                                    Test blabla blabla blabla
-                                </Typography>
-                            </CardContent>
-                            <CardActions>
-                                <IconButton aria-label="share">
-                                    <ShareIcon />
-                                </IconButton>
-                                <IconButton aria-label="edit">
-                                    <EditIcon />
-                                </IconButton>
-                            </CardActions>
-                        </Card>
-                    ))}
-                </div>
-            )}
+            <div>
+                <Breadcrumbs aria-label="breadcrumb">
+                    {/* <Link underline="hover" sx={{ display: 'flex', alignItems: 'center' }} color="inherit" href="/">
+                        <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+                        Mes Playlists
+                    </Link> */}
+                    <Typography sx={{ display: 'flex', alignItems: 'center' }} color="text.primary">
+                        <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
+                        Mes playlists
+                    </Typography>
+                </Breadcrumbs>
+            </div>
+
+            {!playlistsListData ? <div>Rien</div> : <MosaicItem playlistsListData={playlistsListData} />}
         </div>
     )
 }

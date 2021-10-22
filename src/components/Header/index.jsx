@@ -1,12 +1,6 @@
-import AppBar from '@mui/material/AppBar'
-import Box from '@mui/material/Box'
-import Toolbar from '@mui/material/Toolbar'
-import Typography from '@mui/material/Typography'
-import IconButton from '@mui/material/IconButton'
 import MenuIcon from '@mui/icons-material/Menu'
 import LogoutIcon from '@mui/icons-material/Logout'
-import MenuItem from '@mui/material/MenuItem'
-import Menu from '@mui/material/Menu'
+import { Menu, MenuItem, IconButton, Typography, Toolbar, Box, AppBar, Divider } from '@mui/material'
 
 import AvatarCustom from '../AvatarCustom'
 import './styles.css'
@@ -42,10 +36,9 @@ function Header() {
         setAnchorEl(null)
     }
 
-    //TODO: Fixed header
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
+            <AppBar position="fixed">
                 <Toolbar>
                     <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
                         <MenuIcon />
@@ -84,6 +77,7 @@ function Header() {
                                     <AvatarCustom size="sm" />
                                     <span className="header-menuitem-margin-left">Mon profil</span>
                                 </MenuItem>
+                                <Divider />
                                 <MenuItem key="logout" onClick={handleLogout}>
                                     <LogoutIcon />
                                     <span className="header-menuitem-margin-left">Se déconnecter</span>
@@ -100,6 +94,8 @@ function Header() {
                             onSuccess={handleLogin}
                             onFailure={handleLoginFailure}
                             cookiePolicy="single_host_origin"
+                            theme="dark"
+                            icon={false}
                         />
                     )}
                 </Toolbar>

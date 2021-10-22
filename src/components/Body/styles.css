@@ -1,3 +1,4 @@
+/* TODO: Mettre le style sur une div dans App.jsx */
 body {
     background-color: #161616;
     margin: 0;
@@ -6,5 +7,8 @@ body {
 .body-container {
     background-color: #272727;
     padding: 40px;
-    margin: 40px;
+    margin: auto;
+    margin-top: 100px;
+    margin-bottom: 40px;
+    max-width: 80%;
 }
