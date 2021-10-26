@@ -29,7 +29,9 @@ function PlaylistList() {
     }, [googleAccountData])
 
     const handlePlaylistDisplayMode = (mode) => {
-        setPlaylistActiveDisplayMode(mode)
+        if (mode !== playlistActiveDisplayMode) {
+            setPlaylistActiveDisplayMode(mode)
+        }
     }
 
     //TODO:
@@ -58,7 +60,7 @@ function PlaylistList() {
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
                         onClick={() => handlePlaylistDisplayMode('mosaic')}
-                        color="inherit"
+                        color={playlistActiveDisplayMode === 'mosaic' ? 'primary' : 'inherit'}
                     >
                         <ViewModuleIcon />
                     </IconButton>
@@ -68,7 +70,7 @@ function PlaylistList() {
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
                         onClick={() => handlePlaylistDisplayMode('list')}
-                        color="inherit"
+                        color={playlistActiveDisplayMode === 'list' ? 'primary' : 'inherit'}
                     >
                         <ListIcon />
                     </IconButton>
