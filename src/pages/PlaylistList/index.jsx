@@ -17,7 +17,7 @@ function PlaylistList() {
     // Get googleAccountData context
     const { googleAccountData } = useContext(GoogleAccountDataContext)
     const [playlistsListData, setPlaylistsListData] = useState(null)
-    const [playlistActiveMode, setPlaylistActiveMode] = useState('mosaic')
+    const [playlistActiveDisplayMode, setPlaylistActiveDisplayMode] = useState('mosaic')
 
     useEffect(() => {
         console.log('playlist list : ', googleAccountData)
@@ -28,8 +28,11 @@ function PlaylistList() {
         })
     }, [googleAccountData])
 
+    const handlePlaylistDisplayMode = (mode) => {
+        setPlaylistActiveDisplayMode(mode)
+    }
+
     //TODO:
-    // - Affichage Mosaic, Affichage Liste
     // - Trie par : Date de création ASC/DESC puis voir pour d'autres possibilités
 
     return (
@@ -54,7 +57,7 @@ function PlaylistList() {
                         aria-label="account of current user"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
-                        onClick=""
+                        onClick={() => handlePlaylistDisplayMode('mosaic')}
                         color="inherit"
                     >
                         <ViewModuleIcon />
@@ -64,7 +67,7 @@ function PlaylistList() {
                         aria-label="account of current user"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
-                        onClick=""
+                        onClick={() => handlePlaylistDisplayMode('list')}
                         color="inherit"
                     >
                         <ListIcon />
@@ -74,11 +77,13 @@ function PlaylistList() {
 
             {!playlistsListData && <div>Rien</div>}
 
-            {playlistsListData && playlistActiveMode === 'mosaic' && (
+            {playlistsListData && playlistActiveDisplayMode === 'mosaic' && (
                 <MosaicMode playlistsListData={playlistsListData} />
             )}
 
-            {playlistsListData && playlistActiveMode === 'list' && <ListMode playlistsListData={playlistsListData} />}
+            {playlistsListData && playlistActiveDisplayMode === 'list' && (
+                <ListMode playlistsListData={playlistsListData} />
+            )}
         </div>
     )
 }
