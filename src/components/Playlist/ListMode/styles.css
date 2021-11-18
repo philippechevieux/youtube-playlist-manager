@@ -37,3 +37,11 @@
 .list-item-text-margin .primary {
     font-weight: bold;
 }
+
+.list-item-text .primary,
+.list-item-text .secondary {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 85%;
+}

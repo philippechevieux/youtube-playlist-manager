@@ -33,7 +33,7 @@ function ListMode({ playlistsListData }) {
                             />
                         </ListItemAvatar>
                         <ListItemText
-                            className="list-item-text-margin"
+                            className="list-item-text list-item-text-margin"
                             primary={
                                 <Typography className="primary" variant="body1" color="text.primary">
                                     {PlaylistData.snippet.localized.title}

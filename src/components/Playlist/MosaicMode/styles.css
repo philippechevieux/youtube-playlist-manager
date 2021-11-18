@@ -1,3 +1,11 @@
 .grid-container {
     padding: 27px;
 }
+
+.grid-container .card-title,
+.grid-container .card-description {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+}

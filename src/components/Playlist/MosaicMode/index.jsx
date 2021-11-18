@@ -26,10 +26,10 @@ function MosaicMode({ playlistsListData }) {
                             alt={PlaylistData.snippet.localized.title}
                         />
                         <CardContent>
-                            <Typography gutterBottom variant="h5" component="div">
+                            <Typography gutterBottom variant="h5" component="div" className="card-title">
                                 {PlaylistData.snippet.localized.title}
                             </Typography>
-                            <Typography variant="body2" color="text.secondary">
+                            <Typography variant="body2" color="text.secondary" className="card-description">
                                 {PlaylistData.snippet.localized.description === ''
                                     ? 'Aucune description'
                                     : PlaylistData.snippet.localized.description}
