@@ -39,7 +39,13 @@ function ListMode({ playlistsListData }) {
                                     {PlaylistData.snippet.localized.title}
                                 </Typography>
                             }
-                            secondary="Test blabla blabla blabla"
+                            secondary={
+                                <Typography className="secondary" variant="body2" color="text.secondary">
+                                    {PlaylistData.snippet.localized.description === ''
+                                        ? 'Aucune description'
+                                        : PlaylistData.snippet.localized.description}
+                                </Typography>
+                            }
                         />
                     </ListItem>
 

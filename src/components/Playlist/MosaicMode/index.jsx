@@ -4,11 +4,20 @@ import IconButton from '@mui/material/IconButton'
 import ShareIcon from '@mui/icons-material/Share'
 import EditIcon from '@mui/icons-material/Edit'
 
+import './styles.css'
+
 function MosaicMode({ playlistsListData }) {
     return (
-        <Grid container direction="row" rowSpacing={4} columnSpacing={4} alignItems="flex-start">
+        <Grid
+            container
+            direction="row"
+            rowSpacing={4}
+            columnSpacing={4}
+            alignItems="flex-start"
+            className="grid-container"
+        >
             {playlistsListData.items?.map((PlaylistData, index) => (
-                <Grid key={PlaylistData.id} item xs={3}>
+                <Grid key={PlaylistData.id} item xs={12} sm={6} md={4} lg={3}>
                     <Card>
                         <CardMedia
                             component="img"
@@ -21,7 +30,9 @@ function MosaicMode({ playlistsListData }) {
                                 {PlaylistData.snippet.localized.title}
                             </Typography>
                             <Typography variant="body2" color="text.secondary">
-                                Test blabla blabla blabla
+                                {PlaylistData.snippet.localized.description === ''
+                                    ? 'Aucune description'
+                                    : PlaylistData.snippet.localized.description}
                             </Typography>
                         </CardContent>
                         <CardActions>
