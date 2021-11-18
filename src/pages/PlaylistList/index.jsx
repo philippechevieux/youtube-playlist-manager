@@ -39,19 +39,6 @@ function PlaylistList() {
 
     return (
         <div>
-            {/* <div>
-                <Breadcrumbs aria-label="breadcrumb">
-                    <Link underline="hover" sx={{ display: 'flex', alignItems: 'center' }} color="inherit" href="/">
-                        <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-                        Mes Playlists
-                    </Link>
-                    <Typography sx={{ display: 'flex', alignItems: 'center' }} color="text.primary">
-                        <HomeIcon sx={{ mr: 0.5 }} fontSize="inherit" />
-                        Mes playlists
-                    </Typography>
-                </Breadcrumbs>
-            </div> */}
-
             <AppBar position="static">
                 <Toolbar>
                     <IconButton

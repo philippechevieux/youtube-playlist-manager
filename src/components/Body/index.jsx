@@ -13,19 +13,22 @@ function Body() {
     const { googleAccountData } = useContext(GoogleAccountDataContext)
 
     return (
-        <div className="body-container">
-            {!googleAccountData ? (
-                <WaitingLoadingScreen />
-            ) : (
-                <Switch>
-                    <Route exact path="/">
-                        <PlaylistList />
-                    </Route>
-                    <Route exact path="/playlist/:playlistid">
-                        <PlaylistContent />
-                    </Route>
-                </Switch>
-            )}
+        <div>
+            <div className="body-spacer"></div>
+            <div className="body-container">
+                {!googleAccountData ? (
+                    <WaitingLoadingScreen />
+                ) : (
+                    <Switch>
+                        <Route exact path="/">
+                            <PlaylistList />
+                        </Route>
+                        <Route exact path="/playlist/:playlistid">
+                            <PlaylistContent />
+                        </Route>
+                    </Switch>
+                )}
+            </div>
         </div>
     )
 }
