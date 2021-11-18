@@ -8,10 +8,10 @@ import './styles.css'
 
 import MosaicMode from '../../components/Playlist/MosaicMode'
 import ListMode from '../../components/Playlist/ListMode'
-import HomeIcon from '@mui/icons-material/Home'
 
 import ViewModuleIcon from '@mui/icons-material/ViewModule'
 import ListIcon from '@mui/icons-material/List'
+import FilterAltIcon from '@mui/icons-material/FilterAlt'
 
 function PlaylistList() {
     // Get googleAccountData context
@@ -43,7 +43,6 @@ function PlaylistList() {
                 <Toolbar>
                     <IconButton
                         size="large"
-                        aria-label="account of current user"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
                         onClick={() => handlePlaylistDisplayMode('mosaic')}
@@ -53,13 +52,22 @@ function PlaylistList() {
                     </IconButton>
                     <IconButton
                         size="large"
-                        aria-label="account of current user"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
                         onClick={() => handlePlaylistDisplayMode('list')}
                         color={playlistActiveDisplayMode === 'list' ? 'primary' : 'inherit'}
                     >
                         <ListIcon />
+                    </IconButton>
+                    <IconButton
+                        className="button-filter"
+                        size="large"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick=""
+                        color="inherit"
+                    >
+                        <FilterAltIcon />
                     </IconButton>
                 </Toolbar>
             </AppBar>
