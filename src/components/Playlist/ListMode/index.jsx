@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit'
 
 import './styles.css'
 
-function ListMode({ playlistsListData }) {
+function ListMode({ playlistsListData, handlePlaylistClickOnList }) {
     return (
         <List className="list-container">
             {playlistsListData.items?.map((PlaylistData, index) => (
@@ -15,7 +15,11 @@ function ListMode({ playlistsListData }) {
                     <ListItem
                         secondaryAction={
                             <div>
-                                <IconButton edge="end" aria-label="delete">
+                                <IconButton
+                                    edge="end"
+                                    aria-label="edit"
+                                    onClick={() => handlePlaylistClickOnList(PlaylistData.id)}
+                                >
                                     <EditIcon />
                                 </IconButton>
                                 <IconButton edge="end" aria-label="share">

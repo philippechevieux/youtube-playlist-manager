@@ -1,4 +1,4 @@
-import MenuIcon from '@mui/icons-material/Menu'
+import HomeIcon from '@mui/icons-material/Home'
 import LogoutIcon from '@mui/icons-material/Logout'
 import { Menu, MenuItem, IconButton, Typography, Toolbar, Box, AppBar, Divider } from '@mui/material'
 
@@ -8,8 +8,11 @@ import './styles.css'
 import { GoogleLogin } from 'react-google-login'
 import { useState, useContext } from 'react'
 import { GoogleAccountDataContext } from '../../utils/context/'
+import { useHistory } from 'react-router-dom'
 
 function Header() {
+    let history = useHistory()
+
     // Get googleAccountData context
     const { googleAccountData, saveGoogleAccountData } = useContext(GoogleAccountDataContext)
 
@@ -36,12 +39,23 @@ function Header() {
         setAnchorEl(null)
     }
 
+    const handleHomeClick = (id) => {
+        history.push('/')
+    }
+
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed">
                 <Toolbar>
-                    <IconButton size="large" edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
-                        <MenuIcon />
+                    <IconButton
+                        size="large"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        sx={{ mr: 2 }}
+                        onClick={() => handleHomeClick()}
+                    >
+                        <HomeIcon />
                     </IconButton>
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Youtube Playlist Manager

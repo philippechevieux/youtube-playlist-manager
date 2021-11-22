@@ -5,8 +5,9 @@ import ShareIcon from '@mui/icons-material/Share'
 import EditIcon from '@mui/icons-material/Edit'
 
 import './styles.css'
+import { Link } from 'react-router-dom'
 
-function MosaicMode({ playlistsListData }) {
+function MosaicMode({ playlistsListData, handlePlaylistClickOnList }) {
     return (
         <Grid
             container
@@ -39,7 +40,7 @@ function MosaicMode({ playlistsListData }) {
                             <IconButton aria-label="share">
                                 <ShareIcon />
                             </IconButton>
-                            <IconButton aria-label="edit">
+                            <IconButton aria-label="edit" onClick={() => handlePlaylistClickOnList(PlaylistData.id)}>
                                 <EditIcon />
                             </IconButton>
                         </CardActions>

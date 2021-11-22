@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { BrowserRouter as Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { GoogleAccountDataContext } from '../../utils/context/'
 
 import WaitingLoadingScreen from '../WaitingLoadingScreen/index'

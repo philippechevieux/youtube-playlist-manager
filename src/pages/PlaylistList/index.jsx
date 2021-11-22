@@ -2,7 +2,7 @@ import { useEffect, useContext, useState } from 'react'
 import { getYoutubePlaylists } from '../../utils/api'
 import { GoogleAccountDataContext } from '../../utils/context/index'
 
-import { Breadcrumbs, Typography, AppBar, Toolbar, IconButton } from '@mui/material'
+import { AppBar, Toolbar, IconButton } from '@mui/material'
 
 import './styles.css'
 
@@ -13,7 +13,11 @@ import ViewModuleIcon from '@mui/icons-material/ViewModule'
 import ListIcon from '@mui/icons-material/List'
 import FilterAltIcon from '@mui/icons-material/FilterAlt'
 
+import { useHistory } from 'react-router-dom'
+
 function PlaylistList() {
+    let history = useHistory()
+
     // Get googleAccountData context
     const { googleAccountData } = useContext(GoogleAccountDataContext)
     const [playlistsListData, setPlaylistsListData] = useState(null)
@@ -32,6 +36,10 @@ function PlaylistList() {
         if (mode !== playlistActiveDisplayMode) {
             setPlaylistActiveDisplayMode(mode)
         }
+    }
+
+    const handlePlaylistClickOnList = (id) => {
+        history.push('/playlist/' + id)
     }
 
     //TODO:
@@ -64,7 +72,7 @@ function PlaylistList() {
                         size="large"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
-                        onClick=""
+                        onClick={() => console.log('test')}
                         color="inherit"
                     >
                         <FilterAltIcon />
@@ -75,11 +83,14 @@ function PlaylistList() {
             {!playlistsListData && <div>Rien</div>}
 
             {playlistsListData && playlistActiveDisplayMode === 'mosaic' && (
-                <MosaicMode playlistsListData={playlistsListData} />
+                <MosaicMode
+                    playlistsListData={playlistsListData}
+                    handlePlaylistClickOnList={handlePlaylistClickOnList}
+                />
             )}
 
             {playlistsListData && playlistActiveDisplayMode === 'list' && (
-                <ListMode playlistsListData={playlistsListData} />
+                <ListMode playlistsListData={playlistsListData} handlePlaylistClickOnList={handlePlaylistClickOnList} />
             )}
         </div>
     )
