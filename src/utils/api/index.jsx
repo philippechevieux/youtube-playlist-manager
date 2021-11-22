@@ -1,17 +1,27 @@
 const BASE_API_URL = 'https://www.googleapis.com/youtube/v3/'
 
-export function getYoutubePlaylists(access_token) {
+export function getYoutubePlaylists(accessToken) {
     const params = {
         part: 'snippet,contentDetails,id,localizations,player,snippet,status',
         mine: true,
         maxResults: 100,
     }
 
-    return getApi(access_token, 'playlists', params)
+    return getApi(accessToken, 'playlists', params)
 }
 
-function getApi(access_token, end_point, params) {
-    let apiUrl = `${BASE_API_URL}${end_point}?access_token=${access_token}`
+export function getYoutubePlaylistsItems(accessToken, playlistId) {
+    const params = {
+        part: 'snippet,contentDetails,id,status',
+        playlistId: playlistId,
+        maxResults: 50,
+    }
+
+    return getApi(accessToken, 'playlistItems', params)
+}
+
+function getApi(accessToken, endPoint, params) {
+    let apiUrl = `${BASE_API_URL}${endPoint}?access_token=${accessToken}`
 
     Object.keys(params).map((key) => {
         apiUrl = apiUrl + `&${key}=${decodeURIComponent(params[key])}`

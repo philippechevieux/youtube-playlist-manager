@@ -23,7 +23,7 @@ function Body() {
                         <Route exact path="/">
                             <PlaylistList />
                         </Route>
-                        <Route exact path="/playlist/:playlistid">
+                        <Route exact path="/playlist/:playlistId">
                             <PlaylistContent />
                         </Route>
                     </Switch>
