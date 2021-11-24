@@ -30,10 +30,10 @@ function ListMode({ playlistsListData, handlePlaylistClickOnList }) {
                     >
                         <ListItemAvatar>
                             <Avatar
-                                sx={{ width: 75, height: 75 }}
+                                sx={{ width: 120, height: 85 }}
                                 alt={PlaylistData.snippet.localized.title}
                                 src={PlaylistData.snippet.thumbnails.high.url}
-                                variant="rounded"
+                                variant="square"
                             />
                         </ListItemAvatar>
                         <ListItemText
@@ -53,7 +53,7 @@ function ListMode({ playlistsListData, handlePlaylistClickOnList }) {
                         />
                     </ListItem>
 
-                    <Divider variant="inset" component="li" />
+                    <Divider variant="middle" component="li" />
                 </div>
             ))}
         </List>

@@ -3,6 +3,8 @@ import { getYoutubePlaylistsItems } from '../../utils/api'
 import { GoogleAccountDataContext } from '../../utils/context/index'
 import { useParams } from 'react-router-dom'
 
+import Content from '../../components/Playlist/Content/index'
+
 function PlaylistContent() {
     // Get googleAccountData context
     const { googleAccountData } = useContext(GoogleAccountDataContext)
@@ -17,7 +19,12 @@ function PlaylistContent() {
         })
     }, [googleAccountData, playlistId])
 
-    return <div>Mon contenu</div>
+    return (
+        <div>
+            {!playlistsListItems && <div>Rien</div>}
+            {playlistsListItems && <Content playlistsListItems={playlistsListItems} />}
+        </div>
+    )
 }
 
 export default PlaylistContent
