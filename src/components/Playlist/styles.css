@@ -1,0 +1,51 @@
+/* MUI : xs size */
+@media (min-width: 0px) {
+    ul.list-container {
+        width: 100%;
+        margin: auto;
+    }
+}
+
+/* MUI : sm size */
+@media (min-width: 600px) {
+    ul.list-container {
+        width: 90%;
+        margin: auto;
+    }
+}
+
+/* MUI : md size */
+@media (min-width: 900px) {
+    ul.list-container {
+        width: 70%;
+        margin: auto;
+    }
+}
+
+/* MUI : lg size */
+@media (min-width: 1200px) {
+    ul.list-container {
+        width: 60%;
+        margin: auto;
+    }
+}
+
+.list-item-text-margin {
+    margin-left: 20px;
+}
+
+.list-item-text-margin .primary {
+    font-weight: 400;
+}
+
+.list-item-text .primary,
+.list-item-text .secondary {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 85%;
+}
+
+.divider {
+    margin: 5px 0px 5px 0px;
+}

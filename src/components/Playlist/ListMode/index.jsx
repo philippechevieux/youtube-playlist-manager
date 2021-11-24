@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton'
 import ShareIcon from '@mui/icons-material/Share'
 import EditIcon from '@mui/icons-material/Edit'
 
-import './styles.css'
+import '../styles.css'
 
 function ListMode({ playlistsListData, handlePlaylistClickOnList }) {
     return (
@@ -39,7 +39,7 @@ function ListMode({ playlistsListData, handlePlaylistClickOnList }) {
                         <ListItemText
                             className="list-item-text list-item-text-margin"
                             primary={
-                                <Typography className="primary" variant="body1" color="text.primary">
+                                <Typography className="primary" variant="h6" color="text.primary">
                                     {PlaylistData.snippet.localized.title}
                                 </Typography>
                             }
@@ -53,7 +53,7 @@ function ListMode({ playlistsListData, handlePlaylistClickOnList }) {
                         />
                     </ListItem>
 
-                    <Divider variant="middle" component="li" />
+                    <Divider className="divider" variant="middle" component="li" />
                 </div>
             ))}
         </List>

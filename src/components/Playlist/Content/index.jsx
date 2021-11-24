@@ -1,10 +1,12 @@
 import { List, ListItem, ListItemAvatar, ListItemText, Avatar, Divider, Typography } from '@mui/material'
 
+import '../styles.css'
+
 function Content({ playlistsListItems }) {
     // TODO: Later execute a second request to retrieve videos duration. Maybe this request should be done in playlistlist
 
     return (
-        <List>
+        <List className="list-container">
             {playlistsListItems.items?.map((Item, index) => (
                 <div key={Item.id}>
                     <ListItem>
@@ -17,23 +19,21 @@ function Content({ playlistsListItems }) {
                             />
                         </ListItemAvatar>
                         <ListItemText
-                            className=""
+                            className="list-item-text list-item-text-margin"
                             primary={
-                                <Typography className="primary" variant="body1" color="text.primary">
+                                <Typography className="primary" variant="h6" color="text.primary">
                                     {Item.snippet.title}
                                 </Typography>
                             }
                             secondary={
                                 <Typography className="secondary" variant="body2" color="text.secondary">
-                                    {/* {Item.snippet.localized.description === ''
-                                        ? 'Aucune description'
-                                        : Item.snippet.localized.description} */}
+                                    {Item.snippet.videoOwnerChannelTitle}
                                 </Typography>
                             }
                         />
                     </ListItem>
 
-                    <Divider variant="middle" component="li" />
+                    <Divider className="divider" variant="middle" component="li" />
                 </div>
             ))}
         </List>
