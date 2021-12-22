@@ -3,6 +3,7 @@ import { UserDataProvider } from '../../utils/context/userData'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { CssBaseline } from '@mui/material'
 
+import './styles.css'
 import React from 'react'
 import Header from '../Header'
 import Body from '../Body'
@@ -15,6 +16,9 @@ function App() {
                 palette: {
                     mode: 'dark',
                 },
+                typography: {
+                    fontFamily: 'Poppins, sans-serif',
+                },
             }),
         []
     )
@@ -24,8 +28,10 @@ function App() {
             <CssBaseline />
             <Router>
                 <UserDataProvider>
-                    <Header />
-                    <Body />
+                    <div className="app-container">
+                        <Header />
+                        <Body />
+                    </div>
                 </UserDataProvider>
             </Router>
         </ThemeProvider>

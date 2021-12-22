@@ -1,32 +1,20 @@
-import styled from 'styled-components'
-
-const LoginContainer = styled.div`
-    margin: 30px;
-    background-color: #fff;
-    padding: 60px 90px;
-    dispay: flex;
-    flex-direction: row;
-`
-const LeftCol = styled.div`
-    dispay: flex;
-    flex-direction: column;
-    justify-content: center;
-    flex: 1;
-`
-
-const StyledTitle = styled.h2`
-    padding-bottom: 30px;
-    line-height: 50px;
-    color: #000;
-`
+import './styles.css'
+import waitingScreen from '../../assets/waiting-screen.png'
 
 function Login() {
     return (
-        <LoginContainer>
-            <LeftCol>
-                <StyledTitle>Connectez-vous</StyledTitle>
-            </LeftCol>
-        </LoginContainer>
+        <div className="waiting-screen-container">
+            <div className="left-col">
+                <h1 className="title">Gestionnaire de playlists YouTube</h1>
+                <span>
+                    Vous souhaitez retirer de vos playlists toutes les vidéos supprimées de YouTube en seul clique ? Cet
+                    outil est fait pour vous...
+                </span>
+            </div>
+            <div className="right-col">
+                <img src={waitingScreen} alt="Personne travaillant sur un ordinateur" />
+            </div>
+        </div>
     )
 }
 
