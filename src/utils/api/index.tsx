@@ -1,6 +1,8 @@
+import { IApiParams } from './interface'
+
 const BASE_API_URL = 'https://www.googleapis.com/youtube/v3/'
 
-export function getYoutubePlaylists(accessToken) {
+export function getYoutubePlaylists(accessToken: string) {
     const params = {
         part: 'snippet,contentDetails,id,localizations,player,snippet,status',
         mine: true,
@@ -10,7 +12,7 @@ export function getYoutubePlaylists(accessToken) {
     return getApi(accessToken, 'playlists', params)
 }
 
-export function getYoutubePlaylistsItems(accessToken, playlistId) {
+export function getYoutubePlaylistsItems(accessToken: string, playlistId: string) {
     const params = {
         part: 'snippet,contentDetails,id,status',
         playlistId: playlistId,
@@ -20,14 +22,12 @@ export function getYoutubePlaylistsItems(accessToken, playlistId) {
     return getApi(accessToken, 'playlistItems', params)
 }
 
-function getApi(accessToken, endPoint, params) {
+function getApi(accessToken: string, endPoint: string, params: IApiParams) {
     let apiUrl = `${BASE_API_URL}${endPoint}?access_token=${accessToken}`
 
-    Object.keys(params).map((key) => {
-        apiUrl = apiUrl + `&${key}=${decodeURIComponent(params[key])}`
+    Object.entries(params).forEach(([key, value]) => {
+        apiUrl = apiUrl + `&${key}=${decodeURIComponent(value)}`
     })
-
-    console.log('apiUrl : ', apiUrl)
 
     return fetch(apiUrl, {
         method: 'GET',

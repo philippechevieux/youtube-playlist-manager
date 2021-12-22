@@ -32,13 +32,13 @@ function PlaylistList() {
         })
     }, [googleAccountData])
 
-    const handlePlaylistDisplayMode = (mode) => {
+    const handlePlaylistDisplayMode = (mode: string) => {
         if (mode !== playlistActiveDisplayMode) {
             setPlaylistActiveDisplayMode(mode)
         }
     }
 
-    const handlePlaylistClickOnList = (id) => {
+    const handlePlaylistClickOnList = (id: string) => {
         history.push('/playlist/' + id)
     }
 

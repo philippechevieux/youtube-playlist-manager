@@ -9,7 +9,7 @@ function PlaylistContent() {
     // Get googleAccountData context
     const { googleAccountData } = useContext(GoogleAccountDataContext)
     const [playlistsListItems, setPlaylistsListItems] = useState(null)
-    const { playlistId } = useParams()
+    const { playlistId } = useParams<{ playlistId: string }>()
 
     useEffect(() => {
         console.log('playlistId : ', playlistId)

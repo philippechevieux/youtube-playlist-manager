@@ -1,10 +1,10 @@
 import { useContext } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { GoogleAccountDataContext } from '../../utils/context/'
+import { GoogleAccountDataContext } from '../../utils/context'
 
 import WaitingLoadingScreen from '../WaitingLoadingScreen/index'
-import PlaylistContent from './../../pages/PlaylistContent/index'
-import PlaylistList from './../../pages/PlaylistList/index'
+import PlaylistContent from '../../pages/PlaylistContent/index'
+import PlaylistList from '../../pages/PlaylistList/index'
 
 import './styles.css'
 
@@ -16,7 +16,7 @@ function Body() {
         <div>
             <div className="body-spacer"></div>
             <div className="body-container">
-                {!googleAccountData ? (
+                {!googleAccountData.isUserLogin ? (
                     <WaitingLoadingScreen />
                 ) : (
                     <Switch>

@@ -2,12 +2,30 @@ import { List, ListItem, ListItemAvatar, ListItemText, Avatar, Divider, Typograp
 
 import '../styles.css'
 
-function Content({ playlistsListItems }) {
+// TODO: move Interface declaration when i will introduce playlistlist context (to avoir useless reloading)
+interface EnumPlaylistItemsContent {
+    id: string
+    snippet: {
+        title: string
+        videoOwnerChannelTitle: string
+        thumbnails: {
+            high: {
+                url: string
+            }
+        }
+    }
+}
+
+interface IPlaylistsListItems {
+    items: Array<EnumPlaylistItemsContent>
+}
+
+function Content({ playlistsListItems }: { playlistsListItems: IPlaylistsListItems }) {
     // TODO: Later execute a second request to retrieve videos duration. Maybe this request should be done in playlistlist
 
     return (
         <List className="list-container">
-            {playlistsListItems.items?.map((Item, index) => (
+            {playlistsListItems.items?.map((Item) => (
                 <div key={Item.id}>
                     <ListItem>
                         <ListItemAvatar>

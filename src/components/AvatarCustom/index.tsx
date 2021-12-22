@@ -3,11 +3,11 @@ import Avatar from '@mui/material/Avatar'
 import { useContext } from 'react'
 import { GoogleAccountDataContext } from '../../utils/context'
 
-function AvatarCustom({ size }) {
+function AvatarCustom({ size }: { size: string }) {
     // Get googleAccountData context
     const { googleAccountData } = useContext(GoogleAccountDataContext)
 
-    function getAvatarSize(paramSize) {
+    function getAvatarSize(paramSize: string) {
         switch (paramSize) {
             case 'xxxl':
                 return 120

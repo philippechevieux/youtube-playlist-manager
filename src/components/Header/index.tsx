@@ -7,8 +7,9 @@ import './styles.css'
 
 import { GoogleLogin } from 'react-google-login'
 import { useState, useContext } from 'react'
-import { GoogleAccountDataContext } from '../../utils/context/'
+import { GoogleAccountDataContext } from '../../utils/context'
 import { useHistory } from 'react-router-dom'
+import { defaultGoogleAccountData } from './../../utils/context/index'
 
 function Header() {
     let history = useHistory()
@@ -18,20 +19,21 @@ function Header() {
 
     const [anchorEl, setAnchorEl] = useState(null)
 
-    const handleLogin = (response) => {
+    const handleLogin = (response: object) => {
         saveGoogleAccountData(response)
     }
 
-    const handleLoginFailure = (response) => {
-        saveGoogleAccountData(null)
+    const handleLoginFailure = () => {
+        saveGoogleAccountData(defaultGoogleAccountData)
     }
 
     const handleLogout = () => {
-        saveGoogleAccountData(null)
+        saveGoogleAccountData(defaultGoogleAccountData)
         setAnchorEl(null)
     }
 
-    const handleMenu = (event) => {
+    // TODO: Search a fix for this any ...
+    const handleMenu = (event: any) => {
         setAnchorEl(event.currentTarget)
     }
 
@@ -39,7 +41,7 @@ function Header() {
         setAnchorEl(null)
     }
 
-    const handleHomeClick = (id) => {
+    const handleHomeClick = () => {
         history.push('/')
     }
 
@@ -60,7 +62,7 @@ function Header() {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Youtube Playlist Manager
                     </Typography>
-                    {googleAccountData ? (
+                    {googleAccountData.isUserLogin ? (
                         <div>
                             <IconButton
                                 size="large"

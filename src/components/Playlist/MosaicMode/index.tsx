@@ -7,7 +7,32 @@ import EditIcon from '@mui/icons-material/Edit'
 import './styles.css'
 import { Link } from 'react-router-dom'
 
-function MosaicMode({ playlistsListData, handlePlaylistClickOnList }) {
+interface EnumPlaylistsMoasicData {
+    id: string
+    snippet: {
+        localized: {
+            title: string
+            description: string
+        }
+        thumbnails: {
+            high: {
+                url: string
+            }
+        }
+    }
+}
+
+interface IPlaylistsMosaicData {
+    items: Array<EnumPlaylistsMoasicData>
+}
+
+function MosaicMode({
+    playlistsListData,
+    handlePlaylistClickOnList,
+}: {
+    playlistsListData: IPlaylistsMosaicData
+    handlePlaylistClickOnList: Function
+}) {
     return (
         <Grid
             container

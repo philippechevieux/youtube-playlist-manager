@@ -7,10 +7,35 @@ import EditIcon from '@mui/icons-material/Edit'
 
 import '../styles.css'
 
-function ListMode({ playlistsListData, handlePlaylistClickOnList }) {
+interface EnumPlaylistsListData {
+    id: string
+    snippet: {
+        localized: {
+            title: string
+            description: string
+        }
+        thumbnails: {
+            high: {
+                url: string
+            }
+        }
+    }
+}
+
+interface IPlaylistsListData {
+    items: Array<EnumPlaylistsListData>
+}
+
+function ListMode({
+    playlistsListData,
+    handlePlaylistClickOnList,
+}: {
+    playlistsListData: IPlaylistsListData
+    handlePlaylistClickOnList: Function
+}) {
     return (
         <List className="list-container">
-            {playlistsListData.items?.map((PlaylistData, index) => (
+            {playlistsListData.items?.map((PlaylistData) => (
                 <div key={PlaylistData.id}>
                     <ListItem
                         secondaryAction={
