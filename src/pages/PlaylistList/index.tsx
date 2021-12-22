@@ -1,6 +1,6 @@
 import { useEffect, useContext, useState } from 'react'
 import { getYoutubePlaylists } from '../../utils/api'
-import { GoogleAccountDataContext } from '../../utils/context/index'
+import { UserDataContext } from '../../utils/context/userData/index'
 
 import { AppBar, Toolbar, IconButton } from '@mui/material'
 
@@ -18,19 +18,16 @@ import { useHistory } from 'react-router-dom'
 function PlaylistList() {
     let history = useHistory()
 
-    // Get googleAccountData context
-    const { googleAccountData } = useContext(GoogleAccountDataContext)
+    const { state } = useContext(UserDataContext)
     const [playlistsListData, setPlaylistsListData] = useState(null)
     const [playlistActiveDisplayMode, setPlaylistActiveDisplayMode] = useState('mosaic')
 
     useEffect(() => {
-        console.log('playlist list : ', googleAccountData)
-
-        getYoutubePlaylists(googleAccountData.accessToken).then((data) => {
+        getYoutubePlaylists(state.accessToken).then((data) => {
             console.log('setPlaylistsList', data)
             setPlaylistsListData(data)
         })
-    }, [googleAccountData])
+    }, [state])
 
     const handlePlaylistDisplayMode = (mode: string) => {
         if (mode !== playlistActiveDisplayMode) {

@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { GoogleAccountDataContext } from '../../utils/context'
+import { UserDataContext } from '../../utils/context/userData'
 
 import WaitingLoadingScreen from '../WaitingLoadingScreen/index'
 import PlaylistContent from '../../pages/PlaylistContent/index'
@@ -9,14 +9,13 @@ import PlaylistList from '../../pages/PlaylistList/index'
 import './styles.css'
 
 function Body() {
-    // Get googleAccountData context
-    const { googleAccountData } = useContext(GoogleAccountDataContext)
+    const { state } = useContext(UserDataContext)
 
     return (
         <div>
             <div className="body-spacer"></div>
             <div className="body-container">
-                {!googleAccountData.isUserLogin ? (
+                {!state.isUserLogin ? (
                     <WaitingLoadingScreen />
                 ) : (
                     <Switch>

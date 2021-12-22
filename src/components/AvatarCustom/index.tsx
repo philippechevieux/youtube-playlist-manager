@@ -1,11 +1,10 @@
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import Avatar from '@mui/material/Avatar'
 import { useContext } from 'react'
-import { GoogleAccountDataContext } from '../../utils/context'
+import { UserDataContext } from '../../utils/context/userData'
 
 function AvatarCustom({ size }: { size: string }) {
-    // Get googleAccountData context
-    const { googleAccountData } = useContext(GoogleAccountDataContext)
+    const { state } = useContext(UserDataContext)
 
     function getAvatarSize(paramSize: string) {
         switch (paramSize) {
@@ -27,10 +26,10 @@ function AvatarCustom({ size }: { size: string }) {
 
     return (
         <div>
-            {googleAccountData.avatar ? (
+            {state.avatar ? (
                 <Avatar
-                    alt={googleAccountData.fullName}
-                    src={googleAccountData.avatar}
+                    alt={state.fullName}
+                    src={state.avatar}
                     sx={{ width: getAvatarSize(size), height: getAvatarSize(size) }}
                 />
             ) : (

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router } from 'react-router-dom'
-import { GoogleAccountDataProvider } from '../../utils/context'
+import { UserDataProvider } from '../../utils/context/userData'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { CssBaseline } from '@mui/material'
 
@@ -23,10 +23,10 @@ function App() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Router>
-                <GoogleAccountDataProvider>
+                <UserDataProvider>
                     <Header />
                     <Body />
-                </GoogleAccountDataProvider>
+                </UserDataProvider>
             </Router>
         </ThemeProvider>
     )

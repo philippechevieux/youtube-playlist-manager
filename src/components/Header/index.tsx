@@ -7,28 +7,27 @@ import './styles.css'
 
 import { GoogleLogin } from 'react-google-login'
 import { useState, useContext } from 'react'
-import { GoogleAccountDataContext } from '../../utils/context'
+import { UserDataContext } from '../../utils/context/userData'
 import { useHistory } from 'react-router-dom'
-import { defaultGoogleAccountData } from './../../utils/context/index'
+import { UserDataActionTypes } from '../../utils/reducer/userData'
 
 function Header() {
     let history = useHistory()
 
-    // Get googleAccountData context
-    const { googleAccountData, saveGoogleAccountData } = useContext(GoogleAccountDataContext)
+    const { state, dispatch } = useContext(UserDataContext)
 
     const [anchorEl, setAnchorEl] = useState(null)
 
     const handleLogin = (response: object) => {
-        saveGoogleAccountData(response)
+        dispatch({ type: UserDataActionTypes.USER_LOGIN, googleLoginResponse: response })
     }
 
     const handleLoginFailure = () => {
-        saveGoogleAccountData(defaultGoogleAccountData)
+        // TODO: handle login failure (maybe redisplay login screen with info ?)
     }
 
     const handleLogout = () => {
-        saveGoogleAccountData(defaultGoogleAccountData)
+        dispatch({ type: UserDataActionTypes.USER_LOGOUT })
         setAnchorEl(null)
     }
 
@@ -62,7 +61,7 @@ function Header() {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Youtube Playlist Manager
                     </Typography>
-                    {googleAccountData.isUserLogin ? (
+                    {state.isUserLogin ? (
                         <div>
                             <IconButton
                                 size="large"
