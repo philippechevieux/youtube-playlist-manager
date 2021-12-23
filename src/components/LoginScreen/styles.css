@@ -7,7 +7,9 @@ div.login-screen-container {
 
 div.login-screen-container div.left-col {
     grid-row: 1;
+    align-self: center;
 }
+
 div.login-screen-container div.right-col {
     grid-row: 1;
 }
@@ -17,6 +19,11 @@ div.login-screen-container h1.title {
     color: #fff;
     font-size: 45px;
     font-weight: 500;
+}
+
+div.login-screen-container div.login-button {
+    margin-top: 30px;
+    text-align: end;
 }
 
 /* MUI : xs size */
@@ -95,8 +102,8 @@ div.login-screen-container h1.title {
     }
 
     img.login-screen-illustration {
-        height: 450px;
-        width: 550px;
+        height: 360px;
+        width: 450px;
     }
 }
 

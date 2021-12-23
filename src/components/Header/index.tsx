@@ -5,7 +5,7 @@ import { Menu, MenuItem, IconButton, Typography, Toolbar, Box, AppBar, Divider }
 import AvatarCustom from '../AvatarCustom'
 import './styles.css'
 
-import { GoogleLogin } from 'react-google-login'
+// import { GoogleLogin } from 'react-google-login'
 import { useState, useContext } from 'react'
 import { UserDataContext } from '../../utils/context/userData'
 import { useHistory } from 'react-router-dom'
@@ -17,14 +17,6 @@ function Header() {
     const { state, dispatch } = useContext(UserDataContext)
 
     const [anchorEl, setAnchorEl] = useState(null)
-
-    const handleLogin = (response: object) => {
-        dispatch({ type: UserDataActionTypes.USER_LOGIN, googleLoginResponse: response })
-    }
-
-    const handleLoginFailure = () => {
-        // TODO: handle login failure (maybe redisplay login screen with info ?)
-    }
 
     const handleLogout = () => {
         dispatch({ type: UserDataActionTypes.USER_LOGOUT })
@@ -48,20 +40,22 @@ function Header() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed">
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                        onClick={() => handleHomeClick()}
-                    >
-                        <HomeIcon />
-                    </IconButton>
+                    {state.isUserLogin && (
+                        <IconButton
+                            size="large"
+                            edge="start"
+                            color="inherit"
+                            aria-label="menu"
+                            sx={{ mr: 2 }}
+                            onClick={() => handleHomeClick()}
+                        >
+                            <HomeIcon />
+                        </IconButton>
+                    )}
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Youtube Playlist Manager
                     </Typography>
-                    {state.isUserLogin ? (
+                    {state.isUserLogin && (
                         <div>
                             <IconButton
                                 size="large"
@@ -98,19 +92,6 @@ function Header() {
                                 </MenuItem>
                             </Menu>
                         </div>
-                    ) : (
-                        <GoogleLogin
-                            clientId="232248135832-8f8h7mocgfdu17a7vpuul37pi5ugobt7.apps.googleusercontent.com"
-                            buttonText="Login with Google"
-                            scope="https://www.googleapis.com/auth/youtube"
-                            responseType="permissions"
-                            prompt="select_account"
-                            onSuccess={handleLogin}
-                            onFailure={handleLoginFailure}
-                            cookiePolicy="single_host_origin"
-                            theme="dark"
-                            icon={false}
-                        />
                     )}
                 </Toolbar>
             </AppBar>
