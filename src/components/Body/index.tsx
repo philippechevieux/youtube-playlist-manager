@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { UserDataContext } from '../../utils/context/userData'
 
-import WaitingLoadingScreen from '../WaitingLoadingScreen/index'
+import LoginScreen from '../LoginScreen/index'
 import PlaylistContent from '../../pages/PlaylistContent/index'
 import PlaylistList from '../../pages/PlaylistList/index'
 
@@ -16,7 +16,7 @@ function Body() {
             <div className="body-spacer"></div>
             <div className="body-container">
                 {!state.isUserLogin ? (
-                    <WaitingLoadingScreen />
+                    <LoginScreen />
                 ) : (
                     <Switch>
                         <Route exact path="/">

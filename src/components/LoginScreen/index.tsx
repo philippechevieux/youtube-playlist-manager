@@ -1,9 +1,9 @@
 import './styles.css'
-import waitingScreen from '../../assets/waiting-screen.png'
+import loginScreenIllustration from '../../assets/loginScreenIllustration.png'
 
 function Login() {
     return (
-        <div className="waiting-screen-container">
+        <div className="login-screen-container">
             <div className="left-col">
                 <h1 className="title">Gestionnaire de playlists YouTube</h1>
                 <span>
@@ -12,7 +12,11 @@ function Login() {
                 </span>
             </div>
             <div className="right-col">
-                <img src={waitingScreen} alt="Personne travaillant sur un ordinateur" />
+                <img
+                    className="login-screen-illustration"
+                    src={loginScreenIllustration}
+                    alt="Personne travaillant sur un ordinateur"
+                />
             </div>
         </div>
     )

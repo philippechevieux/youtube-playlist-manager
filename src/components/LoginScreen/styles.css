@@ -1,0 +1,134 @@
+div.login-screen-container {
+    margin: 30px;
+    padding: 60px 30px;
+    display: grid;
+    grid-template-columns: 1.5fr 2fr;
+}
+
+div.login-screen-container div.left-col {
+    grid-row: 1;
+}
+div.login-screen-container div.right-col {
+    grid-row: 1;
+}
+
+div.login-screen-container h1.title {
+    line-height: 50px;
+    color: #fff;
+    font-size: 45px;
+    font-weight: 500;
+}
+
+/* MUI : xs size */
+@media (min-width: 0px) {
+    div.login-screen-container {
+        padding: 0px;
+        grid-template-columns: 1fr;
+    }
+
+    div.login-screen-container div.left-col {
+        grid-row: 1;
+    }
+
+    div.login-screen-container div.right-col {
+        grid-row: 2;
+        justify-self: center;
+    }
+
+    div.login-screen-container h1.title {
+        font-size: 25px;
+        font-weight: 600;
+    }
+
+    img.login-screen-illustration {
+        height: 200px;
+        width: 260px;
+    }
+}
+
+/* MUI : sm size */
+@media (min-width: 600px) {
+    div.login-screen-container {
+        padding: 30px 15px;
+        grid-template-columns: 1fr;
+    }
+
+    div.login-screen-container div.left-col {
+        grid-row: 1;
+    }
+
+    div.login-screen-container div.right-col {
+        grid-row: 2;
+        justify-self: center;
+    }
+
+    div.login-screen-container h1.title {
+        font-size: 35px;
+        font-weight: 600;
+    }
+
+    img.login-screen-illustration {
+        height: 270px;
+        width: 370px;
+    }
+}
+
+/* MUI : md size */
+@media (min-width: 900px) {
+    div.login-screen-container {
+        padding: 60px 30px;
+        grid-template-columns: 1fr;
+    }
+
+    div.login-screen-container div.left-col {
+        grid-row: 1;
+    }
+
+    div.login-screen-container div.right-col {
+        grid-row: 2;
+        justify-self: center;
+    }
+
+    div.login-screen-container h1.title {
+        font-size: 45px;
+        font-weight: 500;
+    }
+
+    img.login-screen-illustration {
+        height: 450px;
+        width: 550px;
+    }
+}
+
+/* MUI : lg size */
+@media (min-width: 1200px) {
+    div.login-screen-container {
+        padding: 60px 30px;
+        grid-template-columns: 1fr 2fr;
+    }
+
+    div.login-screen-container div.left-col {
+        grid-row: 1;
+    }
+
+    div.login-screen-container div.right-col {
+        grid-row: 1;
+        justify-self: end;
+    }
+
+    div.login-screen-container h1.title {
+        font-size: 45px;
+        font-weight: 500;
+    }
+
+    img.login-screen-illustration {
+        height: 450px;
+        width: 550px;
+    }
+}
+
+@media (min-width: 1200px) {
+    div.login-screen-container {
+        grid-template-columns: 1.5fr 2fr;
+    }
+}
