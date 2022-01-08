@@ -1,5 +1,5 @@
-import HomeIcon from '@mui/icons-material/Home'
-import LogoutIcon from '@mui/icons-material/Logout'
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
 import { Menu, MenuItem, IconButton, Typography, Toolbar, Box, AppBar, Divider } from '@mui/material'
 
 import AvatarCustom from '../AvatarCustom'
@@ -49,7 +49,7 @@ function Header() {
                             sx={{ mr: 2 }}
                             onClick={() => handleHomeClick()}
                         >
-                            <HomeIcon />
+                            <HomeOutlinedIcon />
                         </IconButton>
                     )}
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -87,7 +87,7 @@ function Header() {
                                 </MenuItem>
                                 <Divider />
                                 <MenuItem key="logout" onClick={handleLogout}>
-                                    <LogoutIcon />
+                                    <LogoutOutlinedIcon />
                                     <span className="header-menuitem-margin-left">Se déconnecter</span>
                                 </MenuItem>
                             </Menu>

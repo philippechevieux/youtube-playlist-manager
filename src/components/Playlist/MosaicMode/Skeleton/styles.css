@@ -1,0 +1,60 @@
+.grid-container.skeleton .card:hover {
+    border: 2px solid #1e1e1e;
+    box-sizing: border-box;
+    background-color: #121212;
+}
+
+.grid-container.skeleton .mosaic-mode-skeleton-preview {
+    height: 180px;
+    background-color: #414141;
+}
+
+.grid-container.skeleton .mosaic-mode-skeleton-preview {
+    height: 180px;
+    background-color: #414141;
+}
+
+.grid-container.skeleton .mosaic-mode-skeleton-title {
+    height: 20px;
+    width: 150px;
+    background-color: #414141;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+
+.grid-container.skeleton .mosaic-mode-skeleton-description {
+    height: 12px;
+    width: 150px;
+    background-color: #414141;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
+.grid-container.skeleton .mosaic-mode-skeleton-actions-container {
+    display: flex;
+    justify-content: end;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.grid-container.skeleton .mosaic-mode-skeleton-actions {
+    height: 25px;
+    width: 25px;
+    background-color: #414141;
+    margin-right: 15px;
+}
+
+.grid-container.skeleton div.skeleton {
+    background: linear-gradient(0.25turn, transparent, #403f3f, transparent), linear-gradient(#343434, #242424),
+        radial-gradient(38px circle at 19px 19px, #545454 50%, transparent 51%), linear-gradient(#1a1a1a, #101010);
+    background-repeat: no-repeat;
+    background-size: 315px 250px, 315px 180px, 100px 100px, 225px 30px;
+    background-position: -315px 0, 0 0, 0px 190px, 50px 195px;
+    animation: loading 2.5s infinite;
+}
+
+@keyframes loading {
+    to {
+        background-position: 315px 0, 0 0, 0 190px, 50px 195px;
+    }
+}

@@ -2,10 +2,10 @@ import { List, ListItem, ListItemAvatar, Avatar, Divider, ListItemText, Typograp
 import React from 'react'
 
 import IconButton from '@mui/material/IconButton'
-import ShareIcon from '@mui/icons-material/Share'
-import EditIcon from '@mui/icons-material/Edit'
+import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined'
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 
-import '../styles.css'
+import './styles.css'
 
 interface EnumPlaylistsListData {
     id: string
@@ -36,19 +36,20 @@ function ListMode({
     return (
         <List className="list-container">
             {playlistsListData.items?.map((PlaylistData) => (
-                <div key={PlaylistData.id}>
+                <div className="item" key={PlaylistData.id}>
                     <ListItem
                         secondaryAction={
                             <div>
                                 <IconButton
+                                    className="margin"
                                     edge="end"
                                     aria-label="edit"
                                     onClick={() => handlePlaylistClickOnList(PlaylistData.id)}
                                 >
-                                    <EditIcon />
+                                    <EditOutlinedIcon />
                                 </IconButton>
                                 <IconButton edge="end" aria-label="share">
-                                    <ShareIcon />
+                                    <ShareOutlinedIcon />
                                 </IconButton>
                             </div>
                         }

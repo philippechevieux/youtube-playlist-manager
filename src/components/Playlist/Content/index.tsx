@@ -2,7 +2,6 @@ import { List, ListItem, ListItemAvatar, ListItemText, Avatar, Divider, Typograp
 
 import '../styles.css'
 
-// TODO: move Interface declaration when i will introduce playlistlist context (to avoir useless reloading)
 interface EnumPlaylistItemsContent {
     id: string
     snippet: {
@@ -16,7 +15,7 @@ interface EnumPlaylistItemsContent {
     }
 }
 
-interface IPlaylistsListItems {
+export interface IPlaylistsListItems {
     items: Array<EnumPlaylistItemsContent>
 }
 
@@ -25,8 +24,8 @@ function Content({ playlistsListItems }: { playlistsListItems: IPlaylistsListIte
 
     return (
         <List className="list-container">
-            {playlistsListItems.items?.map((Item) => (
-                <div key={Item.id}>
+            {Object.values(playlistsListItems.items).map((Item, index) => (
+                <div className="item" key={Item.id}>
                     <ListItem>
                         <ListItemAvatar>
                             <Avatar
@@ -51,7 +50,9 @@ function Content({ playlistsListItems }: { playlistsListItems: IPlaylistsListIte
                         />
                     </ListItem>
 
-                    <Divider className="divider" variant="middle" component="li" />
+                    {index + 1 < playlistsListItems.items.length && (
+                        <Divider className="divider" variant="middle" component="li" />
+                    )}
                 </div>
             ))}
         </List>

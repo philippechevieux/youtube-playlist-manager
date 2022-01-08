@@ -1,0 +1,49 @@
+.list-container.skeleton .skeleton-content-preview {
+    background-color: #414141;
+    width: 120px;
+    min-width: 120px;
+    height: 80px;
+    min-height: 80px;
+}
+
+.list-container.skeleton .skeleton-content-item-container {
+    margin-left: 20px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 70%;
+}
+
+.list-container.skeleton .skeleton-content-item-primary {
+    background-color: #414141;
+    width: 200px;
+    height: 20px;
+}
+
+.list-container.skeleton .skeleton-content-item-secondary {
+    margin-top: 10px;
+    background-color: #414141;
+    width: 200px;
+    height: 12px;
+}
+
+.list-container.skeleton .skeleton-content-item-action {
+    background-color: #414141;
+    height: 30px;
+    width: 30px;
+}
+
+.list-container.skeleton div.skeleton {
+    background: linear-gradient(0.25turn, transparent, #403f3f, transparent), linear-gradient(#343434, #242424),
+        radial-gradient(38px circle at 19px 19px, #545454 50%, transparent 51%), linear-gradient(#1a1a1a, #101010);
+    background-repeat: no-repeat;
+    background-size: 315px 250px, 315px 180px, 100px 100px, 225px 30px;
+    background-position: -315px 0, 0 0, 0px 190px, 50px 195px;
+    animation: loading 2.5s infinite;
+}
+
+@keyframes loading {
+    to {
+        background-position: 315px 0, 0 0, 0 190px, 50px 195px;
+    }
+}

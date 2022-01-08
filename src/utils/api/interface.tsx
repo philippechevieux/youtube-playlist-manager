@@ -3,4 +3,5 @@ export interface IApiParams {
     maxResults: number
     mine?: boolean
     playlistId?: string
+    pageToken?: string
 }

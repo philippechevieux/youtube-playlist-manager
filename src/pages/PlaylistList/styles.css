@@ -2,3 +2,10 @@ button.button-filter {
     position: absolute;
     right: 15px;
 }
+
+.playlist-list .see-more-container {
+    margin: auto;
+    text-align: center;
+    padding: 20px;
+    padding-top: 0px;
+}

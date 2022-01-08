@@ -1,33 +1,30 @@
-import { useEffect, useContext, useState } from 'react'
+import { useEffect, useContext, useState, useCallback } from 'react'
 import { getYoutubePlaylists } from '../../utils/api'
 import { UserDataContext } from '../../utils/context/userData/index'
 
-import { AppBar, Toolbar, IconButton } from '@mui/material'
+import { AppBar, Toolbar, IconButton, Button } from '@mui/material'
 
 import './styles.css'
 
 import MosaicMode from '../../components/Playlist/MosaicMode'
+import MosaicModeSkeleton from '../../components/Playlist/MosaicMode/Skeleton'
 import ListMode from '../../components/Playlist/ListMode'
 
-import ViewModuleIcon from '@mui/icons-material/ViewModule'
-import ListIcon from '@mui/icons-material/List'
-import FilterAltIcon from '@mui/icons-material/FilterAlt'
-
+import ViewModuleOutlinedIcon from '@mui/icons-material/ViewModuleOutlined'
+import ListOutlinedIcon from '@mui/icons-material/ListOutlined'
+import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
 import { useHistory } from 'react-router-dom'
+import { IPlaylistsMosaicData } from './../../components/Playlist/MosaicMode/index'
 
 function PlaylistList() {
     let history = useHistory()
 
     const { state } = useContext(UserDataContext)
-    const [playlistsListData, setPlaylistsListData] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
+    const [isLoaded, setIsLoaded] = useState(false)
+    const [nextPageToken, setNextPageToken] = useState('')
+    const [playlistsListData, setPlaylistsListData] = useState<IPlaylistsMosaicData>({ items: [] })
     const [playlistActiveDisplayMode, setPlaylistActiveDisplayMode] = useState('mosaic')
-
-    useEffect(() => {
-        getYoutubePlaylists(state.accessToken).then((data) => {
-            console.log('setPlaylistsList', data)
-            setPlaylistsListData(data)
-        })
-    }, [state])
 
     const handlePlaylistDisplayMode = (mode: string) => {
         if (mode !== playlistActiveDisplayMode) {
@@ -39,11 +36,29 @@ function PlaylistList() {
         history.push('/playlist/' + id)
     }
 
-    //TODO:
-    // - Trie par : Date de création ASC/DESC puis voir pour d'autres possibilités
+    const loadPlaylistsList = useCallback(() => {
+        if (isLoaded === false && isLoading === false) {
+            setIsLoading(true)
+
+            getYoutubePlaylists(state.accessToken, nextPageToken).then((data) => {
+                setIsLoading(false)
+                setIsLoaded(true)
+
+                const newItems = [...playlistsListData.items, ...data.items]
+                data.items = newItems
+
+                setPlaylistsListData(data)
+                setNextPageToken(data.nextPageToken)
+            })
+        }
+    }, [state.accessToken, nextPageToken, isLoading, isLoaded, playlistsListData])
+
+    useEffect(() => {
+        loadPlaylistsList()
+    }, [loadPlaylistsList])
 
     return (
-        <div>
+        <div className="playlist-list">
             <AppBar position="static">
                 <Toolbar>
                     <IconButton
@@ -53,7 +68,7 @@ function PlaylistList() {
                         onClick={() => handlePlaylistDisplayMode('mosaic')}
                         color={playlistActiveDisplayMode === 'mosaic' ? 'primary' : 'inherit'}
                     >
-                        <ViewModuleIcon />
+                        <ViewModuleOutlinedIcon />
                     </IconButton>
                     <IconButton
                         size="large"
@@ -62,7 +77,7 @@ function PlaylistList() {
                         onClick={() => handlePlaylistDisplayMode('list')}
                         color={playlistActiveDisplayMode === 'list' ? 'primary' : 'inherit'}
                     >
-                        <ListIcon />
+                        <ListOutlinedIcon />
                     </IconButton>
                     <IconButton
                         className="button-filter"
@@ -72,12 +87,10 @@ function PlaylistList() {
                         onClick={() => console.log('test')}
                         color="inherit"
                     >
-                        <FilterAltIcon />
+                        <FilterAltOutlinedIcon />
                     </IconButton>
                 </Toolbar>
             </AppBar>
-
-            {!playlistsListData && <div>Rien</div>}
 
             {playlistsListData && playlistActiveDisplayMode === 'mosaic' && (
                 <MosaicMode
@@ -88,6 +101,24 @@ function PlaylistList() {
 
             {playlistsListData && playlistActiveDisplayMode === 'list' && (
                 <ListMode playlistsListData={playlistsListData} handlePlaylistClickOnList={handlePlaylistClickOnList} />
+            )}
+
+            {/* {!playlistsListData && <div>Rien</div>} */}
+
+            {isLoading && <MosaicModeSkeleton />}
+
+            {nextPageToken !== undefined && (
+                <div className="see-more-container">
+                    <Button
+                        variant="outlined"
+                        onClick={() => {
+                            setIsLoaded(false)
+                            loadPlaylistsList()
+                        }}
+                    >
+                        Voir plus ...
+                    </Button>
+                </div>
             )}
         </div>
     )

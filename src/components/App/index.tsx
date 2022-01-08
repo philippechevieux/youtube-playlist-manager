@@ -15,6 +15,9 @@ function App() {
             createTheme({
                 palette: {
                     mode: 'dark',
+                    primary: {
+                        main: '#fff',
+                    },
                 },
                 typography: {
                     fontFamily: 'Poppins, sans-serif',
