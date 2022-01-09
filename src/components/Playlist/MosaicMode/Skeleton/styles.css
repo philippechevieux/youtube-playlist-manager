@@ -1,3 +1,7 @@
+.grid-container.skeleton {
+    padding-top: 0px;
+}
+
 .grid-container.skeleton .card:hover {
     border: 2px solid #1e1e1e;
     box-sizing: border-box;
@@ -32,7 +36,7 @@
 
 .grid-container.skeleton .mosaic-mode-skeleton-actions-container {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     margin-top: 20px;
     margin-bottom: 10px;
 }
@@ -48,7 +52,7 @@
     background: linear-gradient(0.25turn, transparent, #403f3f, transparent), linear-gradient(#343434, #242424),
         radial-gradient(38px circle at 19px 19px, #545454 50%, transparent 51%), linear-gradient(#1a1a1a, #101010);
     background-repeat: no-repeat;
-    background-size: 315px 250px, 315px 180px, 100px 100px, 225px 30px;
+    background-size: 415px 250px, 415px 180px, 100px 100px, 225px 30px;
     background-position: -315px 0, 0 0, 0px 190px, 50px 195px;
     animation: loading 2.5s infinite;
 }

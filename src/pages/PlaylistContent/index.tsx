@@ -26,6 +26,10 @@ function PlaylistContent() {
         history.push('/')
     }
 
+    const isFirstLoad = () => {
+        return playlistsListItems.items.length === 0 && !isLoaded
+    }
+
     const loadPlaylistsItems = useCallback(() => {
         if (isLoaded === false && isLoading === false) {
             setIsLoading(true)
@@ -42,6 +46,11 @@ function PlaylistContent() {
             })
         }
     }, [state.accessToken, playlistId, nextPageToken, isLoading, isLoaded, playlistsListItems])
+
+    const loadMorePlaylistItems = () => {
+        setIsLoaded(false)
+        loadPlaylistsItems()
+    }
 
     useEffect(() => {
         loadPlaylistsItems()
@@ -73,15 +82,17 @@ function PlaylistContent() {
             </AppBar>
 
             {isLoaded && !playlistsListItems && <div>Aucun vidéo dans votre playlist</div>}
+
             {playlistsListItems && <Content playlistsListItems={playlistsListItems} />}
-            {isLoading && <ContentSkeleton />}
+
+            {isLoading && <ContentSkeleton isFirstLoad={isFirstLoad()} />}
+
             {nextPageToken !== undefined && (
                 <div className="see-more-container">
                     <Button
                         variant="outlined"
                         onClick={() => {
-                            setIsLoaded(false)
-                            loadPlaylistsItems()
+                            loadMorePlaylistItems()
                         }}
                     >
                         Voir plus ...

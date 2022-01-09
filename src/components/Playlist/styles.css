@@ -53,3 +53,7 @@
 .list-container .item:hover {
     background-color: rgba(255, 255, 255, 0.08);
 }
+
+ul.list-container {
+    padding: 0px;
+}

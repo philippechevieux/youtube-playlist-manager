@@ -2,10 +2,12 @@ import { List, ListItem, Divider } from '@mui/material'
 import './styles.css'
 import '../../styles.css'
 
-function displaySkeletonContent() {
+function displaySkeletonContent(isFirstLoad: boolean) {
     return (
         <div>
             <List className="list-container skeleton">
+                {!isFirstLoad && <Divider className="divider" variant="middle" component="li" />}
+
                 {[...Array(5)].map((e, i) => (
                     <div>
                         <ListItem>
@@ -16,7 +18,8 @@ function displaySkeletonContent() {
                             </div>
                             <div className="skeleton skeleton-content-item-action"></div>
                         </ListItem>
-                        <Divider className="divider" variant="middle" component="li" />
+
+                        {i + 1 < 5 && <Divider className="divider" variant="middle" component="li" />}
                     </div>
                 ))}
             </List>
@@ -24,8 +27,8 @@ function displaySkeletonContent() {
     )
 }
 
-function ContentSkeleton() {
-    return <div>{displaySkeletonContent()}</div>
+function ContentSkeleton({ isFirstLoad }: { isFirstLoad: boolean }) {
+    return <div>{displaySkeletonContent(isFirstLoad)}</div>
 }
 
 export default ContentSkeleton

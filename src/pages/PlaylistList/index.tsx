@@ -53,6 +53,11 @@ function PlaylistList() {
         }
     }, [state.accessToken, nextPageToken, isLoading, isLoaded, playlistsListData])
 
+    const loadMorePlaylistList = () => {
+        setIsLoaded(false)
+        loadPlaylistsList()
+    }
+
     useEffect(() => {
         loadPlaylistsList()
     }, [loadPlaylistsList])
@@ -103,7 +108,7 @@ function PlaylistList() {
                 <ListMode playlistsListData={playlistsListData} handlePlaylistClickOnList={handlePlaylistClickOnList} />
             )}
 
-            {/* {!playlistsListData && <div>Rien</div>} */}
+            {/* {isLoaded && !playlistsListData && <div>Rien</div>} */}
 
             {isLoading && <MosaicModeSkeleton />}
 
@@ -112,8 +117,7 @@ function PlaylistList() {
                     <Button
                         variant="outlined"
                         onClick={() => {
-                            setIsLoaded(false)
-                            loadPlaylistsList()
+                            loadMorePlaylistList()
                         }}
                     >
                         Voir plus ...
