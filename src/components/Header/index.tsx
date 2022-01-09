@@ -78,6 +78,7 @@ function Header() {
                                     vertical: 'top',
                                     horizontal: 'right',
                                 }}
+                                disableScrollLock={true}
                                 open={Boolean(anchorEl)}
                                 onClose={handleClose}
                             >
