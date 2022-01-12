@@ -89,6 +89,7 @@ function PlaylistContent() {
 
             if (playlistData === undefined) {
                 getYoutubePlaylists(state.accessToken, undefined, [playlistId]).then((data) => {
+                    console.log('playlist', data.items[0])
                     setPlaylistData(data.items[0])
                 })
             }

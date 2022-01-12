@@ -11,6 +11,9 @@ export interface IPlaylistsItemData {
             }
         }
     }
+    status: {
+        privacyStatus: string
+    }
 }
 
 export interface IPlaylistsData {

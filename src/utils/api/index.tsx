@@ -18,9 +18,6 @@ export function getYoutubePlaylists(accessToken: string, pageToken?: string, pla
         params.id = playlistIds.join(',')
     }
 
-    console.log('-> getYoutubePlaylists')
-    console.log('params', params)
-
     return getApi(accessToken, 'playlists', params)
 }
 
