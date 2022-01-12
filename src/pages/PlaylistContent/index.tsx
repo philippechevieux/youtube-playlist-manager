@@ -4,14 +4,15 @@ import { UserDataContext } from '../../utils/context/userData/index'
 import { useParams } from 'react-router-dom'
 import { AppBar, Toolbar, IconButton, Button, Typography, Box } from '@mui/material'
 import { useHistory } from 'react-router-dom'
+import { IPlaylistsItemData } from './../../components/Playlist/interfaces'
 
+import EditPlaylistDialog from './EditPlaylistDialog'
 import Content, { IPlaylistsListItems } from '../../components/Playlist/Content/index'
 import ContentSkeleton from '../../components/Playlist/Content/Skeleton/index'
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 
 import './styles.css'
-import { IPlaylistsItemData } from './../../components/Playlist/interfaces'
 
 function PlaylistContent() {
     const { state } = useContext(UserDataContext)
@@ -19,6 +20,7 @@ function PlaylistContent() {
     const [playlistData, setPlaylistData] = useState<IPlaylistsItemData>()
     const [isLoading, setIsLoading] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
+    const [openEditPlaylistDialog, setOpenEditPlaylistDialog] = useState(false)
     const [playlistsListItems, setPlaylistsListItems] = useState<IPlaylistsListItems>({ items: [] })
     const [nextPageToken, setNextPageToken] = useState('')
 
@@ -117,7 +119,7 @@ function PlaylistContent() {
                             size="large"
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
-                            onClick={() => console.log('test')}
+                            onClick={() => setOpenEditPlaylistDialog(true)}
                             color="inherit"
                         >
                             <EditOutlinedIcon />
@@ -126,6 +128,11 @@ function PlaylistContent() {
                 </Box>
             </AppBar>
 
+            <EditPlaylistDialog
+                open={openEditPlaylistDialog}
+                setOpen={setOpenEditPlaylistDialog}
+                playlistData={playlistData}
+            />
             {displayPlaylistContent()}
 
             {nextPageToken !== undefined && (
