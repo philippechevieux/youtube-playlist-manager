@@ -4,4 +4,5 @@ export interface IApiParams {
     mine?: boolean
     playlistId?: string
     pageToken?: string
+    id?: string
 }

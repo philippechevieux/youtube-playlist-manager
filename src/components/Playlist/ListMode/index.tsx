@@ -3,53 +3,34 @@ import React from 'react'
 
 import IconButton from '@mui/material/IconButton'
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined'
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 
+import { IPlaylistsData } from '../interfaces'
 import './styles.css'
-
-interface EnumPlaylistsListData {
-    id: string
-    snippet: {
-        localized: {
-            title: string
-            description: string
-        }
-        thumbnails: {
-            high: {
-                url: string
-            }
-        }
-    }
-}
-
-interface IPlaylistsListData {
-    items: Array<EnumPlaylistsListData>
-}
 
 function ListMode({
     playlistsListData,
     handlePlaylistClickOnList,
 }: {
-    playlistsListData: IPlaylistsListData
+    playlistsListData: IPlaylistsData
     handlePlaylistClickOnList: Function
 }) {
     return (
         <List className="list-container">
-            {playlistsListData.items?.map((PlaylistData) => (
+            {playlistsListData.items?.map((PlaylistData, index) => (
                 <div className="item" key={PlaylistData.id}>
                     <ListItem
                         secondaryAction={
                             <div>
+                                <IconButton className="margin" edge="end" aria-label="share">
+                                    <ShareOutlinedIcon />
+                                </IconButton>
                                 <IconButton
-                                    className="margin"
                                     edge="end"
                                     aria-label="edit"
                                     onClick={() => handlePlaylistClickOnList(PlaylistData.id)}
                                 >
-                                    <EditOutlinedIcon />
-                                </IconButton>
-                                <IconButton edge="end" aria-label="share">
-                                    <ShareOutlinedIcon />
+                                    <LaunchOutlinedIcon />
                                 </IconButton>
                             </div>
                         }
@@ -79,7 +60,9 @@ function ListMode({
                         />
                     </ListItem>
 
-                    <Divider className="divider" variant="middle" component="li" />
+                    {index + 1 < playlistsListData.items.length && (
+                        <Divider className="divider" variant="middle" component="li" />
+                    )}
                 </div>
             ))}
         </List>

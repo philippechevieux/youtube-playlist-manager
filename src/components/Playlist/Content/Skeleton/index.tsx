@@ -9,7 +9,7 @@ function displaySkeletonContent(isFirstLoad: boolean) {
                 {!isFirstLoad && <Divider className="divider" variant="middle" component="li" />}
 
                 {[...Array(5)].map((e, i) => (
-                    <div>
+                    <div key={i}>
                         <ListItem>
                             <div className="skeleton skeleton-content-preview"></div>
                             <div className="skeleton-content-item-container">

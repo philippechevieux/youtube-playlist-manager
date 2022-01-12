@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { UserDataContext } from '../../utils/context/userData'
 
-import LoginScreen from '../LoginScreen/index'
+import LoginScreen from '../../pages/LoginScreen/index'
 import PlaylistContent from '../../pages/PlaylistContent/index'
 import PlaylistList from '../../pages/PlaylistList/index'
 

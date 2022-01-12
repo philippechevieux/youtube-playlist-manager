@@ -2,7 +2,7 @@ import { IApiParams } from './interface'
 
 const BASE_API_URL = 'https://www.googleapis.com/youtube/v3/'
 
-export function getYoutubePlaylists(accessToken: string, pageToken?: string) {
+export function getYoutubePlaylists(accessToken: string, pageToken?: string, playlistIds?: Array<String>) {
     const params: IApiParams = {
         part: 'snippet,contentDetails,id,localizations,player,snippet,status',
         mine: true,
@@ -12,6 +12,14 @@ export function getYoutubePlaylists(accessToken: string, pageToken?: string) {
     if (pageToken !== undefined) {
         params.pageToken = pageToken
     }
+
+    if (playlistIds !== undefined) {
+        delete params.mine
+        params.id = playlistIds.join(',')
+    }
+
+    console.log('-> getYoutubePlaylists')
+    console.log('params', params)
 
     return getApi(accessToken, 'playlists', params)
 }

@@ -2,7 +2,7 @@ import { useEffect, useContext, useState, useCallback } from 'react'
 import { getYoutubePlaylists } from '../../utils/api'
 import { UserDataContext } from '../../utils/context/userData/index'
 
-import { AppBar, Toolbar, IconButton, Button } from '@mui/material'
+import { AppBar, Toolbar, IconButton, Button, Box, Typography } from '@mui/material'
 
 import './styles.css'
 
@@ -12,9 +12,9 @@ import ListMode from '../../components/Playlist/ListMode'
 
 import ViewModuleOutlinedIcon from '@mui/icons-material/ViewModuleOutlined'
 import ListOutlinedIcon from '@mui/icons-material/ListOutlined'
-import FilterAltOutlinedIcon from '@mui/icons-material/FilterAltOutlined'
+import SortOutlinedIcon from '@mui/icons-material/SortOutlined'
 import { useHistory } from 'react-router-dom'
-import { IPlaylistsMosaicData } from './../../components/Playlist/MosaicMode/index'
+import { IPlaylistsData } from './../../components/Playlist/interfaces'
 
 function PlaylistList() {
     let history = useHistory()
@@ -23,7 +23,7 @@ function PlaylistList() {
     const [isLoading, setIsLoading] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
     const [nextPageToken, setNextPageToken] = useState('')
-    const [playlistsListData, setPlaylistsListData] = useState<IPlaylistsMosaicData>({ items: [] })
+    const [playlistsListData, setPlaylistsListData] = useState<IPlaylistsData>({ items: [] })
     const [playlistActiveDisplayMode, setPlaylistActiveDisplayMode] = useState('mosaic')
 
     const handlePlaylistDisplayMode = (mode: string) => {
@@ -65,36 +65,45 @@ function PlaylistList() {
     return (
         <div className="playlist-list">
             <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        aria-controls="menu-appbar"
-                        aria-haspopup="true"
-                        onClick={() => handlePlaylistDisplayMode('mosaic')}
-                        color={playlistActiveDisplayMode === 'mosaic' ? 'primary' : 'inherit'}
-                    >
-                        <ViewModuleOutlinedIcon />
-                    </IconButton>
-                    <IconButton
-                        size="large"
-                        aria-controls="menu-appbar"
-                        aria-haspopup="true"
-                        onClick={() => handlePlaylistDisplayMode('list')}
-                        color={playlistActiveDisplayMode === 'list' ? 'primary' : 'inherit'}
-                    >
-                        <ListOutlinedIcon />
-                    </IconButton>
-                    <IconButton
-                        className="button-filter"
-                        size="large"
-                        aria-controls="menu-appbar"
-                        aria-haspopup="true"
-                        onClick={() => console.log('test')}
-                        color="inherit"
-                    >
-                        <FilterAltOutlinedIcon />
-                    </IconButton>
-                </Toolbar>
+                <Box sx={{ flexGrow: 1 }}>
+                    <Toolbar>
+                        <Typography variant="body1" color="text.primary">
+                            Affichage
+                        </Typography>
+                        <IconButton
+                            size="large"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={() => handlePlaylistDisplayMode('mosaic')}
+                            color={playlistActiveDisplayMode === 'mosaic' ? 'secondary' : 'inherit'}
+                        >
+                            <ViewModuleOutlinedIcon />
+                        </IconButton>
+                        <IconButton
+                            size="large"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={() => handlePlaylistDisplayMode('list')}
+                            color={playlistActiveDisplayMode === 'list' ? 'secondary' : 'inherit'}
+                        >
+                            <ListOutlinedIcon />
+                        </IconButton>
+                        <Box sx={{ flexGrow: 1 }} />
+                        <IconButton
+                            className="button-filter"
+                            size="large"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={() => console.log('test')}
+                            color="inherit"
+                        >
+                            <SortOutlinedIcon />
+                        </IconButton>
+                        <Typography variant="body1" color="text.primary">
+                            Trier
+                        </Typography>
+                    </Toolbar>
+                </Box>
             </AppBar>
 
             {playlistsListData && playlistActiveDisplayMode === 'mosaic' && (
@@ -112,7 +121,7 @@ function PlaylistList() {
 
             {isLoading && <MosaicModeSkeleton />}
 
-            {nextPageToken !== undefined && (
+            {!isLoading && nextPageToken !== undefined && (
                 <div className="see-more-container">
                     <Button
                         variant="outlined"

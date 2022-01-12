@@ -1,8 +1,8 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
-import { getYoutubePlaylistsItems } from '../../utils/api'
+import { getYoutubePlaylists, getYoutubePlaylistsItems } from '../../utils/api'
 import { UserDataContext } from '../../utils/context/userData/index'
 import { useParams } from 'react-router-dom'
-import { AppBar, Toolbar, IconButton, Button } from '@mui/material'
+import { AppBar, Toolbar, IconButton, Button, Typography, Box } from '@mui/material'
 import { useHistory } from 'react-router-dom'
 
 import Content, { IPlaylistsListItems } from '../../components/Playlist/Content/index'
@@ -11,10 +11,12 @@ import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 
 import './styles.css'
+import { IPlaylistsItemData } from './../../components/Playlist/interfaces'
 
 function PlaylistContent() {
     const { state } = useContext(UserDataContext)
     const { playlistId } = useParams<{ playlistId: string }>()
+    const [playlistData, setPlaylistData] = useState<IPlaylistsItemData>()
     const [isLoading, setIsLoading] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
     const [playlistsListItems, setPlaylistsListItems] = useState<IPlaylistsListItems>({ items: [] })
@@ -52,40 +54,79 @@ function PlaylistContent() {
         loadPlaylistsItems()
     }
 
+    const displayPlaylistContent = () => {
+        let content, skeleton
+
+        if (playlistsListItems.items.length > 0) {
+            content = <Content playlistsListItems={playlistsListItems} />
+        }
+
+        if (isLoaded && playlistsListItems.items.length === 0) {
+            content = <div>Aucune vidéo dans votre playlist</div>
+        }
+
+        if (isLoading) {
+            skeleton = <ContentSkeleton isFirstLoad={isFirstLoad()} />
+        }
+
+        return (
+            <div>
+                {content}
+                {skeleton}
+            </div>
+        )
+    }
+
     useEffect(() => {
         loadPlaylistsItems()
     }, [loadPlaylistsItems])
 
+    useEffect(() => {
+        function getPlaylistData() {
+            console.log('-> getPlaylistData')
+
+            if (playlistData === undefined) {
+                getYoutubePlaylists(state.accessToken, undefined, [playlistId]).then((data) => {
+                    setPlaylistData(data.items[0])
+                })
+            }
+        }
+
+        getPlaylistData()
+    }, [state.accessToken, playlistId, playlistData])
+
     return (
         <div className="playlist-content">
             <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        size="large"
-                        aria-controls="menu-appbar"
-                        aria-haspopup="true"
-                        onClick={() => handleHomeClick()}
-                    >
-                        <ChevronLeftOutlinedIcon />
-                    </IconButton>
-                    <IconButton
-                        className="button-filter"
-                        size="large"
-                        aria-controls="menu-appbar"
-                        aria-haspopup="true"
-                        onClick={() => console.log('test')}
-                        color="inherit"
-                    >
-                        <EditOutlinedIcon />
-                    </IconButton>
-                </Toolbar>
+                <Box sx={{ flexGrow: 1 }}>
+                    <Toolbar>
+                        <IconButton
+                            size="large"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={() => handleHomeClick()}
+                        >
+                            <ChevronLeftOutlinedIcon />
+                        </IconButton>
+                        <Typography variant="body1" color="text.primary">
+                            {playlistData && playlistData.snippet.localized.title}
+                        </Typography>
+                        <Box sx={{ flexGrow: 1 }} />
+                        <IconButton
+                            className="button-filter"
+                            size="large"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={() => console.log('test')}
+                            color="inherit"
+                        >
+                            <EditOutlinedIcon />
+                        </IconButton>
+                    </Toolbar>
+                </Box>
             </AppBar>
 
-            {isLoaded && !playlistsListItems && <div>Aucun vidéo dans votre playlist</div>}
-
-            {playlistsListItems && <Content playlistsListItems={playlistsListItems} />}
-
-            {isLoading && <ContentSkeleton isFirstLoad={isFirstLoad()} />}
+            {displayPlaylistContent()}
 
             {nextPageToken !== undefined && (
                 <div className="see-more-container">

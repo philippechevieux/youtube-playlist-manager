@@ -2,34 +2,16 @@ import { Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mu
 
 import IconButton from '@mui/material/IconButton'
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined'
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 
+import { IPlaylistsData } from '../interfaces'
 import './styles.css'
-
-interface EnumPlaylistsMoasicData {
-    id: string
-    snippet: {
-        localized: {
-            title: string
-            description: string
-        }
-        thumbnails: {
-            high: {
-                url: string
-            }
-        }
-    }
-}
-
-export interface IPlaylistsMosaicData {
-    items: Array<EnumPlaylistsMoasicData>
-}
 
 function MosaicMode({
     playlistsListData,
     handlePlaylistClickOnList,
 }: {
-    playlistsListData: IPlaylistsMosaicData
+    playlistsListData: IPlaylistsData
     handlePlaylistClickOnList: Function
 }) {
     return (
@@ -65,7 +47,7 @@ function MosaicMode({
                                 <ShareOutlinedIcon />
                             </IconButton>
                             <IconButton aria-label="edit" onClick={() => handlePlaylistClickOnList(PlaylistData.id)}>
-                                <EditOutlinedIcon />
+                                <LaunchOutlinedIcon />
                             </IconButton>
                         </CardActions>
                     </Card>
