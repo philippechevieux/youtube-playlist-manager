@@ -9,7 +9,7 @@ import {
     ListItemText,
 } from '@mui/material'
 import { IPlaylistsItemData } from './../../../components/Playlist/interfaces'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined'
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined'
@@ -31,10 +31,12 @@ function EditPlaylistDialog({
     const [description, setDescription] = useState(playlistData?.snippet.localized.description)
     const [status, setStatus] = useState(playlistData?.status.privacyStatus)
     const [titleError, setTitleError] = useState(isPlaylistTitleEmpty)
+    const [canSave, setCanSave] = useState(true)
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value)
         setTitleError(event.target.value.length === 0)
+        setCanSave(event.target.value.length === 0)
     }
 
     const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -47,10 +49,24 @@ function EditPlaylistDialog({
 
     const onClose = () => {
         setOpen(false)
+    }
+
+    useEffect(() => {
         setTitle(playlistData?.snippet.localized.title)
         setDescription(playlistData?.snippet.localized.description)
         setStatus(playlistData?.status.privacyStatus)
-    }
+
+        if (playlistData?.snippet.localized.title) {
+            setCanSave(playlistData?.snippet.localized.title.length === 0)
+        } else {
+            setCanSave(false)
+        }
+    }, [
+        open,
+        playlistData?.snippet.localized.title,
+        playlistData?.snippet.localized.description,
+        playlistData?.status.privacyStatus,
+    ])
 
     return (
         <Dialog open={open} fullWidth maxWidth="sm">
@@ -109,7 +125,13 @@ function EditPlaylistDialog({
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose}>Fermer</Button>
-                <Button variant="contained" color="secondary" startIcon={<SaveOutlinedIcon />} onClick={onClose}>
+                <Button
+                    disabled={canSave}
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<SaveOutlinedIcon />}
+                    onClick={onClose}
+                >
                     Sauvegarder
                 </Button>
             </DialogActions>
