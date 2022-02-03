@@ -130,6 +130,7 @@ function PlaylistContent() {
             </AppBar>
 
             <EditPlaylistDialog
+                playlistId={playlistId}
                 open={openEditPlaylistDialog}
                 setOpen={setOpenEditPlaylistDialog}
                 playlistData={playlistData}

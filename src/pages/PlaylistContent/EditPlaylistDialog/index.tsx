@@ -9,27 +9,34 @@ import {
     ListItemText,
 } from '@mui/material'
 import { IPlaylistsItemData } from './../../../components/Playlist/interfaces'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useContext } from 'react'
+import { UserDataContext } from '../../../utils/context/userData/index'
+import { updatePlaylistData } from '../../../utils/api'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined'
 import VisibilityOffOutlinedIcon from '@mui/icons-material/VisibilityOffOutlined'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
 import './styles.css'
+import { IApiUpdatePlaylistParams } from '../../../utils/api/interface'
 
 function EditPlaylistDialog({
+    playlistId,
     open,
     setOpen,
     playlistData,
 }: {
+    playlistId: string
     open: boolean
     setOpen: Function
     playlistData?: IPlaylistsItemData
 }) {
+    const { state } = useContext(UserDataContext)
+
     const isPlaylistTitleEmpty = playlistData?.snippet.localized.title.length === 0
-    const [title, setTitle] = useState(playlistData?.snippet.localized.title)
-    const [description, setDescription] = useState(playlistData?.snippet.localized.description)
-    const [status, setStatus] = useState(playlistData?.status.privacyStatus)
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+    const [status, setStatus] = useState('')
     const [titleError, setTitleError] = useState(isPlaylistTitleEmpty)
     const [canSave, setCanSave] = useState(true)
 
@@ -51,22 +58,31 @@ function EditPlaylistDialog({
         setOpen(false)
     }
 
-    useEffect(() => {
-        setTitle(playlistData?.snippet.localized.title)
-        setDescription(playlistData?.snippet.localized.description)
-        setStatus(playlistData?.status.privacyStatus)
+    const onSave = () => {
+        setOpen(false)
 
-        if (playlistData?.snippet.localized.title) {
+        // TODO: A déplacer dans playlistContent pour mettre à jour le titre après l'update et afficher un message alert ok ou ko
+        const data: IApiUpdatePlaylistParams = {
+            title: title,
+            description: description,
+            privacyStatus: status,
+        }
+
+        updatePlaylistData(state.accessToken, playlistId, data).then((data) => {
+            console.log('data', data)
+        })
+    }
+
+    useEffect(() => {
+        if (playlistData !== undefined) {
+            setTitle(playlistData?.snippet.localized.title)
+            setDescription(playlistData?.snippet.localized.description)
+            setStatus(playlistData?.status.privacyStatus)
             setCanSave(playlistData?.snippet.localized.title.length === 0)
         } else {
             setCanSave(false)
         }
-    }, [
-        open,
-        playlistData?.snippet.localized.title,
-        playlistData?.snippet.localized.description,
-        playlistData?.status.privacyStatus,
-    ])
+    }, [open, playlistData])
 
     return (
         <Dialog open={open} fullWidth maxWidth="sm">
@@ -130,7 +146,7 @@ function EditPlaylistDialog({
                     variant="contained"
                     color="secondary"
                     startIcon={<SaveOutlinedIcon />}
-                    onClick={onClose}
+                    onClick={onSave}
                 >
                     Sauvegarder
                 </Button>

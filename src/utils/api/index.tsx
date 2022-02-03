@@ -1,53 +1,86 @@
-import { IApiParams } from './interface'
+import { IApiUrlParams, IApiBodyParams, IApiUpdatePlaylistParams } from './interface'
 
 const BASE_API_URL = 'https://www.googleapis.com/youtube/v3/'
 
 export function getYoutubePlaylists(accessToken: string, pageToken?: string, playlistIds?: Array<String>) {
-    const params: IApiParams = {
+    const urlParams: IApiUrlParams = {
         part: 'snippet,contentDetails,id,localizations,player,snippet,status',
         mine: true,
         maxResults: 50,
     }
 
     if (pageToken !== undefined) {
-        params.pageToken = pageToken
+        urlParams.pageToken = pageToken
     }
 
     if (playlistIds !== undefined) {
-        delete params.mine
-        params.id = playlistIds.join(',')
+        delete urlParams.mine
+        urlParams.id = playlistIds.join(',')
     }
 
-    return getApi(accessToken, 'playlists', params)
+    return requestApi(accessToken, 'GET', 'playlists', urlParams)
 }
 
 export function getYoutubePlaylistsItems(accessToken: string, playlistId: string, pageToken?: string) {
-    const params: IApiParams = {
+    const urlParams: IApiUrlParams = {
         part: 'snippet,contentDetails,id,status',
         playlistId: playlistId,
         maxResults: 50,
     }
 
     if (pageToken !== undefined) {
-        params.pageToken = pageToken
+        urlParams.pageToken = pageToken
     }
 
-    return getApi(accessToken, 'playlistItems', params)
+    return requestApi(accessToken, 'GET', 'playlistItems', urlParams)
 }
 
-function getApi(accessToken: string, endPoint: string, params: IApiParams) {
+export function updatePlaylistData(accessToken: string, playlistId: string, data: IApiUpdatePlaylistParams) {
+    console.log('-> updatePlaylistData')
+
+    const urlParams: IApiUrlParams = {
+        part: 'snippet,status',
+    }
+
+    const bodyParams: IApiBodyParams = {
+        id: playlistId,
+        snippet: {
+            title: data.title,
+            description: data.description,
+        },
+        status: {
+            privacyStatus: data.privacyStatus,
+        },
+    }
+
+    return requestApi(accessToken, 'PUT', 'playlists', urlParams, bodyParams)
+}
+
+function requestApi(
+    accessToken: string,
+    method: string,
+    endPoint: string,
+    urlParams: IApiUrlParams,
+    bodyParams?: IApiBodyParams
+) {
     let apiUrl = `${BASE_API_URL}${endPoint}?access_token=${accessToken}`
 
-    Object.entries(params).forEach(([key, value]) => {
+    Object.entries(urlParams).forEach(([key, value]) => {
         apiUrl = apiUrl + `&${key}=${decodeURIComponent(value)}`
     })
 
-    return fetch(apiUrl, {
-        method: 'GET',
+    let fetchInit: RequestInit = {
+        method: method,
         headers: {
             'Content-Type': 'application/json',
         },
-    })
+    }
+
+    if (method !== 'GET') {
+        fetchInit.body = JSON.stringify(bodyParams)
+    }
+
+    return fetch(apiUrl, fetchInit)
         .then((response) => {
             return response.json()
         })
