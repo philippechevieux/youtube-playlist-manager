@@ -24,12 +24,16 @@ function EditPlaylistDialog({
     playlistId,
     open,
     setOpen,
+    setIsSnackbarOpen,
     playlistData,
+    setPlaylistData,
 }: {
     playlistId: string
     open: boolean
     setOpen: Function
+    setIsSnackbarOpen: Function
     playlistData?: IPlaylistsItemData
+    setPlaylistData?: Function
 }) {
     const { state } = useContext(UserDataContext)
 
@@ -61,15 +65,18 @@ function EditPlaylistDialog({
     const onSave = () => {
         setOpen(false)
 
-        // TODO: A déplacer dans playlistContent pour mettre à jour le titre après l'update et afficher un message alert ok ou ko
-        const data: IApiUpdatePlaylistParams = {
+        // TODO: Après l'update et afficher un message alert ok ou ko
+        const dataToSave: IApiUpdatePlaylistParams = {
             title: title,
             description: description,
             privacyStatus: status,
         }
 
-        updatePlaylistData(state.accessToken, playlistId, data).then((data) => {
-            console.log('data', data)
+        updatePlaylistData(state.accessToken, playlistId, dataToSave).then((updatedData) => {
+            if (setPlaylistData) {
+                setPlaylistData(updatedData)
+                setIsSnackbarOpen(true)
+            }
         })
     }
 

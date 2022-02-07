@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { getYoutubePlaylists, getYoutubePlaylistsItems } from '../../utils/api'
 import { UserDataContext } from '../../utils/context/userData/index'
 import { useParams } from 'react-router-dom'
-import { AppBar, Toolbar, IconButton, Button, Typography, Box } from '@mui/material'
+import { AppBar, Toolbar, IconButton, Button, Typography, Box, Snackbar, Alert } from '@mui/material'
 import { useHistory } from 'react-router-dom'
 import { IPlaylistsItemData } from './../../components/Playlist/interfaces'
 
@@ -21,6 +21,7 @@ function PlaylistContent() {
     const [isLoading, setIsLoading] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
     const [openEditPlaylistDialog, setOpenEditPlaylistDialog] = useState(false)
+    const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
     const [playlistsListItems, setPlaylistsListItems] = useState<IPlaylistsListItems>({ items: [] })
     const [nextPageToken, setNextPageToken] = useState('')
 
@@ -85,11 +86,8 @@ function PlaylistContent() {
 
     useEffect(() => {
         function getPlaylistData() {
-            console.log('-> getPlaylistData')
-
             if (playlistData === undefined) {
                 getYoutubePlaylists(state.accessToken, undefined, [playlistId]).then((data) => {
-                    console.log('playlist', data.items[0])
                     setPlaylistData(data.items[0])
                 })
             }
@@ -133,8 +131,22 @@ function PlaylistContent() {
                 playlistId={playlistId}
                 open={openEditPlaylistDialog}
                 setOpen={setOpenEditPlaylistDialog}
+                setIsSnackbarOpen={setIsSnackbarOpen}
                 playlistData={playlistData}
+                setPlaylistData={setPlaylistData}
             />
+
+            <Snackbar
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                open={isSnackbarOpen}
+                autoHideDuration={6000}
+                onClose={() => {
+                    setIsSnackbarOpen(false)
+                }}
+            >
+                <Alert severity="success">Sauvegarde OK</Alert>
+            </Snackbar>
+
             {displayPlaylistContent()}
 
             {nextPageToken !== undefined && (
