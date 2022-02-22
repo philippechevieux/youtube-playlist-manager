@@ -11,6 +11,9 @@ export const userDefaultData: IUserData = {
     lastName: '',
     fullName: '',
     isUserLogin: false,
+    isSnackbarDisplayed: false,
+    snackbarSeverity: '',
+    snackbarContent: '',
 }
 
 const userDefaultDataContext = {

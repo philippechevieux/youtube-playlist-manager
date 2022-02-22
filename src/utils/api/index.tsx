@@ -36,8 +36,6 @@ export function getYoutubePlaylistsItems(accessToken: string, playlistId: string
 }
 
 export function updatePlaylistData(accessToken: string, playlistId: string, data: IApiUpdatePlaylistParams) {
-    console.log('-> updatePlaylistData')
-
     const urlParams: IApiUrlParams = {
         part: 'snippet,status',
     }
@@ -85,7 +83,7 @@ function requestApi(
             return response.json()
         })
         .catch((error) => {
-            //TODO : Ajouter une gection des erreurs
-            console.log('error', error)
+            //TODO : Trouver une astuce pour utiliser la snackbar
+            return error
         })
 }

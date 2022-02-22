@@ -19,23 +19,22 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
 import './styles.css'
 import { IApiUpdatePlaylistParams } from '../../../utils/api/interface'
+import { UserDataActionTypes } from '../../../utils/reducer/userData'
 
 function EditPlaylistDialog({
     playlistId,
     open,
     setOpen,
-    setIsSnackbarOpen,
     playlistData,
     setPlaylistData,
 }: {
     playlistId: string
     open: boolean
     setOpen: Function
-    setIsSnackbarOpen: Function
     playlistData?: IPlaylistsItemData
     setPlaylistData?: Function
 }) {
-    const { state } = useContext(UserDataContext)
+    const { dispatch, state } = useContext(UserDataContext)
 
     const isPlaylistTitleEmpty = playlistData?.snippet.localized.title.length === 0
     const [title, setTitle] = useState('')
@@ -75,7 +74,12 @@ function EditPlaylistDialog({
         updatePlaylistData(state.accessToken, playlistId, dataToSave).then((updatedData) => {
             if (setPlaylistData) {
                 setPlaylistData(updatedData)
-                setIsSnackbarOpen(true)
+                dispatch({
+                    type: UserDataActionTypes.ERROR_FROM_API,
+                    isSnackbarDisplayed: true,
+                    snackbarSeverity: 'success',
+                    snackbarContent: 'Les informations de votre playlist ont été modifiés avec succès',
+                })
             }
         })
     }

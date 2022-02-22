@@ -22,6 +22,9 @@ export interface IUserData {
     lastName: string
     fullName: string
     isUserLogin: boolean
+    isSnackbarDisplayed: boolean
+    snackbarSeverity: string
+    snackbarContent: string
 }
 
 export interface IUserDataContext {

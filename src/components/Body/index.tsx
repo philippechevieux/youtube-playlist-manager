@@ -7,9 +7,11 @@ import PlaylistContent from '../../pages/PlaylistContent/index'
 import PlaylistList from '../../pages/PlaylistList/index'
 
 import './styles.css'
+import { Snackbar, Alert } from '@mui/material'
+import { UserDataActionTypes } from '../../utils/reducer/userData'
 
 function Body() {
-    const { state } = useContext(UserDataContext)
+    const { dispatch, state } = useContext(UserDataContext)
 
     return (
         <div>
@@ -28,6 +30,26 @@ function Body() {
                     </Switch>
                 )}
             </div>
+
+            <Snackbar
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                open={state.isSnackbarDisplayed}
+                autoHideDuration={5000}
+                onClose={() => {
+                    dispatch({
+                        type: UserDataActionTypes.ERROR_FROM_API,
+                        isSnackbarDisplayed: false,
+                        snackbarSeverity: '',
+                        snackbarContent: '',
+                    })
+                }}
+            >
+                {state.snackbarSeverity === 'success' ? (
+                    <Alert severity="success">{state.snackbarContent}</Alert>
+                ) : (
+                    <Alert severity="error">{state.snackbarContent}</Alert>
+                )}
+            </Snackbar>
         </div>
     )
 }
