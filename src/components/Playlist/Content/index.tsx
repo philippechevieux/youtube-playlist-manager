@@ -65,17 +65,30 @@ function Content({
         })
     }
 
+    const getThumbnailsFromItem = (Item: EnumPlaylistItemsContent): string => {
+        let pathOrUrlOfThumbnails = ''
+
+        if (Item.snippet.thumbnails !== undefined) {
+            if (Item.snippet.thumbnails.high !== undefined) {
+                pathOrUrlOfThumbnails = Item.snippet.thumbnails.high.url
+            }
+        }
+
+        return pathOrUrlOfThumbnails
+    }
+
     return (
         <>
             <List className="list-container">
                 {Object.values(playlistsListItems.items).map((Item, index) => (
                     <div className="item" key={Item.id}>
+                        {console.log(Item)}
                         <ListItem>
                             <ListItemAvatar>
                                 <Avatar
                                     sx={{ width: 120, height: 85 }}
                                     alt={Item.snippet.title}
-                                    src={Item.snippet.thumbnails.high.url}
+                                    src={getThumbnailsFromItem(Item)}
                                     variant="square"
                                 />
                             </ListItemAvatar>
