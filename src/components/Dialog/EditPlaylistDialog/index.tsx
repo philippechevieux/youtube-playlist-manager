@@ -8,7 +8,7 @@ import {
     MenuItem,
     ListItemText,
 } from '@mui/material'
-import { IPlaylistsItemData } from './../../../components/Playlist/interfaces'
+import { IPlaylistsItemData } from '../../Playlist/interfaces'
 import { useEffect, useState, useContext } from 'react'
 import { UserDataContext } from '../../../utils/context/userData/index'
 import { updatePlaylistData } from '../../../utils/api'
@@ -64,7 +64,6 @@ function EditPlaylistDialog({
     const onSave = () => {
         setOpen(false)
 
-        // TODO: Après l'update et afficher un message alert ok ou ko
         const dataToSave: IApiUpdatePlaylistParams = {
             title: title,
             description: description,
@@ -75,8 +74,7 @@ function EditPlaylistDialog({
             if (setPlaylistData) {
                 setPlaylistData(updatedData)
                 dispatch({
-                    type: UserDataActionTypes.ERROR_FROM_API,
-                    isSnackbarDisplayed: true,
+                    type: UserDataActionTypes.DISPLAY_SNACK_BAR,
                     snackbarSeverity: 'success',
                     snackbarContent: 'Les informations de votre playlist ont été modifiés avec succès',
                 })

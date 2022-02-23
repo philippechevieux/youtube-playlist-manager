@@ -54,6 +54,18 @@ export function updatePlaylistData(accessToken: string, playlistId: string, data
     return requestApi(accessToken, 'PUT', 'playlists', urlParams, bodyParams)
 }
 
+export function deleteItemFromPlaylist(accessToken: string, itemId: string) {
+    const urlParams: IApiUrlParams = {
+        part: 'id',
+    }
+
+    const bodyParams: IApiBodyParams = {
+        id: itemId,
+    }
+
+    return requestApi(accessToken, 'DELETE', 'playlistItems', urlParams, bodyParams)
+}
+
 function requestApi(
     accessToken: string,
     method: string,

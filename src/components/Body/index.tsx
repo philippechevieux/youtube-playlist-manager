@@ -13,6 +13,14 @@ import { UserDataActionTypes } from '../../utils/reducer/userData'
 function Body() {
     const { dispatch, state } = useContext(UserDataContext)
 
+    const displayAlertFromSnackbar = () => {
+        if (state.snackbarSeverity === 'success') {
+            return <Alert severity="success">{state.snackbarContent}</Alert>
+        } else if (state.snackbarSeverity === 'error') {
+            return <Alert severity="error">{state.snackbarContent}</Alert>
+        }
+    }
+
     return (
         <div>
             <div className="body-spacer"></div>
@@ -37,18 +45,11 @@ function Body() {
                 autoHideDuration={5000}
                 onClose={() => {
                     dispatch({
-                        type: UserDataActionTypes.ERROR_FROM_API,
-                        isSnackbarDisplayed: false,
-                        snackbarSeverity: '',
-                        snackbarContent: '',
+                        type: UserDataActionTypes.HIDE_SNACK_BAR,
                     })
                 }}
             >
-                {state.snackbarSeverity === 'success' ? (
-                    <Alert severity="success">{state.snackbarContent}</Alert>
-                ) : (
-                    <Alert severity="error">{state.snackbarContent}</Alert>
-                )}
+                {displayAlertFromSnackbar()}
             </Snackbar>
         </div>
     )

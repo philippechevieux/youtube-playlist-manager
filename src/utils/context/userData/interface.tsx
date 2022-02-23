@@ -25,6 +25,10 @@ export interface IUserData {
     isSnackbarDisplayed: boolean
     snackbarSeverity: string
     snackbarContent: string
+    isConfirmActionDialogOpen: boolean
+    confirmActionDialogOnExecute: Function
+    confirmActionDialogExecuteButtonLabel: string
+    confirmActionDialogContentMessage: string
 }
 
 export interface IUserDataContext {

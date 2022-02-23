@@ -6,7 +6,7 @@ import { AppBar, Toolbar, IconButton, Button, Typography, Box } from '@mui/mater
 import { useHistory } from 'react-router-dom'
 import { IPlaylistsItemData } from './../../components/Playlist/interfaces'
 
-import EditPlaylistDialog from './EditPlaylistDialog'
+import EditPlaylistDialog from '../../components/Dialog/EditPlaylistDialog'
 import Content, { IPlaylistsListItems } from '../../components/Playlist/Content/index'
 import ContentSkeleton from '../../components/Playlist/Content/Skeleton/index'
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
@@ -60,7 +60,7 @@ function PlaylistContent() {
         let content, skeleton
 
         if (playlistsListItems.items.length > 0) {
-            content = <Content playlistsListItems={playlistsListItems} />
+            content = <Content playlistsListItems={playlistsListItems} setPlaylistsListItems={setPlaylistsListItems} />
         }
 
         if (isLoaded && playlistsListItems.items.length === 0) {

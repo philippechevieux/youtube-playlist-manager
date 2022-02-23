@@ -14,6 +14,10 @@ export const userDefaultData: IUserData = {
     isSnackbarDisplayed: false,
     snackbarSeverity: '',
     snackbarContent: '',
+    isConfirmActionDialogOpen: false,
+    confirmActionDialogOnExecute: () => {},
+    confirmActionDialogExecuteButtonLabel: '',
+    confirmActionDialogContentMessage: '',
 }
 
 const userDefaultDataContext = {

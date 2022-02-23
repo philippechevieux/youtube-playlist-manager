@@ -4,7 +4,10 @@ import { userDefaultData } from './../../context/userData/index'
 export enum UserDataActionTypes {
     USER_LOGIN = 'USER_LOGIN',
     USER_LOGOUT = 'USER_LOGOUT',
-    ERROR_FROM_API = 'ERROR_FROM_API',
+    DISPLAY_SNACK_BAR = 'DISPLAY_SNACK_BAR',
+    HIDE_SNACK_BAR = 'HIDE_SNACK_BAR',
+    DISPLAY_CONFIRM_ACTION_DIALOG = 'DISPLAY_CONFIRM_ACTION_DIALOG',
+    HIDE_CONFIRM_ACTION_DIALOG = 'HIDE_CONFIRM_ACTION_DIALOG',
 }
 
 // TODO Remove any
@@ -17,10 +20,21 @@ export type UserDataAction =
           type: UserDataActionTypes.USER_LOGOUT
       }
     | {
-          type: UserDataActionTypes.ERROR_FROM_API
-          isSnackbarDisplayed: boolean
+          type: UserDataActionTypes.DISPLAY_SNACK_BAR
           snackbarSeverity: string
           snackbarContent: string
+      }
+    | {
+          type: UserDataActionTypes.HIDE_SNACK_BAR
+      }
+    | {
+          type: UserDataActionTypes.DISPLAY_CONFIRM_ACTION_DIALOG
+          confirmActionDialogOnExecute: Function
+          confirmActionDialogExecuteButtonLabel: string
+          confirmActionDialogContentMessage: string
+      }
+    | {
+          type: UserDataActionTypes.HIDE_CONFIRM_ACTION_DIALOG
       }
 
 export const UserDataReducer = (state: IUserData, action: UserDataAction): IUserData => {
@@ -48,11 +62,37 @@ export const UserDataReducer = (state: IUserData, action: UserDataAction): IUser
 
             return newData
         }
-        case UserDataActionTypes.ERROR_FROM_API: {
+        case UserDataActionTypes.DISPLAY_SNACK_BAR: {
             let newData = { ...state }
-            newData.isSnackbarDisplayed = action.isSnackbarDisplayed
+            newData.isSnackbarDisplayed = true
             newData.snackbarSeverity = action.snackbarSeverity
             newData.snackbarContent = action.snackbarContent
+
+            return newData
+        }
+        case UserDataActionTypes.HIDE_SNACK_BAR: {
+            let newData = { ...state }
+            newData.isSnackbarDisplayed = false
+            newData.snackbarSeverity = ''
+            newData.snackbarContent = ''
+
+            return newData
+        }
+        case UserDataActionTypes.DISPLAY_CONFIRM_ACTION_DIALOG: {
+            let newData = { ...state }
+            newData.isConfirmActionDialogOpen = true
+            newData.confirmActionDialogOnExecute = action.confirmActionDialogOnExecute
+            newData.confirmActionDialogExecuteButtonLabel = action.confirmActionDialogExecuteButtonLabel
+            newData.confirmActionDialogContentMessage = action.confirmActionDialogContentMessage
+
+            return newData
+        }
+        case UserDataActionTypes.HIDE_CONFIRM_ACTION_DIALOG: {
+            let newData = { ...state }
+            newData.isConfirmActionDialogOpen = false
+            newData.confirmActionDialogOnExecute = () => {}
+            newData.confirmActionDialogExecuteButtonLabel = ''
+            newData.confirmActionDialogContentMessage = ''
 
             return newData
         }
