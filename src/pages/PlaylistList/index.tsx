@@ -67,6 +67,20 @@ function PlaylistList() {
             <AppBar position="static">
                 <Box sx={{ flexGrow: 1 }}>
                     <Toolbar>
+                        <IconButton
+                            className="button-filter"
+                            size="large"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={() => console.log('test')}
+                            color="inherit"
+                        >
+                            <SortOutlinedIcon />
+                        </IconButton>
+                        <Typography variant="body1" color="text.primary">
+                            Trier
+                        </Typography>
+                        <Box sx={{ flexGrow: 1 }} />
                         <Typography variant="body1" color="text.primary">
                             Affichage
                         </Typography>
@@ -88,20 +102,6 @@ function PlaylistList() {
                         >
                             <ListOutlinedIcon />
                         </IconButton>
-                        <Box sx={{ flexGrow: 1 }} />
-                        <IconButton
-                            className="button-filter"
-                            size="large"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={() => console.log('test')}
-                            color="inherit"
-                        >
-                            <SortOutlinedIcon />
-                        </IconButton>
-                        <Typography variant="body1" color="text.primary">
-                            Trier
-                        </Typography>
                     </Toolbar>
                 </Box>
             </AppBar>

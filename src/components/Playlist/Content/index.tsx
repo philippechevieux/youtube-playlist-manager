@@ -1,11 +1,24 @@
-import { List, ListItem, ListItemAvatar, ListItemText, Avatar, Divider, Typography, IconButton } from '@mui/material'
+import {
+    List,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
+    Avatar,
+    Divider,
+    Typography,
+    IconButton,
+    Menu,
+    MenuItem,
+} from '@mui/material'
 
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined'
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
+import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined'
 
 import '../styles.css'
 import { deleteItemFromPlaylist } from '../../../utils/api'
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { UserDataContext } from '../../../utils/context/userData'
 import { UserDataActionTypes } from '../../../utils/reducer/userData'
 import ConfirmActionDialog from '../../Dialog/ConfirmActionDialog'
@@ -35,6 +48,7 @@ function Content({
     setPlaylistsListItems: Function
 }) {
     const { dispatch, state } = useContext(UserDataContext)
+    const [anchorEl, setAnchorEl] = useState(null)
 
     const handleDeleteClick = (itemId: string) => {
         dispatch({
@@ -65,6 +79,15 @@ function Content({
         })
     }
 
+    // TODO: Search a fix for this any ...
+    const handleMoreMenu = (event: any) => {
+        setAnchorEl(event.currentTarget)
+    }
+
+    const handleCloseMoreMenu = () => {
+        setAnchorEl(null)
+    }
+
     const getThumbnailsFromItem = (Item: EnumPlaylistItemsContent): string => {
         let pathOrUrlOfThumbnails = ''
 
@@ -82,7 +105,6 @@ function Content({
             <List className="list-container">
                 {Object.values(playlistsListItems.items).map((Item, index) => (
                     <div className="item" key={Item.id}>
-                        {console.log(Item)}
                         <ListItem>
                             <ListItemAvatar>
                                 <Avatar
@@ -105,15 +127,15 @@ function Content({
                                     </Typography>
                                 }
                             />
-                            <IconButton
-                                size="large"
-                                aria-controls="menu-appbar"
-                                aria-haspopup="true"
-                                onClick={() => handleDeleteClick(Item.id)}
-                            >
+                            <IconButton size="large" aria-haspopup="true" onClick={() => handleDeleteClick(Item.id)}>
                                 <DeleteOutlineOutlinedIcon />
                             </IconButton>
-                            <IconButton size="large" aria-controls="menu-appbar" aria-haspopup="true">
+                            <IconButton
+                                size="large"
+                                aria-haspopup="true"
+                                aria-controls="menu-more"
+                                onClick={handleMoreMenu}
+                            >
                                 <MoreVertOutlinedIcon />
                             </IconButton>
                         </ListItem>
@@ -124,6 +146,32 @@ function Content({
                     </div>
                 ))}
             </List>
+            <Menu
+                id="menu-more"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+                disableScrollLock={true}
+                open={Boolean(anchorEl)}
+                onClose={handleCloseMoreMenu}
+            >
+                <MenuItem key="saveInAnOtherPlaylist" onClick={handleCloseMoreMenu}>
+                    <SaveOutlinedIcon />
+                    <span className="header-menuitem-margin-left">Enregistrer dans une autre playlist</span>
+                </MenuItem>
+                <Divider />
+                <MenuItem key="deleteAndSaveInAnOtherPlaylist" onClick={handleCloseMoreMenu}>
+                    <SendAndArchiveOutlinedIcon />
+                    <span className="header-menuitem-margin-left">Déplacer dans une autre playlist</span>
+                </MenuItem>
+            </Menu>
             <ConfirmActionDialog />
         </>
     )
