@@ -1,5 +1,5 @@
 import { BrowserRouter as Router } from 'react-router-dom'
-import { UserDataProvider } from '../../utils/context/userData'
+import { UserDataProvider } from '../../utils/context'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { CssBaseline } from '@mui/material'
 

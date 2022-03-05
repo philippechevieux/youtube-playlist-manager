@@ -8,9 +8,8 @@ import {
     MenuItem,
     ListItemText,
 } from '@mui/material'
-import { IPlaylistsItemData } from '../../Playlist/interfaces'
 import { useEffect, useState, useContext } from 'react'
-import { UserDataContext } from '../../../utils/context/userData/index'
+import { UserDataContext } from '../../../utils/context/index'
 import { updatePlaylistData } from '../../../utils/api'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined'
@@ -19,28 +18,15 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
 import './styles.css'
 import { IApiUpdatePlaylistParams } from '../../../utils/api/interface'
-import { UserDataActionTypes } from '../../../utils/reducer/userData'
+import { DialogActionTypes } from '../../../utils/reducer'
 
-function EditPlaylistDialog({
-    playlistId,
-    open,
-    setOpen,
-    playlistData,
-    setPlaylistData,
-}: {
-    playlistId: string
-    open: boolean
-    setOpen: Function
-    playlistData?: IPlaylistsItemData
-    setPlaylistData?: Function
-}) {
+function EditPlaylistDialog() {
     const { dispatch, state } = useContext(UserDataContext)
 
-    const isPlaylistTitleEmpty = playlistData?.snippet.localized.title.length === 0
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [status, setStatus] = useState('')
-    const [titleError, setTitleError] = useState(isPlaylistTitleEmpty)
+    const [titleError, setTitleError] = useState(false)
     const [canSave, setCanSave] = useState(true)
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,11 +44,15 @@ function EditPlaylistDialog({
     }
 
     const onClose = () => {
-        setOpen(false)
+        dispatch({
+            type: DialogActionTypes.HIDE_EDIT_PLAYLIST_DIALOG,
+        })
     }
 
     const onSave = () => {
-        setOpen(false)
+        dispatch({
+            type: DialogActionTypes.HIDE_EDIT_PLAYLIST_DIALOG,
+        })
 
         const dataToSave: IApiUpdatePlaylistParams = {
             title: title,
@@ -70,33 +60,28 @@ function EditPlaylistDialog({
             privacyStatus: status,
         }
 
-        updatePlaylistData(state.accessToken, playlistId, dataToSave).then((updatedData) => {
-            if (setPlaylistData) {
-                setPlaylistData(updatedData)
-                dispatch({
-                    type: UserDataActionTypes.DISPLAY_SNACK_BAR,
-                    snackbarSeverity: 'success',
-                    snackbarContent: 'Les informations de votre playlist ont été modifiés avec succès',
-                })
-            }
+        updatePlaylistData(state.accessToken, state.editPlaylistDialogPlaylistId, dataToSave).then((updatedData) => {
+            state.editPlaylistDialogSetPlaylistData(updatedData)
+            dispatch({
+                type: DialogActionTypes.DISPLAY_SNACK_BAR,
+                snackbarSeverity: 'success',
+                snackbarContent: 'Les informations de votre playlist ont été modifiés avec succès',
+            })
         })
     }
 
     useEffect(() => {
-        if (playlistData !== undefined) {
-            setTitle(playlistData?.snippet.localized.title)
-            setDescription(playlistData?.snippet.localized.description)
-            setStatus(playlistData?.status.privacyStatus)
-            setCanSave(playlistData?.snippet.localized.title.length === 0)
-        } else {
-            setCanSave(false)
-        }
-    }, [open, playlistData])
+        setTitle(state.editPlaylistDialogPlaylistData.snippet.localized.title)
+        setTitleError(state.editPlaylistDialogPlaylistData.snippet.localized.title.length === 0)
+        setDescription(state.editPlaylistDialogPlaylistData.snippet.localized.description)
+        setStatus(state.editPlaylistDialogPlaylistData.status.privacyStatus)
+        setCanSave(state.editPlaylistDialogPlaylistData.snippet.localized.title.length === 0)
+    }, [state.editPlaylistDialogPlaylistData])
 
     return (
-        <Dialog open={open} fullWidth maxWidth="sm">
+        <Dialog open={state.isEditPlaylistDialogOpen} fullWidth maxWidth="sm">
             <DialogTitle id="alert-dialog-title">
-                Editer la playlist : {playlistData?.snippet.localized.title}
+                Editer la playlist : {state.editPlaylistDialogPlaylistData.snippet.localized.title}
             </DialogTitle>
             <DialogContent>
                 <TextField

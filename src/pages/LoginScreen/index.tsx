@@ -1,8 +1,8 @@
 import './styles.css'
 import loginScreenIllustration from '../../assets/loginScreenIllustration.png'
 import { useContext } from 'react'
-import { UserDataContext } from '../../utils/context/userData'
-import { UserDataActionTypes } from '../../utils/reducer/userData'
+import { UserDataContext } from '../../utils/context'
+import { UserDataActionTypes } from '../../utils/reducer'
 import { GoogleLogin } from 'react-google-login'
 
 function Login() {

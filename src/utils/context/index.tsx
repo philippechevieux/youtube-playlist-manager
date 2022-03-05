@@ -1,6 +1,25 @@
 import { useReducer, createContext, ReactElement } from 'react'
 import { IUserData, IUserDataContext } from './interface'
-import { UserDataReducer } from './../../reducer/userData/index'
+import { UserDataReducer } from '../reducer/index'
+import { IPlaylistsItemData } from './interface'
+
+export const DefaultPlaylistItemData: IPlaylistsItemData = {
+    id: '',
+    snippet: {
+        localized: {
+            title: '',
+            description: '',
+        },
+        thumbnails: {
+            high: {
+                url: '',
+            },
+        },
+    },
+    status: {
+        privacyStatus: '',
+    },
+}
 
 export const userDefaultData: IUserData = {
     accessToken: '',
@@ -18,6 +37,10 @@ export const userDefaultData: IUserData = {
     confirmActionDialogOnExecute: () => {},
     confirmActionDialogExecuteButtonLabel: '',
     confirmActionDialogContentMessage: '',
+    isEditPlaylistDialogOpen: false,
+    editPlaylistDialogPlaylistData: DefaultPlaylistItemData,
+    editPlaylistDialogSetPlaylistData: () => {},
+    editPlaylistDialogPlaylistId: '',
 }
 
 const userDefaultDataContext = {

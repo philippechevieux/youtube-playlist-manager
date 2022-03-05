@@ -19,9 +19,8 @@ import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlin
 import '../styles.css'
 import { deleteItemFromPlaylist } from '../../../utils/api'
 import { useContext, useState } from 'react'
-import { UserDataContext } from '../../../utils/context/userData'
-import { UserDataActionTypes } from '../../../utils/reducer/userData'
-import ConfirmActionDialog from '../../Dialog/ConfirmActionDialog'
+import { UserDataContext } from '../../../utils/context'
+import { DialogActionTypes } from '../../../utils/reducer'
 
 interface EnumPlaylistItemsContent {
     id: string
@@ -52,7 +51,7 @@ function Content({
 
     const handleDeleteClick = (itemId: string) => {
         dispatch({
-            type: UserDataActionTypes.DISPLAY_CONFIRM_ACTION_DIALOG,
+            type: DialogActionTypes.DISPLAY_CONFIRM_ACTION_DIALOG,
             confirmActionDialogContentMessage: 'Etes vous sur de vouloir supprimer cette vidéo ?',
             confirmActionDialogExecuteButtonLabel: 'Supprimer',
             confirmActionDialogOnExecute: () => {
@@ -72,7 +71,7 @@ function Content({
 
         deleteItemFromPlaylist(state.accessToken, itemId).then(() => {
             dispatch({
-                type: UserDataActionTypes.DISPLAY_SNACK_BAR,
+                type: DialogActionTypes.DISPLAY_SNACK_BAR,
                 snackbarSeverity: 'success',
                 snackbarContent: 'La vidéo a été supprimé de votre playlist avec succès',
             })
@@ -169,10 +168,9 @@ function Content({
                 <Divider />
                 <MenuItem key="deleteAndSaveInAnOtherPlaylist" onClick={handleCloseMoreMenu}>
                     <SendAndArchiveOutlinedIcon />
-                    <span className="header-menuitem-margin-left">Déplacer dans une autre playlist</span>
+                    <span className="header-menuitem-margin-left">Déplacer vers une autre playlist</span>
                 </MenuItem>
             </Menu>
-            <ConfirmActionDialog />
         </>
     )
 }

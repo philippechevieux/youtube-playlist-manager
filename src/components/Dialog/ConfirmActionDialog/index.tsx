@@ -1,15 +1,15 @@
 import { Dialog, DialogTitle, DialogActions, Button, DialogContent } from '@mui/material'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 import { useContext } from 'react'
-import { UserDataContext } from '../../../utils/context/userData'
-import { UserDataActionTypes } from '../../../utils/reducer/userData'
+import { UserDataContext } from '../../../utils/context'
+import { DialogActionTypes } from '../../../utils/reducer'
 
 function ConfirmActionDialog() {
     const { dispatch, state } = useContext(UserDataContext)
 
     const onClickClose = () => {
         dispatch({
-            type: UserDataActionTypes.HIDE_CONFIRM_ACTION_DIALOG,
+            type: DialogActionTypes.HIDE_CONFIRM_ACTION_DIALOG,
         })
     }
 
@@ -18,7 +18,7 @@ function ConfirmActionDialog() {
         functionToExecute()
 
         dispatch({
-            type: UserDataActionTypes.HIDE_CONFIRM_ACTION_DIALOG,
+            type: DialogActionTypes.HIDE_CONFIRM_ACTION_DIALOG,
         })
     }
 

@@ -1,7 +1,7 @@
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import Avatar from '@mui/material/Avatar'
 import { useContext } from 'react'
-import { UserDataContext } from '../../utils/context/userData'
+import { UserDataContext } from '../../utils/context'
 
 function AvatarCustom({ size }: { size: string }) {
     const { state } = useContext(UserDataContext)

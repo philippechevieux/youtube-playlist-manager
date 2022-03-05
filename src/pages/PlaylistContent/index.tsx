@@ -1,18 +1,18 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import { getYoutubePlaylists, getYoutubePlaylistsItems } from '../../utils/api'
-import { UserDataContext } from '../../utils/context/userData/index'
+import { UserDataContext } from '../../utils/context/index'
 import { useParams } from 'react-router-dom'
 import { AppBar, Toolbar, IconButton, Button, Typography, Box } from '@mui/material'
 import { useHistory } from 'react-router-dom'
-import { IPlaylistsItemData } from './../../components/Playlist/interfaces'
+import { IPlaylistsItemData } from '../../utils/context/interface'
 
-import EditPlaylistDialog from '../../components/Dialog/EditPlaylistDialog'
 import Content, { IPlaylistsListItems } from '../../components/Playlist/Content/index'
 import ContentSkeleton from '../../components/Playlist/Content/Skeleton/index'
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 
 import './styles.css'
+import { DialogActionTypes } from '../../utils/reducer'
 
 function PlaylistContent() {
     const { dispatch, state } = useContext(UserDataContext)
@@ -20,7 +20,6 @@ function PlaylistContent() {
     const [playlistData, setPlaylistData] = useState<IPlaylistsItemData>()
     const [isLoading, setIsLoading] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
-    const [openEditPlaylistDialog, setOpenEditPlaylistDialog] = useState(false)
     const [playlistsListItems, setPlaylistsListItems] = useState<IPlaylistsListItems>({ items: [] })
     const [nextPageToken, setNextPageToken] = useState('')
 
@@ -117,7 +116,16 @@ function PlaylistContent() {
                             size="large"
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
-                            onClick={() => setOpenEditPlaylistDialog(true)}
+                            onClick={() => {
+                                if (playlistData !== undefined) {
+                                    dispatch({
+                                        type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
+                                        playlistData: playlistData,
+                                        setPlaylistData: setPlaylistData,
+                                        playlistId: playlistId,
+                                    })
+                                }
+                            }}
                             color="inherit"
                         >
                             <EditOutlinedIcon />
@@ -125,14 +133,6 @@ function PlaylistContent() {
                     </Toolbar>
                 </Box>
             </AppBar>
-
-            <EditPlaylistDialog
-                playlistId={playlistId}
-                open={openEditPlaylistDialog}
-                setOpen={setOpenEditPlaylistDialog}
-                playlistData={playlistData}
-                setPlaylistData={setPlaylistData}
-            />
 
             {displayPlaylistContent()}
 

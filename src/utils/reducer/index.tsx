@@ -1,17 +1,22 @@
-import { IUserData } from '../../context/userData/interface'
-import { userDefaultData } from './../../context/userData/index'
+import { IUserData } from '../context/interface'
+import { userDefaultData, DefaultPlaylistItemData } from '../context/index'
+import { IPlaylistsItemData } from '../context/interface'
 
 export enum UserDataActionTypes {
     USER_LOGIN = 'USER_LOGIN',
     USER_LOGOUT = 'USER_LOGOUT',
+}
+
+export enum DialogActionTypes {
     DISPLAY_SNACK_BAR = 'DISPLAY_SNACK_BAR',
     HIDE_SNACK_BAR = 'HIDE_SNACK_BAR',
     DISPLAY_CONFIRM_ACTION_DIALOG = 'DISPLAY_CONFIRM_ACTION_DIALOG',
     HIDE_CONFIRM_ACTION_DIALOG = 'HIDE_CONFIRM_ACTION_DIALOG',
+    DISPLAY_EDIT_PLAYLIST_DIALOG = 'DISPLAY_EDIT_PLAYLIST_DIALOG',
+    HIDE_EDIT_PLAYLIST_DIALOG = 'HIDE_EDIT_PLAYLIST_DIALOG',
 }
 
-// TODO Remove any
-export type UserDataAction =
+export type ReducerAction =
     | {
           type: UserDataActionTypes.USER_LOGIN
           googleLoginResponse: any
@@ -20,24 +25,33 @@ export type UserDataAction =
           type: UserDataActionTypes.USER_LOGOUT
       }
     | {
-          type: UserDataActionTypes.DISPLAY_SNACK_BAR
+          type: DialogActionTypes.DISPLAY_SNACK_BAR
           snackbarSeverity: string
           snackbarContent: string
       }
     | {
-          type: UserDataActionTypes.HIDE_SNACK_BAR
+          type: DialogActionTypes.HIDE_SNACK_BAR
       }
     | {
-          type: UserDataActionTypes.DISPLAY_CONFIRM_ACTION_DIALOG
+          type: DialogActionTypes.DISPLAY_CONFIRM_ACTION_DIALOG
           confirmActionDialogOnExecute: Function
           confirmActionDialogExecuteButtonLabel: string
           confirmActionDialogContentMessage: string
       }
     | {
-          type: UserDataActionTypes.HIDE_CONFIRM_ACTION_DIALOG
+          type: DialogActionTypes.HIDE_CONFIRM_ACTION_DIALOG
+      }
+    | {
+          type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG
+          playlistData: IPlaylistsItemData
+          setPlaylistData: Function
+          playlistId: string
+      }
+    | {
+          type: DialogActionTypes.HIDE_EDIT_PLAYLIST_DIALOG
       }
 
-export const UserDataReducer = (state: IUserData, action: UserDataAction): IUserData => {
+export const UserDataReducer = (state: IUserData, action: ReducerAction): IUserData => {
     switch (action.type) {
         case UserDataActionTypes.USER_LOGIN: {
             if (state.isUserLogin === false) {
@@ -62,7 +76,7 @@ export const UserDataReducer = (state: IUserData, action: UserDataAction): IUser
 
             return newData
         }
-        case UserDataActionTypes.DISPLAY_SNACK_BAR: {
+        case DialogActionTypes.DISPLAY_SNACK_BAR: {
             let newData = { ...state }
             newData.isSnackbarDisplayed = true
             newData.snackbarSeverity = action.snackbarSeverity
@@ -70,7 +84,7 @@ export const UserDataReducer = (state: IUserData, action: UserDataAction): IUser
 
             return newData
         }
-        case UserDataActionTypes.HIDE_SNACK_BAR: {
+        case DialogActionTypes.HIDE_SNACK_BAR: {
             let newData = { ...state }
             newData.isSnackbarDisplayed = false
             newData.snackbarSeverity = ''
@@ -78,7 +92,7 @@ export const UserDataReducer = (state: IUserData, action: UserDataAction): IUser
 
             return newData
         }
-        case UserDataActionTypes.DISPLAY_CONFIRM_ACTION_DIALOG: {
+        case DialogActionTypes.DISPLAY_CONFIRM_ACTION_DIALOG: {
             let newData = { ...state }
             newData.isConfirmActionDialogOpen = true
             newData.confirmActionDialogOnExecute = action.confirmActionDialogOnExecute
@@ -87,12 +101,30 @@ export const UserDataReducer = (state: IUserData, action: UserDataAction): IUser
 
             return newData
         }
-        case UserDataActionTypes.HIDE_CONFIRM_ACTION_DIALOG: {
+        case DialogActionTypes.HIDE_CONFIRM_ACTION_DIALOG: {
             let newData = { ...state }
             newData.isConfirmActionDialogOpen = false
             newData.confirmActionDialogOnExecute = () => {}
             newData.confirmActionDialogExecuteButtonLabel = ''
             newData.confirmActionDialogContentMessage = ''
+
+            return newData
+        }
+        case DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG: {
+            let newData = { ...state }
+            newData.isEditPlaylistDialogOpen = true
+            newData.editPlaylistDialogPlaylistData = action.playlistData
+            newData.editPlaylistDialogSetPlaylistData = action.setPlaylistData
+            newData.editPlaylistDialogPlaylistId = action.playlistId
+
+            return newData
+        }
+        case DialogActionTypes.HIDE_EDIT_PLAYLIST_DIALOG: {
+            let newData = { ...state }
+            newData.isEditPlaylistDialogOpen = false
+            newData.editPlaylistDialogPlaylistData = DefaultPlaylistItemData
+            newData.editPlaylistDialogSetPlaylistData = () => {}
+            newData.editPlaylistDialogPlaylistId = ''
 
             return newData
         }

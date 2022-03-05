@@ -7,9 +7,9 @@ import './styles.css'
 
 // import { GoogleLogin } from 'react-google-login'
 import { useState, useContext } from 'react'
-import { UserDataContext } from '../../utils/context/userData'
+import { UserDataContext } from '../../utils/context'
 import { useHistory } from 'react-router-dom'
-import { UserDataActionTypes } from '../../utils/reducer/userData'
+import { UserDataActionTypes } from '../../utils/reducer'
 
 function Header() {
     let history = useHistory()

@@ -5,7 +5,7 @@ import IconButton from '@mui/material/IconButton'
 import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined'
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 
-import { IPlaylistsData } from '../interfaces'
+import { IPlaylistsData } from '../../../utils/context/interface'
 import './styles.css'
 
 function ListMode({

@@ -1,6 +1,6 @@
 import { useEffect, useContext, useState, useCallback } from 'react'
 import { getYoutubePlaylists } from '../../utils/api'
-import { UserDataContext } from '../../utils/context/userData/index'
+import { UserDataContext } from '../../utils/context/index'
 
 import { AppBar, Toolbar, IconButton, Button, Box, Typography } from '@mui/material'
 
@@ -14,7 +14,7 @@ import ViewModuleOutlinedIcon from '@mui/icons-material/ViewModuleOutlined'
 import ListOutlinedIcon from '@mui/icons-material/ListOutlined'
 import SortOutlinedIcon from '@mui/icons-material/SortOutlined'
 import { useHistory } from 'react-router-dom'
-import { IPlaylistsData } from './../../components/Playlist/interfaces'
+import { IPlaylistsData } from '../../utils/context/interface'
 
 function PlaylistList() {
     let history = useHistory()
@@ -67,6 +67,9 @@ function PlaylistList() {
             <AppBar position="static">
                 <Box sx={{ flexGrow: 1 }}>
                     <Toolbar>
+                        <Typography variant="body1" color="text.primary">
+                            Trier
+                        </Typography>
                         <IconButton
                             className="button-filter"
                             size="large"
@@ -77,9 +80,6 @@ function PlaylistList() {
                         >
                             <SortOutlinedIcon />
                         </IconButton>
-                        <Typography variant="body1" color="text.primary">
-                            Trier
-                        </Typography>
                         <Box sx={{ flexGrow: 1 }} />
                         <Typography variant="body1" color="text.primary">
                             Affichage
