@@ -15,6 +15,7 @@ import ListOutlinedIcon from '@mui/icons-material/ListOutlined'
 import SortOutlinedIcon from '@mui/icons-material/SortOutlined'
 import { useHistory } from 'react-router-dom'
 import { IPlaylistsData } from '../../utils/context/interface'
+import { IPlaylistsItemData } from './../../utils/context/interface'
 
 function PlaylistList() {
     let history = useHistory()
@@ -34,6 +35,22 @@ function PlaylistList() {
 
     const handlePlaylistClickOnList = (id: string) => {
         history.push('/playlist/' + id)
+    }
+
+    const updatePlaylistListData = (data: IPlaylistsItemData) => {
+        const playlistId = data.id
+
+        const newPlaylistIems = playlistsListData.items.map((item) => {
+            if (item.id === playlistId) {
+                item = data
+            }
+
+            return item
+        })
+
+        playlistsListData.items = newPlaylistIems
+
+        setPlaylistsListData(playlistsListData)
     }
 
     const loadPlaylistsList = useCallback(() => {
@@ -109,12 +126,17 @@ function PlaylistList() {
             {playlistsListData && playlistActiveDisplayMode === 'mosaic' && (
                 <MosaicMode
                     playlistsListData={playlistsListData}
+                    updatePlaylistListData={updatePlaylistListData}
                     handlePlaylistClickOnList={handlePlaylistClickOnList}
                 />
             )}
 
             {playlistsListData && playlistActiveDisplayMode === 'list' && (
-                <ListMode playlistsListData={playlistsListData} handlePlaylistClickOnList={handlePlaylistClickOnList} />
+                <ListMode
+                    playlistsListData={playlistsListData}
+                    updatePlaylistListData={updatePlaylistListData}
+                    handlePlaylistClickOnList={handlePlaylistClickOnList}
+                />
             )}
 
             {/* {isLoaded && !playlistsListData && <div>Rien</div>} */}

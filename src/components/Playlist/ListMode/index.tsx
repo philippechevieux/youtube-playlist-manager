@@ -1,20 +1,26 @@
 import { List, ListItem, ListItemAvatar, Avatar, Divider, ListItemText, Typography } from '@mui/material'
-import React from 'react'
+import React, { useContext } from 'react'
 
 import IconButton from '@mui/material/IconButton'
-import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined'
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 
 import { IPlaylistsData } from '../../../utils/context/interface'
 import './styles.css'
+import { DialogActionTypes } from '../../../utils/reducer'
+import { UserDataContext } from './../../../utils/context/index'
 
 function ListMode({
     playlistsListData,
+    updatePlaylistListData,
     handlePlaylistClickOnList,
 }: {
     playlistsListData: IPlaylistsData
+    updatePlaylistListData: Function
     handlePlaylistClickOnList: Function
 }) {
+    const { dispatch } = useContext(UserDataContext)
+
     return (
         <List className="list-container">
             {playlistsListData.items?.map((PlaylistData, index) => (
@@ -22,8 +28,20 @@ function ListMode({
                     <ListItem
                         secondaryAction={
                             <div>
-                                <IconButton className="margin" edge="end" aria-label="share">
-                                    <ShareOutlinedIcon />
+                                <IconButton
+                                    className="margin"
+                                    edge="end"
+                                    aria-label="share"
+                                    onClick={() => {
+                                        dispatch({
+                                            type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
+                                            playlistData: PlaylistData,
+                                            setPlaylistData: updatePlaylistListData,
+                                            playlistId: PlaylistData.id,
+                                        })
+                                    }}
+                                >
+                                    <EditOutlinedIcon />
                                 </IconButton>
                                 <IconButton
                                     edge="end"

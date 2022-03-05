@@ -1,19 +1,26 @@
 import { Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material'
 
 import IconButton from '@mui/material/IconButton'
-import ShareOutlinedIcon from '@mui/icons-material/ShareOutlined'
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 
 import { IPlaylistsData } from '../../../utils/context/interface'
 import './styles.css'
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
+import { useContext } from 'react'
+import { UserDataContext } from './../../../utils/context/index'
+import { DialogActionTypes } from '../../../utils/reducer'
 
 function MosaicMode({
     playlistsListData,
+    updatePlaylistListData,
     handlePlaylistClickOnList,
 }: {
     playlistsListData: IPlaylistsData
+    updatePlaylistListData: Function
     handlePlaylistClickOnList: Function
 }) {
+    const { dispatch } = useContext(UserDataContext)
+
     return (
         <Grid
             container
@@ -43,10 +50,23 @@ function MosaicMode({
                             </Typography>
                         </CardContent>
                         <CardActions className="card-actions">
-                            <IconButton aria-label="share">
-                                <ShareOutlinedIcon />
+                            <IconButton
+                                aria-label="edit"
+                                onClick={() => {
+                                    dispatch({
+                                        type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
+                                        playlistData: PlaylistData,
+                                        setPlaylistData: updatePlaylistListData,
+                                        playlistId: PlaylistData.id,
+                                    })
+                                }}
+                            >
+                                <EditOutlinedIcon />
                             </IconButton>
-                            <IconButton aria-label="edit" onClick={() => handlePlaylistClickOnList(PlaylistData.id)}>
+                            <IconButton
+                                aria-label="open playlist"
+                                onClick={() => handlePlaylistClickOnList(PlaylistData.id)}
+                            >
                                 <LaunchOutlinedIcon />
                             </IconButton>
                         </CardActions>
