@@ -18,9 +18,12 @@ export interface IUserData {
     confirmActionDialogExecuteButtonLabel: string
     confirmActionDialogContentMessage: string
     isEditPlaylistDialogOpen: boolean
-    editPlaylistDialogPlaylistData: IPlaylistsItemData
-    editPlaylistDialogSetPlaylistData: Function
-    editPlaylistDialogPlaylistId: string
+    editPlaylistDialogData: IPlaylistsItemData
+    editPlaylistDialogOnClose: Function
+    editPlaylistDialogId: string
+    isSelectPlaylistDialogOpen: boolean
+    selectPlaylistDialogMode: string
+    selectPlaylistDialogOnClose: Function
 }
 
 export interface IUserDataContext {

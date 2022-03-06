@@ -14,6 +14,8 @@ export enum DialogActionTypes {
     HIDE_CONFIRM_ACTION_DIALOG = 'HIDE_CONFIRM_ACTION_DIALOG',
     DISPLAY_EDIT_PLAYLIST_DIALOG = 'DISPLAY_EDIT_PLAYLIST_DIALOG',
     HIDE_EDIT_PLAYLIST_DIALOG = 'HIDE_EDIT_PLAYLIST_DIALOG',
+    DISPLAY_SELECT_PLAYLIST_DIALOG = 'DISPLAY_SELECT_PLAYLIST_DIALOG',
+    HIDE_SELECT_PLAYLIST_DIALOG = 'HIDE_SELECT_PLAYLIST_DIALOG',
 }
 
 export type ReducerAction =
@@ -43,12 +45,20 @@ export type ReducerAction =
       }
     | {
           type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG
-          playlistData: IPlaylistsItemData
-          setPlaylistData: Function
-          playlistId: string
+          editPlaylistDialogData: IPlaylistsItemData
+          editPlaylistDialogOnClose: Function
+          editPlaylistDialogId: string
       }
     | {
           type: DialogActionTypes.HIDE_EDIT_PLAYLIST_DIALOG
+      }
+    | {
+          type: DialogActionTypes.DISPLAY_SELECT_PLAYLIST_DIALOG
+          selectPlaylistDialogMode: string
+          selectPlaylistDialogOnClose: Function
+      }
+    | {
+          type: DialogActionTypes.HIDE_SELECT_PLAYLIST_DIALOG
       }
 
 export const UserDataReducer = (state: IUserData, action: ReducerAction): IUserData => {
@@ -113,18 +123,32 @@ export const UserDataReducer = (state: IUserData, action: ReducerAction): IUserD
         case DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG: {
             let newData = { ...state }
             newData.isEditPlaylistDialogOpen = true
-            newData.editPlaylistDialogPlaylistData = action.playlistData
-            newData.editPlaylistDialogSetPlaylistData = action.setPlaylistData
-            newData.editPlaylistDialogPlaylistId = action.playlistId
+            newData.editPlaylistDialogData = action.editPlaylistDialogData
+            newData.editPlaylistDialogOnClose = action.editPlaylistDialogOnClose
+            newData.editPlaylistDialogId = action.editPlaylistDialogId
 
             return newData
         }
         case DialogActionTypes.HIDE_EDIT_PLAYLIST_DIALOG: {
             let newData = { ...state }
             newData.isEditPlaylistDialogOpen = false
-            newData.editPlaylistDialogPlaylistData = DefaultPlaylistItemData
-            newData.editPlaylistDialogSetPlaylistData = () => {}
-            newData.editPlaylistDialogPlaylistId = ''
+            newData.editPlaylistDialogData = DefaultPlaylistItemData
+            newData.editPlaylistDialogOnClose = () => {}
+            newData.editPlaylistDialogId = ''
+
+            return newData
+        }
+        case DialogActionTypes.DISPLAY_SELECT_PLAYLIST_DIALOG: {
+            let newData = { ...state }
+            newData.isSelectPlaylistDialogOpen = true
+            newData.selectPlaylistDialogMode = action.selectPlaylistDialogMode
+            newData.selectPlaylistDialogOnClose = action.selectPlaylistDialogOnClose
+
+            return newData
+        }
+        case DialogActionTypes.HIDE_SELECT_PLAYLIST_DIALOG: {
+            let newData = { ...state }
+            newData.isSelectPlaylistDialogOpen = false
 
             return newData
         }

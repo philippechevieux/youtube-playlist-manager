@@ -38,9 +38,12 @@ export const userDefaultData: IUserData = {
     confirmActionDialogExecuteButtonLabel: '',
     confirmActionDialogContentMessage: '',
     isEditPlaylistDialogOpen: false,
-    editPlaylistDialogPlaylistData: DefaultPlaylistItemData,
-    editPlaylistDialogSetPlaylistData: () => {},
-    editPlaylistDialogPlaylistId: '',
+    editPlaylistDialogData: DefaultPlaylistItemData,
+    editPlaylistDialogOnClose: () => {},
+    editPlaylistDialogId: '',
+    isSelectPlaylistDialogOpen: false,
+    selectPlaylistDialogMode: '',
+    selectPlaylistDialogOnClose: () => {},
 }
 
 const userDefaultDataContext = {

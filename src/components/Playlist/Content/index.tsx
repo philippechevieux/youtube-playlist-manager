@@ -87,6 +87,14 @@ function Content({
         setAnchorEl(null)
     }
 
+    const handleOpenSelectPlaylistDialog = (mode: string) => {
+        dispatch({
+            type: DialogActionTypes.DISPLAY_SELECT_PLAYLIST_DIALOG,
+            selectPlaylistDialogMode: mode,
+            selectPlaylistDialogOnClose: handleCloseMoreMenu,
+        })
+    }
+
     const getThumbnailsFromItem = (Item: EnumPlaylistItemsContent): string => {
         let pathOrUrlOfThumbnails = ''
 
@@ -157,16 +165,16 @@ function Content({
                     vertical: 'top',
                     horizontal: 'right',
                 }}
-                disableScrollLock={true}
+                disableScrollLock={false}
                 open={Boolean(anchorEl)}
                 onClose={handleCloseMoreMenu}
             >
-                <MenuItem key="saveInAnOtherPlaylist" onClick={handleCloseMoreMenu}>
+                <MenuItem key="saveInAnOtherPlaylist" onClick={() => handleOpenSelectPlaylistDialog('saveIn')}>
                     <SaveOutlinedIcon />
                     <span className="header-menuitem-margin-left">Enregistrer dans une autre playlist</span>
                 </MenuItem>
                 <Divider />
-                <MenuItem key="deleteAndSaveInAnOtherPlaylist" onClick={handleCloseMoreMenu}>
+                <MenuItem key="deleteAndSaveInAnOtherPlaylist" onClick={() => handleOpenSelectPlaylistDialog('moveTo')}>
                     <SendAndArchiveOutlinedIcon />
                     <span className="header-menuitem-margin-left">Déplacer vers une autre playlist</span>
                 </MenuItem>

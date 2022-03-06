@@ -120,9 +120,9 @@ function PlaylistContent() {
                                 if (playlistData !== undefined) {
                                     dispatch({
                                         type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
-                                        playlistData: playlistData,
-                                        setPlaylistData: setPlaylistData,
-                                        playlistId: playlistId,
+                                        editPlaylistDialogData: playlistData,
+                                        editPlaylistDialogOnClose: setPlaylistData,
+                                        editPlaylistDialogId: playlistId,
                                     })
                                 }
                             }}

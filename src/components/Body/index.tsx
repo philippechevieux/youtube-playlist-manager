@@ -11,6 +11,7 @@ import { Snackbar, Alert } from '@mui/material'
 import { DialogActionTypes } from '../../utils/reducer'
 import ConfirmActionDialog from '../Dialog/ConfirmActionDialog'
 import EditPlaylistDialog from '../Dialog/EditPlaylistDialog'
+import SelectPlaylistDialog from './../Dialog/SelectPlaylistDialog/index'
 
 function Body() {
     const { dispatch, state } = useContext(UserDataContext)
@@ -42,6 +43,7 @@ function Body() {
             </div>
 
             <ConfirmActionDialog />
+            <SelectPlaylistDialog />
             <EditPlaylistDialog />
             <Snackbar
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}

@@ -35,9 +35,9 @@ function ListMode({
                                     onClick={() => {
                                         dispatch({
                                             type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
-                                            playlistData: PlaylistData,
-                                            setPlaylistData: updatePlaylistListData,
-                                            playlistId: PlaylistData.id,
+                                            editPlaylistDialogData: PlaylistData,
+                                            editPlaylistDialogOnClose: updatePlaylistListData,
+                                            editPlaylistDialogId: PlaylistData.id,
                                         })
                                     }}
                                 >
