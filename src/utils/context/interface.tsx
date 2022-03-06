@@ -47,6 +47,7 @@ export interface IPlaylistsItemData {
     status: {
         privacyStatus: string
     }
+    selected?: boolean
 }
 
 export interface IPlaylistsData {

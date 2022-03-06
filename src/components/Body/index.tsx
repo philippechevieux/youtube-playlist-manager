@@ -31,20 +31,22 @@ function Body() {
                 {!state.isUserLogin ? (
                     <LoginScreen />
                 ) : (
-                    <Switch>
-                        <Route exact path="/">
-                            <PlaylistList />
-                        </Route>
-                        <Route exact path="/playlist/:playlistId">
-                            <PlaylistContent />
-                        </Route>
-                    </Switch>
+                    <>
+                        <Switch>
+                            <Route exact path="/">
+                                <PlaylistList />
+                            </Route>
+                            <Route exact path="/playlist/:playlistId">
+                                <PlaylistContent />
+                            </Route>
+                        </Switch>
+                        <ConfirmActionDialog />
+                        <SelectPlaylistDialog />
+                        <EditPlaylistDialog />
+                    </>
                 )}
             </div>
 
-            <ConfirmActionDialog />
-            <SelectPlaylistDialog />
-            <EditPlaylistDialog />
             <Snackbar
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 open={state.isSnackbarDisplayed}
