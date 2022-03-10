@@ -24,6 +24,8 @@ export interface IUserData {
     isSelectPlaylistDialogOpen: boolean
     selectPlaylistDialogMode: string
     selectPlaylistDialogOnClose: Function
+    currentPlaylistId: string
+    selectPlaylistDialogHideCurrentPlaylist: boolean
 }
 
 export interface IUserDataContext {

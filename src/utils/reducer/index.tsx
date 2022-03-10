@@ -54,6 +54,8 @@ export type ReducerAction =
       }
     | {
           type: DialogActionTypes.DISPLAY_SELECT_PLAYLIST_DIALOG
+          currentPlaylistId: string
+          selectPlaylistDialogHideCurrentPlaylist: boolean
           selectPlaylistDialogMode: string
           selectPlaylistDialogOnClose: Function
       }
@@ -141,6 +143,8 @@ export const UserDataReducer = (state: IUserData, action: ReducerAction): IUserD
         case DialogActionTypes.DISPLAY_SELECT_PLAYLIST_DIALOG: {
             let newData = { ...state }
             newData.isSelectPlaylistDialogOpen = true
+            newData.currentPlaylistId = action.currentPlaylistId
+            newData.selectPlaylistDialogHideCurrentPlaylist = action.selectPlaylistDialogHideCurrentPlaylist
             newData.selectPlaylistDialogMode = action.selectPlaylistDialogMode
             newData.selectPlaylistDialogOnClose = action.selectPlaylistDialogOnClose
 
@@ -149,6 +153,7 @@ export const UserDataReducer = (state: IUserData, action: ReducerAction): IUserD
         case DialogActionTypes.HIDE_SELECT_PLAYLIST_DIALOG: {
             let newData = { ...state }
             newData.isSelectPlaylistDialogOpen = false
+            newData.currentPlaylistId = ''
 
             return newData
         }

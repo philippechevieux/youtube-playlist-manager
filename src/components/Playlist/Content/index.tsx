@@ -40,9 +40,11 @@ export interface IPlaylistsListItems {
 }
 
 function Content({
+    playlistId,
     playlistsListItems,
     setPlaylistsListItems,
 }: {
+    playlistId: string
     playlistsListItems: IPlaylistsListItems
     setPlaylistsListItems: Function
 }) {
@@ -90,6 +92,8 @@ function Content({
     const handleOpenSelectPlaylistDialog = (mode: string) => {
         dispatch({
             type: DialogActionTypes.DISPLAY_SELECT_PLAYLIST_DIALOG,
+            selectPlaylistDialogHideCurrentPlaylist: true,
+            currentPlaylistId: playlistId,
             selectPlaylistDialogMode: mode,
             selectPlaylistDialogOnClose: handleCloseMoreMenu,
         })

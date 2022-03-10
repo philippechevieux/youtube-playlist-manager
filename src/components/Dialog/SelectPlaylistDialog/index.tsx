@@ -79,22 +79,37 @@ function SelectPlaylistDialog() {
     }
 
     const loadPlaylistsList = useCallback(() => {
-        if (isLoaded === false && isLoading === false) {
+        if (isLoaded === false && isLoading === false && state.isSelectPlaylistDialogOpen === true) {
             setIsLoading(true)
 
             getYoutubePlaylists(state.accessToken, nextPageToken).then((data) => {
                 setIsLoading(false)
                 setIsLoaded(true)
 
-                // TODO: delete current playlist from list
-                const newItems = [...playlistsListData.items, ...data.items]
+                let newItems = [...playlistsListData.items, ...data.items]
+
+                if (state.selectPlaylistDialogHideCurrentPlaylist === true) {
+                    newItems = newItems.filter((item) => {
+                        return item.id !== state.currentPlaylistId
+                    })
+                }
+
                 data.items = newItems
 
                 setPlaylistsListData(data)
                 setNextPageToken(data.nextPageToken)
             })
         }
-    }, [state.accessToken, nextPageToken, isLoading, isLoaded, playlistsListData])
+    }, [
+        state.accessToken,
+        state.currentPlaylistId,
+        state.isSelectPlaylistDialogOpen,
+        state.selectPlaylistDialogHideCurrentPlaylist,
+        nextPageToken,
+        isLoading,
+        isLoaded,
+        playlistsListData,
+    ])
 
     const loadMorePlaylistList = () => {
         setIsLoaded(false)

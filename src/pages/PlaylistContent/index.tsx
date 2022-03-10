@@ -59,7 +59,13 @@ function PlaylistContent() {
         let content, skeleton
 
         if (playlistsListItems.items.length > 0) {
-            content = <Content playlistsListItems={playlistsListItems} setPlaylistsListItems={setPlaylistsListItems} />
+            content = (
+                <Content
+                    playlistId={playlistId}
+                    playlistsListItems={playlistsListItems}
+                    setPlaylistsListItems={setPlaylistsListItems}
+                />
+            )
         }
 
         if (isLoaded && playlistsListItems.items.length === 0) {
