@@ -1,4 +1,5 @@
 import { Dispatch } from 'react'
+import { IResourceId } from '../api/interface'
 import { ReducerAction } from '../reducer'
 
 export interface IUserData {
@@ -25,7 +26,26 @@ export interface IUserData {
     selectPlaylistDialogMode: string
     selectPlaylistDialogOnClose: Function
     currentPlaylistId: string
+    currentResourceIdItem: IResourceId
     selectPlaylistDialogHideCurrentPlaylist: boolean
+}
+
+export interface IPlaylistItemsContent {
+    id: string
+    snippet: {
+        title: string
+        videoOwnerChannelTitle: string
+        thumbnails: {
+            high: {
+                url: string
+            }
+        }
+        resourceId: IResourceId
+    }
+}
+
+export interface IPlaylistsListItems {
+    items: Array<IPlaylistItemsContent>
 }
 
 export interface IUserDataContext {

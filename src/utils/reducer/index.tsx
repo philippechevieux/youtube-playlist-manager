@@ -1,6 +1,7 @@
 import { IUserData } from '../context/interface'
 import { userDefaultData, DefaultPlaylistItemData } from '../context/index'
 import { IPlaylistsItemData } from '../context/interface'
+import { IResourceId } from '../api/interface'
 
 export enum UserDataActionTypes {
     USER_LOGIN = 'USER_LOGIN',
@@ -55,6 +56,7 @@ export type ReducerAction =
     | {
           type: DialogActionTypes.DISPLAY_SELECT_PLAYLIST_DIALOG
           currentPlaylistId: string
+          currentResourceIdItem: IResourceId
           selectPlaylistDialogHideCurrentPlaylist: boolean
           selectPlaylistDialogMode: string
           selectPlaylistDialogOnClose: Function
@@ -144,6 +146,7 @@ export const UserDataReducer = (state: IUserData, action: ReducerAction): IUserD
             let newData = { ...state }
             newData.isSelectPlaylistDialogOpen = true
             newData.currentPlaylistId = action.currentPlaylistId
+            newData.currentResourceIdItem = action.currentResourceIdItem
             newData.selectPlaylistDialogHideCurrentPlaylist = action.selectPlaylistDialogHideCurrentPlaylist
             newData.selectPlaylistDialogMode = action.selectPlaylistDialogMode
             newData.selectPlaylistDialogOnClose = action.selectPlaylistDialogOnClose

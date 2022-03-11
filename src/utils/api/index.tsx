@@ -1,4 +1,4 @@
-import { IApiUrlParams, IApiBodyParams, IApiUpdatePlaylistParams } from './interface'
+import { IApiUrlParams, IApiBodyParams, IApiUpdatePlaylistParams, IResourceId } from './interface'
 
 const BASE_API_URL = 'https://www.googleapis.com/youtube/v3/'
 
@@ -21,20 +21,6 @@ export function getYoutubePlaylists(accessToken: string, pageToken?: string, pla
     return requestApi(accessToken, 'GET', 'playlists', urlParams)
 }
 
-export function getYoutubePlaylistsItems(accessToken: string, playlistId: string, pageToken?: string) {
-    const urlParams: IApiUrlParams = {
-        part: 'snippet,contentDetails,id,status',
-        playlistId: playlistId,
-        maxResults: 50,
-    }
-
-    if (pageToken !== undefined) {
-        urlParams.pageToken = pageToken
-    }
-
-    return requestApi(accessToken, 'GET', 'playlistItems', urlParams)
-}
-
 export function updatePlaylistData(accessToken: string, playlistId: string, data: IApiUpdatePlaylistParams) {
     const urlParams: IApiUrlParams = {
         part: 'snippet,status',
@@ -54,6 +40,20 @@ export function updatePlaylistData(accessToken: string, playlistId: string, data
     return requestApi(accessToken, 'PUT', 'playlists', urlParams, bodyParams)
 }
 
+export function getYoutubePlaylistsItems(accessToken: string, playlistId: string, pageToken?: string) {
+    const urlParams: IApiUrlParams = {
+        part: 'snippet,contentDetails,id,status',
+        playlistId: playlistId,
+        maxResults: 50,
+    }
+
+    if (pageToken !== undefined) {
+        urlParams.pageToken = pageToken
+    }
+
+    return requestApi(accessToken, 'GET', 'playlistItems', urlParams)
+}
+
 export function deleteItemFromPlaylist(accessToken: string, itemId: string) {
     const urlParams: IApiUrlParams = {
         part: 'id',
@@ -64,6 +64,21 @@ export function deleteItemFromPlaylist(accessToken: string, itemId: string) {
     }
 
     return requestApi(accessToken, 'DELETE', 'playlistItems', urlParams, bodyParams)
+}
+
+export function insertItemToPlaylist(accessToken: string, resourceId: IResourceId, playlistId: string) {
+    const urlParams: IApiUrlParams = {
+        part: 'snippet',
+    }
+
+    const bodyParams: IApiBodyParams = {
+        snippet: {
+            playlistId: playlistId,
+            resourceId: resourceId,
+        },
+    }
+
+    return requestApi(accessToken, 'POST', 'playlistItems', urlParams, bodyParams)
 }
 
 function requestApi(

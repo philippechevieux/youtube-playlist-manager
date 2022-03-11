@@ -21,6 +21,11 @@ export const DefaultPlaylistItemData: IPlaylistsItemData = {
     },
 }
 
+export const defaultItemResourceId = {
+    kind: '',
+    videoId: '',
+}
+
 export const userDefaultData: IUserData = {
     accessToken: '',
     googleId: '',
@@ -45,6 +50,7 @@ export const userDefaultData: IUserData = {
     selectPlaylistDialogMode: '',
     selectPlaylistDialogOnClose: () => {},
     currentPlaylistId: '',
+    currentResourceIdItem: defaultItemResourceId,
     selectPlaylistDialogHideCurrentPlaylist: false,
 }
 

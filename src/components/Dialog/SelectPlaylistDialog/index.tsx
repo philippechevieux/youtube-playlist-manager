@@ -6,7 +6,7 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined'
 import { UserDataContext } from './../../../utils/context/index'
 import { DialogActionTypes } from '../../../utils/reducer'
-import { getYoutubePlaylists } from './../../../utils/api/index'
+import { getYoutubePlaylists, insertItemToPlaylist } from './../../../utils/api/index'
 import { IPlaylistsData } from '../../../utils/context/interface'
 import ListMode from './../../Playlist/ListMode/index'
 
@@ -16,7 +16,7 @@ function SelectPlaylistDialog() {
     const [isLoading, setIsLoading] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
     const [nextPageToken, setNextPageToken] = useState('')
-
+    const [selectedPlaylistId, setSelectedPlaylistId] = useState('')
     const [canSave, setCanSave] = useState(false)
 
     const executeClose = () => {
@@ -38,9 +38,19 @@ function SelectPlaylistDialog() {
     }
 
     const onSave = () => {
-        executeClose()
+        if (state.selectPlaylistDialogMode === 'saveIn') {
+            insertItemToPlaylist(state.accessToken, state.currentResourceIdItem, selectedPlaylistId).then(() => {
+                dispatch({
+                    type: DialogActionTypes.DISPLAY_SNACK_BAR,
+                    snackbarSeverity: 'success',
+                    snackbarContent: 'La vidéo a été enregistré dans une autre playlist',
+                })
+            })
+        } else if (state.selectPlaylistDialogMode === 'moveTo') {
+            // TODO
+        }
 
-        //TODO:
+        executeClose()
     }
 
     // TODO: Replace this function when i will use a real translation module
@@ -128,6 +138,7 @@ function SelectPlaylistDialog() {
                     <ListMode
                         playlistsListData={playlistsListData}
                         setCanExecuteAfterSelect={setCanSave}
+                        setSelectedPlaylistId={setSelectedPlaylistId}
                         mode="selectPlaylist"
                     />
                 )}

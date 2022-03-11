@@ -14,5 +14,6 @@
 .item.item-selectable.item-selected {
     background-color: rgb(33 150 243 / 38%);
     border: 2px solid #2196f3;
+    box-shadow: 0px 0px 11px #000000a1;
     border-radius: 5px;
 }

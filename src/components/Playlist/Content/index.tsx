@@ -19,25 +19,10 @@ import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlin
 import '../styles.css'
 import { deleteItemFromPlaylist } from '../../../utils/api'
 import { useContext, useState } from 'react'
-import { UserDataContext } from '../../../utils/context'
+import { defaultItemResourceId, UserDataContext } from '../../../utils/context'
 import { DialogActionTypes } from '../../../utils/reducer'
-
-interface EnumPlaylistItemsContent {
-    id: string
-    snippet: {
-        title: string
-        videoOwnerChannelTitle: string
-        thumbnails: {
-            high: {
-                url: string
-            }
-        }
-    }
-}
-
-export interface IPlaylistsListItems {
-    items: Array<EnumPlaylistItemsContent>
-}
+import { IResourceId } from '../../../utils/api/interface'
+import { IPlaylistItemsContent, IPlaylistsListItems } from '../../../utils/context/interface'
 
 function Content({
     playlistId,
@@ -50,6 +35,7 @@ function Content({
 }) {
     const { dispatch, state } = useContext(UserDataContext)
     const [anchorEl, setAnchorEl] = useState(null)
+    const [anchorCurrentIemResourceId, setAnchorCurrentIemResourceId] = useState(defaultItemResourceId)
 
     const handleDeleteClick = (itemId: string) => {
         dispatch({
@@ -80,26 +66,28 @@ function Content({
         })
     }
 
-    // TODO: Search a fix for this any ...
-    const handleMoreMenu = (event: any) => {
+    const handleMoreMenu = (event: any, resourceId: IResourceId) => {
         setAnchorEl(event.currentTarget)
+        setAnchorCurrentIemResourceId(resourceId)
     }
 
     const handleCloseMoreMenu = () => {
         setAnchorEl(null)
+        setAnchorCurrentIemResourceId(defaultItemResourceId)
     }
 
-    const handleOpenSelectPlaylistDialog = (mode: string) => {
+    const handleOpenSelectPlaylistDialog = (mode: string, resourceId: IResourceId) => {
         dispatch({
             type: DialogActionTypes.DISPLAY_SELECT_PLAYLIST_DIALOG,
             selectPlaylistDialogHideCurrentPlaylist: true,
             currentPlaylistId: playlistId,
+            currentResourceIdItem: resourceId,
             selectPlaylistDialogMode: mode,
             selectPlaylistDialogOnClose: handleCloseMoreMenu,
         })
     }
 
-    const getThumbnailsFromItem = (Item: EnumPlaylistItemsContent): string => {
+    const getThumbnailsFromItem = (Item: IPlaylistItemsContent): string => {
         let pathOrUrlOfThumbnails = ''
 
         if (Item.snippet.thumbnails !== undefined) {
@@ -145,7 +133,7 @@ function Content({
                                 size="large"
                                 aria-haspopup="true"
                                 aria-controls="menu-more"
-                                onClick={handleMoreMenu}
+                                onClick={(event) => handleMoreMenu(event, Item.snippet.resourceId)}
                             >
                                 <MoreVertOutlinedIcon />
                             </IconButton>
@@ -173,12 +161,18 @@ function Content({
                 open={Boolean(anchorEl)}
                 onClose={handleCloseMoreMenu}
             >
-                <MenuItem key="saveInAnOtherPlaylist" onClick={() => handleOpenSelectPlaylistDialog('saveIn')}>
+                <MenuItem
+                    key="saveInAnOtherPlaylist"
+                    onClick={() => handleOpenSelectPlaylistDialog('saveIn', anchorCurrentIemResourceId)}
+                >
                     <SaveOutlinedIcon />
                     <span className="header-menuitem-margin-left">Enregistrer dans une autre playlist</span>
                 </MenuItem>
                 <Divider />
-                <MenuItem key="deleteAndSaveInAnOtherPlaylist" onClick={() => handleOpenSelectPlaylistDialog('moveTo')}>
+                <MenuItem
+                    key="deleteAndSaveInAnOtherPlaylist"
+                    onClick={() => handleOpenSelectPlaylistDialog('moveTo', anchorCurrentIemResourceId)}
+                >
                     <SendAndArchiveOutlinedIcon />
                     <span className="header-menuitem-margin-left">Déplacer vers une autre playlist</span>
                 </MenuItem>

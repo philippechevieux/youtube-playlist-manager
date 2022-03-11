@@ -1,15 +1,4 @@
-import {
-    List,
-    ListItem,
-    ListItemAvatar,
-    Avatar,
-    Divider,
-    ListItemText,
-    Typography,
-    Radio,
-    RadioGroup,
-    FormControlLabel,
-} from '@mui/material'
+import { List, ListItem, ListItemAvatar, Avatar, Divider, ListItemText, Typography, Radio } from '@mui/material'
 import React, { useContext, useState } from 'react'
 
 import IconButton from '@mui/material/IconButton'
@@ -24,12 +13,14 @@ import { UserDataContext } from './../../../utils/context/index'
 function ListMode({
     playlistsListData,
     setCanExecuteAfterSelect,
+    setSelectedPlaylistId,
     mode = 'default',
     updatePlaylistListData,
     handlePlaylistClickOnList,
 }: {
     playlistsListData: IPlaylistsData
     setCanExecuteAfterSelect?: Function
+    setSelectedPlaylistId?: Function
     mode?: string
     updatePlaylistListData?: Function
     handlePlaylistClickOnList?: Function
@@ -42,6 +33,10 @@ function ListMode({
 
         if (setCanExecuteAfterSelect !== undefined) {
             setCanExecuteAfterSelect(true)
+        }
+
+        if (setSelectedPlaylistId !== undefined) {
+            setSelectedPlaylistId(event.target.value)
         }
     }
 
@@ -114,6 +109,10 @@ function ListMode({
 
             if (setCanExecuteAfterSelect !== undefined) {
                 setCanExecuteAfterSelect(true)
+            }
+
+            if (setSelectedPlaylistId !== undefined) {
+                setSelectedPlaylistId(PlaylistData.id)
             }
         }
     }
