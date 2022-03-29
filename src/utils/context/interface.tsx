@@ -25,8 +25,8 @@ export interface IUserData {
     isSelectPlaylistDialogOpen: boolean
     selectPlaylistDialogMode: string
     selectPlaylistDialogOnClose: Function
+    selectPlaylistDialogOnSave: Function
     currentPlaylistId: string
-    currentResourceIdItem: IResourceId
     selectPlaylistDialogHideCurrentPlaylist: boolean
 }
 

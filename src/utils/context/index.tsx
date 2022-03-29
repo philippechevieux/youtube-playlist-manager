@@ -49,8 +49,8 @@ export const userDefaultData: IUserData = {
     isSelectPlaylistDialogOpen: false,
     selectPlaylistDialogMode: '',
     selectPlaylistDialogOnClose: () => {},
+    selectPlaylistDialogOnSave: () => {},
     currentPlaylistId: '',
-    currentResourceIdItem: defaultItemResourceId,
     selectPlaylistDialogHideCurrentPlaylist: false,
 }
 

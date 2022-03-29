@@ -17,7 +17,7 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined'
 
 import '../styles.css'
-import { deleteItemFromPlaylist } from '../../../utils/api'
+import { deleteItemFromPlaylist, insertItemToPlaylist } from '../../../utils/api'
 import { useContext, useState } from 'react'
 import { defaultItemResourceId, UserDataContext } from '../../../utils/context'
 import { DialogActionTypes } from '../../../utils/reducer'
@@ -36,6 +36,7 @@ function Content({
     const { dispatch, state } = useContext(UserDataContext)
     const [anchorEl, setAnchorEl] = useState(null)
     const [anchorCurrentIemResourceId, setAnchorCurrentIemResourceId] = useState(defaultItemResourceId)
+    const [anchorCurrentItemId, setAnchorCurrentItemId] = useState('')
 
     const handleDeleteClick = (itemId: string) => {
         dispatch({
@@ -66,24 +67,62 @@ function Content({
         })
     }
 
-    const handleMoreMenu = (event: any, resourceId: IResourceId) => {
+    const handleMoreMenu = (event: any, resourceId: IResourceId, itemId: string) => {
         setAnchorEl(event.currentTarget)
         setAnchorCurrentIemResourceId(resourceId)
+        setAnchorCurrentItemId(itemId)
     }
 
     const handleCloseMoreMenu = () => {
         setAnchorEl(null)
         setAnchorCurrentIemResourceId(defaultItemResourceId)
+        setAnchorCurrentItemId('')
     }
 
-    const handleOpenSelectPlaylistDialog = (mode: string, resourceId: IResourceId) => {
+    const handleCloseSelectDialog = () => {
+        handleCloseMoreMenu()
+    }
+
+    const handleSaveSelectDialog = (selectedPlaylistId: string) => {
+        if (state.selectPlaylistDialogMode === 'saveIn') {
+            insertItemToPlaylist(state.accessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
+                dispatch({
+                    type: DialogActionTypes.DISPLAY_SNACK_BAR,
+                    snackbarSeverity: 'success',
+                    snackbarContent: 'La vidéo a été enregistré dans une autre playlist',
+                })
+            })
+        } else if (state.selectPlaylistDialogMode === 'moveTo') {
+            insertItemToPlaylist(state.accessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
+                deleteItemFromPlaylist(state.accessToken, anchorCurrentItemId).then(() => {
+                    let newPlaylistsListItems = {
+                        items: playlistsListItems.items.filter(function (item) {
+                            return item.id !== anchorCurrentItemId
+                        }),
+                    }
+
+                    setPlaylistsListItems(newPlaylistsListItems)
+
+                    dispatch({
+                        type: DialogActionTypes.DISPLAY_SNACK_BAR,
+                        snackbarSeverity: 'success',
+                        snackbarContent: 'La vidéo a été déplacé dans une autre playlist',
+                    })
+                })
+            })
+        }
+
+        handleCloseMoreMenu()
+    }
+
+    const handleOpenSelectPlaylistDialog = (mode: string) => {
         dispatch({
             type: DialogActionTypes.DISPLAY_SELECT_PLAYLIST_DIALOG,
             selectPlaylistDialogHideCurrentPlaylist: true,
             currentPlaylistId: playlistId,
-            currentResourceIdItem: resourceId,
             selectPlaylistDialogMode: mode,
-            selectPlaylistDialogOnClose: handleCloseMoreMenu,
+            selectPlaylistDialogOnClose: handleCloseSelectDialog,
+            selectPlaylistDialogOnSave: handleSaveSelectDialog,
         })
     }
 
@@ -133,7 +172,7 @@ function Content({
                                 size="large"
                                 aria-haspopup="true"
                                 aria-controls="menu-more"
-                                onClick={(event) => handleMoreMenu(event, Item.snippet.resourceId)}
+                                onClick={(event) => handleMoreMenu(event, Item.snippet.resourceId, Item.id)}
                             >
                                 <MoreVertOutlinedIcon />
                             </IconButton>
@@ -161,18 +200,12 @@ function Content({
                 open={Boolean(anchorEl)}
                 onClose={handleCloseMoreMenu}
             >
-                <MenuItem
-                    key="saveInAnOtherPlaylist"
-                    onClick={() => handleOpenSelectPlaylistDialog('saveIn', anchorCurrentIemResourceId)}
-                >
+                <MenuItem key="saveInAnOtherPlaylist" onClick={() => handleOpenSelectPlaylistDialog('saveIn')}>
                     <SaveOutlinedIcon />
                     <span className="header-menuitem-margin-left">Enregistrer dans une autre playlist</span>
                 </MenuItem>
                 <Divider />
-                <MenuItem
-                    key="deleteAndSaveInAnOtherPlaylist"
-                    onClick={() => handleOpenSelectPlaylistDialog('moveTo', anchorCurrentIemResourceId)}
-                >
+                <MenuItem key="deleteAndSaveInAnOtherPlaylist" onClick={() => handleOpenSelectPlaylistDialog('moveTo')}>
                     <SendAndArchiveOutlinedIcon />
                     <span className="header-menuitem-margin-left">Déplacer vers une autre playlist</span>
                 </MenuItem>

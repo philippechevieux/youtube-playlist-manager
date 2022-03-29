@@ -56,10 +56,10 @@ export type ReducerAction =
     | {
           type: DialogActionTypes.DISPLAY_SELECT_PLAYLIST_DIALOG
           currentPlaylistId: string
-          currentResourceIdItem: IResourceId
           selectPlaylistDialogHideCurrentPlaylist: boolean
           selectPlaylistDialogMode: string
           selectPlaylistDialogOnClose: Function
+          selectPlaylistDialogOnSave: Function
       }
     | {
           type: DialogActionTypes.HIDE_SELECT_PLAYLIST_DIALOG
@@ -146,10 +146,10 @@ export const UserDataReducer = (state: IUserData, action: ReducerAction): IUserD
             let newData = { ...state }
             newData.isSelectPlaylistDialogOpen = true
             newData.currentPlaylistId = action.currentPlaylistId
-            newData.currentResourceIdItem = action.currentResourceIdItem
             newData.selectPlaylistDialogHideCurrentPlaylist = action.selectPlaylistDialogHideCurrentPlaylist
             newData.selectPlaylistDialogMode = action.selectPlaylistDialogMode
             newData.selectPlaylistDialogOnClose = action.selectPlaylistDialogOnClose
+            newData.selectPlaylistDialogOnSave = action.selectPlaylistDialogOnSave
 
             return newData
         }

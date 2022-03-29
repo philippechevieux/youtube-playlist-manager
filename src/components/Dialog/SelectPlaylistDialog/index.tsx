@@ -6,7 +6,7 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined'
 import { UserDataContext } from './../../../utils/context/index'
 import { DialogActionTypes } from '../../../utils/reducer'
-import { getYoutubePlaylists, insertItemToPlaylist } from './../../../utils/api/index'
+import { deleteItemFromPlaylist, getYoutubePlaylists, insertItemToPlaylist } from './../../../utils/api/index'
 import { IPlaylistsData } from '../../../utils/context/interface'
 import ListMode from './../../Playlist/ListMode/index'
 
@@ -38,17 +38,7 @@ function SelectPlaylistDialog() {
     }
 
     const onSave = () => {
-        if (state.selectPlaylistDialogMode === 'saveIn') {
-            insertItemToPlaylist(state.accessToken, state.currentResourceIdItem, selectedPlaylistId).then(() => {
-                dispatch({
-                    type: DialogActionTypes.DISPLAY_SNACK_BAR,
-                    snackbarSeverity: 'success',
-                    snackbarContent: 'La vidéo a été enregistré dans une autre playlist',
-                })
-            })
-        } else if (state.selectPlaylistDialogMode === 'moveTo') {
-            // TODO
-        }
+        state.selectPlaylistDialogOnSave(selectedPlaylistId)
 
         executeClose()
     }
