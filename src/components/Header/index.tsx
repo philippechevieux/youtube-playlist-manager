@@ -1,6 +1,6 @@
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
-import { Menu, MenuItem, IconButton, Typography, Toolbar, Box, AppBar, Divider } from '@mui/material'
+import { Menu, MenuItem, IconButton, Typography, Toolbar, Box, AppBar, Divider, Tooltip } from '@mui/material'
 
 import AvatarCustom from '../AvatarCustom'
 import './styles.css'
@@ -41,16 +41,18 @@ function Header() {
             <AppBar position="fixed">
                 <Toolbar>
                     {state.isUserLogin && (
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            sx={{ mr: 2 }}
-                            onClick={() => handleHomeClick()}
-                        >
-                            <HomeOutlinedIcon />
-                        </IconButton>
+                        <Tooltip title="Accueil">
+                            <IconButton
+                                size="large"
+                                edge="start"
+                                color="inherit"
+                                aria-label="menu"
+                                sx={{ mr: 2 }}
+                                onClick={() => handleHomeClick()}
+                            >
+                                <HomeOutlinedIcon />
+                            </IconButton>
+                        </Tooltip>
                     )}
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Youtube Playlist Manager

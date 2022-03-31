@@ -2,7 +2,7 @@ import { useEffect, useContext, useState, useCallback } from 'react'
 import { getYoutubePlaylists } from '../../utils/api'
 import { UserDataContext } from '../../utils/context/index'
 
-import { AppBar, Toolbar, IconButton, Button, Box, Typography } from '@mui/material'
+import { AppBar, Toolbar, IconButton, Button, Box, Typography, Tooltip } from '@mui/material'
 
 import './styles.css'
 
@@ -101,24 +101,28 @@ function PlaylistList() {
                         <Typography variant="body1" color="text.primary">
                             Affichage
                         </Typography>
-                        <IconButton
-                            size="large"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={() => handlePlaylistDisplayMode('mosaic')}
-                            color={playlistActiveDisplayMode === 'mosaic' ? 'secondary' : 'inherit'}
-                        >
-                            <ViewModuleOutlinedIcon />
-                        </IconButton>
-                        <IconButton
-                            size="large"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={() => handlePlaylistDisplayMode('list')}
-                            color={playlistActiveDisplayMode === 'list' ? 'secondary' : 'inherit'}
-                        >
-                            <ListOutlinedIcon />
-                        </IconButton>
+                        <Tooltip title="Mosaic">
+                            <IconButton
+                                size="large"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={() => handlePlaylistDisplayMode('mosaic')}
+                                color={playlistActiveDisplayMode === 'mosaic' ? 'secondary' : 'inherit'}
+                            >
+                                <ViewModuleOutlinedIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip title="Liste">
+                            <IconButton
+                                size="large"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={() => handlePlaylistDisplayMode('list')}
+                                color={playlistActiveDisplayMode === 'list' ? 'secondary' : 'inherit'}
+                            >
+                                <ListOutlinedIcon />
+                            </IconButton>
+                        </Tooltip>
                     </Toolbar>
                 </Box>
             </AppBar>

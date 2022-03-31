@@ -1,4 +1,14 @@
-import { List, ListItem, ListItemAvatar, Avatar, Divider, ListItemText, Typography, Radio } from '@mui/material'
+import {
+    List,
+    ListItem,
+    ListItemAvatar,
+    Avatar,
+    Divider,
+    ListItemText,
+    Typography,
+    Radio,
+    Tooltip,
+} from '@mui/material'
 import React, { useContext, useState } from 'react'
 
 import IconButton from '@mui/material/IconButton'
@@ -44,24 +54,32 @@ function ListMode({
         if (mode === 'default' && updatePlaylistListData && handlePlaylistClickOnList) {
             return (
                 <div>
-                    <IconButton
-                        className="margin"
-                        edge="end"
-                        aria-label="share"
-                        onClick={() => {
-                            dispatch({
-                                type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
-                                editPlaylistDialogData: PlaylistData,
-                                editPlaylistDialogOnClose: updatePlaylistListData,
-                                editPlaylistDialogId: PlaylistData.id,
-                            })
-                        }}
-                    >
-                        <EditOutlinedIcon />
-                    </IconButton>
-                    <IconButton edge="end" aria-label="edit" onClick={() => handlePlaylistClickOnList(PlaylistData.id)}>
-                        <LaunchOutlinedIcon />
-                    </IconButton>
+                    <Tooltip title="Editer">
+                        <IconButton
+                            className="margin"
+                            edge="end"
+                            aria-label="share"
+                            onClick={() => {
+                                dispatch({
+                                    type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
+                                    editPlaylistDialogData: PlaylistData,
+                                    editPlaylistDialogOnClose: updatePlaylistListData,
+                                    editPlaylistDialogId: PlaylistData.id,
+                                })
+                            }}
+                        >
+                            <EditOutlinedIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Ouvrir la playlist">
+                        <IconButton
+                            edge="end"
+                            aria-label="edit"
+                            onClick={() => handlePlaylistClickOnList(PlaylistData.id)}
+                        >
+                            <LaunchOutlinedIcon />
+                        </IconButton>
+                    </Tooltip>
                 </div>
             )
         }

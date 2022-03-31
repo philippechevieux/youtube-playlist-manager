@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react'
 import { getYoutubePlaylists, getYoutubePlaylistsItems } from '../../utils/api'
 import { UserDataContext } from '../../utils/context/index'
 import { useParams } from 'react-router-dom'
-import { AppBar, Toolbar, IconButton, Button, Typography, Box } from '@mui/material'
+import { AppBar, Toolbar, IconButton, Button, Typography, Box, Tooltip } from '@mui/material'
 import { useHistory } from 'react-router-dom'
 import { IPlaylistsItemData, IPlaylistsListItems } from '../../utils/context/interface'
 
@@ -105,37 +105,41 @@ function PlaylistContent() {
             <AppBar position="static">
                 <Box sx={{ flexGrow: 1 }}>
                     <Toolbar>
-                        <IconButton
-                            size="large"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={() => handleHomeClick()}
-                        >
-                            <ChevronLeftOutlinedIcon />
-                        </IconButton>
+                        <Tooltip title="Retour">
+                            <IconButton
+                                size="large"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={() => handleHomeClick()}
+                            >
+                                <ChevronLeftOutlinedIcon />
+                            </IconButton>
+                        </Tooltip>
                         <Typography variant="body1" color="text.primary">
                             {playlistData && playlistData.snippet.localized.title}
                         </Typography>
                         <Box sx={{ flexGrow: 1 }} />
-                        <IconButton
-                            className="button-filter"
-                            size="large"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={() => {
-                                if (playlistData !== undefined) {
-                                    dispatch({
-                                        type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
-                                        editPlaylistDialogData: playlistData,
-                                        editPlaylistDialogOnClose: setPlaylistData,
-                                        editPlaylistDialogId: playlistId,
-                                    })
-                                }
-                            }}
-                            color="inherit"
-                        >
-                            <EditOutlinedIcon />
-                        </IconButton>
+                        <Tooltip title="Editer">
+                            <IconButton
+                                className="button-filter"
+                                size="large"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={() => {
+                                    if (playlistData !== undefined) {
+                                        dispatch({
+                                            type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
+                                            editPlaylistDialogData: playlistData,
+                                            editPlaylistDialogOnClose: setPlaylistData,
+                                            editPlaylistDialogId: playlistId,
+                                        })
+                                    }
+                                }}
+                                color="inherit"
+                            >
+                                <EditOutlinedIcon />
+                            </IconButton>
+                        </Tooltip>
                     </Toolbar>
                 </Box>
             </AppBar>

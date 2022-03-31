@@ -1,4 +1,4 @@
-import { Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material'
+import { Card, CardActions, CardContent, CardMedia, Grid, Tooltip, Typography } from '@mui/material'
 
 import IconButton from '@mui/material/IconButton'
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
@@ -50,25 +50,29 @@ function MosaicMode({
                             </Typography>
                         </CardContent>
                         <CardActions className="card-actions">
-                            <IconButton
-                                aria-label="edit"
-                                onClick={() => {
-                                    dispatch({
-                                        type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
-                                        editPlaylistDialogData: PlaylistData,
-                                        editPlaylistDialogOnClose: updatePlaylistListData,
-                                        editPlaylistDialogId: PlaylistData.id,
-                                    })
-                                }}
-                            >
-                                <EditOutlinedIcon />
-                            </IconButton>
-                            <IconButton
-                                aria-label="open playlist"
-                                onClick={() => handlePlaylistClickOnList(PlaylistData.id)}
-                            >
-                                <LaunchOutlinedIcon />
-                            </IconButton>
+                            <Tooltip title="Editer">
+                                <IconButton
+                                    aria-label="edit"
+                                    onClick={() => {
+                                        dispatch({
+                                            type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
+                                            editPlaylistDialogData: PlaylistData,
+                                            editPlaylistDialogOnClose: updatePlaylistListData,
+                                            editPlaylistDialogId: PlaylistData.id,
+                                        })
+                                    }}
+                                >
+                                    <EditOutlinedIcon />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Ouvrir la playlist">
+                                <IconButton
+                                    aria-label="open playlist"
+                                    onClick={() => handlePlaylistClickOnList(PlaylistData.id)}
+                                >
+                                    <LaunchOutlinedIcon />
+                                </IconButton>
+                            </Tooltip>
                         </CardActions>
                     </Card>
                 </Grid>

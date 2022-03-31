@@ -9,6 +9,7 @@ import {
     IconButton,
     Menu,
     MenuItem,
+    Tooltip,
 } from '@mui/material'
 
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
@@ -165,17 +166,25 @@ function Content({
                                     </Typography>
                                 }
                             />
-                            <IconButton size="large" aria-haspopup="true" onClick={() => handleDeleteClick(Item.id)}>
-                                <DeleteOutlineOutlinedIcon />
-                            </IconButton>
-                            <IconButton
-                                size="large"
-                                aria-haspopup="true"
-                                aria-controls="menu-more"
-                                onClick={(event) => handleMoreMenu(event, Item.snippet.resourceId, Item.id)}
-                            >
-                                <MoreVertOutlinedIcon />
-                            </IconButton>
+                            <Tooltip title="Supprimer">
+                                <IconButton
+                                    size="large"
+                                    aria-haspopup="true"
+                                    onClick={() => handleDeleteClick(Item.id)}
+                                >
+                                    <DeleteOutlineOutlinedIcon />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Autres actions">
+                                <IconButton
+                                    size="large"
+                                    aria-haspopup="true"
+                                    aria-controls="menu-more"
+                                    onClick={(event) => handleMoreMenu(event, Item.snippet.resourceId, Item.id)}
+                                >
+                                    <MoreVertOutlinedIcon />
+                                </IconButton>
+                            </Tooltip>
                         </ListItem>
 
                         {index + 1 < playlistsListItems.items.length && (
