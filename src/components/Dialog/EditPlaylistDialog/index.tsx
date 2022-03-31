@@ -60,8 +60,8 @@ function EditPlaylistDialog() {
             privacyStatus: status,
         }
 
-        updatePlaylistData(state.accessToken, state.editPlaylistDialogPlaylistId, dataToSave).then((updatedData) => {
-            state.editPlaylistDialogSetPlaylistData(updatedData)
+        updatePlaylistData(state.accessToken, state.editPlaylistDialogId, dataToSave).then((updatedData) => {
+            state.editPlaylistDialogOnClose(updatedData)
             dispatch({
                 type: DialogActionTypes.DISPLAY_SNACK_BAR,
                 snackbarSeverity: 'success',
@@ -71,21 +71,21 @@ function EditPlaylistDialog() {
     }
 
     useEffect(() => {
-        setTitle(state.editPlaylistDialogPlaylistData.snippet.localized.title)
-        setTitleError(state.editPlaylistDialogPlaylistData.snippet.localized.title.length === 0)
-        setDescription(state.editPlaylistDialogPlaylistData.snippet.localized.description)
-        setStatus(state.editPlaylistDialogPlaylistData.status.privacyStatus)
-        setCanSave(state.editPlaylistDialogPlaylistData.snippet.localized.title.length === 0)
-    }, [state.editPlaylistDialogPlaylistData])
+        setTitle(state.editPlaylistDialogData.snippet.localized.title)
+        setTitleError(state.editPlaylistDialogData.snippet.localized.title.length === 0)
+        setDescription(state.editPlaylistDialogData.snippet.localized.description)
+        setStatus(state.editPlaylistDialogData.status.privacyStatus)
+        setCanSave(state.editPlaylistDialogData.snippet.localized.title.length === 0)
+    }, [state.editPlaylistDialogData])
 
     return (
         <Dialog open={state.isEditPlaylistDialogOpen} fullWidth maxWidth="sm">
             <DialogTitle id="alert-dialog-title">
-                Editer la playlist : {state.editPlaylistDialogPlaylistData.snippet.localized.title}
+                Editer la playlist : {state.editPlaylistDialogData.snippet.localized.title}
             </DialogTitle>
             <DialogContent>
                 <TextField
-                    error={titleError}
+                    error={titleError && state.isEditPlaylistDialogOpen}
                     required
                     id="dsqds"
                     margin="normal"
@@ -136,7 +136,7 @@ function EditPlaylistDialog() {
             <DialogActions>
                 <Button onClick={onClose}>Fermer</Button>
                 <Button
-                    disabled={canSave}
+                    disabled={canSave && state.isEditPlaylistDialogOpen}
                     variant="contained"
                     color="secondary"
                     startIcon={<SaveOutlinedIcon />}

@@ -1,3 +1,19 @@
 .list-container .item .margin {
     margin-right: 5px;
 }
+
+.item.item-selectable {
+    border: 2px solid #383838;
+    cursor: pointer;
+}
+
+.item.item-selectable:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.item.item-selectable.item-selected {
+    background-color: rgb(33 150 243 / 38%);
+    border: 2px solid #2196f3;
+    box-shadow: 0px 0px 11px #000000a1;
+    border-radius: 5px;
+}

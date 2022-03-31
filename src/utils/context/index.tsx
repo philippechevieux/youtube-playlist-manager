@@ -21,6 +21,11 @@ export const DefaultPlaylistItemData: IPlaylistsItemData = {
     },
 }
 
+export const defaultItemResourceId = {
+    kind: '',
+    videoId: '',
+}
+
 export const userDefaultData: IUserData = {
     accessToken: '',
     googleId: '',
@@ -38,9 +43,15 @@ export const userDefaultData: IUserData = {
     confirmActionDialogExecuteButtonLabel: '',
     confirmActionDialogContentMessage: '',
     isEditPlaylistDialogOpen: false,
-    editPlaylistDialogPlaylistData: DefaultPlaylistItemData,
-    editPlaylistDialogSetPlaylistData: () => {},
-    editPlaylistDialogPlaylistId: '',
+    editPlaylistDialogData: DefaultPlaylistItemData,
+    editPlaylistDialogOnClose: () => {},
+    editPlaylistDialogId: '',
+    isSelectPlaylistDialogOpen: false,
+    selectPlaylistDialogMode: '',
+    selectPlaylistDialogOnClose: () => {},
+    selectPlaylistDialogOnSave: () => {},
+    currentPlaylistId: '',
+    selectPlaylistDialogHideCurrentPlaylist: false,
 }
 
 const userDefaultDataContext = {

@@ -4,9 +4,9 @@ import { UserDataContext } from '../../utils/context/index'
 import { useParams } from 'react-router-dom'
 import { AppBar, Toolbar, IconButton, Button, Typography, Box } from '@mui/material'
 import { useHistory } from 'react-router-dom'
-import { IPlaylistsItemData } from '../../utils/context/interface'
+import { IPlaylistsItemData, IPlaylistsListItems } from '../../utils/context/interface'
 
-import Content, { IPlaylistsListItems } from '../../components/Playlist/Content/index'
+import Content from '../../components/Playlist/Content/index'
 import ContentSkeleton from '../../components/Playlist/Content/Skeleton/index'
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
@@ -59,7 +59,13 @@ function PlaylistContent() {
         let content, skeleton
 
         if (playlistsListItems.items.length > 0) {
-            content = <Content playlistsListItems={playlistsListItems} setPlaylistsListItems={setPlaylistsListItems} />
+            content = (
+                <Content
+                    playlistId={playlistId}
+                    playlistsListItems={playlistsListItems}
+                    setPlaylistsListItems={setPlaylistsListItems}
+                />
+            )
         }
 
         if (isLoaded && playlistsListItems.items.length === 0) {
@@ -120,9 +126,9 @@ function PlaylistContent() {
                                 if (playlistData !== undefined) {
                                     dispatch({
                                         type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
-                                        playlistData: playlistData,
-                                        setPlaylistData: setPlaylistData,
-                                        playlistId: playlistId,
+                                        editPlaylistDialogData: playlistData,
+                                        editPlaylistDialogOnClose: setPlaylistData,
+                                        editPlaylistDialogId: playlistId,
                                     })
                                 }
                             }}

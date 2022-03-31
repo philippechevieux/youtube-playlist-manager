@@ -11,6 +11,7 @@ import { Snackbar, Alert } from '@mui/material'
 import { DialogActionTypes } from '../../utils/reducer'
 import ConfirmActionDialog from '../Dialog/ConfirmActionDialog'
 import EditPlaylistDialog from '../Dialog/EditPlaylistDialog'
+import SelectPlaylistDialog from './../Dialog/SelectPlaylistDialog/index'
 
 function Body() {
     const { dispatch, state } = useContext(UserDataContext)
@@ -30,19 +31,22 @@ function Body() {
                 {!state.isUserLogin ? (
                     <LoginScreen />
                 ) : (
-                    <Switch>
-                        <Route exact path="/">
-                            <PlaylistList />
-                        </Route>
-                        <Route exact path="/playlist/:playlistId">
-                            <PlaylistContent />
-                        </Route>
-                    </Switch>
+                    <>
+                        <Switch>
+                            <Route exact path="/">
+                                <PlaylistList />
+                            </Route>
+                            <Route exact path="/playlist/:playlistId">
+                                <PlaylistContent />
+                            </Route>
+                        </Switch>
+                        <ConfirmActionDialog />
+                        <SelectPlaylistDialog />
+                        <EditPlaylistDialog />
+                    </>
                 )}
             </div>
 
-            <ConfirmActionDialog />
-            <EditPlaylistDialog />
             <Snackbar
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 open={state.isSnackbarDisplayed}
