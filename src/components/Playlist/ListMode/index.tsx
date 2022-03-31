@@ -118,7 +118,7 @@ function ListMode({
     }
 
     return (
-        <List className={`${mode === 'mode' ? 'list-container' : ''}`}>
+        <List className={`${mode === 'default' ? 'list-container' : ''}`}>
             {playlistsListData.items?.map((PlaylistData, index) => (
                 <div
                     className={`item ${mode === 'selectPlaylist' ? 'item-selectable' : ''} ${
