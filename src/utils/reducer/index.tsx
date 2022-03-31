@@ -6,6 +6,7 @@ import { IResourceId } from '../api/interface'
 export enum UserDataActionTypes {
     USER_LOGIN = 'USER_LOGIN',
     USER_LOGOUT = 'USER_LOGOUT',
+    SET_LANGUAGE = 'SET_LANGUAGE',
 }
 
 export enum DialogActionTypes {
@@ -26,6 +27,10 @@ export type ReducerAction =
       }
     | {
           type: UserDataActionTypes.USER_LOGOUT
+      }
+    | {
+          type: UserDataActionTypes.SET_LANGUAGE
+          langague: string
       }
     | {
           type: DialogActionTypes.DISPLAY_SNACK_BAR
@@ -87,6 +92,13 @@ export const UserDataReducer = (state: IUserData, action: ReducerAction): IUserD
         case UserDataActionTypes.USER_LOGOUT: {
             let newData = { ...userDefaultData }
             newData.isUserLogin = false
+
+            return newData
+        }
+        case UserDataActionTypes.SET_LANGUAGE: {
+            let newData = { ...state }
+
+            newData.language = action.langague
 
             return newData
         }

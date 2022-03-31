@@ -4,6 +4,7 @@ import { ReducerAction } from '../reducer'
 
 export interface IUserData {
     accessToken: string
+    language: string
     googleId: string
     email: string
     avatar: string

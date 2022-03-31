@@ -12,6 +12,7 @@ import { DialogActionTypes } from '../../utils/reducer'
 import ConfirmActionDialog from '../Dialog/ConfirmActionDialog'
 import EditPlaylistDialog from '../Dialog/EditPlaylistDialog'
 import SelectPlaylistDialog from './../Dialog/SelectPlaylistDialog/index'
+import Profile from '../../pages/Profile'
 
 function Body() {
     const { dispatch, state } = useContext(UserDataContext)
@@ -35,6 +36,9 @@ function Body() {
                         <Switch>
                             <Route exact path="/">
                                 <PlaylistList />
+                            </Route>
+                            <Route exact path="/profile">
+                                <Profile />
                             </Route>
                             <Route exact path="/playlist/:playlistId">
                                 <PlaylistContent />

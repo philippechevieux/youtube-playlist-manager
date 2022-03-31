@@ -18,11 +18,6 @@ function Header() {
 
     const [anchorEl, setAnchorEl] = useState(null)
 
-    const handleLogout = () => {
-        dispatch({ type: UserDataActionTypes.USER_LOGOUT })
-        setAnchorEl(null)
-    }
-
     // TODO: Search a fix for this any ...
     const handleMenu = (event: any) => {
         setAnchorEl(event.currentTarget)
@@ -32,8 +27,18 @@ function Header() {
         setAnchorEl(null)
     }
 
-    const handleHomeClick = () => {
+    const handleClickOnGoHome = () => {
         history.push('/')
+    }
+
+    const handleClickOnLogout = () => {
+        dispatch({ type: UserDataActionTypes.USER_LOGOUT })
+        setAnchorEl(null)
+    }
+
+    const handleClickOnGoToMyProfile = () => {
+        history.push('/profile')
+        setAnchorEl(null)
     }
 
     return (
@@ -48,7 +53,7 @@ function Header() {
                                 color="inherit"
                                 aria-label="menu"
                                 sx={{ mr: 2 }}
-                                onClick={() => handleHomeClick()}
+                                onClick={() => handleClickOnGoHome()}
                             >
                                 <HomeOutlinedIcon />
                             </IconButton>
@@ -84,12 +89,12 @@ function Header() {
                                 open={Boolean(anchorEl)}
                                 onClose={handleClose}
                             >
-                                <MenuItem key="profil" onClick={handleClose}>
+                                <MenuItem key="profil" onClick={handleClickOnGoToMyProfile}>
                                     <AvatarCustom size="sm" />
                                     <span className="header-menuitem-margin-left">Mon profil</span>
                                 </MenuItem>
                                 <Divider />
-                                <MenuItem key="logout" onClick={handleLogout}>
+                                <MenuItem key="logout" onClick={handleClickOnLogout}>
                                     <LogoutOutlinedIcon />
                                     <span className="header-menuitem-margin-left">Se déconnecter</span>
                                 </MenuItem>

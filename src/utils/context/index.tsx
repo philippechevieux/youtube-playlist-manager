@@ -28,6 +28,7 @@ export const defaultItemResourceId = {
 
 export const userDefaultData: IUserData = {
     accessToken: '',
+    language: 'fr',
     googleId: '',
     email: '',
     avatar: '',
