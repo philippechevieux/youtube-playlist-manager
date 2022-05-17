@@ -7,15 +7,17 @@ import './styles.css'
 
 import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { setUserLogout } from '../../utils/arms/user/reducer';
-import { selectIsUserLogin } from '../../utils/arms/user/selectors';
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { setUserLogout } from '../../utils/arms/user/reducer'
+import { selectIsUserLogin, selectUserFullName, selectUserAvatar } from '../../utils/arms/user/selectors'
 
 function Header() {
     let history = useHistory()
 
-    const dispatch = useAppDispatch();
-    const isUserLogin = useAppSelector(selectIsUserLogin);
+    const dispatch = useAppDispatch()
+    const isUserLogin = useAppSelector(selectIsUserLogin)
+    const userFullName = useAppSelector(selectUserFullName)
+    const userAvatar = useAppSelector(selectUserAvatar)
     const [anchorEl, setAnchorEl] = useState(null)
 
     // TODO: Search a fix for this any ...
@@ -71,7 +73,7 @@ function Header() {
                                 onClick={handleMenu}
                                 color="inherit"
                             >
-                                <AvatarCustom size="md" />
+                                <AvatarCustom title={userFullName} source={userAvatar} size="md" />
                             </IconButton>
                             <Menu
                                 id="menu-appbar"
@@ -90,7 +92,7 @@ function Header() {
                                 onClose={handleClose}
                             >
                                 <MenuItem key="profil" onClick={handleClickOnGoToMyProfile}>
-                                    <AvatarCustom size="sm" />
+                                    <AvatarCustom title={userFullName} source={userAvatar} size="sm" />
                                     <span className="header-menuitem-margin-left">Mon profil</span>
                                 </MenuItem>
                                 <Divider />

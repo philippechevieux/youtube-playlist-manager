@@ -1,11 +1,7 @@
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import Avatar from '@mui/material/Avatar'
-// import { useContext } from 'react'
-// import { UserDataContext } from '../../utils/context'
 
-function AvatarCustom({ size }: { size: string }) {
-    // const { state } = useContext(UserDataContext)
-
+function AvatarCustom({ title, source, size = 'md' }: { title: string; source?: string; size?: string }) {
     function getAvatarSize(paramSize: string) {
         switch (paramSize) {
             case 'xxxl':
@@ -26,12 +22,8 @@ function AvatarCustom({ size }: { size: string }) {
 
     return (
         <div>
-            {state.avatar ? (
-                <Avatar
-                    alt={state.fullName}
-                    src={state.avatar}
-                    sx={{ width: getAvatarSize(size), height: getAvatarSize(size) }}
-                />
+            {source ? (
+                <Avatar alt={title} src={source} sx={{ width: getAvatarSize(size), height: getAvatarSize(size) }} />
             ) : (
                 <AccountCircle />
             )}

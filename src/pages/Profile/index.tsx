@@ -13,27 +13,33 @@ import {
     Tooltip,
     Typography,
 } from '@mui/material'
-import { useHistory } from 'react-router'
-import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
 import './styles.css'
+import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
 import AvatarCustom from '../../components/AvatarCustom'
-import { useContext } from 'react'
-import { UserDataContext } from '../../utils/context'
-import { UserDataActionTypes } from '../../utils/reducer'
+
+import { useHistory } from 'react-router'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { selectUserFullName, selectUserAvatar } from '../../utils/arms/user/selectors'
+
+// import { useContext } from 'react'
+// import { UserDataContext } from '../../utils/context'
+// import { UserDataActionTypes } from '../../utils/reducer'
 
 function Profile() {
     let history = useHistory()
-    const { state, dispatch } = useContext(UserDataContext)
+    // const { state, dispatch } = useContext(UserDataContext)
+    const userFullName = useAppSelector(selectUserFullName)
+    const userAvatar = useAppSelector(selectUserAvatar)
 
     const handleHomeClick = () => {
         history.push('/')
     }
 
     const handleLanguageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch({
-            type: UserDataActionTypes.SET_LANGUAGE,
-            langague: event.target.value,
-        })
+        // dispatch({
+        //     type: UserDataActionTypes.SET_LANGUAGE,
+        //     langague: event.target.value,
+        // })
     }
 
     return (
@@ -60,9 +66,9 @@ function Profile() {
             <div className="profile-options-container">
                 <div>
                     <Grid container direction="column" alignItems="center" justifyContent="center">
-                        <AvatarCustom size="xl" />
+                        <AvatarCustom title={userFullName} source={userAvatar} size="xl" />
                         <Typography variant="h5" color="text.primary" className="profile-options-title">
-                            Bienvenue {state.fullName}
+                            Bienvenue {userFullName}
                         </Typography>
                     </Grid>
                 </div>
