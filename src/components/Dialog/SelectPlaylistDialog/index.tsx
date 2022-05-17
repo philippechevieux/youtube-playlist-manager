@@ -1,21 +1,34 @@
 import { Dialog, DialogTitle, DialogActions, Button, DialogContent } from '@mui/material'
 
 import './styles.css'
-import { useAppSelector } from '../../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { selectUserAccessToken } from '../../../utils/arms/user/selectors'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined'
-import { UserDataContext } from './../../../utils/context/index'
-import { DialogActionTypes } from '../../../utils/reducer'
 import { getYoutubePlaylists } from './../../../utils/api/index'
 import { IPlaylistsData } from '../../../utils/context/interface'
 import ListMode from './../../Playlist/ListMode/index'
+import { hideEditPlaylistDialog } from '../../../utils/arms/global/reducer'
+import {
+    selectIsSelectPlaylistDialogOpen,
+    selectSelectPlaylistDialogCurrentPlaylistId,
+    selectSelectPlaylistDialogHideCurrentPlaylist,
+    selectSelectPlaylistDialogMode,
+    selectSelectPlaylistDialogOnClose,
+    selectSelectPlaylistDialogOnSave,
+} from '../../../utils/arms/global/selectors'
 
 function SelectPlaylistDialog() {
-    const { dispatch, state } = useContext(UserDataContext)
+    const dispatch = useAppDispatch()
 
     const userAccessToken = useAppSelector(selectUserAccessToken)
+    const isSelectPlaylistDialogOpen = useAppSelector(selectIsSelectPlaylistDialogOpen)
+    const selectPlaylistDialogOnClose = useAppSelector(selectSelectPlaylistDialogOnClose)
+    const selectPlaylistDialogOnSave = useAppSelector(selectSelectPlaylistDialogOnSave)
+    const selectPlaylistDialogMode = useAppSelector(selectSelectPlaylistDialogMode)
+    const selectPlaylistDialogCurrentPlaylistId = useAppSelector(selectSelectPlaylistDialogCurrentPlaylistId)
+    const selectPlaylistDialogHideCurrentPlaylist = useAppSelector(selectSelectPlaylistDialogHideCurrentPlaylist)
 
     const [playlistsListData, setPlaylistsListData] = useState<IPlaylistsData>({ items: [] })
     const [isLoading, setIsLoading] = useState(false)
@@ -25,7 +38,7 @@ function SelectPlaylistDialog() {
     const [canSave, setCanSave] = useState(false)
 
     const executeClose = () => {
-        state.selectPlaylistDialogOnClose()
+        selectPlaylistDialogOnClose()
 
         setPlaylistsListData({ items: [] })
         setIsLoading(false)
@@ -33,9 +46,7 @@ function SelectPlaylistDialog() {
         setNextPageToken('')
         setCanSave(false)
 
-        dispatch({
-            type: DialogActionTypes.HIDE_SELECT_PLAYLIST_DIALOG,
-        })
+        dispatch(hideEditPlaylistDialog())
     }
 
     const onClose = () => {
@@ -43,7 +54,7 @@ function SelectPlaylistDialog() {
     }
 
     const onSave = () => {
-        state.selectPlaylistDialogOnSave(selectedPlaylistId)
+        selectPlaylistDialogOnSave(selectedPlaylistId)
 
         executeClose()
     }
@@ -52,7 +63,7 @@ function SelectPlaylistDialog() {
     const handleTranslationByMode = (content: string) => {
         let translation = ''
 
-        if (state.selectPlaylistDialogMode === 'saveIn') {
+        if (selectPlaylistDialogMode === 'saveIn') {
             switch (content) {
                 case 'dialogTitle':
                     translation = 'Enregistrer dans :'
@@ -61,7 +72,7 @@ function SelectPlaylistDialog() {
                     translation = 'Enregistrer'
                     break
             }
-        } else if (state.selectPlaylistDialogMode === 'moveTo') {
+        } else if (selectPlaylistDialogMode === 'moveTo') {
             switch (content) {
                 case 'dialogTitle':
                     translation = 'Déplacer vers :'
@@ -76,15 +87,15 @@ function SelectPlaylistDialog() {
     }
 
     const displayExecuteButtonIcon = () => {
-        if (state.selectPlaylistDialogMode === 'saveIn') {
+        if (selectPlaylistDialogMode === 'saveIn') {
             return <SaveOutlinedIcon />
-        } else if (state.selectPlaylistDialogMode === 'moveTo') {
+        } else if (selectPlaylistDialogMode === 'moveTo') {
             return <SendAndArchiveOutlinedIcon />
         }
     }
 
     const loadPlaylistsList = useCallback(() => {
-        if (isLoaded === false && isLoading === false && state.isSelectPlaylistDialogOpen === true) {
+        if (isLoaded === false && isLoading === false && isSelectPlaylistDialogOpen === true) {
             setIsLoading(true)
 
             getYoutubePlaylists(userAccessToken, nextPageToken).then((data) => {
@@ -93,9 +104,9 @@ function SelectPlaylistDialog() {
 
                 let newItems = [...playlistsListData.items, ...data.items]
 
-                if (state.selectPlaylistDialogHideCurrentPlaylist === true) {
+                if (selectPlaylistDialogHideCurrentPlaylist === true) {
                     newItems = newItems.filter((item) => {
-                        return item.id !== state.currentPlaylistId
+                        return item.id !== selectPlaylistDialogCurrentPlaylistId
                     })
                 }
 
@@ -107,9 +118,9 @@ function SelectPlaylistDialog() {
         }
     }, [
         userAccessToken,
-        state.currentPlaylistId,
-        state.isSelectPlaylistDialogOpen,
-        state.selectPlaylistDialogHideCurrentPlaylist,
+        selectPlaylistDialogCurrentPlaylistId,
+        isSelectPlaylistDialogOpen,
+        selectPlaylistDialogHideCurrentPlaylist,
         nextPageToken,
         isLoading,
         isLoaded,
@@ -126,7 +137,7 @@ function SelectPlaylistDialog() {
     }, [loadPlaylistsList])
 
     return (
-        <Dialog className="dialog-select-playlist" open={state.isSelectPlaylistDialogOpen} fullWidth maxWidth="sm">
+        <Dialog className="dialog-select-playlist" open={isSelectPlaylistDialogOpen} fullWidth maxWidth="sm">
             <DialogTitle>{handleTranslationByMode('dialogTitle')}</DialogTitle>
             <DialogContent>
                 {playlistsListData && (

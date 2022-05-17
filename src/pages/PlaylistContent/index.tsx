@@ -1,6 +1,5 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { getYoutubePlaylists, getYoutubePlaylistsItems } from '../../utils/api'
-import { UserDataContext } from '../../utils/context/index'
 import { useParams } from 'react-router-dom'
 import { AppBar, Toolbar, IconButton, Button, Typography, Box, Tooltip } from '@mui/material'
 import { useHistory } from 'react-router-dom'
@@ -12,12 +11,12 @@ import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 
 import './styles.css'
-import { DialogActionTypes } from '../../utils/reducer'
-import { useAppSelector } from '../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { selectUserAccessToken } from '../../utils/arms/user/selectors'
+import { displayEditPlaylistDialog } from '../../utils/arms/global/reducer'
 
 function PlaylistContent() {
-    const { dispatch } = useContext(UserDataContext)
+    const dispatch = useAppDispatch()
 
     const userAccessToken = useAppSelector(selectUserAccessToken)
 
@@ -132,12 +131,13 @@ function PlaylistContent() {
                                 aria-haspopup="true"
                                 onClick={() => {
                                     if (playlistData !== undefined) {
-                                        dispatch({
-                                            type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
-                                            editPlaylistDialogData: playlistData,
-                                            editPlaylistDialogOnClose: setPlaylistData,
-                                            editPlaylistDialogId: playlistId,
-                                        })
+                                        dispatch(
+                                            displayEditPlaylistDialog({
+                                                editPlaylistDialogData: playlistData,
+                                                editPlaylistDialogOnClose: setPlaylistData,
+                                                editPlaylistDialogId: playlistId,
+                                            })
+                                        )
                                     }
                                 }}
                                 color="inherit"

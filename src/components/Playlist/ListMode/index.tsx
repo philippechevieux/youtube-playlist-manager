@@ -9,7 +9,7 @@ import {
     Radio,
     Tooltip,
 } from '@mui/material'
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 
 import IconButton from '@mui/material/IconButton'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
@@ -17,8 +17,8 @@ import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 
 import { IPlaylistsData, IPlaylistsItemData } from '../../../utils/context/interface'
 import './styles.css'
-import { DialogActionTypes } from '../../../utils/reducer'
-import { UserDataContext } from './../../../utils/context/index'
+import { useAppDispatch } from '../../../app/hooks'
+import { displayEditPlaylistDialog } from '../../../utils/arms/global/reducer'
 
 function ListMode({
     playlistsListData,
@@ -35,7 +35,8 @@ function ListMode({
     updatePlaylistListData?: Function
     handlePlaylistClickOnList?: Function
 }) {
-    const { dispatch } = useContext(UserDataContext)
+    const dispatch = useAppDispatch()
+
     const [selectedPlaylist, setSelectedPlaylist] = useState('')
 
     const handleChangeSelectedPlaylist = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -60,12 +61,13 @@ function ListMode({
                             edge="end"
                             aria-label="share"
                             onClick={() => {
-                                dispatch({
-                                    type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
-                                    editPlaylistDialogData: PlaylistData,
-                                    editPlaylistDialogOnClose: updatePlaylistListData,
-                                    editPlaylistDialogId: PlaylistData.id,
-                                })
+                                dispatch(
+                                    displayEditPlaylistDialog({
+                                        editPlaylistDialogData: PlaylistData,
+                                        editPlaylistDialogOnClose: updatePlaylistListData,
+                                        editPlaylistDialogId: PlaylistData.id,
+                                    })
+                                )
                             }}
                         >
                             <EditOutlinedIcon />

@@ -1,14 +1,11 @@
-import { useContext } from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { UserDataContext } from '../../utils/context'
 
 import LoginScreen from '../../pages/LoginScreen/index'
 import PlaylistContent from '../../pages/PlaylistContent/index'
 import PlaylistList from '../../pages/PlaylistList/index'
 
 import './styles.css'
-import { Snackbar, Alert } from '@mui/material'
-import { DialogActionTypes } from '../../utils/reducer'
+import { Alert, Snackbar } from '@mui/material'
 import ConfirmActionDialog from '../Dialog/ConfirmActionDialog'
 import EditPlaylistDialog from '../Dialog/EditPlaylistDialog'
 import SelectPlaylistDialog from './../Dialog/SelectPlaylistDialog/index'
@@ -16,19 +13,27 @@ import Profile from '../../pages/Profile'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { selectIsUserLogin } from '../../utils/arms/user/selectors'
+import { hideSnackbar } from '../../utils/arms/global/reducer'
+import {
+    selectIsSnackbarDisplayed,
+    selectSnackbarContent,
+    selectSnackbarSeverity,
+} from '../../utils/arms/global/selectors'
 
 function Body() {
-    // const { dispatch, state } = useContext(UserDataContext)
+    const dispatch = useAppDispatch()
+
     const isUserLogin = useAppSelector(selectIsUserLogin)
+    const isSnackbarDisplayed = useAppSelector(selectIsSnackbarDisplayed)
+    const snackbarSeverity = useAppSelector(selectSnackbarSeverity)
+    const snackbarContent = useAppSelector(selectSnackbarContent)
 
     const displayAlertFromSnackbar = () => {
-        // if (state.snackbarSeverity === 'success') {
-        //     return <Alert severity="success">{state.snackbarContent}</Alert>
-        // } else if (state.snackbarSeverity === 'error') {
-        //     return <Alert severity="error">{state.snackbarContent}</Alert>
-        // }
-
-        return <p></p>
+        if (snackbarSeverity === 'success') {
+            return <Alert severity="success">{snackbarContent}</Alert>
+        } else if (snackbarSeverity === 'error') {
+            return <Alert severity="error">{snackbarContent}</Alert>
+        }
     }
 
     return (
@@ -59,12 +64,10 @@ function Body() {
 
             <Snackbar
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                // open={state.isSnackbarDisplayed}
+                open={isSnackbarDisplayed}
                 autoHideDuration={5000}
                 onClose={() => {
-                    // dispatch({
-                    //     type: DialogActionTypes.HIDE_SNACK_BAR,
-                    // })
+                    dispatch(hideSnackbar())
                 }}
             >
                 {displayAlertFromSnackbar()}

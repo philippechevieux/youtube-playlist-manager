@@ -6,9 +6,8 @@ import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 import { IPlaylistsData } from '../../../utils/context/interface'
 import './styles.css'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import { useContext } from 'react'
-import { UserDataContext } from './../../../utils/context/index'
-import { DialogActionTypes } from '../../../utils/reducer'
+import { useAppDispatch } from '../../../app/hooks'
+import { displayEditPlaylistDialog } from '../../../utils/arms/global/reducer'
 
 function MosaicMode({
     playlistsListData,
@@ -19,7 +18,7 @@ function MosaicMode({
     updatePlaylistListData: Function
     handlePlaylistClickOnList: Function
 }) {
-    const { dispatch } = useContext(UserDataContext)
+    const dispatch = useAppDispatch()
 
     return (
         <Grid
@@ -54,12 +53,13 @@ function MosaicMode({
                                 <IconButton
                                     aria-label="edit"
                                     onClick={() => {
-                                        dispatch({
-                                            type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
-                                            editPlaylistDialogData: PlaylistData,
-                                            editPlaylistDialogOnClose: updatePlaylistListData,
-                                            editPlaylistDialogId: PlaylistData.id,
-                                        })
+                                        dispatch(
+                                            displayEditPlaylistDialog({
+                                                editPlaylistDialogData: PlaylistData,
+                                                editPlaylistDialogOnClose: updatePlaylistListData,
+                                                editPlaylistDialogId: PlaylistData.id,
+                                            })
+                                        )
                                     }}
                                 >
                                     <EditOutlinedIcon />

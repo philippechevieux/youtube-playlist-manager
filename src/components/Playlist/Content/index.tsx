@@ -19,13 +19,22 @@ import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlin
 
 import '../styles.css'
 import { deleteItemFromPlaylist, insertItemToPlaylist } from '../../../utils/api'
-import { useContext, useState } from 'react'
-import { defaultItemResourceId, UserDataContext } from '../../../utils/context'
-import { DialogActionTypes } from '../../../utils/reducer'
+import { useState } from 'react'
 import { IResourceId } from '../../../utils/api/interface'
 import { IPlaylistItemsContent, IPlaylistsListItems } from '../../../utils/context/interface'
-import { useAppSelector } from '../../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { selectUserAccessToken } from '../../../utils/arms/user/selectors'
+import {
+    displayConfirmActionDialog,
+    displaySelectPlaylistDialog,
+    displaySnackbar,
+} from '../../../utils/arms/global/reducer'
+import { selectSelectPlaylistDialogMode } from '../../../utils/arms/global/selectors'
+
+const defaultItemResourceId = {
+    kind: '',
+    videoId: '',
+}
 
 function Content({
     playlistId,
@@ -36,23 +45,25 @@ function Content({
     playlistsListItems: IPlaylistsListItems
     setPlaylistsListItems: Function
 }) {
-    const { dispatch, state } = useContext(UserDataContext)
+    const dispatch = useAppDispatch()
 
     const userAccessToken = useAppSelector(selectUserAccessToken)
+    const selectPlaylistDialogMode = useAppSelector(selectSelectPlaylistDialogMode)
 
     const [anchorEl, setAnchorEl] = useState(null)
     const [anchorCurrentIemResourceId, setAnchorCurrentIemResourceId] = useState(defaultItemResourceId)
     const [anchorCurrentItemId, setAnchorCurrentItemId] = useState('')
 
     const handleDeleteClick = (itemId: string) => {
-        dispatch({
-            type: DialogActionTypes.DISPLAY_CONFIRM_ACTION_DIALOG,
-            confirmActionDialogContentMessage: 'Etes vous sur de vouloir supprimer cette vidéo ?',
-            confirmActionDialogExecuteButtonLabel: 'Supprimer',
-            confirmActionDialogOnExecute: () => {
-                ExecuteDeleteClick(itemId)
-            },
-        })
+        dispatch(
+            displayConfirmActionDialog({
+                confirmActionDialogContentMessage: 'Etes vous sur de vouloir supprimer cette vidéo ?',
+                confirmActionDialogExecuteButtonLabel: 'Supprimer',
+                confirmActionDialogOnExecute: () => {
+                    ExecuteDeleteClick(itemId)
+                },
+            })
+        )
     }
 
     const ExecuteDeleteClick = (itemId: string) => {
@@ -65,11 +76,12 @@ function Content({
         setPlaylistsListItems(newPlaylistsListItems)
 
         deleteItemFromPlaylist(userAccessToken, itemId).then(() => {
-            dispatch({
-                type: DialogActionTypes.DISPLAY_SNACK_BAR,
-                snackbarSeverity: 'success',
-                snackbarContent: 'La vidéo a été supprimé de votre playlist avec succès',
-            })
+            dispatch(
+                displaySnackbar({
+                    snackbarSeverity: 'success',
+                    snackbarContent: 'La vidéo a été supprimé de votre playlist avec succès',
+                })
+            )
         })
     }
 
@@ -90,15 +102,16 @@ function Content({
     }
 
     const handleSaveSelectDialog = (selectedPlaylistId: string) => {
-        if (state.selectPlaylistDialogMode === 'saveIn') {
+        if (selectPlaylistDialogMode === 'saveIn') {
             insertItemToPlaylist(userAccessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
-                dispatch({
-                    type: DialogActionTypes.DISPLAY_SNACK_BAR,
-                    snackbarSeverity: 'success',
-                    snackbarContent: 'La vidéo a été enregistré dans une autre playlist',
-                })
+                dispatch(
+                    displaySnackbar({
+                        snackbarSeverity: 'success',
+                        snackbarContent: 'La vidéo a été ajouté à votre playlist avec succès',
+                    })
+                )
             })
-        } else if (state.selectPlaylistDialogMode === 'moveTo') {
+        } else if (selectPlaylistDialogMode === 'moveTo') {
             insertItemToPlaylist(userAccessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
                 deleteItemFromPlaylist(userAccessToken, anchorCurrentItemId).then(() => {
                     let newPlaylistsListItems = {
@@ -109,11 +122,12 @@ function Content({
 
                     setPlaylistsListItems(newPlaylistsListItems)
 
-                    dispatch({
-                        type: DialogActionTypes.DISPLAY_SNACK_BAR,
-                        snackbarSeverity: 'success',
-                        snackbarContent: 'La vidéo a été déplacé dans une autre playlist',
-                    })
+                    dispatch(
+                        displaySnackbar({
+                            snackbarSeverity: 'success',
+                            snackbarContent: 'La vidéo a été déplacé avec succès',
+                        })
+                    )
                 })
             })
         }
@@ -122,14 +136,15 @@ function Content({
     }
 
     const handleOpenSelectPlaylistDialog = (mode: string) => {
-        dispatch({
-            type: DialogActionTypes.DISPLAY_SELECT_PLAYLIST_DIALOG,
-            selectPlaylistDialogHideCurrentPlaylist: true,
-            currentPlaylistId: playlistId,
-            selectPlaylistDialogMode: mode,
-            selectPlaylistDialogOnClose: handleCloseSelectDialog,
-            selectPlaylistDialogOnSave: handleSaveSelectDialog,
-        })
+        dispatch(
+            displaySelectPlaylistDialog({
+                selectPlaylistDialogHideCurrentPlaylist: true,
+                selectPlaylistDialogMode: mode,
+                currentPlaylistId: playlistId,
+                selectPlaylistDialogOnClose: handleCloseSelectDialog,
+                selectPlaylistDialogOnSave: handleSaveSelectDialog,
+            })
+        )
     }
 
     const getThumbnailsFromItem = (Item: IPlaylistItemsContent): string => {

@@ -1,16 +1,16 @@
-import {combineReducers, configureStore} from '@reduxjs/toolkit';
-import userReducer from '../utils/arms/user/reducer';
-// import dialogReducer from '../utils/arms/dialog/reducer';
+import { combineReducers, configureStore } from '@reduxjs/toolkit'
+import userReducer from '../utils/arms/user/reducer'
+import globalReducer from '../utils/arms/global/reducer'
 
 const combinedReducer = combineReducers({
     user: userReducer,
-    // dialog: dialogReducer,
-});
+    global: globalReducer,
+})
 
 const store = configureStore({
-    reducer: combinedReducer
-});
+    reducer: combinedReducer,
+})
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
-export default store;
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
+export default store

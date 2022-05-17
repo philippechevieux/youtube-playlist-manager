@@ -8,10 +8,9 @@ import {
     MenuItem,
     ListItemText,
 } from '@mui/material'
-import { useAppSelector } from '../../../app/hooks'
+import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { selectUserAccessToken } from '../../../utils/arms/user/selectors'
-import { useEffect, useState, useContext } from 'react'
-import { UserDataContext } from '../../../utils/context/index'
+import { useEffect, useState } from 'react'
 import { updatePlaylistData } from '../../../utils/api'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 import PublicOutlinedIcon from '@mui/icons-material/PublicOutlined'
@@ -20,12 +19,21 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
 import './styles.css'
 import { IApiUpdatePlaylistParams } from '../../../utils/api/interface'
-import { DialogActionTypes } from '../../../utils/reducer'
+import { displaySnackbar, hideEditPlaylistDialog } from '../../../utils/arms/global/reducer'
+import {
+    selectEditPlaylistDialogData,
+    selectEditPlaylistDialogId,
+    selectEditPlaylistDialogOnClose,
+    selectIsEditPlaylistDialogOpen,
+} from '../../../utils/arms/global/selectors'
 
 function EditPlaylistDialog() {
-    const { dispatch, state } = useContext(UserDataContext)
-
+    const dispatch = useAppDispatch()
     const userAccessToken = useAppSelector(selectUserAccessToken)
+    const isEditPlaylistDialogOpen = useAppSelector(selectIsEditPlaylistDialogOpen)
+    const editPlaylistDialogId = useAppSelector(selectEditPlaylistDialogId)
+    const editPlaylistDialogOnClose = useAppSelector(selectEditPlaylistDialogOnClose)
+    const editPlaylistDialogData = useAppSelector(selectEditPlaylistDialogData)
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -48,15 +56,11 @@ function EditPlaylistDialog() {
     }
 
     const onClose = () => {
-        dispatch({
-            type: DialogActionTypes.HIDE_EDIT_PLAYLIST_DIALOG,
-        })
+        dispatch(hideEditPlaylistDialog())
     }
 
     const onSave = () => {
-        dispatch({
-            type: DialogActionTypes.HIDE_EDIT_PLAYLIST_DIALOG,
-        })
+        dispatch(hideEditPlaylistDialog())
 
         const dataToSave: IApiUpdatePlaylistParams = {
             title: title,
@@ -64,32 +68,34 @@ function EditPlaylistDialog() {
             privacyStatus: status,
         }
 
-        updatePlaylistData(userAccessToken, state.editPlaylistDialogId, dataToSave).then((updatedData) => {
-            state.editPlaylistDialogOnClose(updatedData)
-            dispatch({
-                type: DialogActionTypes.DISPLAY_SNACK_BAR,
-                snackbarSeverity: 'success',
-                snackbarContent: 'Les informations de votre playlist ont été modifiés avec succès',
-            })
+        updatePlaylistData(userAccessToken, editPlaylistDialogId, dataToSave).then((updatedData) => {
+            editPlaylistDialogOnClose(updatedData)
+
+            dispatch(
+                displaySnackbar({
+                    snackbarSeverity: 'success',
+                    snackbarContent: 'Les informations de votre playlist ont été modifiés avec succès',
+                })
+            )
         })
     }
 
     useEffect(() => {
-        setTitle(state.editPlaylistDialogData.snippet.localized.title)
-        setTitleError(state.editPlaylistDialogData.snippet.localized.title.length === 0)
-        setDescription(state.editPlaylistDialogData.snippet.localized.description)
-        setStatus(state.editPlaylistDialogData.status.privacyStatus)
-        setCanSave(state.editPlaylistDialogData.snippet.localized.title.length === 0)
-    }, [state.editPlaylistDialogData])
+        setTitle(editPlaylistDialogData.snippet.localized.title)
+        setTitleError(editPlaylistDialogData.snippet.localized.title.length === 0)
+        setDescription(editPlaylistDialogData.snippet.localized.description)
+        setStatus(editPlaylistDialogData.status.privacyStatus)
+        setCanSave(editPlaylistDialogData.snippet.localized.title.length === 0)
+    }, [editPlaylistDialogData])
 
     return (
-        <Dialog open={state.isEditPlaylistDialogOpen} fullWidth maxWidth="sm">
+        <Dialog open={isEditPlaylistDialogOpen} fullWidth maxWidth="sm">
             <DialogTitle id="alert-dialog-title">
-                Editer la playlist : {state.editPlaylistDialogData.snippet.localized.title}
+                Editer la playlist : {editPlaylistDialogData.snippet.localized.title}
             </DialogTitle>
             <DialogContent>
                 <TextField
-                    error={titleError && state.isEditPlaylistDialogOpen}
+                    error={titleError && isEditPlaylistDialogOpen}
                     required
                     id="dsqds"
                     margin="normal"
@@ -140,7 +146,7 @@ function EditPlaylistDialog() {
             <DialogActions>
                 <Button onClick={onClose}>Fermer</Button>
                 <Button
-                    disabled={canSave && state.isEditPlaylistDialogOpen}
+                    disabled={canSave && isEditPlaylistDialogOpen}
                     variant="contained"
                     color="secondary"
                     startIcon={<SaveOutlinedIcon />}
