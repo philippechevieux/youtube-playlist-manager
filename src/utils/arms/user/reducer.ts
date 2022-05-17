@@ -1,13 +1,13 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import { userDefaultData } from './state';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { userDefaultData } from './state'
 
 export const userSlice = createSlice({
     name: 'user',
     initialState: userDefaultData,
     reducers: {
-        setUserLogin : (state: any, action: PayloadAction<{googleLoginResponse: any}>) => {
+        setUserLogin: (state: any, action: PayloadAction<{ googleLoginResponse: any }>) => {
             if (!state.isUserLogin) {
-                state.accessToken = action.payload.googleLoginResponse.accessToken;
+                state.accessToken = action.payload.googleLoginResponse.accessToken
                 state.googleId = action.payload.googleLoginResponse.profileObj['googleId']
                 state.email = action.payload.googleLoginResponse.profileObj['email']
                 state.avatar = action.payload.googleLoginResponse.profileObj['imageUrl']
@@ -17,7 +17,7 @@ export const userSlice = createSlice({
                 state.isUserLogin = true
             }
         },
-        setUserLogout : (state: any) => {
+        setUserLogout: (state: any) => {
             state.accessToken = userDefaultData.accessToken
             state.googleId = userDefaultData.googleId
             state.email = userDefaultData.email
@@ -26,13 +26,13 @@ export const userSlice = createSlice({
             state.lastName = userDefaultData.lastName
             state.fullName = userDefaultData.fullName
             state.isUserLogin = userDefaultData.isUserLogin
-        }
-    }
-});
+        },
+        setUserLanguage: (state: any, action: PayloadAction<{ language: string }>) => {
+            state.language = action.payload.language
+        },
+    },
+})
 
-export const {
-    setUserLogin,
-    setUserLogout,
-} = userSlice.actions;
+export const { setUserLogin, setUserLogout, setUserLanguage } = userSlice.actions
 
-export default userSlice.reducer;
+export default userSlice.reducer

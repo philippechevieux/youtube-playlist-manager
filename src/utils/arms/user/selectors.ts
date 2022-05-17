@@ -11,3 +11,7 @@ export const selectUserFullName = (state: RootState) => {
 export const selectUserAvatar = (state: RootState) => {
     return state.user.avatar
 }
+
+export const selectUserLanguage = (state: RootState) => {
+    return state.user.language
+}

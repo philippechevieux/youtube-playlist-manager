@@ -19,27 +19,23 @@ import AvatarCustom from '../../components/AvatarCustom'
 
 import { useHistory } from 'react-router'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { selectUserFullName, selectUserAvatar } from '../../utils/arms/user/selectors'
-
-// import { useContext } from 'react'
-// import { UserDataContext } from '../../utils/context'
-// import { UserDataActionTypes } from '../../utils/reducer'
+import { setUserLanguage } from '../../utils/arms/user/reducer'
+import { selectUserFullName, selectUserAvatar, selectUserLanguage } from '../../utils/arms/user/selectors'
 
 function Profile() {
     let history = useHistory()
-    // const { state, dispatch } = useContext(UserDataContext)
+
+    const dispatch = useAppDispatch()
     const userFullName = useAppSelector(selectUserFullName)
     const userAvatar = useAppSelector(selectUserAvatar)
+    const userLanguage = useAppSelector(selectUserLanguage)
 
     const handleHomeClick = () => {
         history.push('/')
     }
 
     const handleLanguageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        // dispatch({
-        //     type: UserDataActionTypes.SET_LANGUAGE,
-        //     langague: event.target.value,
-        // })
+        dispatch(setUserLanguage({ language: event.target.value }))
     }
 
     return (
@@ -83,7 +79,7 @@ function Profile() {
                             margin="normal"
                             color="secondary"
                             label="Langue"
-                            value={state.language}
+                            value={userLanguage}
                             onChange={handleLanguageChange}
                             fullWidth
                             variant="outlined"
