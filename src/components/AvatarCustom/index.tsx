@@ -1,10 +1,10 @@
 import AccountCircle from '@mui/icons-material/AccountCircle'
 import Avatar from '@mui/material/Avatar'
-import { useContext } from 'react'
-import { UserDataContext } from '../../utils/context'
+// import { useContext } from 'react'
+// import { UserDataContext } from '../../utils/context'
 
 function AvatarCustom({ size }: { size: string }) {
-    const { state } = useContext(UserDataContext)
+    // const { state } = useContext(UserDataContext)
 
     function getAvatarSize(paramSize: string) {
         switch (paramSize) {

@@ -4,8 +4,8 @@ import { IPlaylistsItemData } from '../context/interface'
 import { IResourceId } from '../api/interface'
 
 export enum UserDataActionTypes {
-    USER_LOGIN = 'USER_LOGIN',
-    USER_LOGOUT = 'USER_LOGOUT',
+    // USER_LOGIN = 'USER_LOGIN',
+    // USER_LOGOUT = 'USER_LOGOUT',
     SET_LANGUAGE = 'SET_LANGUAGE',
 }
 
@@ -21,13 +21,13 @@ export enum DialogActionTypes {
 }
 
 export type ReducerAction =
-    | {
-          type: UserDataActionTypes.USER_LOGIN
-          googleLoginResponse: any
-      }
-    | {
-          type: UserDataActionTypes.USER_LOGOUT
-      }
+    // | {
+    //       type: UserDataActionTypes.USER_LOGIN
+    //       googleLoginResponse: any
+    //   }
+    // | {
+    //       type: UserDataActionTypes.USER_LOGOUT
+    //   }
     | {
           type: UserDataActionTypes.SET_LANGUAGE
           langague: string
@@ -72,33 +72,34 @@ export type ReducerAction =
 
 export const UserDataReducer = (state: IUserData, action: ReducerAction): IUserData => {
     switch (action.type) {
-        case UserDataActionTypes.USER_LOGIN: {
-            if (state.isUserLogin === false) {
-                let newData = { ...userDefaultData }
-                newData.accessToken = action.googleLoginResponse.accessToken
-                newData.googleId = action.googleLoginResponse.profileObj['googleId']
-                newData.email = action.googleLoginResponse.profileObj['email']
-                newData.avatar = action.googleLoginResponse.profileObj['imageUrl']
-                newData.firstName = action.googleLoginResponse.profileObj['givenName']
-                newData.lastName = action.googleLoginResponse.profileObj['familyName']
-                newData.fullName = action.googleLoginResponse.profileObj['name']
-                newData.isUserLogin = true
+        // case UserDataActionTypes.USER_LOGIN: {
+        //     if (state.isUserLogin === false) {
+        //         let newData = { ...userDefaultData }
+        //         newData.accessToken = action.googleLoginResponse.accessToken
+        //         newData.googleId = action.googleLoginResponse.profileObj['googleId']
+        //         newData.email = action.googleLoginResponse.profileObj['email']
+        //         newData.avatar = action.googleLoginResponse.profileObj['imageUrl']
+        //         newData.firstName = action.googleLoginResponse.profileObj['givenName']
+        //         newData.lastName = action.googleLoginResponse.profileObj['familyName']
+        //         newData.fullName = action.googleLoginResponse.profileObj['name']
+        //         newData.isUserLogin = true
 
-                return newData
-            }
+        //         return newData
+        //     }
 
-            return state
-        }
-        case UserDataActionTypes.USER_LOGOUT: {
-            let newData = { ...userDefaultData }
-            newData.isUserLogin = false
+        //     return state
+        // }
+        // case UserDataActionTypes.USER_LOGOUT: {
+        //     let newData = { ...userDefaultData }
+        //     newData.isUserLogin = false
 
-            return newData
-        }
+        //     return newData
+        // }
         case UserDataActionTypes.SET_LANGUAGE: {
             let newData = { ...state }
 
-            newData.language = action.langague
+            // TODO: 
+            // newData.language = action.langague
 
             return newData
         }

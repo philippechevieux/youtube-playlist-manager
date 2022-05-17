@@ -14,22 +14,29 @@ import EditPlaylistDialog from '../Dialog/EditPlaylistDialog'
 import SelectPlaylistDialog from './../Dialog/SelectPlaylistDialog/index'
 import Profile from '../../pages/Profile'
 
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { selectIsUserLogin } from '../../utils/arms/user/selectors';
+
+
 function Body() {
-    const { dispatch, state } = useContext(UserDataContext)
+    // const { dispatch, state } = useContext(UserDataContext)
+    const isUserLogin = useAppSelector(selectIsUserLogin);
 
     const displayAlertFromSnackbar = () => {
-        if (state.snackbarSeverity === 'success') {
-            return <Alert severity="success">{state.snackbarContent}</Alert>
-        } else if (state.snackbarSeverity === 'error') {
-            return <Alert severity="error">{state.snackbarContent}</Alert>
-        }
+        // if (state.snackbarSeverity === 'success') {
+        //     return <Alert severity="success">{state.snackbarContent}</Alert>
+        // } else if (state.snackbarSeverity === 'error') {
+        //     return <Alert severity="error">{state.snackbarContent}</Alert>
+        // }
+
+        return <p></p>
     }
 
     return (
         <div>
             <div className="body-spacer"></div>
             <div className="body-container">
-                {!state.isUserLogin ? (
+                {!isUserLogin ? (
                     <LoginScreen />
                 ) : (
                     <>
@@ -53,12 +60,12 @@ function Body() {
 
             <Snackbar
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                open={state.isSnackbarDisplayed}
+                // open={state.isSnackbarDisplayed}
                 autoHideDuration={5000}
                 onClose={() => {
-                    dispatch({
-                        type: DialogActionTypes.HIDE_SNACK_BAR,
-                    })
+                    // dispatch({
+                    //     type: DialogActionTypes.HIDE_SNACK_BAR,
+                    // })
                 }}
             >
                 {displayAlertFromSnackbar()}

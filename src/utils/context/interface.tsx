@@ -3,15 +3,15 @@ import { IResourceId } from '../api/interface'
 import { ReducerAction } from '../reducer'
 
 export interface IUserData {
-    accessToken: string
-    language: string
-    googleId: string
-    email: string
-    avatar: string
-    firstName: string
-    lastName: string
-    fullName: string
-    isUserLogin: boolean
+    // accessToken: string
+    // language: string
+    // googleId: string
+    // email: string
+    // avatar: string
+    // firstName: string
+    // lastName: string
+    // fullName: string
+    // isUserLogin: boolean
     isSnackbarDisplayed: boolean
     snackbarSeverity: string
     snackbarContent: string

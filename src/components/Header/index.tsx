@@ -5,17 +5,17 @@ import { Menu, MenuItem, IconButton, Typography, Toolbar, Box, AppBar, Divider, 
 import AvatarCustom from '../AvatarCustom'
 import './styles.css'
 
-// import { GoogleLogin } from 'react-google-login'
-import { useState, useContext } from 'react'
-import { UserDataContext } from '../../utils/context'
+import { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { UserDataActionTypes } from '../../utils/reducer'
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { setUserLogout } from '../../utils/arms/user/reducer';
+import { selectIsUserLogin } from '../../utils/arms/user/selectors';
 
 function Header() {
     let history = useHistory()
 
-    const { state, dispatch } = useContext(UserDataContext)
-
+    const dispatch = useAppDispatch();
+    const isUserLogin = useAppSelector(selectIsUserLogin);
     const [anchorEl, setAnchorEl] = useState(null)
 
     // TODO: Search a fix for this any ...
@@ -32,7 +32,7 @@ function Header() {
     }
 
     const handleClickOnLogout = () => {
-        dispatch({ type: UserDataActionTypes.USER_LOGOUT })
+        dispatch(setUserLogout())
         setAnchorEl(null)
     }
 
@@ -45,7 +45,7 @@ function Header() {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="fixed">
                 <Toolbar>
-                    {state.isUserLogin && (
+                    {isUserLogin && (
                         <Tooltip title="Accueil">
                             <IconButton
                                 size="large"
@@ -62,7 +62,7 @@ function Header() {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Youtube Playlist Manager
                     </Typography>
-                    {state.isUserLogin && (
+                    {isUserLogin && (
                         <div>
                             <IconButton
                                 size="large"

@@ -1,9 +1,10 @@
 import { BrowserRouter as Router } from 'react-router-dom'
-import { UserDataProvider } from '../../utils/context'
+import { Provider } from 'react-redux';
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { CssBaseline } from '@mui/material'
 
 import './styles.css'
+import store from '../../app/store';
 import React from 'react'
 import Header from '../Header'
 import Body from '../Body'
@@ -36,12 +37,12 @@ function App() {
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Router>
-                <UserDataProvider>
+                <Provider store={store}>
                     <div className="app-container">
                         <Header />
                         <Body />
                     </div>
-                </UserDataProvider>
+                </Provider>
             </Router>
         </ThemeProvider>
     )
