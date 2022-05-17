@@ -15,3 +15,7 @@ export const selectUserAvatar = (state: RootState) => {
 export const selectUserLanguage = (state: RootState) => {
     return state.user.language
 }
+
+export const selectUserAccessToken = (state: RootState) => {
+    return state.user.accessToken
+}

@@ -7,7 +7,6 @@ import {
     IconButton,
     ListItemText,
     MenuItem,
-    Select,
     TextField,
     Toolbar,
     Tooltip,

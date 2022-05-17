@@ -8,6 +8,8 @@ import {
     MenuItem,
     ListItemText,
 } from '@mui/material'
+import { useAppSelector } from '../../../app/hooks'
+import { selectUserAccessToken } from '../../../utils/arms/user/selectors'
 import { useEffect, useState, useContext } from 'react'
 import { UserDataContext } from '../../../utils/context/index'
 import { updatePlaylistData } from '../../../utils/api'
@@ -22,6 +24,8 @@ import { DialogActionTypes } from '../../../utils/reducer'
 
 function EditPlaylistDialog() {
     const { dispatch, state } = useContext(UserDataContext)
+
+    const userAccessToken = useAppSelector(selectUserAccessToken)
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -60,7 +64,7 @@ function EditPlaylistDialog() {
             privacyStatus: status,
         }
 
-        updatePlaylistData(state.accessToken, state.editPlaylistDialogId, dataToSave).then((updatedData) => {
+        updatePlaylistData(userAccessToken, state.editPlaylistDialogId, dataToSave).then((updatedData) => {
             state.editPlaylistDialogOnClose(updatedData)
             dispatch({
                 type: DialogActionTypes.DISPLAY_SNACK_BAR,

@@ -1,18 +1,14 @@
 import './styles.css'
 import loginScreenIllustration from '../../assets/loginScreenIllustration.png'
-// import { useContext } from 'react'
-// import { UserDataContext } from '../../utils/context'
-// import { UserDataActionTypes } from '../../utils/reducer'
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { setUserLogin } from '../../utils/arms/user/reducer';
+import { useAppDispatch } from '../../app/hooks'
+import { setUserLogin } from '../../utils/arms/user/reducer'
 import { GoogleLogin } from 'react-google-login'
 
 function Login() {
-    // const { dispatch } = useContext(UserDataContext)
-    const dispatch = useAppDispatch();
+    const dispatch = useAppDispatch()
 
     const handleLogin = (response: object) => {
-        dispatch(setUserLogin({googleLoginResponse: response}))
+        dispatch(setUserLogin({ googleLoginResponse: response }))
     }
 
     const handleLoginFailure = () => {

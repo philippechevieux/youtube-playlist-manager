@@ -14,13 +14,12 @@ import EditPlaylistDialog from '../Dialog/EditPlaylistDialog'
 import SelectPlaylistDialog from './../Dialog/SelectPlaylistDialog/index'
 import Profile from '../../pages/Profile'
 
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { selectIsUserLogin } from '../../utils/arms/user/selectors';
-
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { selectIsUserLogin } from '../../utils/arms/user/selectors'
 
 function Body() {
     // const { dispatch, state } = useContext(UserDataContext)
-    const isUserLogin = useAppSelector(selectIsUserLogin);
+    const isUserLogin = useAppSelector(selectIsUserLogin)
 
     const displayAlertFromSnackbar = () => {
         // if (state.snackbarSeverity === 'success') {

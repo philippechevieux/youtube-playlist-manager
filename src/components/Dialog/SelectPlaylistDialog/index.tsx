@@ -1,17 +1,22 @@
 import { Dialog, DialogTitle, DialogActions, Button, DialogContent } from '@mui/material'
 
 import './styles.css'
+import { useAppSelector } from '../../../app/hooks'
+import { selectUserAccessToken } from '../../../utils/arms/user/selectors'
 import { useCallback, useContext, useEffect, useState } from 'react'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
 import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined'
 import { UserDataContext } from './../../../utils/context/index'
 import { DialogActionTypes } from '../../../utils/reducer'
-import { deleteItemFromPlaylist, getYoutubePlaylists, insertItemToPlaylist } from './../../../utils/api/index'
+import { getYoutubePlaylists } from './../../../utils/api/index'
 import { IPlaylistsData } from '../../../utils/context/interface'
 import ListMode from './../../Playlist/ListMode/index'
 
 function SelectPlaylistDialog() {
     const { dispatch, state } = useContext(UserDataContext)
+
+    const userAccessToken = useAppSelector(selectUserAccessToken)
+
     const [playlistsListData, setPlaylistsListData] = useState<IPlaylistsData>({ items: [] })
     const [isLoading, setIsLoading] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
@@ -82,7 +87,7 @@ function SelectPlaylistDialog() {
         if (isLoaded === false && isLoading === false && state.isSelectPlaylistDialogOpen === true) {
             setIsLoading(true)
 
-            getYoutubePlaylists(state.accessToken, nextPageToken).then((data) => {
+            getYoutubePlaylists(userAccessToken, nextPageToken).then((data) => {
                 setIsLoading(false)
                 setIsLoaded(true)
 
@@ -101,7 +106,7 @@ function SelectPlaylistDialog() {
             })
         }
     }, [
-        state.accessToken,
+        userAccessToken,
         state.currentPlaylistId,
         state.isSelectPlaylistDialogOpen,
         state.selectPlaylistDialogHideCurrentPlaylist,

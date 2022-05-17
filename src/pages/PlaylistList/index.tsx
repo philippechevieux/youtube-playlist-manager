@@ -1,6 +1,5 @@
-import { useEffect, useContext, useState, useCallback } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { getYoutubePlaylists } from '../../utils/api'
-import { UserDataContext } from '../../utils/context/index'
 
 import { AppBar, Toolbar, IconButton, Button, Box, Typography, Tooltip } from '@mui/material'
 
@@ -16,11 +15,14 @@ import SortOutlinedIcon from '@mui/icons-material/SortOutlined'
 import { useHistory } from 'react-router-dom'
 import { IPlaylistsData } from '../../utils/context/interface'
 import { IPlaylistsItemData } from './../../utils/context/interface'
+import { useAppSelector } from '../../app/hooks'
+import { selectUserAccessToken } from '../../utils/arms/user/selectors'
 
 function PlaylistList() {
     let history = useHistory()
 
-    const { state } = useContext(UserDataContext)
+    const userAccessToken = useAppSelector(selectUserAccessToken)
+
     const [isLoading, setIsLoading] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
     const [nextPageToken, setNextPageToken] = useState('')
@@ -57,7 +59,7 @@ function PlaylistList() {
         if (isLoaded === false && isLoading === false) {
             setIsLoading(true)
 
-            getYoutubePlaylists(state.accessToken, nextPageToken).then((data) => {
+            getYoutubePlaylists(userAccessToken, nextPageToken).then((data) => {
                 setIsLoading(false)
                 setIsLoaded(true)
 
@@ -68,7 +70,7 @@ function PlaylistList() {
                 setNextPageToken(data.nextPageToken)
             })
         }
-    }, [state.accessToken, nextPageToken, isLoading, isLoaded, playlistsListData])
+    }, [userAccessToken, nextPageToken, isLoading, isLoaded, playlistsListData])
 
     const loadMorePlaylistList = () => {
         setIsLoaded(false)

@@ -24,6 +24,8 @@ import { defaultItemResourceId, UserDataContext } from '../../../utils/context'
 import { DialogActionTypes } from '../../../utils/reducer'
 import { IResourceId } from '../../../utils/api/interface'
 import { IPlaylistItemsContent, IPlaylistsListItems } from '../../../utils/context/interface'
+import { useAppSelector } from '../../../app/hooks'
+import { selectUserAccessToken } from '../../../utils/arms/user/selectors'
 
 function Content({
     playlistId,
@@ -35,6 +37,9 @@ function Content({
     setPlaylistsListItems: Function
 }) {
     const { dispatch, state } = useContext(UserDataContext)
+
+    const userAccessToken = useAppSelector(selectUserAccessToken)
+
     const [anchorEl, setAnchorEl] = useState(null)
     const [anchorCurrentIemResourceId, setAnchorCurrentIemResourceId] = useState(defaultItemResourceId)
     const [anchorCurrentItemId, setAnchorCurrentItemId] = useState('')
@@ -59,7 +64,7 @@ function Content({
 
         setPlaylistsListItems(newPlaylistsListItems)
 
-        deleteItemFromPlaylist(state.accessToken, itemId).then(() => {
+        deleteItemFromPlaylist(userAccessToken, itemId).then(() => {
             dispatch({
                 type: DialogActionTypes.DISPLAY_SNACK_BAR,
                 snackbarSeverity: 'success',
@@ -86,7 +91,7 @@ function Content({
 
     const handleSaveSelectDialog = (selectedPlaylistId: string) => {
         if (state.selectPlaylistDialogMode === 'saveIn') {
-            insertItemToPlaylist(state.accessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
+            insertItemToPlaylist(userAccessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
                 dispatch({
                     type: DialogActionTypes.DISPLAY_SNACK_BAR,
                     snackbarSeverity: 'success',
@@ -94,8 +99,8 @@ function Content({
                 })
             })
         } else if (state.selectPlaylistDialogMode === 'moveTo') {
-            insertItemToPlaylist(state.accessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
-                deleteItemFromPlaylist(state.accessToken, anchorCurrentItemId).then(() => {
+            insertItemToPlaylist(userAccessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
+                deleteItemFromPlaylist(userAccessToken, anchorCurrentItemId).then(() => {
                     let newPlaylistsListItems = {
                         items: playlistsListItems.items.filter(function (item) {
                             return item.id !== anchorCurrentItemId

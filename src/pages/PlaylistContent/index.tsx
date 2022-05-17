@@ -13,9 +13,14 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 
 import './styles.css'
 import { DialogActionTypes } from '../../utils/reducer'
+import { useAppSelector } from '../../app/hooks'
+import { selectUserAccessToken } from '../../utils/arms/user/selectors'
 
 function PlaylistContent() {
-    const { dispatch, state } = useContext(UserDataContext)
+    const { dispatch } = useContext(UserDataContext)
+
+    const userAccessToken = useAppSelector(selectUserAccessToken)
+
     const { playlistId } = useParams<{ playlistId: string }>()
     const [playlistData, setPlaylistData] = useState<IPlaylistsItemData>()
     const [isLoading, setIsLoading] = useState(false)
@@ -37,7 +42,7 @@ function PlaylistContent() {
         if (isLoaded === false && isLoading === false) {
             setIsLoading(true)
 
-            getYoutubePlaylistsItems(state.accessToken, playlistId, nextPageToken).then((data) => {
+            getYoutubePlaylistsItems(userAccessToken, playlistId, nextPageToken).then((data) => {
                 setIsLoading(false)
                 setIsLoaded(true)
 
@@ -48,7 +53,7 @@ function PlaylistContent() {
                 setNextPageToken(data.nextPageToken)
             })
         }
-    }, [state.accessToken, playlistId, nextPageToken, isLoading, isLoaded, playlistsListItems])
+    }, [userAccessToken, playlistId, nextPageToken, isLoading, isLoaded, playlistsListItems])
 
     const loadMorePlaylistItems = () => {
         setIsLoaded(false)
@@ -91,14 +96,14 @@ function PlaylistContent() {
     useEffect(() => {
         function getPlaylistData() {
             if (playlistData === undefined) {
-                getYoutubePlaylists(state.accessToken, undefined, [playlistId]).then((data) => {
+                getYoutubePlaylists(userAccessToken, undefined, [playlistId]).then((data) => {
                     setPlaylistData(data.items[0])
                 })
             }
         }
 
         getPlaylistData()
-    }, [dispatch, state.accessToken, playlistId, playlistData])
+    }, [dispatch, userAccessToken, playlistId, playlistData])
 
     return (
         <div className="playlist-content">
