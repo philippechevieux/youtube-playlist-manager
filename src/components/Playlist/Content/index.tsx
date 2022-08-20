@@ -24,12 +24,12 @@ import { IResourceId } from '../../../utils/api/interface'
 import { IPlaylistItemsContent, IPlaylistsListItems } from '../../../utils/context/interface'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { selectUserAccessToken } from '../../../utils/arms/user/selectors'
-import {
-    displayConfirmActionDialog,
-    displaySelectPlaylistDialog,
-    displaySnackbar,
-} from '../../../utils/arms/global/reducer'
-import { selectSelectPlaylistDialogMode } from '../../../utils/arms/global/selectors'
+// import {
+//     displayConfirmActionDialog,
+//     displaySelectPlaylistDialog,
+//     displaySnackbar,
+// } from '../../../utils/arms/global/reducer'
+// import { selectSelectPlaylistDialogMode } from '../../../utils/arms/global/selectors'
 
 const defaultItemResourceId = {
     kind: '',
@@ -48,22 +48,22 @@ function Content({
     const dispatch = useAppDispatch()
 
     const userAccessToken = useAppSelector(selectUserAccessToken)
-    const selectPlaylistDialogMode = useAppSelector(selectSelectPlaylistDialogMode)
+    // const selectPlaylistDialogMode = useAppSelector(selectSelectPlaylistDialogMode)
 
     const [anchorEl, setAnchorEl] = useState(null)
     const [anchorCurrentIemResourceId, setAnchorCurrentIemResourceId] = useState(defaultItemResourceId)
     const [anchorCurrentItemId, setAnchorCurrentItemId] = useState('')
 
     const handleDeleteClick = (itemId: string) => {
-        dispatch(
-            displayConfirmActionDialog({
-                confirmActionDialogContentMessage: 'Etes vous sur de vouloir supprimer cette vidéo ?',
-                confirmActionDialogExecuteButtonLabel: 'Supprimer',
-                confirmActionDialogOnExecute: () => {
-                    ExecuteDeleteClick(itemId)
-                },
-            })
-        )
+        // dispatch(
+        //     displayConfirmActionDialog({
+        //         confirmActionDialogContentMessage: 'Etes vous sur de vouloir supprimer cette vidéo ?',
+        //         confirmActionDialogExecuteButtonLabel: 'Supprimer',
+        //         confirmActionDialogOnExecute: () => {
+        //             ExecuteDeleteClick(itemId)
+        //         },
+        //     })
+        // )
     }
 
     const ExecuteDeleteClick = (itemId: string) => {
@@ -76,12 +76,12 @@ function Content({
         setPlaylistsListItems(newPlaylistsListItems)
 
         deleteItemFromPlaylist(userAccessToken, itemId).then(() => {
-            dispatch(
-                displaySnackbar({
-                    snackbarSeverity: 'success',
-                    snackbarContent: 'La vidéo a été supprimé de votre playlist avec succès',
-                })
-            )
+            // dispatch(
+            //     displaySnackbar({
+            //         snackbarSeverity: 'success',
+            //         snackbarContent: 'La vidéo a été supprimé de votre playlist avec succès',
+            //     })
+            // )
         })
     }
 
@@ -102,49 +102,49 @@ function Content({
     }
 
     const handleSaveSelectDialog = (selectedPlaylistId: string) => {
-        if (selectPlaylistDialogMode === 'saveIn') {
-            insertItemToPlaylist(userAccessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
-                dispatch(
-                    displaySnackbar({
-                        snackbarSeverity: 'success',
-                        snackbarContent: 'La vidéo a été ajouté à votre playlist avec succès',
-                    })
-                )
-            })
-        } else if (selectPlaylistDialogMode === 'moveTo') {
-            insertItemToPlaylist(userAccessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
-                deleteItemFromPlaylist(userAccessToken, anchorCurrentItemId).then(() => {
-                    let newPlaylistsListItems = {
-                        items: playlistsListItems.items.filter(function (item) {
-                            return item.id !== anchorCurrentItemId
-                        }),
-                    }
+        // if (selectPlaylistDialogMode === 'saveIn') {
+        //     insertItemToPlaylist(userAccessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
+        //         dispatch(
+        //             displaySnackbar({
+        //                 snackbarSeverity: 'success',
+        //                 snackbarContent: 'La vidéo a été ajouté à votre playlist avec succès',
+        //             })
+        //         )
+        //     })
+        // } else if (selectPlaylistDialogMode === 'moveTo') {
+        //     insertItemToPlaylist(userAccessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
+        //         deleteItemFromPlaylist(userAccessToken, anchorCurrentItemId).then(() => {
+        //             let newPlaylistsListItems = {
+        //                 items: playlistsListItems.items.filter(function (item) {
+        //                     return item.id !== anchorCurrentItemId
+        //                 }),
+        //             }
 
-                    setPlaylistsListItems(newPlaylistsListItems)
+        //             setPlaylistsListItems(newPlaylistsListItems)
 
-                    dispatch(
-                        displaySnackbar({
-                            snackbarSeverity: 'success',
-                            snackbarContent: 'La vidéo a été déplacé avec succès',
-                        })
-                    )
-                })
-            })
-        }
+        //             dispatch(
+        //                 displaySnackbar({
+        //                     snackbarSeverity: 'success',
+        //                     snackbarContent: 'La vidéo a été déplacé avec succès',
+        //                 })
+        //             )
+        //         })
+        //     })
+        // }
 
         handleCloseMoreMenu()
     }
 
     const handleOpenSelectPlaylistDialog = (mode: string) => {
-        dispatch(
-            displaySelectPlaylistDialog({
-                selectPlaylistDialogHideCurrentPlaylist: true,
-                selectPlaylistDialogMode: mode,
-                currentPlaylistId: playlistId,
-                selectPlaylistDialogOnClose: handleCloseSelectDialog,
-                selectPlaylistDialogOnSave: handleSaveSelectDialog,
-            })
-        )
+        // dispatch(
+        //     displaySelectPlaylistDialog({
+        //         selectPlaylistDialogHideCurrentPlaylist: true,
+        //         selectPlaylistDialogMode: mode,
+        //         currentPlaylistId: playlistId,
+        //         selectPlaylistDialogOnClose: handleCloseSelectDialog,
+        //         selectPlaylistDialogOnSave: handleSaveSelectDialog,
+        //     })
+        // )
     }
 
     const getThumbnailsFromItem = (Item: IPlaylistItemsContent): string => {

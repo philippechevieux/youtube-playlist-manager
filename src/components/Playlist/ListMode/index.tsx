@@ -15,10 +15,10 @@ import IconButton from '@mui/material/IconButton'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 
-import { IPlaylistsData, IPlaylistsItemData } from '../../../utils/context/interface'
 import './styles.css'
 import { useAppDispatch } from '../../../app/hooks'
-import { displayEditPlaylistDialog } from '../../../utils/arms/global/reducer'
+import { ItemInterface, ItemsInterface } from '../../../utils/arms/playlists/state'
+// import { displayEditPlaylistDialog } from '../../../utils/arms/global/reducer'
 
 function ListMode({
     playlistsListData,
@@ -28,7 +28,7 @@ function ListMode({
     updatePlaylistListData,
     handlePlaylistClickOnList,
 }: {
-    playlistsListData: IPlaylistsData
+    playlistsListData: ItemsInterface
     setCanExecuteAfterSelect?: Function
     setSelectedPlaylistId?: Function
     mode?: string
@@ -51,7 +51,7 @@ function ListMode({
         }
     }
 
-    const handleListItemSecondaryActionByMode = (PlaylistData: IPlaylistsItemData) => {
+    const handleListItemSecondaryActionByMode = (PlaylistData: ItemInterface) => {
         if (mode === 'default' && updatePlaylistListData && handlePlaylistClickOnList) {
             return (
                 <div>
@@ -61,13 +61,13 @@ function ListMode({
                             edge="end"
                             aria-label="share"
                             onClick={() => {
-                                dispatch(
-                                    displayEditPlaylistDialog({
-                                        editPlaylistDialogData: PlaylistData,
-                                        editPlaylistDialogOnClose: updatePlaylistListData,
-                                        editPlaylistDialogId: PlaylistData.id,
-                                    })
-                                )
+                                // dispatch(
+                                //     displayEditPlaylistDialog({
+                                //         editPlaylistDialogData: PlaylistData,
+                                //         editPlaylistDialogOnClose: updatePlaylistListData,
+                                //         editPlaylistDialogId: PlaylistData.id,
+                                //     })
+                                // )
                             }}
                         >
                             <EditOutlinedIcon />
@@ -87,7 +87,7 @@ function ListMode({
         }
     }
 
-    const handleListItemAvatarByMode = (PlaylistData: IPlaylistsItemData) => {
+    const handleListItemAvatarByMode = (PlaylistData: ItemInterface) => {
         if (mode === 'default') {
             return (
                 <Avatar
@@ -109,7 +109,7 @@ function ListMode({
         }
     }
 
-    const handleRadioButtonByMode = (PlaylistData: IPlaylistsItemData) => {
+    const handleRadioButtonByMode = (PlaylistData: ItemInterface) => {
         if (mode === 'selectPlaylist') {
             return (
                 <Radio
@@ -123,7 +123,7 @@ function ListMode({
         }
     }
 
-    const handleClickOnItem = (PlaylistData: IPlaylistsItemData) => {
+    const handleClickOnItem = (PlaylistData: ItemInterface) => {
         if (mode === 'selectPlaylist') {
             setSelectedPlaylist(PlaylistData.id)
 

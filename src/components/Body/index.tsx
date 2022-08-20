@@ -13,27 +13,27 @@ import Profile from '../../pages/Profile'
 
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { selectIsUserLogin } from '../../utils/arms/user/selectors'
-import { hideSnackbar } from '../../utils/arms/global/reducer'
-import {
-    selectIsSnackbarDisplayed,
-    selectSnackbarContent,
-    selectSnackbarSeverity,
-} from '../../utils/arms/global/selectors'
+// import { hideSnackbar } from '../../utils/arms/global/reducer'
+// import {
+//     selectIsSnackbarDisplayed,
+//     selectSnackbarContent,
+//     selectSnackbarSeverity,
+// } from '../../utils/arms/global/selectors'
 
 function Body() {
     const dispatch = useAppDispatch()
 
     const isUserLogin = useAppSelector(selectIsUserLogin)
-    const isSnackbarDisplayed = useAppSelector(selectIsSnackbarDisplayed)
-    const snackbarSeverity = useAppSelector(selectSnackbarSeverity)
-    const snackbarContent = useAppSelector(selectSnackbarContent)
+    // const isSnackbarDisplayed = useAppSelector(selectIsSnackbarDisplayed)
+    // const snackbarSeverity = useAppSelector(selectSnackbarSeverity)
+    // const snackbarContent = useAppSelector(selectSnackbarContent)
 
     const displayAlertFromSnackbar = () => {
-        if (snackbarSeverity === 'success') {
-            return <Alert severity="success">{snackbarContent}</Alert>
-        } else if (snackbarSeverity === 'error') {
-            return <Alert severity="error">{snackbarContent}</Alert>
-        }
+        // if (snackbarSeverity === 'success') {
+        //     return <Alert severity="success">{snackbarContent}</Alert>
+        // } else if (snackbarSeverity === 'error') {
+        //     return <Alert severity="error">{snackbarContent}</Alert>
+        // }
     }
 
     return (
@@ -62,7 +62,7 @@ function Body() {
                 )}
             </div>
 
-            <Snackbar
+            {/* <Snackbar
                 anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                 open={isSnackbarDisplayed}
                 autoHideDuration={5000}
@@ -71,7 +71,7 @@ function Body() {
                 }}
             >
                 {displayAlertFromSnackbar()}
-            </Snackbar>
+            </Snackbar> */}
         </div>
     )
 }

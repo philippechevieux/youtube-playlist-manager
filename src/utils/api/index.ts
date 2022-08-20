@@ -6,7 +6,7 @@ export function getYoutubePlaylists(accessToken: string, pageToken?: string, pla
     const urlParams: IApiUrlParams = {
         part: 'snippet,contentDetails,id,localizations,player,snippet,status',
         mine: true,
-        maxResults: 50,
+        maxResults: 10,
     }
 
     if (pageToken !== undefined) {

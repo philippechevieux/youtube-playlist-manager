@@ -1,3 +1,4 @@
 {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "prettier.configPath": "C:\\Users\\phili\\Documents\\Dev\\youtube-playlist-manager\\.prettierrc"
 }

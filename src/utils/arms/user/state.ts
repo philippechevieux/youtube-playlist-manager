@@ -19,5 +19,5 @@ export const userDefaultData: UserDataInterface = {
     firstName: '',
     lastName: '',
     fullName: '',
-    isUserLogin: false
+    isUserLogin: false,
 }

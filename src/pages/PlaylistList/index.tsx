@@ -13,20 +13,31 @@ import ViewModuleOutlinedIcon from '@mui/icons-material/ViewModuleOutlined'
 import ListOutlinedIcon from '@mui/icons-material/ListOutlined'
 import SortOutlinedIcon from '@mui/icons-material/SortOutlined'
 import { useHistory } from 'react-router-dom'
-import { IPlaylistsData } from '../../utils/context/interface'
-import { IPlaylistsItemData } from './../../utils/context/interface'
-import { useAppSelector } from '../../app/hooks'
+// import { IPlaylistsData } from '../../utils/context/interface'
+// import { IPlaylistsItemData } from './../../utils/context/interface'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { selectUserAccessToken } from '../../utils/arms/user/selectors'
+import { addPlaylists } from '../../utils/arms/playlists/reducer'
+import { useFetchPlaylists } from './hook'
+import { selectPlaylistsItems, selectPlaylistsNextPageToken } from '../../utils/arms/playlists/selectors'
+import { ItemInterface } from '../../utils/arms/playlists/state'
 
 function PlaylistList() {
     let history = useHistory()
 
     const userAccessToken = useAppSelector(selectUserAccessToken)
+    const nextPageTokenInStore = useAppSelector(selectPlaylistsNextPageToken)
+    const playlistsItems = useAppSelector(selectPlaylistsItems)
 
-    const [isLoading, setIsLoading] = useState(false)
-    const [isLoaded, setIsLoaded] = useState(false)
-    const [nextPageToken, setNextPageToken] = useState('')
-    const [playlistsListData, setPlaylistsListData] = useState<IPlaylistsData>({ items: [] })
+    const [nextPageToken, setNextPageToken] = useState<string | undefined>(undefined)
+
+    const { arePlaylistsLoading, arePlaylistsLoaded } = useFetchPlaylists(userAccessToken, nextPageToken)
+
+    // const dispatch = useAppDispatch()
+    // const [isLoading, setIsLoading] = useState(false)
+    // const [isLoaded, setIsLoaded] = useState(false)
+    // const [nextPageToken, setNextPageToken] = useState('')
+    // const [playlistsListData, setPlaylistsListData] = useState<IPlaylistsData>({ items: [] })
     const [playlistActiveDisplayMode, setPlaylistActiveDisplayMode] = useState('mosaic')
 
     const handlePlaylistDisplayMode = (mode: string) => {
@@ -39,47 +50,21 @@ function PlaylistList() {
         history.push('/playlist/' + id)
     }
 
-    const updatePlaylistListData = (data: IPlaylistsItemData) => {
-        const playlistId = data.id
-
-        const newPlaylistIems = playlistsListData.items.map((item) => {
-            if (item.id === playlistId) {
-                item = data
-            }
-
-            return item
-        })
-
-        playlistsListData.items = newPlaylistIems
-
-        setPlaylistsListData(playlistsListData)
+    const updatePlaylistListData = (data: ItemInterface) => {
+        // const playlistId = data.id
+        // const newPlaylistIems = playlistsListData.items.map((item) => {
+        //     if (item.id === playlistId) {
+        //         item = data
+        //     }
+        //     return item
+        // })
+        // playlistsListData.items = newPlaylistIems
+        // setPlaylistsListData(playlistsListData)
     }
-
-    const loadPlaylistsList = useCallback(() => {
-        if (isLoaded === false && isLoading === false) {
-            setIsLoading(true)
-
-            getYoutubePlaylists(userAccessToken, nextPageToken).then((data) => {
-                setIsLoading(false)
-                setIsLoaded(true)
-
-                const newItems = [...playlistsListData.items, ...data.items]
-                data.items = newItems
-
-                setPlaylistsListData(data)
-                setNextPageToken(data.nextPageToken)
-            })
-        }
-    }, [userAccessToken, nextPageToken, isLoading, isLoaded, playlistsListData])
 
     const loadMorePlaylistList = () => {
-        setIsLoaded(false)
-        loadPlaylistsList()
+        setNextPageToken(nextPageTokenInStore)
     }
-
-    useEffect(() => {
-        loadPlaylistsList()
-    }, [loadPlaylistsList])
 
     return (
         <div className="playlist-list">
@@ -129,27 +114,27 @@ function PlaylistList() {
                 </Box>
             </AppBar>
 
-            {playlistsListData && playlistActiveDisplayMode === 'mosaic' && (
+            {playlistsItems && playlistActiveDisplayMode === 'mosaic' && (
                 <MosaicMode
-                    playlistsListData={playlistsListData}
+                    playlistsListData={{ items: playlistsItems }}
                     updatePlaylistListData={updatePlaylistListData}
                     handlePlaylistClickOnList={handlePlaylistClickOnList}
                 />
             )}
 
-            {playlistsListData && playlistActiveDisplayMode === 'list' && (
+            {playlistsItems && playlistActiveDisplayMode === 'list' && (
                 <ListMode
-                    playlistsListData={playlistsListData}
+                    playlistsListData={{ items: playlistsItems }}
                     updatePlaylistListData={updatePlaylistListData}
                     handlePlaylistClickOnList={handlePlaylistClickOnList}
                 />
             )}
 
-            {/* {isLoaded && !playlistsListData && <div>Rien</div>} */}
+            {arePlaylistsLoaded && playlistsItems.length === 0 && <div>Rien</div>}
 
-            {isLoading && <MosaicModeSkeleton />}
+            {arePlaylistsLoading && <MosaicModeSkeleton />}
 
-            {!isLoading && nextPageToken !== undefined && (
+            {!arePlaylistsLoading && nextPageTokenInStore !== undefined && (
                 <div className="see-more-container">
                     <Button
                         variant="outlined"

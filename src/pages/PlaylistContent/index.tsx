@@ -3,7 +3,7 @@ import { getYoutubePlaylists, getYoutubePlaylistsItems } from '../../utils/api'
 import { useParams } from 'react-router-dom'
 import { AppBar, Toolbar, IconButton, Button, Typography, Box, Tooltip } from '@mui/material'
 import { useHistory } from 'react-router-dom'
-import { IPlaylistsItemData, IPlaylistsListItems } from '../../utils/context/interface'
+import { IPlaylistsListItems } from '../../utils/context/interface'
 
 import Content from '../../components/Playlist/Content/index'
 import ContentSkeleton from '../../components/Playlist/Content/Skeleton/index'
@@ -13,7 +13,8 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import './styles.css'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { selectUserAccessToken } from '../../utils/arms/user/selectors'
-import { displayEditPlaylistDialog } from '../../utils/arms/global/reducer'
+import { ItemInterface } from '../../utils/arms/playlists/state'
+// import { displayEditPlaylistDialog } from '../../utils/arms/global/reducer'
 
 function PlaylistContent() {
     const dispatch = useAppDispatch()
@@ -21,7 +22,7 @@ function PlaylistContent() {
     const userAccessToken = useAppSelector(selectUserAccessToken)
 
     const { playlistId } = useParams<{ playlistId: string }>()
-    const [playlistData, setPlaylistData] = useState<IPlaylistsItemData>()
+    const [playlistData, setPlaylistData] = useState<ItemInterface>()
     const [isLoading, setIsLoading] = useState(false)
     const [isLoaded, setIsLoaded] = useState(false)
     const [playlistsListItems, setPlaylistsListItems] = useState<IPlaylistsListItems>({ items: [] })
@@ -131,13 +132,13 @@ function PlaylistContent() {
                                 aria-haspopup="true"
                                 onClick={() => {
                                     if (playlistData !== undefined) {
-                                        dispatch(
-                                            displayEditPlaylistDialog({
-                                                editPlaylistDialogData: playlistData,
-                                                editPlaylistDialogOnClose: setPlaylistData,
-                                                editPlaylistDialogId: playlistId,
-                                            })
-                                        )
+                                        // dispatch(
+                                        //     displayEditPlaylistDialog({
+                                        //         editPlaylistDialogData: playlistData,
+                                        //         editPlaylistDialogOnClose: setPlaylistData,
+                                        //         editPlaylistDialogId: playlistId,
+                                        //     })
+                                        // )
                                     }
                                 }}
                                 color="inherit"

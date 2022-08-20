@@ -3,18 +3,18 @@ import { Card, CardActions, CardContent, CardMedia, Grid, Tooltip, Typography } 
 import IconButton from '@mui/material/IconButton'
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 
-import { IPlaylistsData } from '../../../utils/context/interface'
 import './styles.css'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import { useAppDispatch } from '../../../app/hooks'
-import { displayEditPlaylistDialog } from '../../../utils/arms/global/reducer'
+import { ItemsInterface } from '../../../utils/arms/playlists/state'
+// import { displayEditPlaylistDialog } from '../../../utils/arms/global/reducer'
 
 function MosaicMode({
     playlistsListData,
     updatePlaylistListData,
     handlePlaylistClickOnList,
 }: {
-    playlistsListData: IPlaylistsData
+    playlistsListData: ItemsInterface
     updatePlaylistListData: Function
     handlePlaylistClickOnList: Function
 }) {
@@ -53,13 +53,13 @@ function MosaicMode({
                                 <IconButton
                                     aria-label="edit"
                                     onClick={() => {
-                                        dispatch(
-                                            displayEditPlaylistDialog({
-                                                editPlaylistDialogData: PlaylistData,
-                                                editPlaylistDialogOnClose: updatePlaylistListData,
-                                                editPlaylistDialogId: PlaylistData.id,
-                                            })
-                                        )
+                                        // dispatch(
+                                        //     displayEditPlaylistDialog({
+                                        //         editPlaylistDialogData: PlaylistData,
+                                        //         editPlaylistDialogOnClose: updatePlaylistListData,
+                                        //         editPlaylistDialogId: PlaylistData.id,
+                                        //     })
+                                        // )
                                     }}
                                 >
                                     <EditOutlinedIcon />

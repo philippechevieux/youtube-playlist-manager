@@ -1,10 +1,10 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import userReducer from '../utils/arms/user/reducer'
-import globalReducer from '../utils/arms/global/reducer'
+import playlistsReducer from '../utils/arms/playlists/reducer'
 
 const combinedReducer = combineReducers({
     user: userReducer,
-    global: globalReducer,
+    playlists: playlistsReducer,
 })
 
 const store = configureStore({
