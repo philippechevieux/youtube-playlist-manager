@@ -6,16 +6,14 @@ export const userSlice = createSlice({
     initialState: userDefaultData,
     reducers: {
         setUserLogin: (state: any, action: PayloadAction<{ googleLoginResponse: any }>) => {
-            console.log('action.payload', action.payload)
-
             if (!state.isUserLogin) {
                 state.accessToken = action.payload.googleLoginResponse.accessToken
-                state.googleId = action.payload.googleLoginResponse.profileObj['googleId']
-                state.email = action.payload.googleLoginResponse.profileObj['email']
-                state.avatar = action.payload.googleLoginResponse.profileObj['imageUrl']
-                state.firstName = action.payload.googleLoginResponse.profileObj['givenName']
-                state.lastName = action.payload.googleLoginResponse.profileObj['familyName']
-                state.fullName = action.payload.googleLoginResponse.profileObj['name']
+                state.googleId = action.payload.googleLoginResponse.googleId
+                state.email = action.payload.googleLoginResponse.email
+                state.avatar = action.payload.googleLoginResponse.avatar
+                state.firstName = action.payload.googleLoginResponse.firstName
+                state.lastName = action.payload.googleLoginResponse.lastName
+                state.fullName = action.payload.googleLoginResponse.fullName
                 state.isUserLogin = true
             }
         },

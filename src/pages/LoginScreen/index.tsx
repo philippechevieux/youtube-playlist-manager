@@ -3,12 +3,25 @@ import loginScreenIllustration from '../../assets/loginScreenIllustration.png'
 import { useAppDispatch } from '../../app/hooks'
 import { setUserLogin } from '../../utils/arms/user/reducer'
 import { GoogleLogin } from 'react-google-login'
+import { UserDataInterface } from '../../utils/arms/user/state'
 
 function Login() {
     const dispatch = useAppDispatch()
 
-    const handleLogin = (response: object) => {
-        dispatch(setUserLogin({ googleLoginResponse: response }))
+    const handleLogin = (response: any) => {
+        const loginResponse: UserDataInterface = {
+            accessToken: response.accessToken,
+            language: 'fr',
+            googleId: response.profileObj.googleId,
+            email: response.profileObj.email,
+            avatar: response.profileObj.imageUrl,
+            firstName: response.profileObj.givenName,
+            lastName: response.profileObj.familyName,
+            fullName: response.profileObj.name,
+            isUserLogin: true,
+        }
+
+        dispatch(setUserLogin({ googleLoginResponse: loginResponse }))
     }
 
     const handleLoginFailure = () => {

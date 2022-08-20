@@ -24,6 +24,7 @@ import { IResourceId } from '../../../utils/api/interface'
 import { IPlaylistItemsContent, IPlaylistsListItems } from '../../../utils/context/interface'
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { selectUserAccessToken } from '../../../utils/arms/user/selectors'
+import { ContentsInterface } from '../../../utils/arms/playlistContents/state'
 // import {
 //     displayConfirmActionDialog,
 //     displaySelectPlaylistDialog,
@@ -42,7 +43,7 @@ function Content({
     setPlaylistsListItems,
 }: {
     playlistId: string
-    playlistsListItems: IPlaylistsListItems
+    playlistsListItems: ContentsInterface
     setPlaylistsListItems: Function
 }) {
     const dispatch = useAppDispatch()

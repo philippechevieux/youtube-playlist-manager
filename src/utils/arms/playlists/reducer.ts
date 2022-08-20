@@ -16,19 +16,12 @@ export const playlistsSlice = createSlice({
                 state.items = [...state.items, ...action.payload.playlistsData.items]
             }
 
-            if (
-                'prevPageTokenaction' in action.payload.playlistsData &&
-                action.payload.playlistsData.prevPageToken !== undefined
-            ) {
-                state.prevPageToken = action.payload.playlistsData.prevPageToken
-            }
-
-            if (
-                'nextPageToken' in action.payload.playlistsData &&
-                action.payload.playlistsData.nextPageToken !== undefined
-            ) {
-                state.nextPageToken = action.payload.playlistsData.nextPageToken
-            }
+            state.prevPageToken = action.payload.playlistsData.prevPageToken
+                ? action.payload.playlistsData.prevPageToken
+                : undefined
+            state.nextPageToken = action.payload.playlistsData.nextPageToken
+                ? action.payload.playlistsData.nextPageToken
+                : undefined
         },
         updatePlaylist: (
             state: any,

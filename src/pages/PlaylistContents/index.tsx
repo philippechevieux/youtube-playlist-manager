@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { getYoutubePlaylists, getYoutubePlaylistsItems } from '../../utils/api'
 import { useParams } from 'react-router-dom'
-import { AppBar, Toolbar, IconButton, Button, Typography, Box, Tooltip } from '@mui/material'
+import { AppBar, Toolbar, IconButton, Button, Typography, Box, Tooltip, CircularProgress } from '@mui/material'
 import { useHistory } from 'react-router-dom'
 import { IPlaylistsListItems } from '../../utils/context/interface'
 
@@ -11,22 +11,26 @@ import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 
 import './styles.css'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { useAppSelector } from '../../app/hooks'
 import { selectUserAccessToken } from '../../utils/arms/user/selectors'
-import { ItemInterface } from '../../utils/arms/playlists/state'
-// import { displayEditPlaylistDialog } from '../../utils/arms/global/reducer'
+import { useFetchPlaylistContents } from './hook'
+import {
+    selectPlaylistContentsItems,
+    selectPlaylistContentsNextPageToken,
+} from '../../utils/arms/playlistContents/selectors'
 
 function PlaylistContent() {
-    const dispatch = useAppDispatch()
-
-    const userAccessToken = useAppSelector(selectUserAccessToken)
-
     const { playlistId } = useParams<{ playlistId: string }>()
-    const [playlistData, setPlaylistData] = useState<ItemInterface>()
-    const [isLoading, setIsLoading] = useState(false)
-    const [isLoaded, setIsLoaded] = useState(false)
-    const [playlistsListItems, setPlaylistsListItems] = useState<IPlaylistsListItems>({ items: [] })
-    const [nextPageToken, setNextPageToken] = useState('')
+    const userAccessToken = useAppSelector(selectUserAccessToken)
+    const nextPageTokenInStore = useAppSelector(selectPlaylistContentsNextPageToken)
+    const playlistContentsItems = useAppSelector(selectPlaylistContentsItems)
+    const [nextPageToken, setNextPageToken] = useState<string | undefined>(undefined)
+
+    const { arePlaylistContentsLoading, arePlaylistContentsLoaded } = useFetchPlaylistContents(
+        userAccessToken,
+        playlistId,
+        nextPageToken
+    )
 
     let history = useHistory()
 
@@ -34,51 +38,29 @@ function PlaylistContent() {
         history.push('/')
     }
 
-    const isFirstLoad = () => {
-        return playlistsListItems.items.length === 0 && !isLoaded
-    }
-
-    const loadPlaylistsItems = useCallback(() => {
-        if (isLoaded === false && isLoading === false) {
-            setIsLoading(true)
-
-            getYoutubePlaylistsItems(userAccessToken, playlistId, nextPageToken).then((data) => {
-                setIsLoading(false)
-                setIsLoaded(true)
-
-                const newItems = [...playlistsListItems.items, ...data.items]
-                data.items = newItems
-
-                setPlaylistsListItems(data)
-                setNextPageToken(data.nextPageToken)
-            })
-        }
-    }, [userAccessToken, playlistId, nextPageToken, isLoading, isLoaded, playlistsListItems])
-
-    const loadMorePlaylistItems = () => {
-        setIsLoaded(false)
-        loadPlaylistsItems()
+    const loadMorePlaylisContents = () => {
+        setNextPageToken(nextPageTokenInStore)
     }
 
     const displayPlaylistContent = () => {
         let content, skeleton
 
-        if (playlistsListItems.items.length > 0) {
+        if (playlistContentsItems.length > 0) {
             content = (
                 <Content
                     playlistId={playlistId}
-                    playlistsListItems={playlistsListItems}
-                    setPlaylistsListItems={setPlaylistsListItems}
+                    playlistsListItems={{ items: playlistContentsItems }}
+                    setPlaylistsListItems={() => {}}
                 />
             )
         }
 
-        if (isLoaded && playlistsListItems.items.length === 0) {
+        if (arePlaylistContentsLoaded && playlistContentsItems.length === 0) {
             content = <div>Aucune vidéo dans votre playlist</div>
         }
 
-        if (isLoading) {
-            skeleton = <ContentSkeleton isFirstLoad={isFirstLoad()} />
+        if (arePlaylistContentsLoading) {
+            skeleton = <ContentSkeleton isFirstLoad={playlistContentsItems.length === 0} />
         }
 
         return (
@@ -88,22 +70,6 @@ function PlaylistContent() {
             </div>
         )
     }
-
-    useEffect(() => {
-        loadPlaylistsItems()
-    }, [loadPlaylistsItems])
-
-    useEffect(() => {
-        function getPlaylistData() {
-            if (playlistData === undefined) {
-                getYoutubePlaylists(userAccessToken, undefined, [playlistId]).then((data) => {
-                    setPlaylistData(data.items[0])
-                })
-            }
-        }
-
-        getPlaylistData()
-    }, [dispatch, userAccessToken, playlistId, playlistData])
 
     return (
         <div className="playlist-content">
@@ -121,7 +87,7 @@ function PlaylistContent() {
                             </IconButton>
                         </Tooltip>
                         <Typography variant="body1" color="text.primary">
-                            {playlistData && playlistData.snippet.localized.title}
+                            {/* {playlistData && playlistData.snippet.localized.title} */}
                         </Typography>
                         <Box sx={{ flexGrow: 1 }} />
                         <Tooltip title="Editer">
@@ -131,15 +97,15 @@ function PlaylistContent() {
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
                                 onClick={() => {
-                                    if (playlistData !== undefined) {
-                                        // dispatch(
-                                        //     displayEditPlaylistDialog({
-                                        //         editPlaylistDialogData: playlistData,
-                                        //         editPlaylistDialogOnClose: setPlaylistData,
-                                        //         editPlaylistDialogId: playlistId,
-                                        //     })
-                                        // )
-                                    }
+                                    // if (playlistData !== undefined) {
+                                    // dispatch(
+                                    //     displayEditPlaylistDialog({
+                                    //         editPlaylistDialogData: playlistData,
+                                    //         editPlaylistDialogOnClose: setPlaylistData,
+                                    //         editPlaylistDialogId: playlistId,
+                                    //     })
+                                    // )
+                                    // }
                                 }}
                                 color="inherit"
                             >
@@ -152,12 +118,12 @@ function PlaylistContent() {
 
             {displayPlaylistContent()}
 
-            {nextPageToken !== undefined && (
+            {playlistContentsItems.length > 0 && nextPageTokenInStore !== undefined && (
                 <div className="see-more-container">
                     <Button
                         variant="outlined"
                         onClick={() => {
-                            loadMorePlaylistItems()
+                            loadMorePlaylisContents()
                         }}
                     >
                         Voir plus ...

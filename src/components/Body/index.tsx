@@ -1,8 +1,8 @@
 import { Route, Switch } from 'react-router-dom'
 
 import LoginScreen from '../../pages/LoginScreen/index'
-import PlaylistContent from '../../pages/PlaylistContent/index'
-import PlaylistList from '../../pages/PlaylistList/index'
+import PlaylistContent from '../../pages/PlaylistContents/index'
+import PlaylistList from '../../pages/Playlists/index'
 
 import './styles.css'
 import { Alert, Snackbar } from '@mui/material'
