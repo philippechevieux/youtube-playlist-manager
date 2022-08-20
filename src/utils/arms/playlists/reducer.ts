@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { PlaylistsDataInterface, playlistsDefaultData } from './state'
+import { IApiUpdatePlaylistParams } from '../../api/interface'
+import { ItemInterface, PlaylistsDataInterface, playlistsDefaultData } from './state'
 
 export const playlistsSlice = createSlice({
     name: 'playlists',
@@ -29,9 +30,21 @@ export const playlistsSlice = createSlice({
                 state.nextPageToken = action.payload.playlistsData.nextPageToken
             }
         },
+        updatePlaylist: (
+            state: any,
+            action: PayloadAction<{ playlistId: string; dataToUpdate: IApiUpdatePlaylistParams }>
+        ) => {
+            state.items.forEach((item: ItemInterface) => {
+                if (item.id === action.payload.playlistId) {
+                    item.snippet.localized.title = action.payload.dataToUpdate.title
+                    item.snippet.localized.description = action.payload.dataToUpdate.description
+                    item.status.privacyStatus = action.payload.dataToUpdate.privacyStatus
+                }
+            })
+        },
     },
 })
 
-export const { addPlaylists } = playlistsSlice.actions
+export const { addPlaylists, updatePlaylist } = playlistsSlice.actions
 
 export default playlistsSlice.reducer

@@ -1,6 +1,16 @@
 import { useState } from 'react'
 
-import { AppBar, Toolbar, IconButton, Button, Box, Typography, Tooltip, CircularProgress } from '@mui/material'
+import {
+    AppBar,
+    Toolbar,
+    IconButton,
+    Button,
+    Box,
+    Typography,
+    Tooltip,
+    CircularProgress,
+    Snackbar,
+} from '@mui/material'
 
 import './styles.css'
 
@@ -48,20 +58,7 @@ function PlaylistList() {
     }
 
     const closeEditPlaylistDialog = () => {
-        setPlaylistIdToEdit(undefined)
         setIsPlaylistDialogOpen(false)
-    }
-
-    const updatePlaylistListData = (data: ItemInterface) => {
-        // const playlistId = data.id
-        // const newPlaylistIems = playlistsListData.items.map((item) => {
-        //     if (item.id === playlistId) {
-        //         item = data
-        //     }
-        //     return item
-        // })
-        // playlistsListData.items = newPlaylistIems
-        // setPlaylistsListData(playlistsListData)
     }
 
     const loadMorePlaylistList = () => {
