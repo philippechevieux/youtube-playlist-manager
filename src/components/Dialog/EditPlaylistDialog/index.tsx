@@ -19,6 +19,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 
 import './styles.css'
 import { IApiUpdatePlaylistParams } from '../../../utils/api/interface'
+import { selectPlaylistItem } from '../../../utils/arms/playlists/selectors'
 // import { displaySnackbar, hideEditPlaylistDialog } from '../../../utils/arms/global/reducer'
 // import {
 //     selectEditPlaylistDialogData,
@@ -27,17 +28,22 @@ import { IApiUpdatePlaylistParams } from '../../../utils/api/interface'
 //     selectIsEditPlaylistDialogOpen,
 // } from '../../../utils/arms/global/selectors'
 
-function EditPlaylistDialog() {
+function EditPlaylistDialog({
+    visible = false,
+    playlistId,
+    onCancel,
+}: {
+    visible: boolean
+    playlistId: string | undefined
+    onCancel: Function
+}) {
     const dispatch = useAppDispatch()
     const userAccessToken = useAppSelector(selectUserAccessToken)
-    // const isEditPlaylistDialogOpen = useAppSelector(selectIsEditPlaylistDialogOpen)
-    // const editPlaylistDialogId = useAppSelector(selectEditPlaylistDialogId)
-    // const editPlaylistDialogOnClose = useAppSelector(selectEditPlaylistDialogOnClose)
-    // const editPlaylistDialogData = useAppSelector(selectEditPlaylistDialogData)
+    const playlistItem = useAppSelector((state) => selectPlaylistItem(state, playlistId))
 
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
-    const [status, setStatus] = useState('')
+    const [title, setTitle] = useState(playlistItem.snippet.localized.title)
+    const [description, setDescription] = useState(playlistItem.snippet.localized.description)
+    const [status, setStatus] = useState(playlistItem.status.privacyStatus)
     const [titleError, setTitleError] = useState(false)
     const [canSave, setCanSave] = useState(true)
 
@@ -55,22 +61,15 @@ function EditPlaylistDialog() {
         setStatus(event.target.value)
     }
 
-    const onClose = () => {
-        // dispatch(hideEditPlaylistDialog())
-    }
-
     const onSave = () => {
         // dispatch(hideEditPlaylistDialog())
-
-        const dataToSave: IApiUpdatePlaylistParams = {
-            title: title,
-            description: description,
-            privacyStatus: status,
-        }
-
+        // const dataToSave: IApiUpdatePlaylistParams = {
+        //     title: title,
+        //     description: description,
+        //     privacyStatus: status,
+        // }
         // updatePlaylistData(userAccessToken, editPlaylistDialogId, dataToSave).then((updatedData) => {
         //     editPlaylistDialogOnClose(updatedData)
-
         //     dispatch(
         //         displaySnackbar({
         //             snackbarSeverity: 'success',
@@ -80,83 +79,74 @@ function EditPlaylistDialog() {
         // })
     }
 
-    // useEffect(() => {
-    //     setTitle(editPlaylistDialogData.snippet.localized.title)
-    //     setTitleError(editPlaylistDialogData.snippet.localized.title.length === 0)
-    //     setDescription(editPlaylistDialogData.snippet.localized.description)
-    //     setStatus(editPlaylistDialogData.status.privacyStatus)
-    //     setCanSave(editPlaylistDialogData.snippet.localized.title.length === 0)
-    // }, [editPlaylistDialogData])
-
     return (
-        <></>
-        // <Dialog open={isEditPlaylistDialogOpen} fullWidth maxWidth="sm">
-        //     <DialogTitle id="alert-dialog-title">
-        //         Editer la playlist : {editPlaylistDialogData.snippet.localized.title}
-        //     </DialogTitle>
-        //     <DialogContent>
-        //         <TextField
-        //             error={titleError && isEditPlaylistDialogOpen}
-        //             required
-        //             id="dsqds"
-        //             margin="normal"
-        //             color="secondary"
-        //             label="Titre"
-        //             value={title}
-        //             type="text"
-        //             fullWidth
-        //             onChange={handleTitleChange}
-        //             variant="outlined"
-        //         />
-        //         <TextField
-        //             id="dd"
-        //             margin="normal"
-        //             color="secondary"
-        //             label="Description"
-        //             value={description}
-        //             type="text"
-        //             fullWidth
-        //             onChange={handleDescriptionChange}
-        //             variant="outlined"
-        //         />
-        //         <TextField
-        //             select
-        //             id="edit-playlist-select-status"
-        //             margin="normal"
-        //             color="secondary"
-        //             label="Status"
-        //             value={status}
-        //             fullWidth
-        //             onChange={handleStatusChange}
-        //             variant="outlined"
-        //         >
-        //             <MenuItem key="public" value="public">
-        //                 <PublicOutlinedIcon />
-        //                 <ListItemText className="select-item-text" primary={'Public'} />
-        //             </MenuItem>
-        //             <MenuItem key="unlisted" value="unlisted">
-        //                 <VisibilityOffOutlinedIcon />
-        //                 <ListItemText className="select-item-text" primary={'Non répertoriée'} />
-        //             </MenuItem>
-        //             <MenuItem key="private" value="private">
-        //                 <LockOutlinedIcon />
-        //                 <ListItemText className="select-item-text" primary={'Privée'} />
-        //             </MenuItem>
-        //         </TextField>
-        //     </DialogContent>
-        //     <DialogActions>
-        //         <Button onClick={onClose}>Fermer</Button>
-        //         <Button
-        //             disabled={canSave && isEditPlaylistDialogOpen}
-        //             variant="contained"
-        //             color="secondary"
-        //             startIcon={<SaveOutlinedIcon />}
-        //             onClick={onSave}
-        //         >
-        //             Sauvegarder
-        //         </Button>
-        //     </DialogActions>
-        // </Dialog>
+        <Dialog open={visible} fullWidth maxWidth="sm">
+            <DialogTitle id="alert-dialog-title">
+                Editer la playlist : {playlistItem.snippet.localized.title}
+            </DialogTitle>
+            <DialogContent>
+                <TextField
+                    error={titleError}
+                    required
+                    id="dsqds"
+                    margin="normal"
+                    color="secondary"
+                    label="Titre"
+                    value={title}
+                    type="text"
+                    fullWidth
+                    onChange={handleTitleChange}
+                    variant="outlined"
+                />
+                <TextField
+                    id="dd"
+                    margin="normal"
+                    color="secondary"
+                    label="Description"
+                    value={description}
+                    type="text"
+                    fullWidth
+                    onChange={handleDescriptionChange}
+                    variant="outlined"
+                />
+                <TextField
+                    select
+                    id="edit-playlist-select-status"
+                    margin="normal"
+                    color="secondary"
+                    label="Status"
+                    value={status}
+                    fullWidth
+                    onChange={handleStatusChange}
+                    variant="outlined"
+                >
+                    <MenuItem key="public" value="public">
+                        <PublicOutlinedIcon />
+                        <ListItemText className="select-item-text" primary={'Public'} />
+                    </MenuItem>
+                    <MenuItem key="unlisted" value="unlisted">
+                        <VisibilityOffOutlinedIcon />
+                        <ListItemText className="select-item-text" primary={'Non répertoriée'} />
+                    </MenuItem>
+                    <MenuItem key="private" value="private">
+                        <LockOutlinedIcon />
+                        <ListItemText className="select-item-text" primary={'Privée'} />
+                    </MenuItem>
+                </TextField>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={() => onCancel()}>Fermer</Button>
+                <Button
+                    disabled={canSave}
+                    variant="contained"
+                    color="secondary"
+                    startIcon={<SaveOutlinedIcon />}
+                    onClick={onSave}
+                >
+                    Sauvegarder
+                </Button>
+            </DialogActions>
+        </Dialog>
     )
 }
 

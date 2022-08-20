@@ -1,7 +1,6 @@
-import { useEffect, useState, useCallback } from 'react'
-import { getYoutubePlaylists } from '../../utils/api'
+import { useState } from 'react'
 
-import { AppBar, Toolbar, IconButton, Button, Box, Typography, Tooltip } from '@mui/material'
+import { AppBar, Toolbar, IconButton, Button, Box, Typography, Tooltip, CircularProgress } from '@mui/material'
 
 import './styles.css'
 
@@ -13,32 +12,25 @@ import ViewModuleOutlinedIcon from '@mui/icons-material/ViewModuleOutlined'
 import ListOutlinedIcon from '@mui/icons-material/ListOutlined'
 import SortOutlinedIcon from '@mui/icons-material/SortOutlined'
 import { useHistory } from 'react-router-dom'
-// import { IPlaylistsData } from '../../utils/context/interface'
-// import { IPlaylistsItemData } from './../../utils/context/interface'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { useAppSelector } from '../../app/hooks'
 import { selectUserAccessToken } from '../../utils/arms/user/selectors'
-import { addPlaylists } from '../../utils/arms/playlists/reducer'
 import { useFetchPlaylists } from './hook'
 import { selectPlaylistsItems, selectPlaylistsNextPageToken } from '../../utils/arms/playlists/selectors'
 import { ItemInterface } from '../../utils/arms/playlists/state'
+import EditPlaylistDialog from '../../components/Dialog/EditPlaylistDialog'
 
 function PlaylistList() {
     let history = useHistory()
-
     const userAccessToken = useAppSelector(selectUserAccessToken)
     const nextPageTokenInStore = useAppSelector(selectPlaylistsNextPageToken)
     const playlistsItems = useAppSelector(selectPlaylistsItems)
 
+    const [isEditPlaylistDialogOpen, setIsPlaylistDialogOpen] = useState(false)
+    const [playlistIdToEdit, setPlaylistIdToEdit] = useState<string | undefined>()
+    const [playlistActiveDisplayMode, setPlaylistActiveDisplayMode] = useState('mosaic')
     const [nextPageToken, setNextPageToken] = useState<string | undefined>(undefined)
 
     const { arePlaylistsLoading, arePlaylistsLoaded } = useFetchPlaylists(userAccessToken, nextPageToken)
-
-    // const dispatch = useAppDispatch()
-    // const [isLoading, setIsLoading] = useState(false)
-    // const [isLoaded, setIsLoaded] = useState(false)
-    // const [nextPageToken, setNextPageToken] = useState('')
-    // const [playlistsListData, setPlaylistsListData] = useState<IPlaylistsData>({ items: [] })
-    const [playlistActiveDisplayMode, setPlaylistActiveDisplayMode] = useState('mosaic')
 
     const handlePlaylistDisplayMode = (mode: string) => {
         if (mode !== playlistActiveDisplayMode) {
@@ -46,8 +38,18 @@ function PlaylistList() {
         }
     }
 
-    const handlePlaylistClickOnList = (id: string) => {
-        history.push('/playlist/' + id)
+    const openPlaylist = (playlistId: string) => {
+        history.push('/playlist/' + playlistId)
+    }
+
+    const openEditPlaylistDialog = (playlistId: string) => {
+        setPlaylistIdToEdit(playlistId)
+        setIsPlaylistDialogOpen(true)
+    }
+
+    const closeEditPlaylistDialog = () => {
+        setPlaylistIdToEdit(undefined)
+        setIsPlaylistDialogOpen(false)
     }
 
     const updatePlaylistListData = (data: ItemInterface) => {
@@ -64,6 +66,36 @@ function PlaylistList() {
 
     const loadMorePlaylistList = () => {
         setNextPageToken(nextPageTokenInStore)
+    }
+
+    const displayPlaylists = () => {
+        if (playlistsItems.length > 0) {
+            if (playlistActiveDisplayMode === 'mosaic') {
+                return (
+                    <MosaicMode
+                        playlistsListData={{ items: playlistsItems }}
+                        onClickOnEditPlaylist={openEditPlaylistDialog}
+                        onClickOnOpenPlaylist={openPlaylist}
+                    />
+                )
+            } else if (playlistActiveDisplayMode === 'list') {
+                return (
+                    <ListMode
+                        playlistsListData={{ items: playlistsItems }}
+                        onClickOnEditPlaylist={openEditPlaylistDialog}
+                        onClickOnOpenPlaylist={openPlaylist}
+                    />
+                )
+            } else {
+                // TODO: Error screen
+            }
+        } else {
+            if (arePlaylistsLoading) {
+                return <MosaicModeSkeleton />
+            } else {
+                // TODO: Affichage vide
+            }
+        }
     }
 
     return (
@@ -114,27 +146,9 @@ function PlaylistList() {
                 </Box>
             </AppBar>
 
-            {playlistsItems && playlistActiveDisplayMode === 'mosaic' && (
-                <MosaicMode
-                    playlistsListData={{ items: playlistsItems }}
-                    updatePlaylistListData={updatePlaylistListData}
-                    handlePlaylistClickOnList={handlePlaylistClickOnList}
-                />
-            )}
+            {displayPlaylists()}
 
-            {playlistsItems && playlistActiveDisplayMode === 'list' && (
-                <ListMode
-                    playlistsListData={{ items: playlistsItems }}
-                    updatePlaylistListData={updatePlaylistListData}
-                    handlePlaylistClickOnList={handlePlaylistClickOnList}
-                />
-            )}
-
-            {arePlaylistsLoaded && playlistsItems.length === 0 && <div>Rien</div>}
-
-            {arePlaylistsLoading && <MosaicModeSkeleton />}
-
-            {!arePlaylistsLoading && nextPageTokenInStore !== undefined && (
+            {playlistsItems.length > 0 && nextPageTokenInStore !== undefined && (
                 <div className="see-more-container">
                     <Button
                         variant="outlined"
@@ -142,9 +156,18 @@ function PlaylistList() {
                             loadMorePlaylistList()
                         }}
                     >
+                        {arePlaylistsLoading && <CircularProgress size={15} />}
                         Voir plus ...
                     </Button>
                 </div>
+            )}
+
+            {playlistIdToEdit !== undefined && (
+                <EditPlaylistDialog
+                    visible={isEditPlaylistDialogOpen}
+                    playlistId={playlistIdToEdit}
+                    onCancel={closeEditPlaylistDialog}
+                />
             )}
         </div>
     )

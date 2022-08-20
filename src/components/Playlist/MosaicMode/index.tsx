@@ -5,21 +5,17 @@ import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 
 import './styles.css'
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import { useAppDispatch } from '../../../app/hooks'
 import { ItemsInterface } from '../../../utils/arms/playlists/state'
-// import { displayEditPlaylistDialog } from '../../../utils/arms/global/reducer'
 
 function MosaicMode({
     playlistsListData,
-    updatePlaylistListData,
-    handlePlaylistClickOnList,
+    onClickOnEditPlaylist,
+    onClickOnOpenPlaylist,
 }: {
     playlistsListData: ItemsInterface
-    updatePlaylistListData: Function
-    handlePlaylistClickOnList: Function
+    onClickOnEditPlaylist: Function
+    onClickOnOpenPlaylist: Function
 }) {
-    const dispatch = useAppDispatch()
-
     return (
         <Grid
             container
@@ -50,25 +46,14 @@ function MosaicMode({
                         </CardContent>
                         <CardActions className="card-actions">
                             <Tooltip title="Editer">
-                                <IconButton
-                                    aria-label="edit"
-                                    onClick={() => {
-                                        // dispatch(
-                                        //     displayEditPlaylistDialog({
-                                        //         editPlaylistDialogData: PlaylistData,
-                                        //         editPlaylistDialogOnClose: updatePlaylistListData,
-                                        //         editPlaylistDialogId: PlaylistData.id,
-                                        //     })
-                                        // )
-                                    }}
-                                >
+                                <IconButton aria-label="edit" onClick={() => onClickOnEditPlaylist(PlaylistData.id)}>
                                     <EditOutlinedIcon />
                                 </IconButton>
                             </Tooltip>
                             <Tooltip title="Ouvrir la playlist">
                                 <IconButton
                                     aria-label="open playlist"
-                                    onClick={() => handlePlaylistClickOnList(PlaylistData.id)}
+                                    onClick={() => onClickOnOpenPlaylist(PlaylistData.id)}
                                 >
                                     <LaunchOutlinedIcon />
                                 </IconButton>

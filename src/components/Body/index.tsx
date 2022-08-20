@@ -55,9 +55,9 @@ function Body() {
                                 <PlaylistContent />
                             </Route>
                         </Switch>
-                        <ConfirmActionDialog />
+                        {/* <ConfirmActionDialog />
                         <SelectPlaylistDialog />
-                        <EditPlaylistDialog />
+                        <EditPlaylistDialog /> */}
                     </>
                 )}
             </div>

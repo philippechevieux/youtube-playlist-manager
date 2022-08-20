@@ -16,27 +16,23 @@ import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
 
 import './styles.css'
-import { useAppDispatch } from '../../../app/hooks'
 import { ItemInterface, ItemsInterface } from '../../../utils/arms/playlists/state'
-// import { displayEditPlaylistDialog } from '../../../utils/arms/global/reducer'
 
 function ListMode({
     playlistsListData,
     setCanExecuteAfterSelect,
     setSelectedPlaylistId,
     mode = 'default',
-    updatePlaylistListData,
-    handlePlaylistClickOnList,
+    onClickOnEditPlaylist,
+    onClickOnOpenPlaylist,
 }: {
     playlistsListData: ItemsInterface
     setCanExecuteAfterSelect?: Function
     setSelectedPlaylistId?: Function
     mode?: string
-    updatePlaylistListData?: Function
-    handlePlaylistClickOnList?: Function
+    onClickOnEditPlaylist?: Function
+    onClickOnOpenPlaylist?: Function
 }) {
-    const dispatch = useAppDispatch()
-
     const [selectedPlaylist, setSelectedPlaylist] = useState('')
 
     const handleChangeSelectedPlaylist = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +48,7 @@ function ListMode({
     }
 
     const handleListItemSecondaryActionByMode = (PlaylistData: ItemInterface) => {
-        if (mode === 'default' && updatePlaylistListData && handlePlaylistClickOnList) {
+        if (mode === 'default' && onClickOnEditPlaylist && onClickOnOpenPlaylist) {
             return (
                 <div>
                     <Tooltip title="Editer">
@@ -60,25 +56,13 @@ function ListMode({
                             className="margin"
                             edge="end"
                             aria-label="share"
-                            onClick={() => {
-                                // dispatch(
-                                //     displayEditPlaylistDialog({
-                                //         editPlaylistDialogData: PlaylistData,
-                                //         editPlaylistDialogOnClose: updatePlaylistListData,
-                                //         editPlaylistDialogId: PlaylistData.id,
-                                //     })
-                                // )
-                            }}
+                            onClick={() => onClickOnEditPlaylist(PlaylistData.id)}
                         >
                             <EditOutlinedIcon />
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Ouvrir la playlist">
-                        <IconButton
-                            edge="end"
-                            aria-label="edit"
-                            onClick={() => handlePlaylistClickOnList(PlaylistData.id)}
-                        >
+                        <IconButton edge="end" aria-label="edit" onClick={() => onClickOnOpenPlaylist(PlaylistData.id)}>
                             <LaunchOutlinedIcon />
                         </IconButton>
                     </Tooltip>
