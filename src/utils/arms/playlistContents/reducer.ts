@@ -22,9 +22,15 @@ export const playlistContentsSlice = createSlice({
                 : undefined
             state.items = [...state.items, ...action.payload.playListContentsData.items]
         },
+        removePlaylistContents: (state: any, action: PayloadAction<{}>) => {
+            state.playlistId = playlistContentsDefaultData.playlistId
+            state.prevPageToken = playlistContentsDefaultData.prevPageToken
+            state.nextPageToken = playlistContentsDefaultData.nextPageToken
+            state.items = playlistContentsDefaultData.items
+        },
     },
 })
 
-export const { addPlaylistContents } = playlistContentsSlice.actions
+export const { addPlaylistContents, removePlaylistContents } = playlistContentsSlice.actions
 
 export default playlistContentsSlice.reducer

@@ -1,16 +1,6 @@
 import { useState } from 'react'
 
-import {
-    AppBar,
-    Toolbar,
-    IconButton,
-    Button,
-    Box,
-    Typography,
-    Tooltip,
-    CircularProgress,
-    Snackbar,
-} from '@mui/material'
+import { AppBar, Toolbar, IconButton, Button, Box, Typography, Tooltip, CircularProgress } from '@mui/material'
 
 import './styles.css'
 
@@ -26,7 +16,6 @@ import { useAppSelector } from '../../app/hooks'
 import { selectUserAccessToken } from '../../utils/arms/user/selectors'
 import { useFetchPlaylists } from './hook'
 import { selectPlaylistsItems, selectPlaylistsNextPageToken } from '../../utils/arms/playlists/selectors'
-import { ItemInterface } from '../../utils/arms/playlists/state'
 import EditPlaylistDialog from '../../components/Dialog/EditPlaylistDialog'
 
 function PlaylistList() {
@@ -40,7 +29,7 @@ function PlaylistList() {
     const [playlistActiveDisplayMode, setPlaylistActiveDisplayMode] = useState('mosaic')
     const [nextPageToken, setNextPageToken] = useState<string | undefined>(undefined)
 
-    const { arePlaylistsLoading, arePlaylistsLoaded } = useFetchPlaylists(userAccessToken, nextPageToken)
+    const { arePlaylistsLoading } = useFetchPlaylists(userAccessToken, nextPageToken)
 
     const handlePlaylistDisplayMode = (mode: string) => {
         if (mode !== playlistActiveDisplayMode) {
@@ -88,7 +77,7 @@ function PlaylistList() {
             }
         } else {
             if (arePlaylistsLoading) {
-                return <MosaicModeSkeleton />
+                return <MosaicModeSkeleton /> // TODO: revoir l'affichage du skeleton pour matcher ce qui est fait dans playlistContents
             } else {
                 // TODO: Affichage vide
             }
