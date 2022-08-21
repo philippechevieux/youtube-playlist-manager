@@ -25,6 +25,8 @@ import { IPlaylistItemsContent, IPlaylistsListItems } from '../../../utils/conte
 import { useAppDispatch, useAppSelector } from '../../../app/hooks'
 import { selectUserAccessToken } from '../../../utils/arms/user/selectors'
 import { ContentsInterface } from '../../../utils/arms/playlistContents/state'
+import ConfirmActionDialog from '../../Dialog/ConfirmActionDialog'
+import { removeContent } from '../../../utils/arms/playlistContents/reducer'
 // import {
 //     displayConfirmActionDialog,
 //     displaySelectPlaylistDialog,
@@ -37,15 +39,7 @@ const defaultItemResourceId = {
     videoId: '',
 }
 
-function Content({
-    playlistId,
-    playlistsListItems,
-    setPlaylistsListItems,
-}: {
-    playlistId: string
-    playlistsListItems: ContentsInterface
-    setPlaylistsListItems: Function
-}) {
+function Content({ playlistId, playlistsListItems }: { playlistId: string; playlistsListItems: ContentsInterface }) {
     const dispatch = useAppDispatch()
 
     const userAccessToken = useAppSelector(selectUserAccessToken)
@@ -55,34 +49,37 @@ function Content({
     const [anchorCurrentIemResourceId, setAnchorCurrentIemResourceId] = useState(defaultItemResourceId)
     const [anchorCurrentItemId, setAnchorCurrentItemId] = useState('')
 
-    const handleDeleteClick = (itemId: string) => {
-        // dispatch(
-        //     displayConfirmActionDialog({
-        //         confirmActionDialogContentMessage: 'Etes vous sur de vouloir supprimer cette vidéo ?',
-        //         confirmActionDialogExecuteButtonLabel: 'Supprimer',
-        //         confirmActionDialogOnExecute: () => {
-        //             ExecuteDeleteClick(itemId)
-        //         },
-        //     })
-        // )
+    const [confirmDialogVisible, setConfirmDialogVisible] = useState(false)
+    const [confirmDialogContent, setConfirmDialogContent] = useState('')
+    const [confirmDialogOnConfirm, setConfirmDialogOnConfirm] = useState<Function>(() => {})
+    const [confirmDialogOnCancel, setConfirmDialogOnCancel] = useState<Function>(() => {})
+
+    const [confirmDialogSnackbarVisible, setConfirmDialogSnackbarVisible] = useState(false)
+    const [confirmDialogSnackbarMessage, setConfirmDialogSnackbarMessage] = useState('')
+    const [confirmDialogSnackbarOnClose, setConfirmDialogSnackbarOnClose] = useState<Function>(() => {})
+
+    const resetConfirmDialogStates = () => {
+        setConfirmDialogVisible(false)
+        setConfirmDialogContent('')
+        setConfirmDialogOnConfirm(() => {})
+        setConfirmDialogOnCancel(() => {})
     }
 
-    const ExecuteDeleteClick = (itemId: string) => {
-        let newPlaylistsListItems = {
-            items: playlistsListItems.items.filter(function (item) {
-                return item.id !== itemId
-            }),
-        }
+    const handleDeleteClick = (itemId: string) => {
+        setConfirmDialogContent('Etes-vous sûr de vouloir supprimer cette vidéo de votre playlist ?')
+        setConfirmDialogOnCancel(() => resetConfirmDialogStates)
+        setConfirmDialogOnConfirm(() => () => executeDeleteClick(itemId))
+        setConfirmDialogVisible(true)
+    }
 
-        setPlaylistsListItems(newPlaylistsListItems)
-
+    const executeDeleteClick = (itemId: string) => {
         deleteItemFromPlaylist(userAccessToken, itemId).then(() => {
-            // dispatch(
-            //     displaySnackbar({
-            //         snackbarSeverity: 'success',
-            //         snackbarContent: 'La vidéo a été supprimé de votre playlist avec succès',
-            //     })
-            // )
+            dispatch(removeContent({ id: itemId }))
+            resetConfirmDialogStates()
+
+            setConfirmDialogSnackbarOnClose(() => () => setConfirmDialogSnackbarVisible(false))
+            setConfirmDialogSnackbarMessage('La vidéo a été supprimé de votre playlist avec succès')
+            setConfirmDialogSnackbarVisible(true)
         })
     }
 
@@ -240,6 +237,15 @@ function Content({
                     <span className="header-menuitem-margin-left">Déplacer vers une autre playlist</span>
                 </MenuItem>
             </Menu>
+            <ConfirmActionDialog
+                visible={confirmDialogVisible}
+                content={confirmDialogContent}
+                onCancel={confirmDialogOnCancel}
+                onConfirm={confirmDialogOnConfirm}
+                snackbarVisible={confirmDialogSnackbarVisible}
+                snackbarMessage={confirmDialogSnackbarMessage}
+                snackbarOnClose={confirmDialogSnackbarOnClose}
+            />
         </>
     )
 }

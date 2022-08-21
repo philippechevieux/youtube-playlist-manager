@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { ItemInterface } from '../playlists/state'
 import { PlaylistContentsDataInterface, playlistContentsDefaultData } from './state'
 
 export const playlistContentsSlice = createSlice({
@@ -28,9 +29,12 @@ export const playlistContentsSlice = createSlice({
             state.nextPageToken = playlistContentsDefaultData.nextPageToken
             state.items = playlistContentsDefaultData.items
         },
+        removeContent: (state: any, action: PayloadAction<{ id: string }>) => {
+            state.items = state.items.filter((item: ItemInterface) => item.id !== action.payload.id)
+        },
     },
 })
 
-export const { addPlaylistContents, removePlaylistContents } = playlistContentsSlice.actions
+export const { addPlaylistContents, removePlaylistContents, removeContent } = playlistContentsSlice.actions
 
 export default playlistContentsSlice.reducer

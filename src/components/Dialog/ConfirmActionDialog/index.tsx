@@ -1,43 +1,55 @@
-import { Dialog, DialogTitle, DialogActions, Button, DialogContent } from '@mui/material'
+import { Dialog, DialogTitle, DialogActions, Button, DialogContent, Snackbar, Alert } from '@mui/material'
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
-import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-// import { hideConfirmActionDialog } from '../../../utils/arms/global/reducer'
-// import {
-//     selectConfirmActionDialogContentMessage,
-//     selectConfirmActionDialogExecuteButtonLabel,
-//     selectConfirmActionDialogOnExecute,
-//     selectIsConfirmActionDialogOpen,
-// } from '../../../utils/arms/global/selectors'
 
-function ConfirmActionDialog() {
-    // const dispatch = useAppDispatch()
-    // const confirmActionDialogOnExecute = useAppSelector(selectConfirmActionDialogOnExecute)
-    // const isConfirmActionDialogOpen = useAppSelector(selectIsConfirmActionDialogOpen)
-    // const confirmActionDialogContentMessage = useAppSelector(selectConfirmActionDialogContentMessage)
-    // const confirmActionDialogExecuteButtonLabel = useAppSelector(selectConfirmActionDialogExecuteButtonLabel)
-
-    const onClickClose = () => {
-        // dispatch(hideConfirmActionDialog())
-    }
-
-    const onClickExecute = () => {
-        // let functionToExecute = confirmActionDialogOnExecute
-        // functionToExecute()
-        // dispatch(hideConfirmActionDialog())
-    }
-
+function ConfirmActionDialog({
+    visible = false,
+    title,
+    content,
+    confirmButtonLabel,
+    onConfirm,
+    onCancel,
+    snackbarVisible = false,
+    snackbarMessage,
+    snackbarOnClose,
+}: {
+    visible: boolean
+    title?: string
+    content: string
+    confirmButtonLabel?: string
+    onConfirm: Function
+    onCancel: Function
+    snackbarVisible?: boolean
+    snackbarMessage?: string
+    snackbarOnClose?: Function
+}) {
     return (
-        <></>
-        // <Dialog open={isConfirmActionDialogOpen} fullWidth maxWidth="sm">
-        //     <DialogTitle id="alert-dialog-title">Confirmation</DialogTitle>
-        //     <DialogContent>{confirmActionDialogContentMessage}</DialogContent>
-        //     <DialogActions>
-        //         <Button onClick={onClickClose}>Fermer</Button>
-        //         <Button variant="contained" color="error" startIcon={<SaveOutlinedIcon />} onClick={onClickExecute}>
-        //             {confirmActionDialogExecuteButtonLabel}
-        //         </Button>
-        //     </DialogActions>
-        // </Dialog>
+        <>
+            <Dialog open={visible} fullWidth maxWidth="sm">
+                <DialogTitle id="alert-dialog-title">{title ? title : 'Confirmation'}</DialogTitle>
+                <DialogContent>{content}</DialogContent>
+                <DialogActions>
+                    <Button onClick={() => onCancel()}>Fermer</Button>
+                    <Button
+                        variant="contained"
+                        color="error"
+                        startIcon={<SaveOutlinedIcon />}
+                        onClick={() => onConfirm()}
+                    >
+                        {confirmButtonLabel ? confirmButtonLabel : 'Confirmer'}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+            <Snackbar
+                open={snackbarVisible}
+                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                autoHideDuration={4000}
+                onClose={() => snackbarOnClose && snackbarOnClose()}
+            >
+                {/* TODO: regareder pour gérer les erreurs */}
+                <Alert severity="success">{snackbarMessage}</Alert>
+            </Snackbar>
+        </>
     )
 }
 
