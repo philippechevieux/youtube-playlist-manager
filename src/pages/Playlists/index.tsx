@@ -15,19 +15,20 @@ import { useHistory } from 'react-router-dom'
 import { useAppSelector } from '../../app/hooks'
 import { selectUserAccessToken } from '../../utils/arms/user/selectors'
 import { useFetchPlaylists } from './hook'
-import { selectPlaylistsItems, selectPlaylistsNextPageToken } from '../../utils/arms/playlists/selectors'
+import { selectPlaylistsCurrentPageToken, selectPlaylistsItems, selectPlaylistsNextPageToken } from '../../utils/arms/playlists/selectors'
 import EditPlaylistDialog from '../../components/Dialog/EditPlaylistDialog'
 
 function PlaylistList() {
     let history = useHistory()
     const userAccessToken = useAppSelector(selectUserAccessToken)
     const nextPageTokenInStore = useAppSelector(selectPlaylistsNextPageToken)
+    const currentPageToken = useAppSelector(selectPlaylistsCurrentPageToken)
     const playlistsItems = useAppSelector(selectPlaylistsItems)
 
     const [isEditPlaylistDialogOpen, setIsPlaylistDialogOpen] = useState(false)
     const [playlistIdToEdit, setPlaylistIdToEdit] = useState<string | undefined>()
     const [playlistActiveDisplayMode, setPlaylistActiveDisplayMode] = useState('mosaic')
-    const [nextPageToken, setNextPageToken] = useState<string | undefined>(undefined)
+    const [nextPageToken, setNextPageToken] = useState<string | undefined>(currentPageToken)
 
     const { arePlaylistsLoading } = useFetchPlaylists(userAccessToken, nextPageToken)
 

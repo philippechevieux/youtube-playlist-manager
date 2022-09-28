@@ -14,6 +14,7 @@ export const playlistsSlice = createSlice({
                     action.payload.playlistsData.nextPageToken !== state.nextPageToken)
             ) {
                 state.items = [...state.items, ...action.payload.playlistsData.items]
+                state.currentPageToken = state.nextPageToken
             }
 
             state.prevPageToken = action.payload.playlistsData.prevPageToken

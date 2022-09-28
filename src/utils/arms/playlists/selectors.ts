@@ -4,6 +4,10 @@ export const selectPlaylistsPrevPageToken = (state: RootState) => {
     return state.playlists.prevPageToken
 }
 
+export const selectPlaylistsCurrentPageToken = (state: RootState) => {
+    return state.playlists.currentPageToken
+}
+
 export const selectPlaylistsNextPageToken = (state: RootState) => {
     return state.playlists.nextPageToken
 }

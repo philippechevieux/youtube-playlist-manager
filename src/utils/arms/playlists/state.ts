@@ -23,12 +23,14 @@ export interface ItemsInterface {
 
 export interface PlaylistsDataInterface {
     prevPageToken: string | undefined
+    currentPageToken: string | undefined
     nextPageToken: string | undefined
     items: Array<ItemInterface>
 }
 
 export const playlistsDefaultData: PlaylistsDataInterface = {
     prevPageToken: undefined,
+    currentPageToken : undefined,
     nextPageToken: undefined,
     items: [],
 }
