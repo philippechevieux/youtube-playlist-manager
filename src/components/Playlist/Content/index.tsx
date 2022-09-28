@@ -27,6 +27,7 @@ import { selectUserAccessToken } from '../../../utils/arms/user/selectors'
 import { ContentsInterface } from '../../../utils/arms/playlistContents/state'
 import ConfirmActionDialog from '../../Dialog/ConfirmActionDialog'
 import { removeContent } from '../../../utils/arms/playlistContents/reducer'
+import SelectPlaylistDialog from '../../Dialog/SelectPlaylistDialog'
 // import {
 //     displayConfirmActionDialog,
 //     displaySelectPlaylistDialog,
@@ -38,6 +39,9 @@ const defaultItemResourceId = {
     kind: '',
     videoId: '',
 }
+
+const SAVE_IN = "saveIn";
+const MOVE_TO = "moveTo";
 
 function Content({ playlistId, playlistsListItems }: { playlistId: string; playlistsListItems: ContentsInterface }) {
     const dispatch = useAppDispatch()
@@ -57,6 +61,11 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
     const [confirmDialogSnackbarVisible, setConfirmDialogSnackbarVisible] = useState(false)
     const [confirmDialogSnackbarMessage, setConfirmDialogSnackbarMessage] = useState('')
     const [confirmDialogSnackbarOnClose, setConfirmDialogSnackbarOnClose] = useState<Function>(() => {})
+
+    const [selectPlaylistDialogVisible, setSelectPlaylistDialogVisible] = useState(false);
+    const [selectPlaylistDialogTitle, setSelectPlaylistDialogTitle] = useState('');
+    const [selectPlaylistDialogConfirm, setSelectPlaylistDialogConfirm] = useState('');
+    const [selectPlaylistDialogConfirmIcon, setSelectPlaylistDialogConfirmIcon] = useState(<></>);
 
     const resetConfirmDialogStates = () => {
         setConfirmDialogVisible(false)
@@ -83,6 +92,15 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
         })
     }
 
+    const resetSelectPlaylistDialogStates = () => {
+        setSelectPlaylistDialogVisible(false)
+        setSelectPlaylistDialogTitle('')
+        setSelectPlaylistDialogConfirm('')
+        setSelectPlaylistDialogConfirmIcon(<></>)
+
+        handleCloseMoreMenu()
+    }
+
     const handleMoreMenu = (event: any, resourceId: IResourceId, itemId: string) => {
         setAnchorEl(event.currentTarget)
         setAnchorCurrentIemResourceId(resourceId)
@@ -95,11 +113,7 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
         setAnchorCurrentItemId('')
     }
 
-    const handleCloseSelectDialog = () => {
-        handleCloseMoreMenu()
-    }
-
-    const handleSaveSelectDialog = (selectedPlaylistId: string) => {
+    const handleSaveSelectDialog = (selectedPlaylistId: string) => {        
         // if (selectPlaylistDialogMode === 'saveIn') {
         //     insertItemToPlaylist(userAccessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
         //         dispatch(
@@ -134,6 +148,21 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
     }
 
     const handleOpenSelectPlaylistDialog = (mode: string) => {
+        switch (mode) {
+            case SAVE_IN:
+                setSelectPlaylistDialogTitle("Enregistrer dans :");
+                setSelectPlaylistDialogConfirm("Enregistrer");
+                setSelectPlaylistDialogConfirmIcon(<SaveOutlinedIcon />)
+                break;
+            case MOVE_TO:
+                setSelectPlaylistDialogTitle("Déplacer vers :");
+                setSelectPlaylistDialogConfirm("Déplacer");
+                setSelectPlaylistDialogConfirmIcon(<SendAndArchiveOutlinedIcon />);
+                break;
+        }
+
+        setSelectPlaylistDialogVisible(true)
+
         // dispatch(
         //     displaySelectPlaylistDialog({
         //         selectPlaylistDialogHideCurrentPlaylist: true,
@@ -227,12 +256,12 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
                 open={Boolean(anchorEl)}
                 onClose={handleCloseMoreMenu}
             >
-                <MenuItem key="saveInAnOtherPlaylist" onClick={() => handleOpenSelectPlaylistDialog('saveIn')}>
+                <MenuItem key="saveInAnOtherPlaylist" onClick={() => handleOpenSelectPlaylistDialog(SAVE_IN)}>
                     <SaveOutlinedIcon />
                     <span className="header-menuitem-margin-left">Enregistrer dans une autre playlist</span>
                 </MenuItem>
                 <Divider />
-                <MenuItem key="deleteAndSaveInAnOtherPlaylist" onClick={() => handleOpenSelectPlaylistDialog('moveTo')}>
+                <MenuItem key="deleteAndSaveInAnOtherPlaylist" onClick={() => handleOpenSelectPlaylistDialog(MOVE_TO)}>
                     <SendAndArchiveOutlinedIcon />
                     <span className="header-menuitem-margin-left">Déplacer vers une autre playlist</span>
                 </MenuItem>
@@ -245,6 +274,16 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
                 snackbarVisible={confirmDialogSnackbarVisible}
                 snackbarMessage={confirmDialogSnackbarMessage}
                 snackbarOnClose={confirmDialogSnackbarOnClose}
+            />
+            <SelectPlaylistDialog
+                visible={selectPlaylistDialogVisible}
+                currentPlaylistId={playlistId}
+                userAccessToken={userAccessToken}
+                hideCurrentPlaylist={true}
+                title={selectPlaylistDialogTitle}
+                confirmText={selectPlaylistDialogConfirm}
+                confirmIcon={selectPlaylistDialogConfirmIcon}
+                onCancel={resetSelectPlaylistDialogStates}
             />
         </>
     )
