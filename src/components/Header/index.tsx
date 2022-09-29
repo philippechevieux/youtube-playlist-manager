@@ -30,7 +30,7 @@ function Header() {
     }
 
     const handleClickOnGoHome = () => {
-        history.push('/')
+        history.push('/playlists')
     }
 
     const handleClickOnLogout = () => {

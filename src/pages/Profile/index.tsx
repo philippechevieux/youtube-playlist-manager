@@ -30,7 +30,7 @@ function Profile() {
     const userLanguage = useAppSelector(selectUserLanguage)
 
     const handleHomeClick = () => {
-        history.push('/')
+        history.push('/playlists')
     }
 
     const handleLanguageChange = (event: React.ChangeEvent<HTMLInputElement>) => {

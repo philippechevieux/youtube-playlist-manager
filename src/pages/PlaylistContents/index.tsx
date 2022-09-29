@@ -42,7 +42,7 @@ function PlaylistContent() {
 
     const handleHomeClick = () => {
         dispatch(removePlaylistContents({}))
-        history.push('/')
+        history.push('/playlists')
     }
 
     const loadMorePlaylisContents = () => {

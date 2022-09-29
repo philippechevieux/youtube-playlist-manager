@@ -4,8 +4,10 @@ import { useAppDispatch } from '../../app/hooks'
 import { setUserLogin } from '../../utils/arms/user/reducer'
 import { GoogleLogin } from 'react-google-login'
 import { UserDataInterface } from '../../utils/arms/user/state'
+import { useHistory } from 'react-router'
 
 function Login() {
+    let history = useHistory()
     const dispatch = useAppDispatch()
 
     const handleLogin = (response: any) => {
@@ -22,6 +24,7 @@ function Login() {
         }
 
         dispatch(setUserLogin({ googleLoginResponse: loginResponse }))
+        history.push('/playlists')
     }
 
     const handleLoginFailure = () => {

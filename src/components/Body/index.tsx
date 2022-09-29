@@ -1,4 +1,4 @@
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, useHistory } from 'react-router-dom'
 
 import LoginScreen from '../../pages/LoginScreen/index'
 import PlaylistContent from '../../pages/PlaylistContents/index'
@@ -21,9 +21,15 @@ import { selectIsUserLogin } from '../../utils/arms/user/selectors'
 // } from '../../utils/arms/global/selectors'
 
 function Body() {
+    let history = useHistory()
     const dispatch = useAppDispatch()
 
     const isUserLogin = useAppSelector(selectIsUserLogin)
+
+    if (!isUserLogin) {
+        history.push('/')
+    }
+
     // const isSnackbarDisplayed = useAppSelector(selectIsSnackbarDisplayed)
     // const snackbarSeverity = useAppSelector(selectSnackbarSeverity)
     // const snackbarContent = useAppSelector(selectSnackbarContent)
@@ -45,7 +51,7 @@ function Body() {
                 ) : (
                     <>
                         <Switch>
-                            <Route exact path="/">
+                            <Route exact path="/playlists">
                                 <PlaylistList />
                             </Route>
                             <Route exact path="/profile">
