@@ -63,6 +63,7 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
     const [confirmDialogSnackbarOnClose, setConfirmDialogSnackbarOnClose] = useState<Function>(() => {})
 
     const [selectPlaylistDialogVisible, setSelectPlaylistDialogVisible] = useState(false);
+    const [selectPlaylistDialogMode, setSelectPlaylistDialogMode] = useState('');
     const [selectPlaylistDialogTitle, setSelectPlaylistDialogTitle] = useState('');
     const [selectPlaylistDialogConfirm, setSelectPlaylistDialogConfirm] = useState('');
     const [selectPlaylistDialogConfirmIcon, setSelectPlaylistDialogConfirmIcon] = useState(<></>);
@@ -94,6 +95,7 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
 
     const resetSelectPlaylistDialogStates = () => {
         setSelectPlaylistDialogVisible(false)
+        setSelectPlaylistDialogMode('')
         setSelectPlaylistDialogTitle('')
         setSelectPlaylistDialogConfirm('')
         setSelectPlaylistDialogConfirmIcon(<></>)
@@ -113,7 +115,30 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
         setAnchorCurrentItemId('')
     }
 
-    const handleSaveSelectDialog = (selectedPlaylistId: string) => {        
+    const handleSaveSelectDialog = async (selectedPlaylistId: string) => {
+        console.log("--- handleSaveSelectDialog ---");
+
+        try {
+            if (selectPlaylistDialogMode === SAVE_IN) {
+                // await dispatch(
+                //     insertItemToPlaylistAction(
+                //         {
+                //             userAccessToken: userAccessToken,
+                //             itemResourceId: anchorCurrentIemResourceId,
+                //             playlistId: selectedPlaylistId
+                //         }
+                //     )
+                // )
+                //Todo: Snackbar
+            } else if (selectPlaylistDialogMode === MOVE_TO) {
+                // await dispatch()
+            }
+        } catch {
+            //Todo: Snackbar
+            console.log("An error occured ...");
+        }
+
+
         // if (selectPlaylistDialogMode === 'saveIn') {
         //     insertItemToPlaylist(userAccessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
         //         dispatch(
@@ -148,6 +173,8 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
     }
 
     const handleOpenSelectPlaylistDialog = (mode: string) => {
+        setSelectPlaylistDialogMode(mode)
+
         switch (mode) {
             case SAVE_IN:
                 setSelectPlaylistDialogTitle("Enregistrer dans :");
@@ -283,6 +310,7 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
                 title={selectPlaylistDialogTitle}
                 confirmText={selectPlaylistDialogConfirm}
                 confirmIcon={selectPlaylistDialogConfirmIcon}
+                onConfirm={handleSaveSelectDialog}
                 onCancel={resetSelectPlaylistDialogStates}
             />
         </>
