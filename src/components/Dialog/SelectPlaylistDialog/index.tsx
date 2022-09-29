@@ -14,6 +14,7 @@ function SelectPlaylistDialog({
     title = "Selection",
     confirmText = "Confimer",
     confirmIcon,
+    onConfirm,
     onCancel
 } : {
     visible: boolean,
@@ -23,6 +24,7 @@ function SelectPlaylistDialog({
     title?: string,
     confirmText?: string,
     confirmIcon?: ReactElement,
+    onConfirm: Function
     onCancel: Function
 }) {
     const [playlistsListData, setPlaylistsListData] = useState<ItemsInterface>({ items: [] })
@@ -31,6 +33,11 @@ function SelectPlaylistDialog({
     const [nextPageToken, setNextPageToken] = useState('')
     const [selectedPlaylistId, setSelectedPlaylistId] = useState('')
     const [canSave, setCanSave] = useState(false)
+
+    const onSave = () => {
+        setCanSave(false);
+        onConfirm(selectedPlaylistId)
+    }
 
     const loadPlaylistsList = useCallback(
         () => {
@@ -104,7 +111,7 @@ function SelectPlaylistDialog({
                      variant="contained"
                      color="secondary"
                      startIcon={confirmIcon}
-                    //  onClick={onSave}
+                     onClick={onSave}
                  >
                      {confirmText}
                  </Button>
