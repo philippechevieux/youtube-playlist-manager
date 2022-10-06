@@ -1,45 +1,22 @@
-import { Route, Switch, useHistory } from 'react-router-dom'
+import {Route, Switch, useHistory} from 'react-router-dom';
 
-import LoginScreen from '../../pages/LoginScreen/index'
-import PlaylistContent from '../../pages/PlaylistContents/index'
-import PlaylistList from '../../pages/Playlists/index'
+import LoginScreen from '../../pages/LoginScreen/index';
+import PlaylistContent from '../../pages/PlaylistContents/index';
+import PlaylistList from '../../pages/Playlists/index';
 
-import './styles.css'
-import { Alert, Snackbar } from '@mui/material'
-import ConfirmActionDialog from '../Dialog/ConfirmActionDialog'
-import EditPlaylistDialog from '../Dialog/EditPlaylistDialog'
-import SelectPlaylistDialog from './../Dialog/SelectPlaylistDialog/index'
-import Profile from '../../pages/Profile'
+import './styles.css';
+import Profile from '../../pages/Profile';
 
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { selectIsUserLogin } from '../../utils/arms/user/selectors'
-// import { hideSnackbar } from '../../utils/arms/global/reducer'
-// import {
-//     selectIsSnackbarDisplayed,
-//     selectSnackbarContent,
-//     selectSnackbarSeverity,
-// } from '../../utils/arms/global/selectors'
+import {useAppSelector} from '../../app/hooks';
+import {selectIsUserLogin} from '../../utils/arms/user/selectors';
 
 function Body() {
-    let history = useHistory()
-    const dispatch = useAppDispatch()
+    let history = useHistory();
 
-    const isUserLogin = useAppSelector(selectIsUserLogin)
+    const isUserLogin = useAppSelector(selectIsUserLogin);
 
     if (!isUserLogin) {
-        history.push('/')
-    }
-
-    // const isSnackbarDisplayed = useAppSelector(selectIsSnackbarDisplayed)
-    // const snackbarSeverity = useAppSelector(selectSnackbarSeverity)
-    // const snackbarContent = useAppSelector(selectSnackbarContent)
-
-    const displayAlertFromSnackbar = () => {
-        // if (snackbarSeverity === 'success') {
-        //     return <Alert severity="success">{snackbarContent}</Alert>
-        // } else if (snackbarSeverity === 'error') {
-        //     return <Alert severity="error">{snackbarContent}</Alert>
-        // }
+        history.push('/');
     }
 
     return (
@@ -61,25 +38,11 @@ function Body() {
                                 <PlaylistContent />
                             </Route>
                         </Switch>
-                        {/* <ConfirmActionDialog />
-                        <SelectPlaylistDialog />
-                        <EditPlaylistDialog /> */}
                     </>
                 )}
             </div>
-
-            {/* <Snackbar
-                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-                open={isSnackbarDisplayed}
-                autoHideDuration={5000}
-                onClose={() => {
-                    dispatch(hideSnackbar())
-                }}
-            >
-                {displayAlertFromSnackbar()}
-            </Snackbar> */}
         </div>
-    )
+    );
 }
 
-export default Body
+export default Body;

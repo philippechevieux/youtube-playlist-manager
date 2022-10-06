@@ -1,20 +1,20 @@
-import { Card, CardActions, CardContent, CardMedia, Grid, Tooltip, Typography } from '@mui/material'
+import {Card, CardActions, CardContent, CardMedia, Grid, Tooltip, Typography} from '@mui/material';
 
-import IconButton from '@mui/material/IconButton'
-import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
+import IconButton from '@mui/material/IconButton';
+import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 
-import './styles.css'
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import { ItemsInterface } from '../../../utils/arms/playlists/state'
+import './styles.css';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import {ItemsInterface} from '../../../utils/arms/playlists/state';
 
 function MosaicMode({
     playlistsListData,
     onClickOnEditPlaylist,
-    onClickOnOpenPlaylist,
+    onClickOnOpenPlaylist
 }: {
-    playlistsListData: ItemsInterface
-    onClickOnEditPlaylist: Function
-    onClickOnOpenPlaylist: Function
+    playlistsListData: ItemsInterface;
+    onClickOnEditPlaylist: Function;
+    onClickOnOpenPlaylist: Function;
 }) {
     return (
         <Grid
@@ -63,7 +63,7 @@ function MosaicMode({
                 </Grid>
             ))}
         </Grid>
-    )
+    );
 }
 
-export default MosaicMode
+export default MosaicMode;

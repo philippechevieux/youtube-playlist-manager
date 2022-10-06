@@ -1,14 +1,14 @@
-import './styles.css'
-import loginScreenIllustration from '../../assets/loginScreenIllustration.png'
-import { useAppDispatch } from '../../app/hooks'
-import { setUserLogin } from '../../utils/arms/user/reducer'
-import { GoogleLogin } from 'react-google-login'
-import { UserDataInterface } from '../../utils/arms/user/state'
-import { useHistory } from 'react-router'
+import './styles.css';
+import loginScreenIllustration from '../../assets/loginScreenIllustration.png';
+import {useAppDispatch} from '../../app/hooks';
+import {setUserLogin} from '../../utils/arms/user/reducer';
+import {GoogleLogin} from 'react-google-login';
+import {UserDataInterface} from '../../utils/arms/user/state';
+import {useHistory} from 'react-router';
 
 function Login() {
-    let history = useHistory()
-    const dispatch = useAppDispatch()
+    let history = useHistory();
+    const dispatch = useAppDispatch();
 
     const handleLogin = (response: any) => {
         const loginResponse: UserDataInterface = {
@@ -20,16 +20,16 @@ function Login() {
             firstName: response.profileObj.givenName,
             lastName: response.profileObj.familyName,
             fullName: response.profileObj.name,
-            isUserLogin: true,
-        }
+            isUserLogin: true
+        };
 
-        dispatch(setUserLogin({ googleLoginResponse: loginResponse }))
-        history.push('/playlists')
-    }
+        dispatch(setUserLogin({googleLoginResponse: loginResponse}));
+        history.push('/playlists');
+    };
 
     const handleLoginFailure = () => {
         // TODO: handle login failure (maybe redisplay login screen with info ?)
-    }
+    };
 
     return (
         <div className="login-screen-container">
@@ -62,7 +62,7 @@ function Login() {
                 />
             </div>
         </div>
-    )
+    );
 }
 
-export default Login
+export default Login;

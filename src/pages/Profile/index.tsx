@@ -10,37 +10,37 @@ import {
     TextField,
     Toolbar,
     Tooltip,
-    Typography,
-} from '@mui/material'
-import './styles.css'
-import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined'
-import AvatarCustom from '../../components/AvatarCustom'
+    Typography
+} from '@mui/material';
+import './styles.css';
+import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
+import AvatarCustom from '../../components/AvatarCustom';
 
-import { useHistory } from 'react-router'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { setUserLanguage } from '../../utils/arms/user/reducer'
-import { selectUserFullName, selectUserAvatar, selectUserLanguage } from '../../utils/arms/user/selectors'
+import {useHistory} from 'react-router';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {setUserLanguage} from '../../utils/arms/user/reducer';
+import {selectUserFullName, selectUserAvatar, selectUserLanguage} from '../../utils/arms/user/selectors';
 
 function Profile() {
-    let history = useHistory()
+    let history = useHistory();
 
-    const dispatch = useAppDispatch()
-    const userFullName = useAppSelector(selectUserFullName)
-    const userAvatar = useAppSelector(selectUserAvatar)
-    const userLanguage = useAppSelector(selectUserLanguage)
+    const dispatch = useAppDispatch();
+    const userFullName = useAppSelector(selectUserFullName);
+    const userAvatar = useAppSelector(selectUserAvatar);
+    const userLanguage = useAppSelector(selectUserLanguage);
 
     const handleHomeClick = () => {
-        history.push('/playlists')
-    }
+        history.push('/playlists');
+    };
 
     const handleLanguageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setUserLanguage({ language: event.target.value }))
-    }
+        dispatch(setUserLanguage({language: event.target.value}));
+    };
 
     return (
         <div className="">
             <AppBar position="static">
-                <Box sx={{ flexGrow: 1 }}>
+                <Box sx={{flexGrow: 1}}>
                     <Toolbar>
                         <Tooltip title="Retour">
                             <IconButton
@@ -67,7 +67,7 @@ function Profile() {
                         </Typography>
                     </Grid>
                 </div>
-                <Card sx={{ minWidth: 275 }}>
+                <Card sx={{minWidth: 275}}>
                     <CardContent>
                         <Typography variant="h5" color="text.primary" className="profile-options-subtitle">
                             Mes préférences
@@ -110,7 +110,7 @@ function Profile() {
                 </Card>
             </div>
         </div>
-    )
+    );
 }
 
-export default Profile
+export default Profile;

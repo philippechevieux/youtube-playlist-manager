@@ -1,6 +1,6 @@
-import { List, ListItem, Divider } from '@mui/material'
-import './styles.css'
-import '../../styles.css'
+import {List, ListItem, Divider} from '@mui/material';
+import './styles.css';
+import '../../styles.css';
 
 function displaySkeletonContent(isFirstLoad: boolean) {
     return (
@@ -24,11 +24,11 @@ function displaySkeletonContent(isFirstLoad: boolean) {
                 ))}
             </List>
         </div>
-    )
+    );
 }
 
-function ContentSkeleton({ isFirstLoad }: { isFirstLoad: boolean }) {
-    return <div>{displaySkeletonContent(isFirstLoad)}</div>
+function ContentSkeleton({isFirstLoad}: {isFirstLoad: boolean}) {
+    return <div>{displaySkeletonContent(isFirstLoad)}</div>;
 }
 
-export default ContentSkeleton
+export default ContentSkeleton;

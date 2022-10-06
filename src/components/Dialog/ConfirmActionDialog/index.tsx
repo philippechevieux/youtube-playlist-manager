@@ -1,5 +1,5 @@
-import { Dialog, DialogTitle, DialogActions, Button, DialogContent, Snackbar, Alert } from '@mui/material'
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
+import {Dialog, DialogTitle, DialogActions, Button, DialogContent, Snackbar, Alert} from '@mui/material';
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 
 function ConfirmActionDialog({
     visible = false,
@@ -10,17 +10,17 @@ function ConfirmActionDialog({
     onCancel,
     snackbarVisible = false,
     snackbarMessage,
-    snackbarOnClose,
+    snackbarOnClose
 }: {
-    visible: boolean
-    title?: string
-    content: string
-    confirmButtonLabel?: string
-    onConfirm: Function
-    onCancel: Function
-    snackbarVisible?: boolean
-    snackbarMessage?: string
-    snackbarOnClose?: Function
+    visible: boolean;
+    title?: string;
+    content: string;
+    confirmButtonLabel?: string;
+    onConfirm: Function;
+    onCancel: Function;
+    snackbarVisible?: boolean;
+    snackbarMessage?: string;
+    snackbarOnClose?: Function;
 }) {
     return (
         <>
@@ -42,7 +42,7 @@ function ConfirmActionDialog({
 
             <Snackbar
                 open={snackbarVisible}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
                 autoHideDuration={4000}
                 onClose={() => snackbarOnClose && snackbarOnClose()}
             >
@@ -50,7 +50,7 @@ function ConfirmActionDialog({
                 <Alert severity="success">{snackbarMessage}</Alert>
             </Snackbar>
         </>
-    )
+    );
 }
 
-export default ConfirmActionDialog
+export default ConfirmActionDialog;

@@ -1,50 +1,50 @@
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
-import { Menu, MenuItem, IconButton, Typography, Toolbar, Box, AppBar, Divider, Tooltip } from '@mui/material'
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import {Menu, MenuItem, IconButton, Typography, Toolbar, Box, AppBar, Divider, Tooltip} from '@mui/material';
 
-import AvatarCustom from '../AvatarCustom'
-import './styles.css'
+import AvatarCustom from '../AvatarCustom';
+import './styles.css';
 
-import { useState } from 'react'
-import { useHistory } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { setUserLogout } from '../../utils/arms/user/reducer'
-import { selectIsUserLogin, selectUserFullName, selectUserAvatar } from '../../utils/arms/user/selectors'
+import {useState} from 'react';
+import {useHistory} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {setUserLogout} from '../../utils/arms/user/reducer';
+import {selectIsUserLogin, selectUserFullName, selectUserAvatar} from '../../utils/arms/user/selectors';
 
 function Header() {
-    let history = useHistory()
+    let history = useHistory();
 
-    const dispatch = useAppDispatch()
-    const isUserLogin = useAppSelector(selectIsUserLogin)
-    const userFullName = useAppSelector(selectUserFullName)
-    const userAvatar = useAppSelector(selectUserAvatar)
-    const [anchorEl, setAnchorEl] = useState(null)
+    const dispatch = useAppDispatch();
+    const isUserLogin = useAppSelector(selectIsUserLogin);
+    const userFullName = useAppSelector(selectUserFullName);
+    const userAvatar = useAppSelector(selectUserAvatar);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     // TODO: Search a fix for this any ...
     const handleMenu = (event: any) => {
-        setAnchorEl(event.currentTarget)
-    }
+        setAnchorEl(event.currentTarget);
+    };
 
     const handleClose = () => {
-        setAnchorEl(null)
-    }
+        setAnchorEl(null);
+    };
 
     const handleClickOnGoHome = () => {
-        history.push('/playlists')
-    }
+        history.push('/playlists');
+    };
 
     const handleClickOnLogout = () => {
-        dispatch(setUserLogout())
-        setAnchorEl(null)
-    }
+        dispatch(setUserLogout());
+        setAnchorEl(null);
+    };
 
     const handleClickOnGoToMyProfile = () => {
-        history.push('/profile')
-        setAnchorEl(null)
-    }
+        history.push('/profile');
+        setAnchorEl(null);
+    };
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{flexGrow: 1}}>
             <AppBar position="fixed">
                 <Toolbar>
                     {isUserLogin && (
@@ -54,14 +54,14 @@ function Header() {
                                 edge="start"
                                 color="inherit"
                                 aria-label="menu"
-                                sx={{ mr: 2 }}
+                                sx={{mr: 2}}
                                 onClick={() => handleClickOnGoHome()}
                             >
                                 <HomeOutlinedIcon />
                             </IconButton>
                         </Tooltip>
                     )}
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         Youtube Playlist Manager
                     </Typography>
                     {isUserLogin && (
@@ -80,12 +80,12 @@ function Header() {
                                 anchorEl={anchorEl}
                                 anchorOrigin={{
                                     vertical: 'top',
-                                    horizontal: 'right',
+                                    horizontal: 'right'
                                 }}
                                 keepMounted
                                 transformOrigin={{
                                     vertical: 'top',
-                                    horizontal: 'right',
+                                    horizontal: 'right'
                                 }}
                                 disableScrollLock={true}
                                 open={Boolean(anchorEl)}
@@ -106,7 +106,7 @@ function Header() {
                 </Toolbar>
             </AppBar>
         </Box>
-    )
+    );
 }
 
-export default Header
+export default Header;

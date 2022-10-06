@@ -1,22 +1,12 @@
-import {
-    List,
-    ListItem,
-    ListItemAvatar,
-    Avatar,
-    Divider,
-    ListItemText,
-    Typography,
-    Radio,
-    Tooltip,
-} from '@mui/material'
-import React, { useState } from 'react'
+import {List, ListItem, ListItemAvatar, Avatar, Divider, ListItemText, Typography, Radio, Tooltip} from '@mui/material';
+import React, {useState} from 'react';
 
-import IconButton from '@mui/material/IconButton'
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
+import IconButton from '@mui/material/IconButton';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 
-import './styles.css'
-import { ItemInterface, ItemsInterface } from '../../../utils/arms/playlists/state'
+import './styles.css';
+import {ItemInterface, ItemsInterface} from '../../../utils/arms/playlists/state';
 
 function ListMode({
     playlistsListData,
@@ -24,28 +14,28 @@ function ListMode({
     setSelectedPlaylistId,
     mode = 'default',
     onClickOnEditPlaylist,
-    onClickOnOpenPlaylist,
+    onClickOnOpenPlaylist
 }: {
-    playlistsListData: ItemsInterface
-    setCanExecuteAfterSelect?: Function
-    setSelectedPlaylistId?: Function
-    mode?: string
-    onClickOnEditPlaylist?: Function
-    onClickOnOpenPlaylist?: Function
+    playlistsListData: ItemsInterface;
+    setCanExecuteAfterSelect?: Function;
+    setSelectedPlaylistId?: Function;
+    mode?: string;
+    onClickOnEditPlaylist?: Function;
+    onClickOnOpenPlaylist?: Function;
 }) {
-    const [selectedPlaylist, setSelectedPlaylist] = useState('')
+    const [selectedPlaylist, setSelectedPlaylist] = useState('');
 
     const handleChangeSelectedPlaylist = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedPlaylist(event.target.value)
+        setSelectedPlaylist(event.target.value);
 
         if (setCanExecuteAfterSelect !== undefined) {
-            setCanExecuteAfterSelect(true)
+            setCanExecuteAfterSelect(true);
         }
 
         if (setSelectedPlaylistId !== undefined) {
-            setSelectedPlaylistId(event.target.value)
+            setSelectedPlaylistId(event.target.value);
         }
-    }
+    };
 
     const handleListItemSecondaryActionByMode = (PlaylistData: ItemInterface) => {
         if (mode === 'default' && onClickOnEditPlaylist && onClickOnOpenPlaylist) {
@@ -67,31 +57,31 @@ function ListMode({
                         </IconButton>
                     </Tooltip>
                 </div>
-            )
+            );
         }
-    }
+    };
 
     const handleListItemAvatarByMode = (PlaylistData: ItemInterface) => {
         if (mode === 'default') {
             return (
                 <Avatar
-                    sx={{ width: 120, height: 85 }}
+                    sx={{width: 120, height: 85}}
                     alt={PlaylistData.snippet.localized.title}
                     src={PlaylistData.snippet.thumbnails.high.url}
                     variant="square"
                 />
-            )
+            );
         } else if (mode === 'selectPlaylist') {
             return (
                 <Avatar
-                    sx={{ width: 90, height: 75 }}
+                    sx={{width: 90, height: 75}}
                     alt={PlaylistData.snippet.localized.title}
                     src={PlaylistData.snippet.thumbnails.high.url}
                     variant="square"
                 />
-            )
+            );
         }
-    }
+    };
 
     const handleRadioButtonByMode = (PlaylistData: ItemInterface) => {
         if (mode === 'selectPlaylist') {
@@ -103,23 +93,23 @@ function ListMode({
                     name="select-playlist"
                     color="secondary"
                 />
-            )
+            );
         }
-    }
+    };
 
     const handleClickOnItem = (PlaylistData: ItemInterface) => {
         if (mode === 'selectPlaylist') {
-            setSelectedPlaylist(PlaylistData.id)
+            setSelectedPlaylist(PlaylistData.id);
 
             if (setCanExecuteAfterSelect !== undefined) {
-                setCanExecuteAfterSelect(true)
+                setCanExecuteAfterSelect(true);
             }
 
             if (setSelectedPlaylistId !== undefined) {
-                setSelectedPlaylistId(PlaylistData.id)
+                setSelectedPlaylistId(PlaylistData.id);
             }
         }
-    }
+    };
 
     return (
         <List className={`${mode === 'default' ? 'list-container' : ''}`}>
@@ -157,7 +147,7 @@ function ListMode({
                 </div>
             ))}
         </List>
-    )
+    );
 }
 
-export default ListMode
+export default ListMode;

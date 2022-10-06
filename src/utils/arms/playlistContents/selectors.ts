@@ -1,13 +1,13 @@
-import { RootState } from '../../../app/store'
+import {RootState} from '../../../app/store';
 
 export const selectPlaylistContentsPrevPageToken = (state: RootState) => {
-    return state.playlistContents.prevPageToken
-}
+    return state.playlistContents.prevPageToken;
+};
 
 export const selectPlaylistContentsNextPageToken = (state: RootState) => {
-    return state.playlistContents.nextPageToken
-}
+    return state.playlistContents.nextPageToken;
+};
 
 export const selectPlaylistContentsItems = (state: RootState) => {
-    return state.playlistContents.items
-}
+    return state.playlistContents.items;
+};
