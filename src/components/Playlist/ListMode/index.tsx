@@ -1,95 +1,89 @@
-import { List, ListItem, ListItemAvatar, Avatar, Divider, ListItemText, Typography, Radio } from '@mui/material'
-import React, { useContext, useState } from 'react'
+import {List, ListItem, ListItemAvatar, Avatar, Divider, ListItemText, Typography, Radio, Tooltip} from '@mui/material';
+import React, {useState} from 'react';
 
-import IconButton from '@mui/material/IconButton'
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
+import IconButton from '@mui/material/IconButton';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 
-import { IPlaylistsData, IPlaylistsItemData } from '../../../utils/context/interface'
-import './styles.css'
-import { DialogActionTypes } from '../../../utils/reducer'
-import { UserDataContext } from './../../../utils/context/index'
+import './styles.css';
+import {ItemInterface, ItemsInterface} from '../../../utils/arms/playlists/state';
 
 function ListMode({
     playlistsListData,
     setCanExecuteAfterSelect,
     setSelectedPlaylistId,
     mode = 'default',
-    updatePlaylistListData,
-    handlePlaylistClickOnList,
+    onClickOnEditPlaylist,
+    onClickOnOpenPlaylist
 }: {
-    playlistsListData: IPlaylistsData
-    setCanExecuteAfterSelect?: Function
-    setSelectedPlaylistId?: Function
-    mode?: string
-    updatePlaylistListData?: Function
-    handlePlaylistClickOnList?: Function
+    playlistsListData: ItemsInterface;
+    setCanExecuteAfterSelect?: Function;
+    setSelectedPlaylistId?: Function;
+    mode?: string;
+    onClickOnEditPlaylist?: Function;
+    onClickOnOpenPlaylist?: Function;
 }) {
-    const { dispatch } = useContext(UserDataContext)
-    const [selectedPlaylist, setSelectedPlaylist] = useState('')
+    const [selectedPlaylist, setSelectedPlaylist] = useState('');
 
     const handleChangeSelectedPlaylist = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSelectedPlaylist(event.target.value)
+        setSelectedPlaylist(event.target.value);
 
         if (setCanExecuteAfterSelect !== undefined) {
-            setCanExecuteAfterSelect(true)
+            setCanExecuteAfterSelect(true);
         }
 
         if (setSelectedPlaylistId !== undefined) {
-            setSelectedPlaylistId(event.target.value)
+            setSelectedPlaylistId(event.target.value);
         }
-    }
+    };
 
-    const handleListItemSecondaryActionByMode = (PlaylistData: IPlaylistsItemData) => {
-        if (mode === 'default' && updatePlaylistListData && handlePlaylistClickOnList) {
+    const handleListItemSecondaryActionByMode = (PlaylistData: ItemInterface) => {
+        if (mode === 'default' && onClickOnEditPlaylist && onClickOnOpenPlaylist) {
             return (
                 <div>
-                    <IconButton
-                        className="margin"
-                        edge="end"
-                        aria-label="share"
-                        onClick={() => {
-                            dispatch({
-                                type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
-                                editPlaylistDialogData: PlaylistData,
-                                editPlaylistDialogOnClose: updatePlaylistListData,
-                                editPlaylistDialogId: PlaylistData.id,
-                            })
-                        }}
-                    >
-                        <EditOutlinedIcon />
-                    </IconButton>
-                    <IconButton edge="end" aria-label="edit" onClick={() => handlePlaylistClickOnList(PlaylistData.id)}>
-                        <LaunchOutlinedIcon />
-                    </IconButton>
+                    <Tooltip title="Editer">
+                        <IconButton
+                            className="margin"
+                            edge="end"
+                            aria-label="share"
+                            onClick={() => onClickOnEditPlaylist(PlaylistData.id)}
+                        >
+                            <EditOutlinedIcon />
+                        </IconButton>
+                    </Tooltip>
+                    <Tooltip title="Ouvrir la playlist">
+                        <IconButton edge="end" aria-label="edit" onClick={() => onClickOnOpenPlaylist(PlaylistData.id)}>
+                            <LaunchOutlinedIcon />
+                        </IconButton>
+                    </Tooltip>
                 </div>
-            )
+            );
         }
-    }
+    };
 
-    const handleListItemAvatarByMode = (PlaylistData: IPlaylistsItemData) => {
+    const handleListItemAvatarByMode = (PlaylistData: ItemInterface) => {
         if (mode === 'default') {
             return (
                 <Avatar
-                    sx={{ width: 120, height: 85 }}
+                    sx={{width: 120, height: 85}}
                     alt={PlaylistData.snippet.localized.title}
                     src={PlaylistData.snippet.thumbnails.high.url}
                     variant="square"
                 />
-            )
+            );
         } else if (mode === 'selectPlaylist') {
             return (
                 <Avatar
-                    sx={{ width: 90, height: 75 }}
+                    sx={{width: 90, height: 75}}
                     alt={PlaylistData.snippet.localized.title}
                     src={PlaylistData.snippet.thumbnails.high.url}
                     variant="square"
                 />
-            )
+            );
         }
-    }
+    };
 
-    const handleRadioButtonByMode = (PlaylistData: IPlaylistsItemData) => {
+    const handleRadioButtonByMode = (PlaylistData: ItemInterface) => {
         if (mode === 'selectPlaylist') {
             return (
                 <Radio
@@ -99,26 +93,26 @@ function ListMode({
                     name="select-playlist"
                     color="secondary"
                 />
-            )
+            );
         }
-    }
+    };
 
-    const handleClickOnItem = (PlaylistData: IPlaylistsItemData) => {
+    const handleClickOnItem = (PlaylistData: ItemInterface) => {
         if (mode === 'selectPlaylist') {
-            setSelectedPlaylist(PlaylistData.id)
+            setSelectedPlaylist(PlaylistData.id);
 
             if (setCanExecuteAfterSelect !== undefined) {
-                setCanExecuteAfterSelect(true)
+                setCanExecuteAfterSelect(true);
             }
 
             if (setSelectedPlaylistId !== undefined) {
-                setSelectedPlaylistId(PlaylistData.id)
+                setSelectedPlaylistId(PlaylistData.id);
             }
         }
-    }
+    };
 
     return (
-        <List className={`${mode === 'mode' ? 'list-container' : ''}`}>
+        <List className={`${mode === 'default' ? 'list-container' : ''}`}>
             {playlistsListData.items?.map((PlaylistData, index) => (
                 <div
                     className={`item ${mode === 'selectPlaylist' ? 'item-selectable' : ''} ${
@@ -153,7 +147,7 @@ function ListMode({
                 </div>
             ))}
         </List>
-    )
+    );
 }
 
-export default ListMode
+export default ListMode;

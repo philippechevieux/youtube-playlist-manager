@@ -1,7 +1,7 @@
-import { Grid, Card } from '@mui/material'
-import './styles.css'
-import '../styles.css'
-import '../../styles.css'
+import {Grid, Card} from '@mui/material';
+import './styles.css';
+import '../styles.css';
+import '../../styles.css';
 
 function displaySkeletonContent() {
     return (
@@ -27,11 +27,11 @@ function displaySkeletonContent() {
                 </Grid>
             ))}
         </Grid>
-    )
+    );
 }
 
 function MosaicModeSkeleton() {
-    return <div>{displaySkeletonContent()}</div>
+    return <div>{displaySkeletonContent()}</div>;
 }
 
-export default MosaicModeSkeleton
+export default MosaicModeSkeleton;

@@ -3,7 +3,7 @@
 }
 
 .item.item-selectable {
-    border: 2px solid #383838;
+    border: 2px solid #414141;
     cursor: pointer;
 }
 
@@ -12,7 +12,10 @@
 }
 
 .item.item-selectable.item-selected {
-    background-color: rgb(33 150 243 / 38%);
+    position: sticky;
+    top: 0px;
+    z-index: 10;
+    background-color: rgb(50 99 138);
     border: 2px solid #2196f3;
     box-shadow: 0px 0px 11px #000000a1;
     border-radius: 5px;

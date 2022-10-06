@@ -1,39 +1,56 @@
-import { Dialog, DialogTitle, DialogActions, Button, DialogContent } from '@mui/material'
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
-import { useContext } from 'react'
-import { UserDataContext } from '../../../utils/context'
-import { DialogActionTypes } from '../../../utils/reducer'
+import {Dialog, DialogTitle, DialogActions, Button, DialogContent, Snackbar, Alert} from '@mui/material';
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 
-function ConfirmActionDialog() {
-    const { dispatch, state } = useContext(UserDataContext)
-
-    const onClickClose = () => {
-        dispatch({
-            type: DialogActionTypes.HIDE_CONFIRM_ACTION_DIALOG,
-        })
-    }
-
-    const onClickExecute = () => {
-        let functionToExecute = state.confirmActionDialogOnExecute
-        functionToExecute()
-
-        dispatch({
-            type: DialogActionTypes.HIDE_CONFIRM_ACTION_DIALOG,
-        })
-    }
-
+function ConfirmActionDialog({
+    visible = false,
+    title,
+    content,
+    confirmButtonLabel,
+    onConfirm,
+    onCancel,
+    snackbarVisible = false,
+    snackbarMessage,
+    snackbarOnClose
+}: {
+    visible: boolean;
+    title?: string;
+    content: string;
+    confirmButtonLabel?: string;
+    onConfirm: Function;
+    onCancel: Function;
+    snackbarVisible?: boolean;
+    snackbarMessage?: string;
+    snackbarOnClose?: Function;
+}) {
     return (
-        <Dialog open={state.isConfirmActionDialogOpen} fullWidth maxWidth="sm">
-            <DialogTitle id="alert-dialog-title">Confirmation</DialogTitle>
-            <DialogContent>{state.confirmActionDialogContentMessage}</DialogContent>
-            <DialogActions>
-                <Button onClick={onClickClose}>Fermer</Button>
-                <Button variant="contained" color="error" startIcon={<SaveOutlinedIcon />} onClick={onClickExecute}>
-                    {state.confirmActionDialogExecuteButtonLabel}
-                </Button>
-            </DialogActions>
-        </Dialog>
-    )
+        <>
+            <Dialog open={visible} fullWidth maxWidth="sm">
+                <DialogTitle id="alert-dialog-title">{title ? title : 'Confirmation'}</DialogTitle>
+                <DialogContent>{content}</DialogContent>
+                <DialogActions>
+                    <Button onClick={() => onCancel()}>Fermer</Button>
+                    <Button
+                        variant="contained"
+                        color="error"
+                        startIcon={<SaveOutlinedIcon />}
+                        onClick={() => onConfirm()}
+                    >
+                        {confirmButtonLabel ? confirmButtonLabel : 'Confirmer'}
+                    </Button>
+                </DialogActions>
+            </Dialog>
+
+            <Snackbar
+                open={snackbarVisible}
+                anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                autoHideDuration={4000}
+                onClose={() => snackbarOnClose && snackbarOnClose()}
+            >
+                {/* TODO: regareder pour gérer les erreurs */}
+                <Alert severity="success">{snackbarMessage}</Alert>
+            </Snackbar>
+        </>
+    );
 }
 
-export default ConfirmActionDialog
+export default ConfirmActionDialog;

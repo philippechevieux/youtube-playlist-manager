@@ -1,0 +1,52 @@
+/* MUI : xs size */
+@media (min-width: 0px) {
+    div.profile-options-container {
+        width: 100%;
+        margin: auto;
+    }
+}
+
+/* MUI : sm size */
+@media (min-width: 600px) {
+    div.profile-options-container {
+        width: 90%;
+        margin: auto;
+    }
+}
+
+/* MUI : md size */
+@media (min-width: 900px) {
+    div.profile-options-container {
+        width: 70%;
+        margin: auto;
+    }
+}
+
+/* MUI : lg size */
+@media (min-width: 1200px) {
+    div.profile-options-container {
+        width: 60%;
+        margin: auto;
+    }
+}
+
+div.profile-options-container {
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+div.profile-options-container .profile-options-title {
+    margin: 15px 0px 30px 0px;
+}
+
+div.profile-options-container .profile-options-subtitle {
+    margin: 10px 0px 15px 0px;
+}
+
+div.profile-options-container #select-language {
+    display: flex;
+}
+
+div.profile-options-container .flag-icon {
+    padding-top: 5px;
+}

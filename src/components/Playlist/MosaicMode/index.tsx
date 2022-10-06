@@ -1,26 +1,21 @@
-import { Card, CardActions, CardContent, CardMedia, Grid, Typography } from '@mui/material'
+import {Card, CardActions, CardContent, CardMedia, Grid, Tooltip, Typography} from '@mui/material';
 
-import IconButton from '@mui/material/IconButton'
-import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined'
+import IconButton from '@mui/material/IconButton';
+import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 
-import { IPlaylistsData } from '../../../utils/context/interface'
-import './styles.css'
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined'
-import { useContext } from 'react'
-import { UserDataContext } from './../../../utils/context/index'
-import { DialogActionTypes } from '../../../utils/reducer'
+import './styles.css';
+import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
+import {ItemsInterface} from '../../../utils/arms/playlists/state';
 
 function MosaicMode({
     playlistsListData,
-    updatePlaylistListData,
-    handlePlaylistClickOnList,
+    onClickOnEditPlaylist,
+    onClickOnOpenPlaylist
 }: {
-    playlistsListData: IPlaylistsData
-    updatePlaylistListData: Function
-    handlePlaylistClickOnList: Function
+    playlistsListData: ItemsInterface;
+    onClickOnEditPlaylist: Function;
+    onClickOnOpenPlaylist: Function;
 }) {
-    const { dispatch } = useContext(UserDataContext)
-
     return (
         <Grid
             container
@@ -50,31 +45,25 @@ function MosaicMode({
                             </Typography>
                         </CardContent>
                         <CardActions className="card-actions">
-                            <IconButton
-                                aria-label="edit"
-                                onClick={() => {
-                                    dispatch({
-                                        type: DialogActionTypes.DISPLAY_EDIT_PLAYLIST_DIALOG,
-                                        editPlaylistDialogData: PlaylistData,
-                                        editPlaylistDialogOnClose: updatePlaylistListData,
-                                        editPlaylistDialogId: PlaylistData.id,
-                                    })
-                                }}
-                            >
-                                <EditOutlinedIcon />
-                            </IconButton>
-                            <IconButton
-                                aria-label="open playlist"
-                                onClick={() => handlePlaylistClickOnList(PlaylistData.id)}
-                            >
-                                <LaunchOutlinedIcon />
-                            </IconButton>
+                            <Tooltip title="Editer">
+                                <IconButton aria-label="edit" onClick={() => onClickOnEditPlaylist(PlaylistData.id)}>
+                                    <EditOutlinedIcon />
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Ouvrir la playlist">
+                                <IconButton
+                                    aria-label="open playlist"
+                                    onClick={() => onClickOnOpenPlaylist(PlaylistData.id)}
+                                >
+                                    <LaunchOutlinedIcon />
+                                </IconButton>
+                            </Tooltip>
                         </CardActions>
                     </Card>
                 </Grid>
             ))}
         </Grid>
-    )
+    );
 }
 
-export default MosaicMode
+export default MosaicMode;

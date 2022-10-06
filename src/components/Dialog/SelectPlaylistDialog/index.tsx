@@ -1,128 +1,87 @@
-import { Dialog, DialogTitle, DialogActions, Button, DialogContent } from '@mui/material'
+import {Dialog, DialogTitle, DialogActions, Button, DialogContent} from '@mui/material';
 
-import './styles.css'
-import { useCallback, useContext, useEffect, useState } from 'react'
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
-import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined'
-import { UserDataContext } from './../../../utils/context/index'
-import { DialogActionTypes } from '../../../utils/reducer'
-import { deleteItemFromPlaylist, getYoutubePlaylists, insertItemToPlaylist } from './../../../utils/api/index'
-import { IPlaylistsData } from '../../../utils/context/interface'
-import ListMode from './../../Playlist/ListMode/index'
+import './styles.css';
+import {ReactElement, useCallback, useEffect, useState} from 'react';
+import {getYoutubePlaylists} from './../../../utils/api/index';
+import ListMode from './../../Playlist/ListMode/index';
+import {ItemsInterface} from '../../../utils/arms/playlists/state';
+import {LoadingButton} from '@mui/lab';
 
-function SelectPlaylistDialog() {
-    const { dispatch, state } = useContext(UserDataContext)
-    const [playlistsListData, setPlaylistsListData] = useState<IPlaylistsData>({ items: [] })
-    const [isLoading, setIsLoading] = useState(false)
-    const [isLoaded, setIsLoaded] = useState(false)
-    const [nextPageToken, setNextPageToken] = useState('')
-    const [selectedPlaylistId, setSelectedPlaylistId] = useState('')
-    const [canSave, setCanSave] = useState(false)
-
-    const executeClose = () => {
-        state.selectPlaylistDialogOnClose()
-
-        setPlaylistsListData({ items: [] })
-        setIsLoading(false)
-        setIsLoaded(false)
-        setNextPageToken('')
-        setCanSave(false)
-
-        dispatch({
-            type: DialogActionTypes.HIDE_SELECT_PLAYLIST_DIALOG,
-        })
-    }
-
-    const onClose = () => {
-        executeClose()
-    }
+function SelectPlaylistDialog({
+    visible,
+    userAccessToken,
+    currentPlaylistId = '',
+    hideCurrentPlaylist = false,
+    title = 'Selection',
+    confirmText = 'Confimer',
+    confirmIcon,
+    onConfirm,
+    onCancel
+}: {
+    visible: boolean;
+    userAccessToken: string;
+    currentPlaylistId?: string;
+    hideCurrentPlaylist?: boolean;
+    title?: string;
+    confirmText?: string;
+    confirmIcon?: ReactElement;
+    onConfirm: Function;
+    onCancel: Function;
+}) {
+    const [playlistsListData, setPlaylistsListData] = useState<ItemsInterface>({items: []});
+    const [isLoading, setIsLoading] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
+    const [nextPageToken, setNextPageToken] = useState('');
+    const [selectedPlaylistId, setSelectedPlaylistId] = useState('');
+    const [canSave, setCanSave] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
 
     const onSave = () => {
-        state.selectPlaylistDialogOnSave(selectedPlaylistId)
-
-        executeClose()
-    }
-
-    // TODO: Replace this function when i will use a real translation module
-    const handleTranslationByMode = (content: string) => {
-        let translation = ''
-
-        if (state.selectPlaylistDialogMode === 'saveIn') {
-            switch (content) {
-                case 'dialogTitle':
-                    translation = 'Enregistrer dans :'
-                    break
-                case 'dialogExecuteButton':
-                    translation = 'Enregistrer'
-                    break
-            }
-        } else if (state.selectPlaylistDialogMode === 'moveTo') {
-            switch (content) {
-                case 'dialogTitle':
-                    translation = 'Déplacer vers :'
-                    break
-                case 'dialogExecuteButton':
-                    translation = 'Déplacer'
-                    break
-            }
-        }
-
-        return translation
-    }
-
-    const displayExecuteButtonIcon = () => {
-        if (state.selectPlaylistDialogMode === 'saveIn') {
-            return <SaveOutlinedIcon />
-        } else if (state.selectPlaylistDialogMode === 'moveTo') {
-            return <SendAndArchiveOutlinedIcon />
-        }
-    }
+        setIsSaving(true);
+        setCanSave(false);
+        onConfirm(selectedPlaylistId);
+    };
 
     const loadPlaylistsList = useCallback(() => {
-        if (isLoaded === false && isLoading === false && state.isSelectPlaylistDialogOpen === true) {
-            setIsLoading(true)
-
-            getYoutubePlaylists(state.accessToken, nextPageToken).then((data) => {
-                setIsLoading(false)
-                setIsLoaded(true)
-
-                let newItems = [...playlistsListData.items, ...data.items]
-
-                if (state.selectPlaylistDialogHideCurrentPlaylist === true) {
-                    newItems = newItems.filter((item) => {
-                        return item.id !== state.currentPlaylistId
-                    })
+        if (!isLoaded && !isLoading && visible) {
+            setIsLoading(true);
+            getYoutubePlaylists(userAccessToken, nextPageToken).then(data => {
+                setIsLoading(false);
+                setIsLoaded(true);
+                let newItems = [...playlistsListData.items, ...data.items];
+                if (hideCurrentPlaylist && currentPlaylistId !== '') {
+                    newItems = newItems.filter(item => {
+                        return item.id !== currentPlaylistId;
+                    });
                 }
-
-                data.items = newItems
-
-                setPlaylistsListData(data)
-                setNextPageToken(data.nextPageToken)
-            })
+                data.items = newItems;
+                setPlaylistsListData(data);
+                setNextPageToken(data.nextPageToken);
+            });
         }
     }, [
-        state.accessToken,
-        state.currentPlaylistId,
-        state.isSelectPlaylistDialogOpen,
-        state.selectPlaylistDialogHideCurrentPlaylist,
+        userAccessToken,
+        currentPlaylistId,
+        visible,
+        hideCurrentPlaylist,
         nextPageToken,
         isLoading,
         isLoaded,
-        playlistsListData,
-    ])
+        playlistsListData
+    ]);
 
     const loadMorePlaylistList = () => {
-        setIsLoaded(false)
-        loadPlaylistsList()
-    }
+        setIsLoaded(false);
+        loadPlaylistsList();
+    };
 
     useEffect(() => {
-        loadPlaylistsList()
-    }, [loadPlaylistsList])
+        loadPlaylistsList();
+    }, [loadPlaylistsList]);
 
     return (
-        <Dialog className="dialog-select-playlist" open={state.isSelectPlaylistDialogOpen} fullWidth maxWidth="sm">
-            <DialogTitle>{handleTranslationByMode('dialogTitle')}</DialogTitle>
+        <Dialog className="dialog-select-playlist" open={visible} fullWidth maxWidth="sm">
+            <DialogTitle>{title}</DialogTitle>
             <DialogContent>
                 {playlistsListData && (
                     <ListMode
@@ -137,7 +96,7 @@ function SelectPlaylistDialog() {
                         <Button
                             variant="outlined"
                             onClick={() => {
-                                loadMorePlaylistList()
+                                loadMorePlaylistList();
                             }}
                         >
                             Voir plus ...
@@ -146,19 +105,20 @@ function SelectPlaylistDialog() {
                 )}
             </DialogContent>
             <DialogActions>
-                <Button onClick={onClose}>Fermer</Button>
-                <Button
+                <Button onClick={() => onCancel()}>Fermer</Button>
+                <LoadingButton
+                    loading={isSaving}
                     disabled={!canSave}
                     variant="contained"
                     color="secondary"
-                    startIcon={displayExecuteButtonIcon()}
+                    startIcon={confirmIcon}
                     onClick={onSave}
                 >
-                    {handleTranslationByMode('dialogExecuteButton')}
-                </Button>
+                    {confirmText}
+                </LoadingButton>
             </DialogActions>
         </Dialog>
-    )
+    );
 }
 
-export default SelectPlaylistDialog
+export default SelectPlaylistDialog;

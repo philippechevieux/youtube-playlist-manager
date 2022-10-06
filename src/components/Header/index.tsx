@@ -1,61 +1,70 @@
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined'
-import { Menu, MenuItem, IconButton, Typography, Toolbar, Box, AppBar, Divider } from '@mui/material'
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import {Menu, MenuItem, IconButton, Typography, Toolbar, Box, AppBar, Divider, Tooltip} from '@mui/material';
 
-import AvatarCustom from '../AvatarCustom'
-import './styles.css'
+import AvatarCustom from '../AvatarCustom';
+import './styles.css';
 
-// import { GoogleLogin } from 'react-google-login'
-import { useState, useContext } from 'react'
-import { UserDataContext } from '../../utils/context'
-import { useHistory } from 'react-router-dom'
-import { UserDataActionTypes } from '../../utils/reducer'
+import {useState} from 'react';
+import {useHistory} from 'react-router-dom';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {setUserLogout} from '../../utils/arms/user/reducer';
+import {selectIsUserLogin, selectUserFullName, selectUserAvatar} from '../../utils/arms/user/selectors';
 
 function Header() {
-    let history = useHistory()
+    let history = useHistory();
 
-    const { state, dispatch } = useContext(UserDataContext)
-
-    const [anchorEl, setAnchorEl] = useState(null)
-
-    const handleLogout = () => {
-        dispatch({ type: UserDataActionTypes.USER_LOGOUT })
-        setAnchorEl(null)
-    }
+    const dispatch = useAppDispatch();
+    const isUserLogin = useAppSelector(selectIsUserLogin);
+    const userFullName = useAppSelector(selectUserFullName);
+    const userAvatar = useAppSelector(selectUserAvatar);
+    const [anchorEl, setAnchorEl] = useState(null);
 
     // TODO: Search a fix for this any ...
     const handleMenu = (event: any) => {
-        setAnchorEl(event.currentTarget)
-    }
+        setAnchorEl(event.currentTarget);
+    };
 
     const handleClose = () => {
-        setAnchorEl(null)
-    }
+        setAnchorEl(null);
+    };
 
-    const handleHomeClick = () => {
-        history.push('/')
-    }
+    const handleClickOnGoHome = () => {
+        history.push('/playlists');
+    };
+
+    const handleClickOnLogout = () => {
+        dispatch(setUserLogout());
+        setAnchorEl(null);
+    };
+
+    const handleClickOnGoToMyProfile = () => {
+        history.push('/profile');
+        setAnchorEl(null);
+    };
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
+        <Box sx={{flexGrow: 1}}>
             <AppBar position="fixed">
                 <Toolbar>
-                    {state.isUserLogin && (
-                        <IconButton
-                            size="large"
-                            edge="start"
-                            color="inherit"
-                            aria-label="menu"
-                            sx={{ mr: 2 }}
-                            onClick={() => handleHomeClick()}
-                        >
-                            <HomeOutlinedIcon />
-                        </IconButton>
+                    {isUserLogin && (
+                        <Tooltip title="Accueil">
+                            <IconButton
+                                size="large"
+                                edge="start"
+                                color="inherit"
+                                aria-label="menu"
+                                sx={{mr: 2}}
+                                onClick={() => handleClickOnGoHome()}
+                            >
+                                <HomeOutlinedIcon />
+                            </IconButton>
+                        </Tooltip>
                     )}
-                    <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
                         Youtube Playlist Manager
                     </Typography>
-                    {state.isUserLogin && (
+                    {isUserLogin && (
                         <div>
                             <IconButton
                                 size="large"
@@ -64,30 +73,30 @@ function Header() {
                                 onClick={handleMenu}
                                 color="inherit"
                             >
-                                <AvatarCustom size="md" />
+                                <AvatarCustom title={userFullName} source={userAvatar} size="md" />
                             </IconButton>
                             <Menu
                                 id="menu-appbar"
                                 anchorEl={anchorEl}
                                 anchorOrigin={{
                                     vertical: 'top',
-                                    horizontal: 'right',
+                                    horizontal: 'right'
                                 }}
                                 keepMounted
                                 transformOrigin={{
                                     vertical: 'top',
-                                    horizontal: 'right',
+                                    horizontal: 'right'
                                 }}
                                 disableScrollLock={true}
                                 open={Boolean(anchorEl)}
                                 onClose={handleClose}
                             >
-                                <MenuItem key="profil" onClick={handleClose}>
-                                    <AvatarCustom size="sm" />
+                                <MenuItem key="profil" onClick={handleClickOnGoToMyProfile}>
+                                    <AvatarCustom title={userFullName} source={userAvatar} size="sm" />
                                     <span className="header-menuitem-margin-left">Mon profil</span>
                                 </MenuItem>
                                 <Divider />
-                                <MenuItem key="logout" onClick={handleLogout}>
+                                <MenuItem key="logout" onClick={handleClickOnLogout}>
                                     <LogoutOutlinedIcon />
                                     <span className="header-menuitem-margin-left">Se déconnecter</span>
                                 </MenuItem>
@@ -97,7 +106,7 @@ function Header() {
                 </Toolbar>
             </AppBar>
         </Box>
-    )
+    );
 }
 
-export default Header
+export default Header;

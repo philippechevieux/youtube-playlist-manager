@@ -1,12 +1,13 @@
-import { BrowserRouter as Router } from 'react-router-dom'
-import { UserDataProvider } from '../../utils/context'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
-import { CssBaseline } from '@mui/material'
+import {BrowserRouter as Router} from 'react-router-dom';
+import {Provider} from 'react-redux';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
+import {CssBaseline} from '@mui/material';
 
-import './styles.css'
-import React from 'react'
-import Header from '../Header'
-import Body from '../Body'
+import './styles.css';
+import store from '../../app/store';
+import React from 'react';
+import Header from '../Header';
+import Body from '../Body';
 
 function App() {
     //TODO: Ajouter un bouton pour changer de theme (https://mui.com/customization/dark-mode/)
@@ -16,35 +17,35 @@ function App() {
                 palette: {
                     mode: 'dark',
                     primary: {
-                        main: '#fff',
+                        main: '#fff'
                     },
                     secondary: {
                         light: '#6ec6ff',
                         main: '#2196f3',
                         dark: '#0069c0',
-                        contrastText: '#fff',
-                    },
+                        contrastText: '#fff'
+                    }
                 },
                 typography: {
-                    fontFamily: 'Poppins, sans-serif',
-                },
+                    fontFamily: 'Poppins, sans-serif'
+                }
             }),
         []
-    )
+    );
 
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline />
             <Router>
-                <UserDataProvider>
+                <Provider store={store}>
                     <div className="app-container">
                         <Header />
                         <Body />
                     </div>
-                </UserDataProvider>
+                </Provider>
             </Router>
         </ThemeProvider>
-    )
+    );
 }
 
-export default App
+export default App;
