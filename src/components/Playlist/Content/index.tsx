@@ -10,57 +10,51 @@ import {
     Menu,
     MenuItem,
     Tooltip,
-} from '@mui/material'
+    Snackbar,
+    Alert,
+    AlertColor
+} from '@mui/material';
 
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined'
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined'
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined'
-import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined'
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
+import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined';
 
-import '../styles.css'
-import { deleteItemFromPlaylist, insertItemToPlaylist } from '../../../utils/api'
-import { useState } from 'react'
-import { IResourceId } from '../../../utils/api/interface'
-import { IPlaylistItemsContent, IPlaylistsListItems } from '../../../utils/context/interface'
-import { useAppDispatch, useAppSelector } from '../../../app/hooks'
-import { selectUserAccessToken } from '../../../utils/arms/user/selectors'
-import { ContentsInterface } from '../../../utils/arms/playlistContents/state'
-import ConfirmActionDialog from '../../Dialog/ConfirmActionDialog'
-import { removeContent } from '../../../utils/arms/playlistContents/reducer'
-import SelectPlaylistDialog from '../../Dialog/SelectPlaylistDialog'
-// import {
-//     displayConfirmActionDialog,
-//     displaySelectPlaylistDialog,
-//     displaySnackbar,
-// } from '../../../utils/arms/global/reducer'
-// import { selectSelectPlaylistDialogMode } from '../../../utils/arms/global/selectors'
+import '../styles.css';
+import {deleteItemFromPlaylist} from '../../../utils/api';
+import {useState} from 'react';
+import {IResourceId} from '../../../utils/api/interface';
+import {IPlaylistItemsContent} from '../../../utils/context/interface';
+import {useAppDispatch, useAppSelector} from '../../../app/hooks';
+import {selectUserAccessToken} from '../../../utils/arms/user/selectors';
+import {
+    ContentsInterface,
+    defaultItemResourceId,
+    ResourceIdInterface
+} from '../../../utils/arms/playlistContents/state';
+import ConfirmActionDialog from '../../Dialog/ConfirmActionDialog';
+import {removeContent} from '../../../utils/arms/playlistContents/reducer';
+import SelectPlaylistDialog from '../../Dialog/SelectPlaylistDialog';
+import {insertItemToPlaylistAction, moveItemToPlaylistAction} from '../../../utils/arms/playlistContents/middleware';
+import {MOVE_TO, SAVE_IN} from '../../../utils/constants';
 
-const defaultItemResourceId = {
-    kind: '',
-    videoId: '',
-}
+function Content({playlistId, playlistsListItems}: {playlistId: string; playlistsListItems: ContentsInterface}) {
+    const dispatch = useAppDispatch();
 
-const SAVE_IN = "saveIn";
-const MOVE_TO = "moveTo";
+    const userAccessToken = useAppSelector(selectUserAccessToken);
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorCurrentIemResourceId, setAnchorCurrentIemResourceId] =
+        useState<ResourceIdInterface>(defaultItemResourceId);
+    const [anchorCurrentItemId, setAnchorCurrentItemId] = useState('');
 
-function Content({ playlistId, playlistsListItems }: { playlistId: string; playlistsListItems: ContentsInterface }) {
-    const dispatch = useAppDispatch()
+    const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
+    const [confirmDialogContent, setConfirmDialogContent] = useState('');
+    const [confirmDialogOnConfirm, setConfirmDialogOnConfirm] = useState<Function>(() => {});
+    const [confirmDialogOnCancel, setConfirmDialogOnCancel] = useState<Function>(() => {});
 
-    const userAccessToken = useAppSelector(selectUserAccessToken)
-    // const selectPlaylistDialogMode = useAppSelector(selectSelectPlaylistDialogMode)
-
-    const [anchorEl, setAnchorEl] = useState(null)
-    const [anchorCurrentIemResourceId, setAnchorCurrentIemResourceId] = useState(defaultItemResourceId)
-    const [anchorCurrentItemId, setAnchorCurrentItemId] = useState('')
-
-    const [confirmDialogVisible, setConfirmDialogVisible] = useState(false)
-    const [confirmDialogContent, setConfirmDialogContent] = useState('')
-    const [confirmDialogOnConfirm, setConfirmDialogOnConfirm] = useState<Function>(() => {})
-    const [confirmDialogOnCancel, setConfirmDialogOnCancel] = useState<Function>(() => {})
-
-    const [confirmDialogSnackbarVisible, setConfirmDialogSnackbarVisible] = useState(false)
-    const [confirmDialogSnackbarMessage, setConfirmDialogSnackbarMessage] = useState('')
-    const [confirmDialogSnackbarOnClose, setConfirmDialogSnackbarOnClose] = useState<Function>(() => {})
+    const [confirmDialogSnackbarVisible, setConfirmDialogSnackbarVisible] = useState(false);
+    const [confirmDialogSnackbarMessage, setConfirmDialogSnackbarMessage] = useState('');
+    const [confirmDialogSnackbarOnClose, setConfirmDialogSnackbarOnClose] = useState<Function>(() => {});
 
     const [selectPlaylistDialogVisible, setSelectPlaylistDialogVisible] = useState(false);
     const [selectPlaylistDialogMode, setSelectPlaylistDialogMode] = useState('');
@@ -68,150 +62,127 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
     const [selectPlaylistDialogConfirm, setSelectPlaylistDialogConfirm] = useState('');
     const [selectPlaylistDialogConfirmIcon, setSelectPlaylistDialogConfirmIcon] = useState(<></>);
 
+    const [snackbarVisible, setSnackbarVisible] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('info');
+
     const resetConfirmDialogStates = () => {
-        setConfirmDialogVisible(false)
-        setConfirmDialogContent('')
-        setConfirmDialogOnConfirm(() => {})
-        setConfirmDialogOnCancel(() => {})
-    }
+        setConfirmDialogVisible(false);
+        setConfirmDialogContent('');
+        setConfirmDialogOnConfirm(() => {});
+        setConfirmDialogOnCancel(() => {});
+    };
 
     const handleDeleteClick = (itemId: string) => {
-        setConfirmDialogContent('Etes-vous sûr de vouloir supprimer cette vidéo de votre playlist ?')
-        setConfirmDialogOnCancel(() => resetConfirmDialogStates)
-        setConfirmDialogOnConfirm(() => () => executeDeleteClick(itemId))
-        setConfirmDialogVisible(true)
-    }
+        setConfirmDialogContent('Etes-vous sûr de vouloir supprimer cette vidéo de votre playlist ?');
+        setConfirmDialogOnCancel(() => resetConfirmDialogStates);
+        setConfirmDialogOnConfirm(() => () => executeDeleteClick(itemId));
+        setConfirmDialogVisible(true);
+    };
 
     const executeDeleteClick = (itemId: string) => {
+        // TODO: Move this for async wait logic
         deleteItemFromPlaylist(userAccessToken, itemId).then(() => {
-            dispatch(removeContent({ id: itemId }))
-            resetConfirmDialogStates()
+            dispatch(removeContent({id: itemId}));
+            resetConfirmDialogStates();
 
-            setConfirmDialogSnackbarOnClose(() => () => setConfirmDialogSnackbarVisible(false))
-            setConfirmDialogSnackbarMessage('La vidéo a été supprimé de votre playlist avec succès')
-            setConfirmDialogSnackbarVisible(true)
-        })
-    }
+            setConfirmDialogSnackbarOnClose(() => () => setConfirmDialogSnackbarVisible(false));
+            setConfirmDialogSnackbarMessage('La vidéo a été supprimé de votre playlist avec succès');
+            setConfirmDialogSnackbarVisible(true);
+        });
+    };
 
     const resetSelectPlaylistDialogStates = () => {
-        setSelectPlaylistDialogVisible(false)
-        setSelectPlaylistDialogMode('')
-        setSelectPlaylistDialogTitle('')
-        setSelectPlaylistDialogConfirm('')
-        setSelectPlaylistDialogConfirmIcon(<></>)
+        setSelectPlaylistDialogVisible(false);
+        setSelectPlaylistDialogMode('');
+        setSelectPlaylistDialogTitle('');
+        setSelectPlaylistDialogConfirm('');
+        setSelectPlaylistDialogConfirmIcon(<></>);
 
-        handleCloseMoreMenu()
-    }
+        handleCloseMoreMenu();
+    };
 
     const handleMoreMenu = (event: any, resourceId: IResourceId, itemId: string) => {
-        setAnchorEl(event.currentTarget)
-        setAnchorCurrentIemResourceId(resourceId)
-        setAnchorCurrentItemId(itemId)
-    }
+        setAnchorEl(event.currentTarget);
+        setAnchorCurrentIemResourceId(resourceId);
+        setAnchorCurrentItemId(itemId);
+    };
 
     const handleCloseMoreMenu = () => {
-        setAnchorEl(null)
-        setAnchorCurrentIemResourceId(defaultItemResourceId)
-        setAnchorCurrentItemId('')
-    }
+        setAnchorEl(null);
+        setAnchorCurrentIemResourceId(defaultItemResourceId);
+        setAnchorCurrentItemId('');
+    };
 
     const handleSaveSelectDialog = async (selectedPlaylistId: string) => {
-        console.log("--- handleSaveSelectDialog ---");
-
         try {
             if (selectPlaylistDialogMode === SAVE_IN) {
-                // await dispatch(
-                //     insertItemToPlaylistAction(
-                //         {
-                //             userAccessToken: userAccessToken,
-                //             itemResourceId: anchorCurrentIemResourceId,
-                //             playlistId: selectedPlaylistId
-                //         }
-                //     )
-                // )
-                //Todo: Snackbar
+                await dispatch(
+                    insertItemToPlaylistAction({
+                        userAccessToken: userAccessToken,
+                        itemResourceId: anchorCurrentIemResourceId,
+                        playlistId: selectedPlaylistId
+                    })
+                );
+
+                setSnackbarMessage('La vidéo a été ajouté à votre playlist avec succès');
+                setSnackbarSeverity('success');
+                setSnackbarVisible(true);
+                resetSelectPlaylistDialogStates();
             } else if (selectPlaylistDialogMode === MOVE_TO) {
-                // await dispatch()
+                await dispatch(
+                    moveItemToPlaylistAction({
+                        userAccessToken: userAccessToken,
+                        itemResourceId: anchorCurrentIemResourceId,
+                        itemId: anchorCurrentItemId,
+                        playlistId: selectedPlaylistId
+                    })
+                );
+
+                setSnackbarMessage('La vidéo a été déplacé avec succès');
+                setSnackbarSeverity('success');
+                setSnackbarVisible(true);
+                resetSelectPlaylistDialogStates();
             }
         } catch {
-            //Todo: Snackbar
-            console.log("An error occured ...");
+            setSnackbarMessage("Une erreur est survenue lors de l'enregistrement");
+            setSnackbarSeverity('error');
+            setSnackbarVisible(true);
         }
 
-
-        // if (selectPlaylistDialogMode === 'saveIn') {
-        //     insertItemToPlaylist(userAccessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
-        //         dispatch(
-        //             displaySnackbar({
-        //                 snackbarSeverity: 'success',
-        //                 snackbarContent: 'La vidéo a été ajouté à votre playlist avec succès',
-        //             })
-        //         )
-        //     })
-        // } else if (selectPlaylistDialogMode === 'moveTo') {
-        //     insertItemToPlaylist(userAccessToken, anchorCurrentIemResourceId, selectedPlaylistId).then(() => {
-        //         deleteItemFromPlaylist(userAccessToken, anchorCurrentItemId).then(() => {
-        //             let newPlaylistsListItems = {
-        //                 items: playlistsListItems.items.filter(function (item) {
-        //                     return item.id !== anchorCurrentItemId
-        //                 }),
-        //             }
-
-        //             setPlaylistsListItems(newPlaylistsListItems)
-
-        //             dispatch(
-        //                 displaySnackbar({
-        //                     snackbarSeverity: 'success',
-        //                     snackbarContent: 'La vidéo a été déplacé avec succès',
-        //                 })
-        //             )
-        //         })
-        //     })
-        // }
-
-        handleCloseMoreMenu()
-    }
+        handleCloseMoreMenu();
+    };
 
     const handleOpenSelectPlaylistDialog = (mode: string) => {
-        setSelectPlaylistDialogMode(mode)
+        setSelectPlaylistDialogMode(mode);
 
         switch (mode) {
             case SAVE_IN:
-                setSelectPlaylistDialogTitle("Enregistrer dans :");
-                setSelectPlaylistDialogConfirm("Enregistrer");
-                setSelectPlaylistDialogConfirmIcon(<SaveOutlinedIcon />)
+                setSelectPlaylistDialogTitle('Enregistrer dans :');
+                setSelectPlaylistDialogConfirm('Enregistrer');
+                setSelectPlaylistDialogConfirmIcon(<SaveOutlinedIcon />);
                 break;
             case MOVE_TO:
-                setSelectPlaylistDialogTitle("Déplacer vers :");
-                setSelectPlaylistDialogConfirm("Déplacer");
+                setSelectPlaylistDialogTitle('Déplacer vers :');
+                setSelectPlaylistDialogConfirm('Déplacer');
                 setSelectPlaylistDialogConfirmIcon(<SendAndArchiveOutlinedIcon />);
                 break;
         }
 
-        setSelectPlaylistDialogVisible(true)
-
-        // dispatch(
-        //     displaySelectPlaylistDialog({
-        //         selectPlaylistDialogHideCurrentPlaylist: true,
-        //         selectPlaylistDialogMode: mode,
-        //         currentPlaylistId: playlistId,
-        //         selectPlaylistDialogOnClose: handleCloseSelectDialog,
-        //         selectPlaylistDialogOnSave: handleSaveSelectDialog,
-        //     })
-        // )
-    }
+        setSelectPlaylistDialogVisible(true);
+    };
 
     const getThumbnailsFromItem = (Item: IPlaylistItemsContent): string => {
-        let pathOrUrlOfThumbnails = ''
+        let pathOrUrlOfThumbnails = '';
 
         if (Item.snippet.thumbnails !== undefined) {
             if (Item.snippet.thumbnails.high !== undefined) {
-                pathOrUrlOfThumbnails = Item.snippet.thumbnails.high.url
+                pathOrUrlOfThumbnails = Item.snippet.thumbnails.high.url;
             }
         }
 
-        return pathOrUrlOfThumbnails
-    }
+        return pathOrUrlOfThumbnails;
+    };
 
     return (
         <>
@@ -221,7 +192,7 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
                         <ListItem>
                             <ListItemAvatar>
                                 <Avatar
-                                    sx={{ width: 120, height: 85 }}
+                                    sx={{width: 120, height: 85}}
                                     alt={Item.snippet.title}
                                     src={getThumbnailsFromItem(Item)}
                                     variant="square"
@@ -254,7 +225,7 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
                                     size="large"
                                     aria-haspopup="true"
                                     aria-controls="menu-more"
-                                    onClick={(event) => handleMoreMenu(event, Item.snippet.resourceId, Item.id)}
+                                    onClick={event => handleMoreMenu(event, Item.snippet.resourceId, Item.id)}
                                 >
                                     <MoreVertOutlinedIcon />
                                 </IconButton>
@@ -272,12 +243,12 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
                 anchorEl={anchorEl}
                 anchorOrigin={{
                     vertical: 'top',
-                    horizontal: 'right',
+                    horizontal: 'right'
                 }}
                 keepMounted
                 transformOrigin={{
                     vertical: 'top',
-                    horizontal: 'right',
+                    horizontal: 'right'
                 }}
                 disableScrollLock={false}
                 open={Boolean(anchorEl)}
@@ -313,8 +284,16 @@ function Content({ playlistId, playlistsListItems }: { playlistId: string; playl
                 onConfirm={handleSaveSelectDialog}
                 onCancel={resetSelectPlaylistDialogStates}
             />
+            <Snackbar
+                open={snackbarVisible}
+                anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
+                autoHideDuration={4000}
+                onClose={() => setSnackbarVisible(false)}
+            >
+                <Alert severity={snackbarSeverity}>{snackbarMessage}</Alert>
+            </Snackbar>
         </>
-    )
+    );
 }
 
-export default Content
+export default Content;
