@@ -36,10 +36,18 @@ function SelectPlaylistDialog({
     const [canSave, setCanSave] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
-    const onSave = () => {
+    const executeOnCancel = () => {
+        setCanSave(false);
+        setIsSaving(false);
+        onCancel();
+    };
+
+    const onSave = async () => {
         setIsSaving(true);
         setCanSave(false);
-        onConfirm(selectedPlaylistId);
+        await onConfirm(selectedPlaylistId);
+        setIsSaving(false);
+        setCanSave(false);
     };
 
     const loadPlaylistsList = useCallback(() => {
@@ -105,7 +113,7 @@ function SelectPlaylistDialog({
                 )}
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => onCancel()}>Fermer</Button>
+                <Button onClick={() => executeOnCancel()}>Fermer</Button>
                 <LoadingButton
                     loading={isSaving}
                     disabled={!canSave}

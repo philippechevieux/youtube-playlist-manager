@@ -8,7 +8,8 @@ import {
     MenuItem,
     ListItemText,
     Snackbar,
-    Alert
+    Alert,
+    AlertColor
 } from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import {selectUserAccessToken} from '../../../utils/arms/user/selectors';
@@ -21,8 +22,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import './styles.css';
 import {selectPlaylistItem} from '../../../utils/arms/playlists/selectors';
 import {IApiUpdatePlaylistParams} from '../../../utils/api/interface';
-import {updatePlaylistData} from '../../../utils/api';
-import {updatePlaylist} from '../../../utils/arms/playlists/reducer';
+import {updatePlaylistDataAction} from '../../../utils/arms/playlists/middleware';
+import {LoadingButton} from '@mui/lab';
 
 function EditPlaylistDialog({
     visible = false,
@@ -42,7 +43,17 @@ function EditPlaylistDialog({
     const [status, setStatus] = useState(playlistItem.status.privacyStatus);
     const [titleError, setTitleError] = useState(false);
     const [canSave, setCanSave] = useState(true);
-    const [displaySnackbar, setDisplaySnackbar] = useState(false);
+    const [isSaving, setIsSaving] = useState(false);
+
+    const [snackbarVisible, setSnackbarVisible] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor>('info');
+
+    const executeOnCancel = () => {
+        setCanSave(true);
+        setIsSaving(false);
+        onCancel();
+    };
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(event.target.value);
@@ -58,19 +69,35 @@ function EditPlaylistDialog({
         setStatus(event.target.value);
     };
 
-    const onSave = () => {
+    const onSave = async () => {
         if (playlistId !== undefined) {
-            const dataToSave: IApiUpdatePlaylistParams = {
-                title: title,
-                description: description,
-                privacyStatus: status
-            };
+            try {
+                const dataToSave: IApiUpdatePlaylistParams = {
+                    title: title,
+                    description: description,
+                    privacyStatus: status
+                };
 
-            updatePlaylistData(userAccessToken, playlistId, dataToSave).then(updatedData => {
-                setDisplaySnackbar(true);
-                dispatch(updatePlaylist({playlistId: playlistId, dataToUpdate: dataToSave}));
-                onCancel();
-            });
+                setIsSaving(true);
+
+                await dispatch(
+                    updatePlaylistDataAction({
+                        userAccessToken: userAccessToken,
+                        playlistId: playlistId,
+                        data: dataToSave
+                    })
+                );
+
+                executeOnCancel();
+                setSnackbarMessage('Les informations de votre playlist ont été modifiés avec succès');
+                setSnackbarSeverity('success');
+                setSnackbarVisible(true);
+            } catch {
+                executeOnCancel();
+                setSnackbarMessage("Une erreur est survenue lors de l'enregistrement des modifications");
+                setSnackbarSeverity('error');
+                setSnackbarVisible(true);
+            }
         }
     };
 
@@ -139,8 +166,9 @@ function EditPlaylistDialog({
                     </TextField>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => onCancel()}>Fermer</Button>
-                    <Button
+                    <Button onClick={() => executeOnCancel()}>Fermer</Button>
+                    <LoadingButton
+                        loading={isSaving}
                         disabled={canSave}
                         variant="contained"
                         color="secondary"
@@ -148,16 +176,16 @@ function EditPlaylistDialog({
                         onClick={onSave}
                     >
                         Sauvegarder
-                    </Button>
+                    </LoadingButton>
                 </DialogActions>
             </Dialog>
             <Snackbar
-                open={displaySnackbar}
+                open={snackbarVisible}
                 anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
                 autoHideDuration={4000}
-                onClose={() => setDisplaySnackbar(false)}
+                onClose={() => setSnackbarVisible(false)}
             >
-                <Alert severity="success">Les informations de votre playlist ont été modifiés avec succès</Alert>
+                <Alert severity={snackbarSeverity}>{snackbarMessage}</Alert>
             </Snackbar>
         </>
     );
