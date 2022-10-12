@@ -46,11 +46,6 @@ div.login-screen-container div.login-button {
         font-size: 25px;
         font-weight: 600;
     }
-
-    img.login-screen-illustration {
-        height: 200px;
-        width: 260px;
-    }
 }
 
 /* MUI : sm size */
@@ -72,11 +67,6 @@ div.login-screen-container div.login-button {
     div.login-screen-container h1.title {
         font-size: 35px;
         font-weight: 600;
-    }
-
-    img.login-screen-illustration {
-        height: 270px;
-        width: 370px;
     }
 }
 
@@ -100,11 +90,6 @@ div.login-screen-container div.login-button {
         font-size: 45px;
         font-weight: 500;
     }
-
-    img.login-screen-illustration {
-        height: 360px;
-        width: 450px;
-    }
 }
 
 /* MUI : lg size */
@@ -126,11 +111,6 @@ div.login-screen-container div.login-button {
     div.login-screen-container h1.title {
         font-size: 45px;
         font-weight: 500;
-    }
-
-    img.login-screen-illustration {
-        height: 450px;
-        width: 550px;
     }
 }
 

@@ -1,10 +1,10 @@
 import './styles.css';
-import loginScreenIllustration from '../../assets/loginScreenIllustration.png';
 import {useAppDispatch} from '../../app/hooks';
-import {setUserLogin} from '../../utils/arms/user/reducer';
 import {GoogleLogin} from 'react-google-login';
-import {UserDataInterface} from '../../utils/arms/user/state';
 import {useHistory} from 'react-router';
+import {UserDataInterface} from '../../utils/arms/user/state';
+import {setUserLogin} from '../../utils/arms/user/reducer';
+import LoginIllustration from '../../components/Assets/LoginIllustration';
 
 function Login() {
     let history = useHistory();
@@ -55,11 +55,7 @@ function Login() {
                 </div>
             </div>
             <div className="right-col">
-                <img
-                    className="login-screen-illustration"
-                    src={loginScreenIllustration}
-                    alt="Personne travaillant sur un ordinateur"
-                />
+                <LoginIllustration />
             </div>
         </div>
     );

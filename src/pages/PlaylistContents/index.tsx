@@ -19,6 +19,7 @@ import {
 import {removePlaylistContents} from '../../utils/arms/playlistContents/reducer';
 import {selectPlaylistItem} from '../../utils/arms/playlists/selectors';
 import EditPlaylistDialog from '../../components/Dialog/EditPlaylistDialog';
+import EmptyIllustration from '../../components/Assets/EmptyIllustration';
 
 function PlaylistContent() {
     const dispatch = useAppDispatch();
@@ -57,7 +58,7 @@ function PlaylistContent() {
         }
 
         if (arePlaylistContentsLoaded && playlistContentsItems.length === 0) {
-            content = <div>Aucune vidéo dans votre playlist</div>;
+            content = <EmptyIllustration title="Aucune vidéo dans votre playlist" />;
         }
 
         if (arePlaylistContentsLoading) {

@@ -21,6 +21,7 @@ import {
     selectPlaylistsNextPageToken
 } from '../../utils/arms/playlists/selectors';
 import EditPlaylistDialog from '../../components/Dialog/EditPlaylistDialog';
+import EmptyIllustration from '../../components/Assets/EmptyIllustration';
 
 function PlaylistList() {
     let history = useHistory();
@@ -77,14 +78,12 @@ function PlaylistList() {
                         onClickOnOpenPlaylist={openPlaylist}
                     />
                 );
-            } else {
-                // TODO: Error screen
             }
         } else {
             if (arePlaylistsLoading) {
                 return <MosaicModeSkeleton />; // TODO: revoir l'affichage du skeleton pour matcher ce qui est fait dans playlistContents
             } else {
-                // TODO: Affichage vide
+                return <EmptyIllustration title="Aucune playlist trouvée" />;
             }
         }
     };

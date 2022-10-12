@@ -1,0 +1,37 @@
+.empty-illustration-wrapper {
+    text-align: center;
+    padding: 15px;
+}
+
+/* MUI : xs size */
+@media (min-width: 0px) {
+    img.empty-illustration {
+        height: 196px;
+        width: 250px;
+    }
+}
+
+/* MUI : sm size */
+@media (min-width: 600px) {
+    img.empty-illustration {
+        height: 290px;
+        width: 370px;
+    }
+}
+
+/* MUI : md size */
+@media (min-width: 900px) {
+    img.empty-illustration {
+        height: 334px;
+        width: 425px;
+    }
+}
+
+/* MUI : lg size */
+@media (min-width: 1200px) {
+    img.empty-illustration {
+        height: 392px;
+        width: 500px;
+    }
+}
+
