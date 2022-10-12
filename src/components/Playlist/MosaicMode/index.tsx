@@ -29,13 +29,21 @@ function MosaicMode({
                 <Grid key={PlaylistData.id} item xs={12} sm={6} md={4} lg={3}>
                     <Card className="card">
                         <CardMedia
+                            className="open-playlist-pointer"
                             component="img"
                             height="194"
                             image={PlaylistData.snippet.thumbnails.high.url}
                             alt={PlaylistData.snippet.localized.title}
+                            onClick={() => onClickOnOpenPlaylist(PlaylistData.id)}
                         />
                         <CardContent>
-                            <Typography gutterBottom variant="h5" component="div" className="card-title">
+                            <Typography
+                                gutterBottom
+                                variant="h5"
+                                component="div"
+                                className="card-title open-playlist-pointer"
+                                onClick={() => onClickOnOpenPlaylist(PlaylistData.id)}
+                            >
                                 {PlaylistData.snippet.localized.title}
                             </Typography>
                             <Typography variant="body2" color="text.secondary" className="card-description">

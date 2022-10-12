@@ -62,13 +62,15 @@ function ListMode({
     };
 
     const handleListItemAvatarByMode = (PlaylistData: ItemInterface) => {
-        if (mode === 'default') {
+        if (mode === 'default' && onClickOnOpenPlaylist) {
             return (
                 <Avatar
+                    className="open-playlist-pointer"
                     sx={{width: 120, height: 85}}
                     alt={PlaylistData.snippet.localized.title}
                     src={PlaylistData.snippet.thumbnails.high.url}
                     variant="square"
+                    onClick={() => onClickOnOpenPlaylist(PlaylistData.id)}
                 />
             );
         } else if (mode === 'selectPlaylist') {
@@ -127,7 +129,16 @@ function ListMode({
                         <ListItemText
                             className="list-item-text list-item-text-margin"
                             primary={
-                                <Typography className="primary" variant="h6" color="text.primary">
+                                <Typography
+                                    className="primary open-playlist-pointer"
+                                    variant="h6"
+                                    color="text.primary"
+                                    onClick={() =>
+                                        mode === 'default' &&
+                                        onClickOnOpenPlaylist &&
+                                        onClickOnOpenPlaylist(PlaylistData.id)
+                                    }
+                                >
                                     {PlaylistData.snippet.localized.title}
                                 </Typography>
                             }

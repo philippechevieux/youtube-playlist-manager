@@ -2,6 +2,10 @@
     padding: 27px;
 }
 
+.grid-container .open-playlist-pointer{
+    cursor: pointer;
+}
+
 .grid-container .card {
     border: 2px solid #1e1e1e;
     box-sizing: border-box;
