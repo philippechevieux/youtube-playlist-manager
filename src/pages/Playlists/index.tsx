@@ -61,32 +61,31 @@ function PlaylistList() {
     };
 
     const displayPlaylists = () => {
-        // if (playlistsItems.length > 0) {
-        //     if (playlistActiveDisplayMode === 'mosaic') {
-        //         return (
-        //             <MosaicMode
-        //                 playlistsListData={{items: playlistsItems}}
-        //                 onClickOnEditPlaylist={openEditPlaylistDialog}
-        //                 onClickOnOpenPlaylist={openPlaylist}
-        //             />
-        //         );
-        //     } else if (playlistActiveDisplayMode === 'list') {
-        //         return (
-        //             <ListMode
-        //                 playlistsListData={{items: playlistsItems}}
-        //                 onClickOnEditPlaylist={openEditPlaylistDialog}
-        //                 onClickOnOpenPlaylist={openPlaylist}
-        //             />
-        //         );
-        //     }
-        // } else {
-        //     if (arePlaylistsLoading) {
-        //         return <MosaicModeSkeleton />; // TODO: revoir l'affichage du skeleton pour matcher ce qui est fait dans playlistContents
-        //     } else {
-        //         // TODO: Affichage vide
-        //     }
-        // }
-        return <EmptyIllustration title="Aucune playlist trouvée" />;
+        if (playlistsItems.length > 0) {
+            if (playlistActiveDisplayMode === 'mosaic') {
+                return (
+                    <MosaicMode
+                        playlistsListData={{items: playlistsItems}}
+                        onClickOnEditPlaylist={openEditPlaylistDialog}
+                        onClickOnOpenPlaylist={openPlaylist}
+                    />
+                );
+            } else if (playlistActiveDisplayMode === 'list') {
+                return (
+                    <ListMode
+                        playlistsListData={{items: playlistsItems}}
+                        onClickOnEditPlaylist={openEditPlaylistDialog}
+                        onClickOnOpenPlaylist={openPlaylist}
+                    />
+                );
+            }
+        } else {
+            if (arePlaylistsLoading) {
+                return <MosaicModeSkeleton />; // TODO: revoir l'affichage du skeleton pour matcher ce qui est fait dans playlistContents
+            } else {
+                return <EmptyIllustration title="Aucune playlist trouvée" />;
+            }
+        }
     };
 
     return (
@@ -139,7 +138,7 @@ function PlaylistList() {
 
             {displayPlaylists()}
 
-            {/* {playlistsItems.length > 0 && nextPageTokenInStore !== undefined && (
+            {playlistsItems.length > 0 && nextPageTokenInStore !== undefined && (
                 <div className="see-more-container">
                     <Button
                         variant="outlined"
@@ -151,7 +150,7 @@ function PlaylistList() {
                         Voir plus ...
                     </Button>
                 </div>
-            )} */}
+            )}
 
             {playlistIdToEdit !== undefined && (
                 <EditPlaylistDialog
