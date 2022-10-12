@@ -3,6 +3,18 @@ import {deleteItemFromPlaylist, insertItemToPlaylist} from '../../api';
 import {removeContent} from './reducer';
 import {ResourceIdInterface} from './state';
 
+export const deleteItemFromPlaylistAction = (payload: {userAccessToken: string; itemId: string}) => {
+    return async (dispatch: AppDispatch) => {
+        try {
+            await deleteItemFromPlaylist(payload.userAccessToken, payload.itemId);
+            dispatch(removeContent({id: payload.itemId}));
+        } catch (e) {
+            console.error(`Error while deleting item (${payload.itemId})`);
+            throw e;
+        }
+    };
+};
+
 export const insertItemToPlaylistAction = (payload: {
     userAccessToken: string;
     itemResourceId: ResourceIdInterface;

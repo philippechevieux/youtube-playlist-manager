@@ -21,7 +21,6 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined';
 
 import '../styles.css';
-import {deleteItemFromPlaylist} from '../../../utils/api';
 import {useState} from 'react';
 import {IResourceId} from '../../../utils/api/interface';
 import {IPlaylistItemsContent} from '../../../utils/context/interface';
@@ -33,9 +32,12 @@ import {
     ResourceIdInterface
 } from '../../../utils/arms/playlistContents/state';
 import ConfirmActionDialog from '../../Dialog/ConfirmActionDialog';
-import {removeContent} from '../../../utils/arms/playlistContents/reducer';
 import SelectPlaylistDialog from '../../Dialog/SelectPlaylistDialog';
-import {insertItemToPlaylistAction, moveItemToPlaylistAction} from '../../../utils/arms/playlistContents/middleware';
+import {
+    deleteItemFromPlaylistAction,
+    insertItemToPlaylistAction,
+    moveItemToPlaylistAction
+} from '../../../utils/arms/playlistContents/middleware';
 import {MOVE_TO, SAVE_IN} from '../../../utils/constants';
 
 function Content({playlistId, playlistsListItems}: {playlistId: string; playlistsListItems: ContentsInterface}) {
@@ -51,10 +53,6 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
     const [confirmDialogContent, setConfirmDialogContent] = useState('');
     const [confirmDialogOnConfirm, setConfirmDialogOnConfirm] = useState<Function>(() => {});
     const [confirmDialogOnCancel, setConfirmDialogOnCancel] = useState<Function>(() => {});
-
-    const [confirmDialogSnackbarVisible, setConfirmDialogSnackbarVisible] = useState(false);
-    const [confirmDialogSnackbarMessage, setConfirmDialogSnackbarMessage] = useState('');
-    const [confirmDialogSnackbarOnClose, setConfirmDialogSnackbarOnClose] = useState<Function>(() => {});
 
     const [selectPlaylistDialogVisible, setSelectPlaylistDialogVisible] = useState(false);
     const [selectPlaylistDialogMode, setSelectPlaylistDialogMode] = useState('');
@@ -80,16 +78,19 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
         setConfirmDialogVisible(true);
     };
 
-    const executeDeleteClick = (itemId: string) => {
-        // TODO: Move this for async wait logic
-        deleteItemFromPlaylist(userAccessToken, itemId).then(() => {
-            dispatch(removeContent({id: itemId}));
+    const executeDeleteClick = async (itemId: string) => {
+        try {
+            await dispatch(deleteItemFromPlaylistAction({userAccessToken: userAccessToken, itemId: itemId}));
             resetConfirmDialogStates();
 
-            setConfirmDialogSnackbarOnClose(() => () => setConfirmDialogSnackbarVisible(false));
-            setConfirmDialogSnackbarMessage('La vidéo a été supprimé de votre playlist avec succès');
-            setConfirmDialogSnackbarVisible(true);
-        });
+            setSnackbarMessage('La vidéo a été supprimé de votre playlist avec succès');
+            setSnackbarSeverity('success');
+            setSnackbarVisible(true);
+        } catch {
+            setSnackbarMessage('Une erreur est survenue lors de la suppression');
+            setSnackbarSeverity('error');
+            setSnackbarVisible(true);
+        }
     };
 
     const resetSelectPlaylistDialogStates = () => {
@@ -148,6 +149,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
             setSnackbarMessage("Une erreur est survenue lors de l'enregistrement");
             setSnackbarSeverity('error');
             setSnackbarVisible(true);
+            resetSelectPlaylistDialogStates();
         }
 
         handleCloseMoreMenu();
@@ -269,9 +271,6 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
                 content={confirmDialogContent}
                 onCancel={confirmDialogOnCancel}
                 onConfirm={confirmDialogOnConfirm}
-                snackbarVisible={confirmDialogSnackbarVisible}
-                snackbarMessage={confirmDialogSnackbarMessage}
-                snackbarOnClose={confirmDialogSnackbarOnClose}
             />
             <SelectPlaylistDialog
                 visible={selectPlaylistDialogVisible}
