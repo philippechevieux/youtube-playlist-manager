@@ -1,0 +1,31 @@
+/* MUI : xs size */
+@media (min-width: 0px) {
+    img.login-screen-illustration {
+        height: 177px;
+        width: 250px;
+    }
+}
+
+/* MUI : sm size */
+@media (min-width: 600px) {
+    img.login-screen-illustration {
+        height: 262px;
+        width: 370px;
+    }
+}
+
+/* MUI : md size */
+@media (min-width: 900px) {
+    img.login-screen-illustration {
+        height: 319px;
+        width: 450px;
+    }
+}
+
+/* MUI : lg size */
+@media (min-width: 1200px) {
+    img.login-screen-illustration {
+        height: 390px;
+        width: 550px;
+    }
+}
