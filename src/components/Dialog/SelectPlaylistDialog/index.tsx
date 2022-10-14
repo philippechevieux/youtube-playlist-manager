@@ -3,7 +3,7 @@ import {Dialog, DialogTitle, DialogActions, Button, DialogContent} from '@mui/ma
 import './styles.css';
 import {ReactElement, useCallback, useEffect, useState} from 'react';
 import {getYoutubePlaylists} from './../../../utils/api/index';
-import ListMode from './../../Playlist/ListMode/index';
+import ListMode, {DisplayListMode} from './../../Playlist/ListMode/index';
 import {ItemsInterface} from '../../../utils/arms/playlists/state';
 import {LoadingButton} from '@mui/lab';
 
@@ -96,7 +96,7 @@ function SelectPlaylistDialog({
                         playlistsListData={playlistsListData}
                         setCanExecuteAfterSelect={setCanSave}
                         setSelectedPlaylistId={setSelectedPlaylistId}
-                        mode="selectPlaylist"
+                        mode={DisplayListMode.SELECTION}
                     />
                 )}
                 {!isLoading && nextPageToken !== undefined && (
