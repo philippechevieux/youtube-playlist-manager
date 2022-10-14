@@ -38,7 +38,11 @@ import {
     insertItemToPlaylistAction,
     moveItemToPlaylistAction
 } from '../../../utils/arms/playlistContents/middleware';
-import {MOVE_TO, SAVE_IN} from '../../../utils/constants';
+
+enum ItemAction {
+    MOVE_TO = 'move_to',
+    SAVE_IN = 'save_in'
+}
 
 function Content({playlistId, playlistsListItems}: {playlistId: string; playlistsListItems: ContentsInterface}) {
     const dispatch = useAppDispatch();
@@ -55,7 +59,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
     const [confirmDialogOnCancel, setConfirmDialogOnCancel] = useState<Function>(() => {});
 
     const [selectPlaylistDialogVisible, setSelectPlaylistDialogVisible] = useState(false);
-    const [selectPlaylistDialogMode, setSelectPlaylistDialogMode] = useState('');
+    const [selectPlaylistDialogMode, setSelectPlaylistDialogMode] = useState<ItemAction | ''>('');
     const [selectPlaylistDialogTitle, setSelectPlaylistDialogTitle] = useState('');
     const [selectPlaylistDialogConfirm, setSelectPlaylistDialogConfirm] = useState('');
     const [selectPlaylistDialogConfirmIcon, setSelectPlaylistDialogConfirmIcon] = useState(<></>);
@@ -117,7 +121,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
 
     const handleSaveSelectDialog = async (selectedPlaylistId: string) => {
         try {
-            if (selectPlaylistDialogMode === SAVE_IN) {
+            if (selectPlaylistDialogMode === ItemAction.SAVE_IN) {
                 await dispatch(
                     insertItemToPlaylistAction({
                         userAccessToken: userAccessToken,
@@ -130,7 +134,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
                 setSnackbarSeverity('success');
                 setSnackbarVisible(true);
                 resetSelectPlaylistDialogStates();
-            } else if (selectPlaylistDialogMode === MOVE_TO) {
+            } else if (selectPlaylistDialogMode === ItemAction.MOVE_TO) {
                 await dispatch(
                     moveItemToPlaylistAction({
                         userAccessToken: userAccessToken,
@@ -155,16 +159,16 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
         handleCloseMoreMenu();
     };
 
-    const handleOpenSelectPlaylistDialog = (mode: string) => {
+    const handleOpenSelectPlaylistDialog = (mode: ItemAction) => {
         setSelectPlaylistDialogMode(mode);
 
         switch (mode) {
-            case SAVE_IN:
+            case ItemAction.SAVE_IN:
                 setSelectPlaylistDialogTitle('Enregistrer dans :');
                 setSelectPlaylistDialogConfirm('Enregistrer');
                 setSelectPlaylistDialogConfirmIcon(<SaveOutlinedIcon />);
                 break;
-            case MOVE_TO:
+            case ItemAction.MOVE_TO:
                 setSelectPlaylistDialogTitle('Déplacer vers :');
                 setSelectPlaylistDialogConfirm('Déplacer');
                 setSelectPlaylistDialogConfirmIcon(<SendAndArchiveOutlinedIcon />);
@@ -256,12 +260,18 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
                 open={Boolean(anchorEl)}
                 onClose={handleCloseMoreMenu}
             >
-                <MenuItem key="saveInAnOtherPlaylist" onClick={() => handleOpenSelectPlaylistDialog(SAVE_IN)}>
+                <MenuItem
+                    key="saveInAnOtherPlaylist"
+                    onClick={() => handleOpenSelectPlaylistDialog(ItemAction.SAVE_IN)}
+                >
                     <SaveOutlinedIcon />
                     <span className="header-menuitem-margin-left">Enregistrer dans une autre playlist</span>
                 </MenuItem>
                 <Divider />
-                <MenuItem key="deleteAndSaveInAnOtherPlaylist" onClick={() => handleOpenSelectPlaylistDialog(MOVE_TO)}>
+                <MenuItem
+                    key="deleteAndSaveInAnOtherPlaylist"
+                    onClick={() => handleOpenSelectPlaylistDialog(ItemAction.MOVE_TO)}
+                >
                     <SendAndArchiveOutlinedIcon />
                     <span className="header-menuitem-margin-left">Déplacer vers une autre playlist</span>
                 </MenuItem>
