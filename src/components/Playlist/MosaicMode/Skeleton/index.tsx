@@ -13,7 +13,7 @@ function displaySkeletonContent() {
             alignItems="flex-start"
             className="grid-container skeleton"
         >
-            {[...Array(4)].map((e, index) => (
+            {[...Array(4)].map((_, index) => (
                 <Grid key={index} item xs={12} sm={6} md={4} lg={3}>
                     <Card className="card">
                         <div className="skeleton mosaic-mode-skeleton-preview"></div>
