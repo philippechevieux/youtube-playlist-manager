@@ -2,7 +2,7 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import {Menu, MenuItem, IconButton, Typography, Toolbar, Box, AppBar, Divider, Tooltip} from '@mui/material';
 
-import AvatarCustom from '../AvatarCustom';
+import AvatarCustom, {AvatarSize} from '../AvatarCustom';
 import './styles.css';
 
 import {useState} from 'react';
@@ -18,10 +18,9 @@ function Header() {
     const isUserLogin = useAppSelector(selectIsUserLogin);
     const userFullName = useAppSelector(selectUserFullName);
     const userAvatar = useAppSelector(selectUserAvatar);
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
-    // TODO: Search a fix for this any ...
-    const handleMenu = (event: any) => {
+    const handleMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
@@ -73,7 +72,7 @@ function Header() {
                                 onClick={handleMenu}
                                 color="inherit"
                             >
-                                <AvatarCustom title={userFullName} source={userAvatar} size="md" />
+                                <AvatarCustom title={userFullName} source={userAvatar} size={AvatarSize.MD} />
                             </IconButton>
                             <Menu
                                 id="menu-appbar"
@@ -92,7 +91,7 @@ function Header() {
                                 onClose={handleClose}
                             >
                                 <MenuItem key="profil" onClick={handleClickOnGoToMyProfile}>
-                                    <AvatarCustom title={userFullName} source={userAvatar} size="sm" />
+                                    <AvatarCustom title={userFullName} source={userAvatar} size={AvatarSize.SM} />
                                     <span className="header-menuitem-margin-left">Mon profil</span>
                                 </MenuItem>
                                 <Divider />

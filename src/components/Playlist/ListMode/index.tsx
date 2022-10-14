@@ -8,18 +8,23 @@ import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 import './styles.css';
 import {ItemInterface, ItemsInterface} from '../../../utils/arms/playlists/state';
 
+export enum DisplayListMode {
+    DEFAULT = 'default',
+    SELECTION = 'selection'
+}
+
 function ListMode({
     playlistsListData,
     setCanExecuteAfterSelect,
     setSelectedPlaylistId,
-    mode = 'default',
+    mode = DisplayListMode.DEFAULT,
     onClickOnEditPlaylist,
     onClickOnOpenPlaylist
 }: {
     playlistsListData: ItemsInterface;
     setCanExecuteAfterSelect?: Function;
     setSelectedPlaylistId?: Function;
-    mode?: string;
+    mode?: DisplayListMode;
     onClickOnEditPlaylist?: Function;
     onClickOnOpenPlaylist?: Function;
 }) {
@@ -38,7 +43,7 @@ function ListMode({
     };
 
     const handleListItemSecondaryActionByMode = (PlaylistData: ItemInterface) => {
-        if (mode === 'default' && onClickOnEditPlaylist && onClickOnOpenPlaylist) {
+        if (mode === DisplayListMode.DEFAULT && onClickOnEditPlaylist && onClickOnOpenPlaylist) {
             return (
                 <div>
                     <Tooltip title="Editer">
@@ -62,7 +67,7 @@ function ListMode({
     };
 
     const handleListItemAvatarByMode = (PlaylistData: ItemInterface) => {
-        if (mode === 'default' && onClickOnOpenPlaylist) {
+        if (mode === DisplayListMode.DEFAULT && onClickOnOpenPlaylist) {
             return (
                 <Avatar
                     className="open-playlist-pointer"
@@ -73,7 +78,7 @@ function ListMode({
                     onClick={() => onClickOnOpenPlaylist(PlaylistData.id)}
                 />
             );
-        } else if (mode === 'selectPlaylist') {
+        } else if (mode === DisplayListMode.SELECTION) {
             return (
                 <Avatar
                     sx={{width: 90, height: 75}}
@@ -86,7 +91,7 @@ function ListMode({
     };
 
     const handleRadioButtonByMode = (PlaylistData: ItemInterface) => {
-        if (mode === 'selectPlaylist') {
+        if (mode === DisplayListMode.SELECTION) {
             return (
                 <Radio
                     checked={selectedPlaylist === PlaylistData.id}
@@ -100,7 +105,7 @@ function ListMode({
     };
 
     const handleClickOnItem = (PlaylistData: ItemInterface) => {
-        if (mode === 'selectPlaylist') {
+        if (mode === DisplayListMode.SELECTION) {
             setSelectedPlaylist(PlaylistData.id);
 
             if (setCanExecuteAfterSelect !== undefined) {
@@ -114,10 +119,10 @@ function ListMode({
     };
 
     return (
-        <List className={`${mode === 'default' ? 'list-container' : ''}`}>
+        <List className={`${mode === DisplayListMode.DEFAULT ? 'list-container' : ''}`}>
             {playlistsListData.items?.map((PlaylistData, index) => (
                 <div
-                    className={`item ${mode === 'selectPlaylist' ? 'item-selectable' : ''} ${
+                    className={`item ${mode === DisplayListMode.SELECTION ? 'item-selectable' : ''} ${
                         selectedPlaylist === PlaylistData.id ? 'item-selected' : ''
                     }`}
                     key={PlaylistData.id}
@@ -134,7 +139,7 @@ function ListMode({
                                     variant="h6"
                                     color="text.primary"
                                     onClick={() =>
-                                        mode === 'default' &&
+                                        mode === DisplayListMode.DEFAULT &&
                                         onClickOnOpenPlaylist &&
                                         onClickOnOpenPlaylist(PlaylistData.id)
                                     }

@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import './styles.css';
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
-import AvatarCustom from '../../components/AvatarCustom';
+import AvatarCustom, {AvatarSize} from '../../components/AvatarCustom';
 
 import {useHistory} from 'react-router';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
@@ -61,7 +61,7 @@ function Profile() {
             <div className="profile-options-container">
                 <div>
                     <Grid container direction="column" alignItems="center" justifyContent="center">
-                        <AvatarCustom title={userFullName} source={userAvatar} size="xl" />
+                        <AvatarCustom title={userFullName} source={userAvatar} size={AvatarSize.XL} />
                         <Typography variant="h5" color="text.primary" className="profile-options-title">
                             Bienvenue {userFullName}
                         </Typography>
