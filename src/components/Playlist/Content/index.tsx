@@ -44,7 +44,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
     const dispatch = useAppDispatch();
 
     const userAccessToken = useAppSelector(selectUserAccessToken);
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const [anchorCurrentIemResourceId, setAnchorCurrentIemResourceId] =
         useState<ResourceIdInterface>(defaultItemResourceId);
     const [anchorCurrentItemId, setAnchorCurrentItemId] = useState('');
@@ -103,7 +103,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
         handleCloseMoreMenu();
     };
 
-    const handleMoreMenu = (event: any, resourceId: IResourceId, itemId: string) => {
+    const handleMoreMenu = (event: React.MouseEvent<HTMLButtonElement>, resourceId: IResourceId, itemId: string) => {
         setAnchorEl(event.currentTarget);
         setAnchorCurrentIemResourceId(resourceId);
         setAnchorCurrentItemId(itemId);

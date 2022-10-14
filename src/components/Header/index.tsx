@@ -18,10 +18,9 @@ function Header() {
     const isUserLogin = useAppSelector(selectIsUserLogin);
     const userFullName = useAppSelector(selectUserFullName);
     const userAvatar = useAppSelector(selectUserAvatar);
-    const [anchorEl, setAnchorEl] = useState(null);
+    const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
 
-    // TODO: Search a fix for this any ...
-    const handleMenu = (event: any) => {
+    const handleMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
 
