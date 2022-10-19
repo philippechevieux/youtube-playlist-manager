@@ -44,7 +44,7 @@ function Header() {
 
     return (
         <Box sx={{flexGrow: 1}}>
-            <AppBar position="fixed">
+            <AppBar className="appbar-wrapper" position="fixed">
                 <Toolbar>
                     {isUserLogin && (
                         <Tooltip title="Accueil">
@@ -60,9 +60,11 @@ function Header() {
                             </IconButton>
                         </Tooltip>
                     )}
-                    <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                        Youtube Playlist Manager
-                    </Typography>
+                    <div className="title-wrapper">
+                        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                            Youtube Playlist Manager
+                        </Typography>
+                    </div>
                     {isUserLogin && (
                         <div>
                             <IconButton
