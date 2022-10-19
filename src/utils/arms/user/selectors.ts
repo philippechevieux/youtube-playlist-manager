@@ -19,3 +19,7 @@ export const selectUserLanguage = (state: RootState) => {
 export const selectUserAccessToken = (state: RootState) => {
     return state.user.accessToken;
 };
+
+export const selectUserPlaylistDisplayMode = (state: RootState) => {
+    return state.user.playlistDisplayMode;
+};

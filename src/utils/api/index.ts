@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {IApiUrlParams, IApiBodyParams, IApiUpdatePlaylistParams, IResourceId, RequestMethod} from './interface';
+import {IApiUrlParams, IApiBodyParams, IApiUpdatePlaylistParams, IResourceId, RequestMethodEnum} from './interface';
 
 const BASE_API_URL = 'https://www.googleapis.com/youtube/v3/';
 
@@ -17,7 +17,7 @@ const toPostData = (datas: IApiBodyParams | undefined) => {
 
 function requestApi(
     accessToken: string,
-    method: RequestMethod,
+    method: RequestMethodEnum,
     endPoint: string,
     urlParams: IApiUrlParams,
     bodyParams?: IApiBodyParams
@@ -55,7 +55,7 @@ export function getYoutubePlaylists(accessToken: string, pageToken?: string, pla
         urlParams.id = playlistIds.join(',');
     }
 
-    return requestApi(accessToken, RequestMethod.GET, 'playlists', urlParams);
+    return requestApi(accessToken, RequestMethodEnum.GET, 'playlists', urlParams);
 }
 
 export function updatePlaylistData(accessToken: string, playlistId: string, data: IApiUpdatePlaylistParams) {
@@ -74,7 +74,7 @@ export function updatePlaylistData(accessToken: string, playlistId: string, data
         }
     };
 
-    return requestApi(accessToken, RequestMethod.PUT, 'playlists', urlParams, bodyParams);
+    return requestApi(accessToken, RequestMethodEnum.PUT, 'playlists', urlParams, bodyParams);
 }
 
 export function getYoutubePlaylistsItems(accessToken: string, playlistId: string, pageToken?: string) {
@@ -88,7 +88,7 @@ export function getYoutubePlaylistsItems(accessToken: string, playlistId: string
         urlParams.pageToken = pageToken;
     }
 
-    return requestApi(accessToken, RequestMethod.GET, 'playlistItems', urlParams);
+    return requestApi(accessToken, RequestMethodEnum.GET, 'playlistItems', urlParams);
 }
 
 export function deleteItemFromPlaylist(accessToken: string, itemId: string) {
@@ -100,7 +100,7 @@ export function deleteItemFromPlaylist(accessToken: string, itemId: string) {
         id: itemId
     };
 
-    return requestApi(accessToken, RequestMethod.DELETE, 'playlistItems', urlParams, bodyParams);
+    return requestApi(accessToken, RequestMethodEnum.DELETE, 'playlistItems', urlParams, bodyParams);
 }
 
 export function insertItemToPlaylist(accessToken: string, resourceId: IResourceId, playlistId: string) {
@@ -115,5 +115,5 @@ export function insertItemToPlaylist(accessToken: string, resourceId: IResourceI
         }
     };
 
-    return requestApi(accessToken, RequestMethod.POST, 'playlistItems', urlParams, bodyParams);
+    return requestApi(accessToken, RequestMethodEnum.POST, 'playlistItems', urlParams, bodyParams);
 }

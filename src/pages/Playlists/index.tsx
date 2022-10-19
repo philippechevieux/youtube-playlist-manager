@@ -12,8 +12,8 @@ import ViewModuleOutlinedIcon from '@mui/icons-material/ViewModuleOutlined';
 import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
 import SortOutlinedIcon from '@mui/icons-material/SortOutlined';
 import {useHistory} from 'react-router-dom';
-import {useAppSelector} from '../../app/hooks';
-import {selectUserAccessToken} from '../../utils/arms/user/selectors';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {selectUserAccessToken, selectUserPlaylistDisplayMode} from '../../utils/arms/user/selectors';
 import {useFetchPlaylists} from './hook';
 import {
     selectPlaylistsCurrentPageToken,
@@ -22,24 +22,29 @@ import {
 } from '../../utils/arms/playlists/selectors';
 import EditPlaylistDialog from '../../components/Dialog/EditPlaylistDialog';
 import EmptyIllustration from '../../components/Assets/EmptyIllustration';
+import {PlaylistDisplayModeEnum} from '../../utils/arms/user/state';
+import {setUserPlaylistDisplayMode} from '../../utils/arms/user/reducer';
 
 function PlaylistList() {
     let history = useHistory();
+
+    const dispatch = useAppDispatch();
+
     const userAccessToken = useAppSelector(selectUserAccessToken);
     const nextPageTokenInStore = useAppSelector(selectPlaylistsNextPageToken);
     const currentPageToken = useAppSelector(selectPlaylistsCurrentPageToken);
     const playlistsItems = useAppSelector(selectPlaylistsItems);
+    const userPlaylistDisplayMode = useAppSelector(selectUserPlaylistDisplayMode);
 
     const [isEditPlaylistDialogOpen, setIsPlaylistDialogOpen] = useState(false);
     const [playlistIdToEdit, setPlaylistIdToEdit] = useState<string | undefined>();
-    const [playlistActiveDisplayMode, setPlaylistActiveDisplayMode] = useState('mosaic');
     const [nextPageToken, setNextPageToken] = useState<string | undefined>(currentPageToken);
 
     const {arePlaylistsLoading} = useFetchPlaylists(userAccessToken, nextPageToken);
 
-    const handlePlaylistDisplayMode = (mode: string) => {
-        if (mode !== playlistActiveDisplayMode) {
-            setPlaylistActiveDisplayMode(mode);
+    const handlePlaylistDisplayMode = (mode: PlaylistDisplayModeEnum) => {
+        if (mode !== userPlaylistDisplayMode) {
+            dispatch(setUserPlaylistDisplayMode({playlistDisplayMode: mode}));
         }
     };
 
@@ -62,7 +67,7 @@ function PlaylistList() {
 
     const displayPlaylists = () => {
         if (playlistsItems.length > 0) {
-            if (playlistActiveDisplayMode === 'mosaic') {
+            if (userPlaylistDisplayMode === PlaylistDisplayModeEnum.MOSAIC) {
                 return (
                     <MosaicMode
                         playlistsListData={{items: playlistsItems}}
@@ -70,7 +75,7 @@ function PlaylistList() {
                         onClickOnOpenPlaylist={openPlaylist}
                     />
                 );
-            } else if (playlistActiveDisplayMode === 'list') {
+            } else if (userPlaylistDisplayMode === PlaylistDisplayModeEnum.LIST) {
                 return (
                     <ListMode
                         playlistsListData={{items: playlistsItems}}
@@ -115,8 +120,10 @@ function PlaylistList() {
                                 size="large"
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
-                                onClick={() => handlePlaylistDisplayMode('mosaic')}
-                                color={playlistActiveDisplayMode === 'mosaic' ? 'secondary' : 'inherit'}
+                                onClick={() => handlePlaylistDisplayMode(PlaylistDisplayModeEnum.MOSAIC)}
+                                color={
+                                    userPlaylistDisplayMode === PlaylistDisplayModeEnum.MOSAIC ? 'secondary' : 'inherit'
+                                }
                             >
                                 <ViewModuleOutlinedIcon />
                             </IconButton>
@@ -126,8 +133,10 @@ function PlaylistList() {
                                 size="large"
                                 aria-controls="menu-appbar"
                                 aria-haspopup="true"
-                                onClick={() => handlePlaylistDisplayMode('list')}
-                                color={playlistActiveDisplayMode === 'list' ? 'secondary' : 'inherit'}
+                                onClick={() => handlePlaylistDisplayMode(PlaylistDisplayModeEnum.LIST)}
+                                color={
+                                    userPlaylistDisplayMode === PlaylistDisplayModeEnum.LIST ? 'secondary' : 'inherit'
+                                }
                             >
                                 <ListOutlinedIcon />
                             </IconButton>

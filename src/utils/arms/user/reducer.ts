@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {userDefaultData} from './state';
+import {PlaylistDisplayModeEnum, userDefaultData} from './state';
 
 export const userSlice = createSlice({
     name: 'user',
@@ -26,13 +26,20 @@ export const userSlice = createSlice({
             state.lastName = userDefaultData.lastName;
             state.fullName = userDefaultData.fullName;
             state.isUserLogin = userDefaultData.isUserLogin;
+            state.playlistDisplayMode = userDefaultData.playlistDisplayMode;
         },
         setUserLanguage: (state: any, action: PayloadAction<{language: string}>) => {
             state.language = action.payload.language;
+        },
+        setUserPlaylistDisplayMode: (
+            state: any,
+            action: PayloadAction<{playlistDisplayMode: PlaylistDisplayModeEnum}>
+        ) => {
+            state.playlistDisplayMode = action.payload.playlistDisplayMode;
         }
     }
 });
 
-export const {setUserLogin, setUserLogout, setUserLanguage} = userSlice.actions;
+export const {setUserLogin, setUserLogout, setUserLanguage, setUserPlaylistDisplayMode} = userSlice.actions;
 
 export default userSlice.reducer;
