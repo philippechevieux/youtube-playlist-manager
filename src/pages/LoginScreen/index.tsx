@@ -2,7 +2,7 @@ import './styles.css';
 import {useAppDispatch} from '../../app/hooks';
 import {GoogleLogin} from 'react-google-login';
 import {useHistory} from 'react-router';
-import {UserDataInterface} from '../../utils/arms/user/state';
+import {UserDataInterface, userDefaultData} from '../../utils/arms/user/state';
 import {setUserLogin} from '../../utils/arms/user/reducer';
 import LoginIllustration from '../../components/Assets/LoginIllustration';
 
@@ -13,14 +13,15 @@ function Login() {
     const handleLogin = (response: any) => {
         const loginResponse: UserDataInterface = {
             accessToken: response.accessToken,
-            language: 'fr',
             googleId: response.profileObj.googleId,
             email: response.profileObj.email,
             avatar: response.profileObj.imageUrl,
             firstName: response.profileObj.givenName,
             lastName: response.profileObj.familyName,
             fullName: response.profileObj.name,
-            isUserLogin: true
+            isUserLogin: true,
+            language: userDefaultData.language,
+            playlistDisplayMode: userDefaultData.playlistDisplayMode
         };
 
         dispatch(setUserLogin({googleLoginResponse: loginResponse}));

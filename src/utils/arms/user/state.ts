@@ -1,3 +1,8 @@
+export enum PlaylistDisplayModeEnum {
+    MOSAIC = 'mosaic',
+    LIST = 'list'
+}
+
 export interface UserDataInterface {
     accessToken: string;
     language: string;
@@ -8,6 +13,7 @@ export interface UserDataInterface {
     lastName: string;
     fullName: string;
     isUserLogin: boolean;
+    playlistDisplayMode: string;
 }
 
 export const userDefaultData: UserDataInterface = {
@@ -19,5 +25,6 @@ export const userDefaultData: UserDataInterface = {
     firstName: '',
     lastName: '',
     fullName: '',
-    isUserLogin: false
+    isUserLogin: false,
+    playlistDisplayMode: PlaylistDisplayModeEnum.MOSAIC
 };
