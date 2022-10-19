@@ -39,7 +39,7 @@ import {
     moveItemToPlaylistAction
 } from '../../../utils/arms/playlistContents/middleware';
 
-enum ItemAction {
+enum ItemActionEnum {
     MOVE_TO = 'move_to',
     SAVE_IN = 'save_in'
 }
@@ -59,7 +59,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
     const [confirmDialogOnCancel, setConfirmDialogOnCancel] = useState<Function>(() => {});
 
     const [selectPlaylistDialogVisible, setSelectPlaylistDialogVisible] = useState(false);
-    const [selectPlaylistDialogMode, setSelectPlaylistDialogMode] = useState<ItemAction | ''>('');
+    const [selectPlaylistDialogMode, setSelectPlaylistDialogMode] = useState<ItemActionEnum | ''>('');
     const [selectPlaylistDialogTitle, setSelectPlaylistDialogTitle] = useState('');
     const [selectPlaylistDialogConfirm, setSelectPlaylistDialogConfirm] = useState('');
     const [selectPlaylistDialogConfirmIcon, setSelectPlaylistDialogConfirmIcon] = useState(<></>);
@@ -121,7 +121,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
 
     const handleSaveSelectDialog = async (selectedPlaylistId: string) => {
         try {
-            if (selectPlaylistDialogMode === ItemAction.SAVE_IN) {
+            if (selectPlaylistDialogMode === ItemActionEnum.SAVE_IN) {
                 await dispatch(
                     insertItemToPlaylistAction({
                         userAccessToken: userAccessToken,
@@ -134,7 +134,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
                 setSnackbarSeverity('success');
                 setSnackbarVisible(true);
                 resetSelectPlaylistDialogStates();
-            } else if (selectPlaylistDialogMode === ItemAction.MOVE_TO) {
+            } else if (selectPlaylistDialogMode === ItemActionEnum.MOVE_TO) {
                 await dispatch(
                     moveItemToPlaylistAction({
                         userAccessToken: userAccessToken,
@@ -159,16 +159,16 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
         handleCloseMoreMenu();
     };
 
-    const handleOpenSelectPlaylistDialog = (mode: ItemAction) => {
+    const handleOpenSelectPlaylistDialog = (mode: ItemActionEnum) => {
         setSelectPlaylistDialogMode(mode);
 
         switch (mode) {
-            case ItemAction.SAVE_IN:
+            case ItemActionEnum.SAVE_IN:
                 setSelectPlaylistDialogTitle('Enregistrer dans :');
                 setSelectPlaylistDialogConfirm('Enregistrer');
                 setSelectPlaylistDialogConfirmIcon(<SaveOutlinedIcon />);
                 break;
-            case ItemAction.MOVE_TO:
+            case ItemActionEnum.MOVE_TO:
                 setSelectPlaylistDialogTitle('Déplacer vers :');
                 setSelectPlaylistDialogConfirm('Déplacer');
                 setSelectPlaylistDialogConfirmIcon(<SendAndArchiveOutlinedIcon />);
@@ -262,7 +262,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
             >
                 <MenuItem
                     key="saveInAnOtherPlaylist"
-                    onClick={() => handleOpenSelectPlaylistDialog(ItemAction.SAVE_IN)}
+                    onClick={() => handleOpenSelectPlaylistDialog(ItemActionEnum.SAVE_IN)}
                 >
                     <SaveOutlinedIcon />
                     <span className="header-menuitem-margin-left">Enregistrer dans une autre playlist</span>
@@ -270,7 +270,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
                 <Divider />
                 <MenuItem
                     key="deleteAndSaveInAnOtherPlaylist"
-                    onClick={() => handleOpenSelectPlaylistDialog(ItemAction.MOVE_TO)}
+                    onClick={() => handleOpenSelectPlaylistDialog(ItemActionEnum.MOVE_TO)}
                 >
                     <SendAndArchiveOutlinedIcon />
                     <span className="header-menuitem-margin-left">Déplacer vers une autre playlist</span>

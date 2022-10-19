@@ -1,7 +1,7 @@
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Avatar from '@mui/material/Avatar';
 
-export enum AvatarSize {
+export enum AvatarSizeEnum {
     XXXL = 120,
     XXL = 100,
     XL = 80,
@@ -10,20 +10,28 @@ export enum AvatarSize {
     SM = 25
 }
 
-function AvatarCustom({title, source, size = AvatarSize.MD}: {title: string; source?: string; size?: AvatarSize}) {
-    function getAvatarSize(paramSize: AvatarSize) {
+function AvatarCustom({
+    title,
+    source,
+    size = AvatarSizeEnum.MD
+}: {
+    title: string;
+    source?: string;
+    size?: AvatarSizeEnum;
+}) {
+    function getAvatarSize(paramSize: AvatarSizeEnum) {
         switch (paramSize) {
-            case AvatarSize.XXXL:
+            case AvatarSizeEnum.XXXL:
                 return 120;
-            case AvatarSize.XXL:
+            case AvatarSizeEnum.XXL:
                 return 100;
-            case AvatarSize.XL:
+            case AvatarSizeEnum.XL:
                 return 80;
-            case AvatarSize.L:
+            case AvatarSizeEnum.L:
                 return 60;
-            case AvatarSize.MD:
+            case AvatarSizeEnum.MD:
                 return 40;
-            case AvatarSize.SM:
+            case AvatarSizeEnum.SM:
             default:
                 return 25;
         }

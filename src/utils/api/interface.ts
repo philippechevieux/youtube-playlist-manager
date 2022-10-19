@@ -31,7 +31,7 @@ export interface IResourceId {
     videoId: string;
 }
 
-export enum RequestMethod {
+export enum RequestMethodEnum {
     GET = 'GET',
     POST = 'POST',
     PUT = 'PUT',
