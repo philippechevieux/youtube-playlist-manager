@@ -1,5 +1,6 @@
 import {Dialog, DialogTitle, DialogActions, Button, DialogContent} from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
+import {useTranslation} from 'react-i18next';
 
 function ConfirmActionDialog({
     visible = false,
@@ -16,14 +17,16 @@ function ConfirmActionDialog({
     onConfirm: Function;
     onCancel: Function;
 }) {
+    const {t} = useTranslation();
+
     return (
         <Dialog open={visible} fullWidth maxWidth="sm">
-            <DialogTitle id="alert-dialog-title">{title ? title : 'Confirmation'}</DialogTitle>
+            <DialogTitle id="alert-dialog-title">{title ? title : t('confirmation')}</DialogTitle>
             <DialogContent>{content}</DialogContent>
             <DialogActions>
-                <Button onClick={() => onCancel()}>Fermer</Button>
+                <Button onClick={() => onCancel()}>{t('close')}</Button>
                 <Button variant="contained" color="error" startIcon={<SaveOutlinedIcon />} onClick={() => onConfirm()}>
-                    {confirmButtonLabel ? confirmButtonLabel : 'Confirmer'}
+                    {confirmButtonLabel ? confirmButtonLabel : t('confirm')}
                 </Button>
             </DialogActions>
         </Dialog>

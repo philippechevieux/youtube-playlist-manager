@@ -5,9 +5,12 @@ import {useHistory} from 'react-router';
 import {UserDataInterface, userDefaultData} from '../../utils/arms/user/state';
 import {setUserLogin} from '../../utils/arms/user/reducer';
 import LoginIllustration from '../../components/Assets/LoginIllustration';
+import {useTranslation} from 'react-i18next';
 
 function Login() {
     let history = useHistory();
+
+    const {t} = useTranslation();
     const dispatch = useAppDispatch();
 
     const handleLogin = (response: any) => {
@@ -35,15 +38,12 @@ function Login() {
     return (
         <div className="login-screen-container">
             <div className="left-col">
-                <h1 className="title">Gestionnaire de playlists YouTube</h1>
-                <span>
-                    Vous souhaitez retirer de vos playlists toutes les vidéos supprimées de YouTube en seul clique ? Cet
-                    outil est fait pour vous...
-                </span>
+                <h1 className="title">{t('login screen title')}</h1>
+                <span>{t('login screen subtitle')}</span>
                 <div className="login-button">
                     <GoogleLogin
                         clientId="232248135832-8f8h7mocgfdu17a7vpuul37pi5ugobt7.apps.googleusercontent.com"
-                        buttonText="Se connecter"
+                        buttonText={t('sign in')}
                         scope="https://www.googleapis.com/auth/youtube"
                         responseType="permissions"
                         prompt="select_account"

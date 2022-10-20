@@ -49,12 +49,11 @@ function Header() {
             <AppBar className="appbar-wrapper" position="fixed">
                 <Toolbar>
                     {isUserLogin && (
-                        <Tooltip title="Accueil">
+                        <Tooltip title={t('home')}>
                             <IconButton
                                 size="large"
                                 edge="start"
                                 color="inherit"
-                                aria-label="menu"
                                 sx={{mr: 2}}
                                 onClick={() => handleClickOnGoHome()}
                             >
@@ -96,12 +95,12 @@ function Header() {
                             >
                                 <MenuItem key="profil" onClick={handleClickOnGoToMyProfile}>
                                     <AvatarCustom title={userFullName} source={userAvatar} size={AvatarSizeEnum.SM} />
-                                    <span className="header-menuitem-margin-left">Mon profil</span>
+                                    <span className="header-menuitem-margin-left">{t('my profile')}</span>
                                 </MenuItem>
                                 <Divider />
                                 <MenuItem key="logout" onClick={handleClickOnLogout}>
                                     <LogoutOutlinedIcon />
-                                    <span className="header-menuitem-margin-left">Se déconnecter</span>
+                                    <span className="header-menuitem-margin-left">{t('sign out')}</span>
                                 </MenuItem>
                             </Menu>
                         </div>
