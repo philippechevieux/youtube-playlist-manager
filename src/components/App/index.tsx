@@ -20,9 +20,9 @@ function App() {
                         main: '#fff'
                     },
                     secondary: {
-                        light: '#6ec6ff',
-                        main: '#2196f3',
-                        dark: '#0069c0',
+                        light: '#eb6652',
+                        main: '#eb6652',
+                        dark: '#ff4b31',
                         contrastText: '#fff'
                     }
                 },
