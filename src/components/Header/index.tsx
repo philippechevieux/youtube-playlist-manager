@@ -10,10 +10,12 @@ import {useHistory} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {setUserLogout} from '../../utils/arms/user/reducer';
 import {selectIsUserLogin, selectUserFullName, selectUserAvatar} from '../../utils/arms/user/selectors';
+import {useTranslation} from 'react-i18next';
 
 function Header() {
     let history = useHistory();
 
+    const {t} = useTranslation();
     const dispatch = useAppDispatch();
     const isUserLogin = useAppSelector(selectIsUserLogin);
     const userFullName = useAppSelector(selectUserFullName);
@@ -62,7 +64,7 @@ function Header() {
                     )}
                     <div className="title-wrapper">
                         <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                            Youtube Playlist Manager
+                            {t('application name')}
                         </Typography>
                     </div>
                     {isUserLogin && (
