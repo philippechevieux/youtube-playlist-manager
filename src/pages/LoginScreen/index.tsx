@@ -50,8 +50,6 @@ function Login() {
                         onSuccess={handleLogin}
                         onFailure={handleLoginFailure}
                         cookiePolicy="single_host_origin"
-                        theme="dark"
-                        icon={false}
                     />
                 </div>
             </div>
