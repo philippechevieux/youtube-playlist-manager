@@ -7,6 +7,7 @@ import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 
 import './styles.css';
 import {ItemInterface, ItemsInterface} from '../../../utils/arms/playlists/state';
+import {useTranslation} from 'react-i18next';
 
 export enum DisplayListModeEnum {
     DEFAULT = 'default',
@@ -28,6 +29,7 @@ function ListMode({
     onClickOnEditPlaylist?: Function;
     onClickOnOpenPlaylist?: Function;
 }) {
+    const {t} = useTranslation();
     const [selectedPlaylist, setSelectedPlaylist] = useState('');
 
     const handleChangeSelectedPlaylist = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,18 +48,17 @@ function ListMode({
         if (mode === DisplayListModeEnum.DEFAULT && onClickOnEditPlaylist && onClickOnOpenPlaylist) {
             return (
                 <div>
-                    <Tooltip title="Editer">
+                    <Tooltip title={t('edit')}>
                         <IconButton
                             className="margin"
                             edge="end"
-                            aria-label="share"
                             onClick={() => onClickOnEditPlaylist(PlaylistData.id)}
                         >
                             <EditOutlinedIcon />
                         </IconButton>
                     </Tooltip>
-                    <Tooltip title="Ouvrir la playlist">
-                        <IconButton edge="end" aria-label="edit" onClick={() => onClickOnOpenPlaylist(PlaylistData.id)}>
+                    <Tooltip title={t('open playlist')}>
+                        <IconButton edge="end" onClick={() => onClickOnOpenPlaylist(PlaylistData.id)}>
                             <LaunchOutlinedIcon />
                         </IconButton>
                     </Tooltip>
@@ -150,7 +151,7 @@ function ListMode({
                             secondary={
                                 <Typography className="secondary" variant="body2" color="text.secondary">
                                     {PlaylistData.snippet.localized.description === ''
-                                        ? 'Aucune description'
+                                        ? t('no description')
                                         : PlaylistData.snippet.localized.description}
                                 </Typography>
                             }

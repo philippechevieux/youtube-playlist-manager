@@ -38,6 +38,7 @@ import {
     insertItemToPlaylistAction,
     moveItemToPlaylistAction
 } from '../../../utils/arms/playlistContents/middleware';
+import {useTranslation} from 'react-i18next';
 
 enum ItemActionEnum {
     MOVE_TO = 'move_to',
@@ -47,6 +48,7 @@ enum ItemActionEnum {
 function Content({playlistId, playlistsListItems}: {playlistId: string; playlistsListItems: ContentsInterface}) {
     const dispatch = useAppDispatch();
 
+    const {t} = useTranslation();
     const userAccessToken = useAppSelector(selectUserAccessToken);
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
     const [anchorCurrentIemResourceId, setAnchorCurrentIemResourceId] =
@@ -76,7 +78,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
     };
 
     const handleDeleteClick = (itemId: string) => {
-        setConfirmDialogContent('Etes-vous sûr de vouloir supprimer cette vidéo de votre playlist ?');
+        setConfirmDialogContent(t('confirm delete video from playlist'));
         setConfirmDialogOnCancel(() => resetConfirmDialogStates);
         setConfirmDialogOnConfirm(() => () => executeDeleteClick(itemId));
         setConfirmDialogVisible(true);
@@ -87,11 +89,11 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
             await dispatch(deleteItemFromPlaylistAction({userAccessToken: userAccessToken, itemId: itemId}));
             resetConfirmDialogStates();
 
-            setSnackbarMessage('La vidéo a été supprimé de votre playlist avec succès');
+            setSnackbarMessage(t('video delete success'));
             setSnackbarSeverity('success');
             setSnackbarVisible(true);
         } catch {
-            setSnackbarMessage('Une erreur est survenue lors de la suppression');
+            setSnackbarMessage(t('video delete error'));
             setSnackbarSeverity('error');
             setSnackbarVisible(true);
         }
@@ -130,7 +132,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
                     })
                 );
 
-                setSnackbarMessage('La vidéo a été ajouté à votre playlist avec succès');
+                setSnackbarMessage(t('video add success'));
                 setSnackbarSeverity('success');
                 setSnackbarVisible(true);
                 resetSelectPlaylistDialogStates();
@@ -144,13 +146,13 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
                     })
                 );
 
-                setSnackbarMessage('La vidéo a été déplacé avec succès');
+                setSnackbarMessage(t('video move success'));
                 setSnackbarSeverity('success');
                 setSnackbarVisible(true);
                 resetSelectPlaylistDialogStates();
             }
         } catch {
-            setSnackbarMessage("Une erreur est survenue lors de l'enregistrement");
+            setSnackbarMessage(t('error occure while saving'));
             setSnackbarSeverity('error');
             setSnackbarVisible(true);
             resetSelectPlaylistDialogStates();
@@ -164,13 +166,13 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
 
         switch (mode) {
             case ItemActionEnum.SAVE_IN:
-                setSelectPlaylistDialogTitle('Enregistrer dans :');
-                setSelectPlaylistDialogConfirm('Enregistrer');
+                setSelectPlaylistDialogTitle(t('save in') + ' :');
+                setSelectPlaylistDialogConfirm(t('save'));
                 setSelectPlaylistDialogConfirmIcon(<SaveOutlinedIcon />);
                 break;
             case ItemActionEnum.MOVE_TO:
-                setSelectPlaylistDialogTitle('Déplacer vers :');
-                setSelectPlaylistDialogConfirm('Déplacer');
+                setSelectPlaylistDialogTitle(t('move to') + ' :');
+                setSelectPlaylistDialogConfirm(t('move'));
                 setSelectPlaylistDialogConfirmIcon(<SendAndArchiveOutlinedIcon />);
                 break;
         }
@@ -217,7 +219,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
                                     </Typography>
                                 }
                             />
-                            <Tooltip title="Supprimer">
+                            <Tooltip title={t('delete')}>
                                 <IconButton
                                     size="large"
                                     aria-haspopup="true"
@@ -226,7 +228,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
                                     <DeleteOutlineOutlinedIcon />
                                 </IconButton>
                             </Tooltip>
-                            <Tooltip title="Autres actions">
+                            <Tooltip title={t('other actions')}>
                                 <IconButton
                                     size="large"
                                     aria-haspopup="true"
@@ -265,7 +267,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
                     onClick={() => handleOpenSelectPlaylistDialog(ItemActionEnum.SAVE_IN)}
                 >
                     <SaveOutlinedIcon />
-                    <span className="header-menuitem-margin-left">Enregistrer dans une autre playlist</span>
+                    <span className="header-menuitem-margin-left">{t('save in an other playlist')}</span>
                 </MenuItem>
                 <Divider />
                 <MenuItem
@@ -273,7 +275,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
                     onClick={() => handleOpenSelectPlaylistDialog(ItemActionEnum.MOVE_TO)}
                 >
                     <SendAndArchiveOutlinedIcon />
-                    <span className="header-menuitem-margin-left">Déplacer vers une autre playlist</span>
+                    <span className="header-menuitem-margin-left">{t('move to an other playlist')}</span>
                 </MenuItem>
             </Menu>
             <ConfirmActionDialog

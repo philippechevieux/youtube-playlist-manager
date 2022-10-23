@@ -20,10 +20,13 @@ import {useHistory} from 'react-router';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {setUserLanguage} from '../../utils/arms/user/reducer';
 import {selectUserFullName, selectUserAvatar, selectUserLanguage} from '../../utils/arms/user/selectors';
+import {useTranslation} from 'react-i18next';
+import {AvailableLangague} from '../../utils/arms/user/state';
 
 function Profile() {
     let history = useHistory();
 
+    const {t, i18n} = useTranslation();
     const dispatch = useAppDispatch();
     const userFullName = useAppSelector(selectUserFullName);
     const userAvatar = useAppSelector(selectUserAvatar);
@@ -34,7 +37,9 @@ function Profile() {
     };
 
     const handleLanguageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setUserLanguage({language: event.target.value}));
+        const language = event.target.value as AvailableLangague;
+        dispatch(setUserLanguage({language: language}));
+        i18n.changeLanguage(language);
     };
 
     return (
@@ -42,7 +47,7 @@ function Profile() {
             <AppBar position="static">
                 <Box sx={{flexGrow: 1}}>
                     <Toolbar>
-                        <Tooltip title="Retour">
+                        <Tooltip title={t('back')}>
                             <IconButton
                                 size="large"
                                 aria-controls="menu-appbar"
@@ -53,7 +58,7 @@ function Profile() {
                             </IconButton>
                         </Tooltip>
                         <Typography variant="body1" color="text.primary">
-                            Mon profil
+                            {t('my profile')}
                         </Typography>
                     </Toolbar>
                 </Box>
@@ -63,47 +68,47 @@ function Profile() {
                     <Grid container direction="column" alignItems="center" justifyContent="center">
                         <AvatarCustom title={userFullName} source={userAvatar} size={AvatarSizeEnum.XL} />
                         <Typography variant="h5" color="text.primary" className="profile-options-title">
-                            Bienvenue {userFullName}
+                            {t('welcome')} {userFullName}
                         </Typography>
                     </Grid>
                 </div>
                 <Card sx={{minWidth: 275}}>
                     <CardContent>
                         <Typography variant="h5" color="text.primary" className="profile-options-subtitle">
-                            Mes préférences
+                            {t('my preferences')}
                         </Typography>
                         <TextField
                             select
                             id="select-language"
                             margin="normal"
                             color="secondary"
-                            label="Langue"
+                            label={t('language')}
                             value={userLanguage}
                             onChange={handleLanguageChange}
                             fullWidth
                             variant="outlined"
                         >
-                            <MenuItem key="fr" value="fr">
+                            <MenuItem key="fr" value={AvailableLangague.FR}>
                                 <img
                                     className="flag-icon"
                                     loading="lazy"
                                     height="13"
                                     width="20"
                                     src={`https://flagcdn.com/w20/fr.png`}
-                                    alt="Français"
+                                    alt={t('french')}
                                 />
-                                <ListItemText className="select-item-text" primary={'Français'}></ListItemText>
+                                <ListItemText className="select-item-text" primary={t('french')}></ListItemText>
                             </MenuItem>
-                            <MenuItem key="en" value="en">
+                            <MenuItem key="en" value={AvailableLangague.EN}>
                                 <img
                                     className="flag-icon"
                                     loading="lazy"
                                     height="13"
                                     width="20"
                                     src={`https://flagcdn.com/w20/gb.png`}
-                                    alt="Anglais"
+                                    alt={t('english')}
                                 />
-                                <ListItemText className="select-item-text" primary={'Anglais'} />
+                                <ListItemText className="select-item-text" primary={t('english')} />
                             </MenuItem>
                         </TextField>
                     </CardContent>

@@ -24,10 +24,12 @@ import EditPlaylistDialog from '../../components/Dialog/EditPlaylistDialog';
 import EmptyIllustration from '../../components/Assets/EmptyIllustration';
 import {PlaylistDisplayModeEnum} from '../../utils/arms/user/state';
 import {setUserPlaylistDisplayMode} from '../../utils/arms/user/reducer';
+import {useTranslation} from 'react-i18next';
 
 function PlaylistList() {
     let history = useHistory();
 
+    const {t} = useTranslation();
     const dispatch = useAppDispatch();
 
     const userAccessToken = useAppSelector(selectUserAccessToken);
@@ -88,7 +90,7 @@ function PlaylistList() {
             if (arePlaylistsLoading) {
                 return <MosaicModeSkeleton />; // TODO: revoir l'affichage du skeleton pour matcher ce qui est fait dans playlistContents
             } else {
-                return <EmptyIllustration title="Aucune playlist trouvée" />;
+                return <EmptyIllustration title={t('no playlist found')} />;
             }
         }
     };
@@ -99,7 +101,7 @@ function PlaylistList() {
                 <Box sx={{flexGrow: 1}}>
                     <Toolbar>
                         <Typography variant="body1" color="text.primary">
-                            Trier
+                            {t('sort')}
                         </Typography>
                         <IconButton
                             className="button-filter"
@@ -113,9 +115,9 @@ function PlaylistList() {
                         </IconButton>
                         <Box sx={{flexGrow: 1}} />
                         <Typography variant="body1" color="text.primary">
-                            Affichage
+                            {t('display')}
                         </Typography>
-                        <Tooltip title="Mosaic">
+                        <Tooltip title={t('mosaic')}>
                             <IconButton
                                 size="large"
                                 aria-controls="menu-appbar"
@@ -128,7 +130,7 @@ function PlaylistList() {
                                 <ViewModuleOutlinedIcon />
                             </IconButton>
                         </Tooltip>
-                        <Tooltip title="Liste">
+                        <Tooltip title={t('list')}>
                             <IconButton
                                 size="large"
                                 aria-controls="menu-appbar"
@@ -156,7 +158,7 @@ function PlaylistList() {
                         }}
                     >
                         {arePlaylistsLoading && <CircularProgress size={15} />}
-                        Voir plus ...
+                        {t('see more')} ...
                     </Button>
                 </div>
             )}

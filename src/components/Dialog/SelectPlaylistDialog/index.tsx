@@ -6,14 +6,15 @@ import {getYoutubePlaylists} from './../../../utils/api/index';
 import ListMode, {DisplayListModeEnum} from './../../Playlist/ListMode/index';
 import {ItemsInterface} from '../../../utils/arms/playlists/state';
 import {LoadingButton} from '@mui/lab';
+import {useTranslation} from 'react-i18next';
 
 function SelectPlaylistDialog({
     visible,
     userAccessToken,
     currentPlaylistId = '',
     hideCurrentPlaylist = false,
-    title = 'Selection',
-    confirmText = 'Confimer',
+    title = '',
+    confirmText = '',
     confirmIcon,
     onConfirm,
     onCancel
@@ -28,6 +29,7 @@ function SelectPlaylistDialog({
     onConfirm: Function;
     onCancel: Function;
 }) {
+    const {t} = useTranslation();
     const [playlistsListData, setPlaylistsListData] = useState<ItemsInterface>({items: []});
     const [isLoading, setIsLoading] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
@@ -35,6 +37,14 @@ function SelectPlaylistDialog({
     const [selectedPlaylistId, setSelectedPlaylistId] = useState('');
     const [canSave, setCanSave] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
+
+    if (title === '') {
+        title = t('selection');
+    }
+
+    if (confirmText === '') {
+        confirmText = t('confirm');
+    }
 
     const executeOnCancel = () => {
         setCanSave(false);
@@ -107,13 +117,13 @@ function SelectPlaylistDialog({
                                 loadMorePlaylistList();
                             }}
                         >
-                            Voir plus ...
+                            {t('see more')} ...
                         </Button>
                     </div>
                 )}
             </DialogContent>
             <DialogActions>
-                <Button onClick={() => executeOnCancel()}>Fermer</Button>
+                <Button onClick={() => executeOnCancel()}>{t('close')}</Button>
                 <LoadingButton
                     loading={isSaving}
                     disabled={!canSave}

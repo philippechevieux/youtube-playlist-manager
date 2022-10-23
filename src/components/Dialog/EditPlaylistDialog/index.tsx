@@ -24,6 +24,7 @@ import {selectPlaylistItem} from '../../../utils/arms/playlists/selectors';
 import {IApiUpdatePlaylistParams} from '../../../utils/api/interface';
 import {updatePlaylistDataAction} from '../../../utils/arms/playlists/middleware';
 import {LoadingButton} from '@mui/lab';
+import {useTranslation} from 'react-i18next';
 
 function EditPlaylistDialog({
     visible = false,
@@ -34,6 +35,7 @@ function EditPlaylistDialog({
     playlistId: string | undefined;
     onCancel: Function;
 }) {
+    const {t} = useTranslation();
     const dispatch = useAppDispatch();
     const userAccessToken = useAppSelector(selectUserAccessToken);
     const playlistItem = useAppSelector(state => selectPlaylistItem(state, playlistId));
@@ -89,12 +91,12 @@ function EditPlaylistDialog({
                 );
 
                 executeOnCancel();
-                setSnackbarMessage('Les informations de votre playlist ont été modifiés avec succès');
+                setSnackbarMessage(t('playlist data update success'));
                 setSnackbarSeverity('success');
                 setSnackbarVisible(true);
             } catch {
                 executeOnCancel();
-                setSnackbarMessage("Une erreur est survenue lors de l'enregistrement des modifications");
+                setSnackbarMessage(t('playlist data update error'));
                 setSnackbarSeverity('error');
                 setSnackbarVisible(true);
             }
@@ -113,7 +115,7 @@ function EditPlaylistDialog({
         <>
             <Dialog open={visible} fullWidth maxWidth="sm">
                 <DialogTitle id="alert-dialog-title">
-                    Editer la playlist : {playlistItem.snippet.localized.title}
+                    {t('edit playlist')} : {playlistItem.snippet.localized.title}
                 </DialogTitle>
                 <DialogContent>
                     <TextField
@@ -122,7 +124,7 @@ function EditPlaylistDialog({
                         id="edit-playlist-title"
                         margin="normal"
                         color="secondary"
-                        label="Titre"
+                        label={t('title')}
                         value={title}
                         type="text"
                         fullWidth
@@ -133,7 +135,7 @@ function EditPlaylistDialog({
                         margin="normal"
                         id="edit-playlist-description"
                         color="secondary"
-                        label="Description"
+                        label={t('description')}
                         value={description}
                         type="text"
                         fullWidth
@@ -145,7 +147,7 @@ function EditPlaylistDialog({
                         margin="normal"
                         id="edit-playlist-select-status"
                         color="secondary"
-                        label="Status"
+                        label={t('status')}
                         value={status}
                         fullWidth
                         onChange={handleStatusChange}
@@ -153,20 +155,20 @@ function EditPlaylistDialog({
                     >
                         <MenuItem key="public" value="public">
                             <PublicOutlinedIcon />
-                            <ListItemText className="select-item-text" primary={'Public'} />
+                            <ListItemText className="select-item-text" primary={t('public')} />
                         </MenuItem>
                         <MenuItem key="unlisted" value="unlisted">
                             <VisibilityOffOutlinedIcon />
-                            <ListItemText className="select-item-text" primary={'Non répertoriée'} />
+                            <ListItemText className="select-item-text" primary={t('not listed')} />
                         </MenuItem>
                         <MenuItem key="private" value="private">
                             <LockOutlinedIcon />
-                            <ListItemText className="select-item-text" primary={'Privée'} />
+                            <ListItemText className="select-item-text" primary={t('private')} />
                         </MenuItem>
                     </TextField>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={() => executeOnCancel()}>Fermer</Button>
+                    <Button onClick={() => executeOnCancel()}>{t('close')}</Button>
                     <LoadingButton
                         loading={isSaving}
                         disabled={canSave}
@@ -175,7 +177,7 @@ function EditPlaylistDialog({
                         startIcon={<SaveOutlinedIcon />}
                         onClick={onSave}
                     >
-                        Sauvegarder
+                        {t('save')}
                     </LoadingButton>
                 </DialogActions>
             </Dialog>

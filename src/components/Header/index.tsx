@@ -10,10 +10,12 @@ import {useHistory} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {setUserLogout} from '../../utils/arms/user/reducer';
 import {selectIsUserLogin, selectUserFullName, selectUserAvatar} from '../../utils/arms/user/selectors';
+import {useTranslation} from 'react-i18next';
 
 function Header() {
     let history = useHistory();
 
+    const {t} = useTranslation();
     const dispatch = useAppDispatch();
     const isUserLogin = useAppSelector(selectIsUserLogin);
     const userFullName = useAppSelector(selectUserFullName);
@@ -47,12 +49,11 @@ function Header() {
             <AppBar className="appbar-wrapper" position="fixed">
                 <Toolbar>
                     {isUserLogin && (
-                        <Tooltip title="Accueil">
+                        <Tooltip title={t('home')}>
                             <IconButton
                                 size="large"
                                 edge="start"
                                 color="inherit"
-                                aria-label="menu"
                                 sx={{mr: 2}}
                                 onClick={() => handleClickOnGoHome()}
                             >
@@ -62,7 +63,7 @@ function Header() {
                     )}
                     <div className="title-wrapper">
                         <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
-                            Youtube Playlist Manager
+                            {t('application name')}
                         </Typography>
                     </div>
                     {isUserLogin && (
@@ -94,12 +95,12 @@ function Header() {
                             >
                                 <MenuItem key="profil" onClick={handleClickOnGoToMyProfile}>
                                     <AvatarCustom title={userFullName} source={userAvatar} size={AvatarSizeEnum.SM} />
-                                    <span className="header-menuitem-margin-left">Mon profil</span>
+                                    <span className="header-menuitem-margin-left">{t('my profile')}</span>
                                 </MenuItem>
                                 <Divider />
                                 <MenuItem key="logout" onClick={handleClickOnLogout}>
                                     <LogoutOutlinedIcon />
-                                    <span className="header-menuitem-margin-left">Se déconnecter</span>
+                                    <span className="header-menuitem-margin-left">{t('sign out')}</span>
                                 </MenuItem>
                             </Menu>
                         </div>

@@ -6,6 +6,7 @@ import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 import './styles.css';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import {ItemsInterface} from '../../../utils/arms/playlists/state';
+import {useTranslation} from 'react-i18next';
 
 function MosaicMode({
     playlistsListData,
@@ -16,6 +17,8 @@ function MosaicMode({
     onClickOnEditPlaylist: Function;
     onClickOnOpenPlaylist: Function;
 }) {
+    const {t} = useTranslation();
+
     return (
         <Grid
             container
@@ -48,21 +51,18 @@ function MosaicMode({
                             </Typography>
                             <Typography variant="body2" color="text.secondary" className="card-description">
                                 {PlaylistData.snippet.localized.description === ''
-                                    ? 'Aucune description'
+                                    ? t('no description')
                                     : PlaylistData.snippet.localized.description}
                             </Typography>
                         </CardContent>
                         <CardActions className="card-actions">
-                            <Tooltip title="Editer">
-                                <IconButton aria-label="edit" onClick={() => onClickOnEditPlaylist(PlaylistData.id)}>
+                            <Tooltip title={t('edit')}>
+                                <IconButton onClick={() => onClickOnEditPlaylist(PlaylistData.id)}>
                                     <EditOutlinedIcon />
                                 </IconButton>
                             </Tooltip>
-                            <Tooltip title="Ouvrir la playlist">
-                                <IconButton
-                                    aria-label="open playlist"
-                                    onClick={() => onClickOnOpenPlaylist(PlaylistData.id)}
-                                >
+                            <Tooltip title={t('open playlist')}>
+                                <IconButton onClick={() => onClickOnOpenPlaylist(PlaylistData.id)}>
                                     <LaunchOutlinedIcon />
                                 </IconButton>
                             </Tooltip>

@@ -1,5 +1,5 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {PlaylistDisplayModeEnum, userDefaultData} from './state';
+import {AvailableLangague, PlaylistDisplayModeEnum, userDefaultData} from './state';
 
 export const userSlice = createSlice({
     name: 'user',
@@ -14,6 +14,7 @@ export const userSlice = createSlice({
                 state.firstName = action.payload.googleLoginResponse.firstName;
                 state.lastName = action.payload.googleLoginResponse.lastName;
                 state.fullName = action.payload.googleLoginResponse.fullName;
+                state.language = action.payload.googleLoginResponse.language;
                 state.isUserLogin = true;
             }
         },
@@ -28,7 +29,7 @@ export const userSlice = createSlice({
             state.isUserLogin = userDefaultData.isUserLogin;
             state.playlistDisplayMode = userDefaultData.playlistDisplayMode;
         },
-        setUserLanguage: (state: any, action: PayloadAction<{language: string}>) => {
+        setUserLanguage: (state: any, action: PayloadAction<{language: AvailableLangague}>) => {
             state.language = action.payload.language;
         },
         setUserPlaylistDisplayMode: (

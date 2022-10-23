@@ -20,8 +20,10 @@ import {removePlaylistContents} from '../../utils/arms/playlistContents/reducer'
 import {selectPlaylistItem} from '../../utils/arms/playlists/selectors';
 import EditPlaylistDialog from '../../components/Dialog/EditPlaylistDialog';
 import EmptyIllustration from '../../components/Assets/EmptyIllustration';
+import {useTranslation} from 'react-i18next';
 
 function PlaylistContent() {
+    const {t} = useTranslation();
     const dispatch = useAppDispatch();
 
     let history = useHistory();
@@ -58,7 +60,7 @@ function PlaylistContent() {
         }
 
         if (arePlaylistContentsLoaded && playlistContentsItems.length === 0) {
-            content = <EmptyIllustration title="Aucune vidéo dans votre playlist" />;
+            content = <EmptyIllustration title={t('no video in your playlist')} />;
         }
 
         if (arePlaylistContentsLoading) {
@@ -78,7 +80,7 @@ function PlaylistContent() {
             <AppBar position="static">
                 <Box sx={{flexGrow: 1}}>
                     <Toolbar>
-                        <Tooltip title="Retour">
+                        <Tooltip title={t('back')}>
                             <IconButton
                                 size="large"
                                 aria-controls="menu-appbar"
@@ -92,7 +94,7 @@ function PlaylistContent() {
                             {playlistItem.snippet.localized.title}
                         </Typography>
                         <Box sx={{flexGrow: 1}} />
-                        <Tooltip title="Editer">
+                        <Tooltip title={t('edit')}>
                             <IconButton
                                 className="button-filter"
                                 size="large"
@@ -120,7 +122,7 @@ function PlaylistContent() {
                             loadMorePlaylisContents();
                         }}
                     >
-                        Voir plus ...
+                        {t('see more')} ...
                     </Button>
                 </div>
             )}
