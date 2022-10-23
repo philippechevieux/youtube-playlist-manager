@@ -14,6 +14,7 @@ export const userSlice = createSlice({
                 state.firstName = action.payload.googleLoginResponse.firstName;
                 state.lastName = action.payload.googleLoginResponse.lastName;
                 state.fullName = action.payload.googleLoginResponse.fullName;
+                state.language = action.payload.googleLoginResponse.language;
                 state.isUserLogin = true;
             }
         },

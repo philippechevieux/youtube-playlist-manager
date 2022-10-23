@@ -2,7 +2,7 @@ import './styles.css';
 import {useAppDispatch} from '../../app/hooks';
 import {GoogleLogin} from 'react-google-login';
 import {useHistory} from 'react-router';
-import {UserDataInterface, userDefaultData} from '../../utils/arms/user/state';
+import {AvailableLangague, UserDataInterface, userDefaultData} from '../../utils/arms/user/state';
 import {setUserLogin} from '../../utils/arms/user/reducer';
 import LoginIllustration from '../../components/Assets/LoginIllustration';
 import {useTranslation} from 'react-i18next';
@@ -10,7 +10,7 @@ import {useTranslation} from 'react-i18next';
 function Login() {
     let history = useHistory();
 
-    const {t} = useTranslation();
+    const {t, i18n} = useTranslation();
     const dispatch = useAppDispatch();
 
     const handleLogin = (response: any) => {
@@ -23,7 +23,7 @@ function Login() {
             lastName: response.profileObj.familyName,
             fullName: response.profileObj.name,
             isUserLogin: true,
-            language: userDefaultData.language,
+            language: i18n.language as AvailableLangague,
             playlistDisplayMode: userDefaultData.playlistDisplayMode
         };
 
