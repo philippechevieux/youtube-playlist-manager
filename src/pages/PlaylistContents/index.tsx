@@ -3,8 +3,6 @@ import {useParams} from 'react-router-dom';
 import {AppBar, Toolbar, IconButton, Button, Typography, Box, Tooltip} from '@mui/material';
 import {useHistory} from 'react-router-dom';
 
-import Content from '../../components/Playlist/Content/index';
-import ContentSkeleton from '../../components/Playlist/Content/Skeleton/index';
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
@@ -18,9 +16,11 @@ import {
 } from '../../utils/arms/playlistContents/selectors';
 import {removePlaylistContents} from '../../utils/arms/playlistContents/reducer';
 import {selectPlaylistItem} from '../../utils/arms/playlists/selectors';
-import EditPlaylistDialog from '../../components/Dialog/EditPlaylistDialog';
+import EditPlaylistDialog from '../../containers/Dialog/EditPlaylistDialog';
 import EmptyIllustration from '../../components/Assets/EmptyIllustration';
 import {useTranslation} from 'react-i18next';
+import Content from '../../containers/PlaylistContents/Content';
+import ContentSkeleton from '../../containers/PlaylistContents/Content/Skeleton';
 
 function PlaylistContent() {
     const {t} = useTranslation();

@@ -2,7 +2,7 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import {Menu, MenuItem, IconButton, Typography, Toolbar, Box, AppBar, Divider, Tooltip} from '@mui/material';
 
-import AvatarCustom, {AvatarSizeEnum} from '../AvatarCustom';
+import AvatarCustom, {AvatarSizeEnum} from '../../components/AvatarCustom';
 import './styles.css';
 
 import {useState} from 'react';

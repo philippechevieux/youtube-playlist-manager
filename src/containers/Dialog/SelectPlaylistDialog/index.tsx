@@ -2,11 +2,11 @@ import {Dialog, DialogTitle, DialogActions, Button, DialogContent} from '@mui/ma
 
 import './styles.css';
 import {ReactElement, useCallback, useEffect, useState} from 'react';
-import {getYoutubePlaylists} from './../../../utils/api/index';
-import ListMode, {DisplayListModeEnum} from './../../Playlist/ListMode/index';
+import {getYoutubePlaylists} from '../../../utils/api/index';
 import {ItemsInterface} from '../../../utils/arms/playlists/state';
 import {LoadingButton} from '@mui/lab';
 import {useTranslation} from 'react-i18next';
+import ListMode, {DisplayListModeEnum} from '../../../components/Playlists/ListMode';
 
 function SelectPlaylistDialog({
     visible,

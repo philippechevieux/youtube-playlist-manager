@@ -1,6 +1,6 @@
 import {List, ListItem, Divider} from '@mui/material';
 import './styles.css';
-import '../../styles.css';
+import '../styles.css';
 
 function displaySkeletonContent(isFirstLoad: boolean) {
     return (
