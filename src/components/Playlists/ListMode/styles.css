@@ -24,3 +24,7 @@
 .list-container .open-playlist-pointer{
     cursor: pointer;
 }
+
+.divider {
+    margin: 5px 0px 5px 0px;
+}

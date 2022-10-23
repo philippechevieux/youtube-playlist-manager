@@ -20,7 +20,7 @@ import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined';
 
-import '../styles.css';
+import './styles.css';
 import {useState} from 'react';
 import {IResourceId} from '../../../utils/api/interface';
 import {IPlaylistItemsContent} from '../../../utils/context/interface';
@@ -31,14 +31,14 @@ import {
     defaultItemResourceId,
     ResourceIdInterface
 } from '../../../utils/arms/playlistContents/state';
-import ConfirmActionDialog from '../../Dialog/ConfirmActionDialog';
-import SelectPlaylistDialog from '../../Dialog/SelectPlaylistDialog';
+import SelectPlaylistDialog from '../../../containers/Dialog/SelectPlaylistDialog';
 import {
     deleteItemFromPlaylistAction,
     insertItemToPlaylistAction,
     moveItemToPlaylistAction
 } from '../../../utils/arms/playlistContents/middleware';
 import {useTranslation} from 'react-i18next';
+import ConfirmActionDialog from '../../../components/Dialog/ConfirmActionDialog';
 
 enum ItemActionEnum {
     MOVE_TO = 'move_to',

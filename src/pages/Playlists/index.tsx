@@ -4,10 +4,6 @@ import {AppBar, Toolbar, IconButton, Button, Box, Typography, Tooltip, CircularP
 
 import './styles.css';
 
-import MosaicMode from '../../components/Playlist/MosaicMode';
-import MosaicModeSkeleton from '../../components/Playlist/MosaicMode/Skeleton';
-import ListMode from '../../components/Playlist/ListMode';
-
 import ViewModuleOutlinedIcon from '@mui/icons-material/ViewModuleOutlined';
 import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
 import SortOutlinedIcon from '@mui/icons-material/SortOutlined';
@@ -20,11 +16,14 @@ import {
     selectPlaylistsItems,
     selectPlaylistsNextPageToken
 } from '../../utils/arms/playlists/selectors';
-import EditPlaylistDialog from '../../components/Dialog/EditPlaylistDialog';
+import EditPlaylistDialog from '../../containers/Dialog/EditPlaylistDialog';
 import EmptyIllustration from '../../components/Assets/EmptyIllustration';
 import {PlaylistDisplayModeEnum} from '../../utils/arms/user/state';
 import {setUserPlaylistDisplayMode} from '../../utils/arms/user/reducer';
 import {useTranslation} from 'react-i18next';
+import MosaicMode from '../../components/Playlists/MosaicMode';
+import ListMode from '../../components/Playlists/ListMode';
+import MosaicModeSkeleton from '../../components/Playlists/MosaicMode/Skeleton';
 
 function PlaylistList() {
     let history = useHistory();

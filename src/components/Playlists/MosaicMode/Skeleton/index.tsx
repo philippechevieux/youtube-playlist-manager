@@ -1,7 +1,6 @@
 import {Grid, Card} from '@mui/material';
 import './styles.css';
 import '../styles.css';
-import '../../styles.css';
 
 function displaySkeletonContent() {
     return (

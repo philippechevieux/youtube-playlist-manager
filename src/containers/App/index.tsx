@@ -7,7 +7,7 @@ import './styles.css';
 import store from '../../app/store';
 import React from 'react';
 import Header from '../Header';
-import Body from '../Body';
+import Body from '../../containers/Body';
 
 function App() {
     //TODO: Ajouter un bouton pour changer de theme (https://mui.com/customization/dark-mode/)
