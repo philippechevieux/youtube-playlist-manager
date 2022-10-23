@@ -21,11 +21,12 @@ import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {setUserLanguage} from '../../utils/arms/user/reducer';
 import {selectUserFullName, selectUserAvatar, selectUserLanguage} from '../../utils/arms/user/selectors';
 import {useTranslation} from 'react-i18next';
+import {AvailableLangague} from '../../utils/arms/user/state';
 
 function Profile() {
     let history = useHistory();
 
-    const {t} = useTranslation();
+    const {t, i18n} = useTranslation();
     const dispatch = useAppDispatch();
     const userFullName = useAppSelector(selectUserFullName);
     const userAvatar = useAppSelector(selectUserAvatar);
@@ -36,7 +37,9 @@ function Profile() {
     };
 
     const handleLanguageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        dispatch(setUserLanguage({language: event.target.value}));
+        const language = event.target.value as AvailableLangague;
+        dispatch(setUserLanguage({language: language}));
+        i18n.changeLanguage(language);
     };
 
     return (
@@ -85,7 +88,7 @@ function Profile() {
                             fullWidth
                             variant="outlined"
                         >
-                            <MenuItem key="fr" value="fr">
+                            <MenuItem key="fr" value={AvailableLangague.FR}>
                                 <img
                                     className="flag-icon"
                                     loading="lazy"
@@ -96,7 +99,7 @@ function Profile() {
                                 />
                                 <ListItemText className="select-item-text" primary={t('french')}></ListItemText>
                             </MenuItem>
-                            <MenuItem key="en" value="en">
+                            <MenuItem key="en" value={AvailableLangague.EN}>
                                 <img
                                     className="flag-icon"
                                     loading="lazy"

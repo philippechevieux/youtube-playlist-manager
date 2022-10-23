@@ -3,9 +3,14 @@ export enum PlaylistDisplayModeEnum {
     LIST = 'list'
 }
 
+export enum AvailableLangague {
+    FR = 'fr',
+    EN = 'en'
+}
+
 export interface UserDataInterface {
     accessToken: string;
-    language: string;
+    language: AvailableLangague;
     googleId: string;
     email: string;
     avatar: string;
@@ -18,7 +23,7 @@ export interface UserDataInterface {
 
 export const userDefaultData: UserDataInterface = {
     accessToken: '',
-    language: 'fr',
+    language: AvailableLangague.EN,
     googleId: '',
     email: '',
     avatar: '',
