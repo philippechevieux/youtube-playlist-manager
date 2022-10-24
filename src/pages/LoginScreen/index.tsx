@@ -1,11 +1,15 @@
 import './styles.css';
 import {useAppDispatch} from '../../app/hooks';
-import {GoogleLogin} from 'react-google-login';
+import {useGoogleLogin} from '@react-oauth/google';
+
 import {useHistory} from 'react-router';
 import {AvailableLangague, UserDataInterface, userDefaultData} from '../../utils/arms/user/state';
 import {setUserLogin} from '../../utils/arms/user/reducer';
 import LoginIllustration from '../../components/Assets/LoginIllustration';
 import {useTranslation} from 'react-i18next';
+import {Button} from '@mui/material';
+import {getUserInfo} from '../../utils/api';
+import GoogleIcon from '@mui/icons-material/Google';
 
 function Login() {
     let history = useHistory();
@@ -13,27 +17,31 @@ function Login() {
     const {t, i18n} = useTranslation();
     const dispatch = useAppDispatch();
 
-    const handleLogin = (response: any) => {
-        const loginResponse: UserDataInterface = {
-            accessToken: response.accessToken,
-            googleId: response.profileObj.googleId,
-            email: response.profileObj.email,
-            avatar: response.profileObj.imageUrl,
-            firstName: response.profileObj.givenName,
-            lastName: response.profileObj.familyName,
-            fullName: response.profileObj.name,
-            isUserLogin: true,
-            language: i18n.language as AvailableLangague,
-            playlistDisplayMode: userDefaultData.playlistDisplayMode
-        };
+    const login = useGoogleLogin({
+        prompt: 'select_account',
+        scope: 'https://www.googleapis.com/auth/youtube',
+        onSuccess: async res => {
+            const {data} = await getUserInfo(res.access_token);
 
-        dispatch(setUserLogin({googleLoginResponse: loginResponse}));
-        history.push('/playlists');
-    };
+            const loginResponse: UserDataInterface = {
+                accessToken: res.access_token,
+                email: data.email,
+                avatar: data.picture,
+                firstName: data.given_name,
+                lastName: data.family_name,
+                fullName: data.name,
+                isUserLogin: true,
+                language: i18n.language as AvailableLangague,
+                playlistDisplayMode: userDefaultData.playlistDisplayMode
+            };
 
-    const handleLoginFailure = () => {
-        // TODO: handle login failure (maybe redisplay login screen with info ?)
-    };
+            dispatch(setUserLogin({googleLoginResponse: loginResponse}));
+            history.push('/playlists');
+        },
+        onError: () => {
+            console.error('An error occured while sign in');
+        }
+    });
 
     return (
         <div className="login-screen-container">
@@ -41,16 +49,9 @@ function Login() {
                 <h1 className="title">{t('login screen title')}</h1>
                 <span>{t('login screen subtitle')}</span>
                 <div className="login-button">
-                    <GoogleLogin
-                        clientId="232248135832-8f8h7mocgfdu17a7vpuul37pi5ugobt7.apps.googleusercontent.com"
-                        buttonText={t('sign in')}
-                        scope="https://www.googleapis.com/auth/youtube"
-                        responseType="permissions"
-                        prompt="select_account"
-                        onSuccess={handleLogin}
-                        onFailure={handleLoginFailure}
-                        cookiePolicy="single_host_origin"
-                    />
+                    <Button startIcon={<GoogleIcon />} variant="contained" color="secondary" onClick={() => login()}>
+                        {t('sign in')}
+                    </Button>
                 </div>
             </div>
             <div className="right-col">

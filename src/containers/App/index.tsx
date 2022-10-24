@@ -2,6 +2,7 @@ import {BrowserRouter as Router} from 'react-router-dom';
 import {Provider} from 'react-redux';
 import {createTheme, ThemeProvider} from '@mui/material/styles';
 import {CssBaseline} from '@mui/material';
+import {GoogleOAuthProvider} from '@react-oauth/google';
 
 import './styles.css';
 import store from '../../app/store';
@@ -10,7 +11,6 @@ import Header from '../Header';
 import Body from '../../containers/Body';
 
 function App() {
-    //TODO: Ajouter un bouton pour changer de theme (https://mui.com/customization/dark-mode/)
     const theme = React.useMemo(
         () =>
             createTheme({
@@ -33,18 +33,22 @@ function App() {
         []
     );
 
+    const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID ? process.env.REACT_APP_GOOGLE_CLIENT_ID : '';
+
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline />
-            <Router>
-                <Provider store={store}>
-                    <div className="app-container">
-                        <Header />
-                        <Body />
-                    </div>
-                </Provider>
-            </Router>
-        </ThemeProvider>
+        <GoogleOAuthProvider clientId={clientId}>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Router>
+                    <Provider store={store}>
+                        <div className="app-container">
+                            <Header />
+                            <Body />
+                        </div>
+                    </Provider>
+                </Router>
+            </ThemeProvider>
+        </GoogleOAuthProvider>
     );
 }
 

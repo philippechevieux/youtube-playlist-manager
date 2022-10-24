@@ -11,7 +11,6 @@ export enum AvailableLangague {
 export interface UserDataInterface {
     accessToken: string;
     language: AvailableLangague;
-    googleId: string;
     email: string;
     avatar: string;
     firstName: string;
@@ -24,7 +23,6 @@ export interface UserDataInterface {
 export const userDefaultData: UserDataInterface = {
     accessToken: '',
     language: AvailableLangague.EN,
-    googleId: '',
     email: '',
     avatar: '',
     firstName: '',

@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {IApiUrlParams, IApiBodyParams, IApiUpdatePlaylistParams, IResourceId, RequestMethodEnum} from './interface';
 
-const BASE_API_URL = 'https://www.googleapis.com/youtube/v3/';
+const BASE_YOUTUBE_API_URL = 'https://www.googleapis.com/youtube/v3/';
+const BASE_USER_INFO_API = 'https://www.googleapis.com/oauth2/v3/userinfo';
 
 const toPostData = (datas: IApiBodyParams | undefined) => {
     let str = '';
@@ -15,14 +16,14 @@ const toPostData = (datas: IApiBodyParams | undefined) => {
     return str;
 };
 
-function requestApi(
+function requestYoutubeApi(
     accessToken: string,
     method: RequestMethodEnum,
     endPoint: string,
     urlParams: IApiUrlParams,
     bodyParams?: IApiBodyParams
 ) {
-    let apiUrl = `${BASE_API_URL}${endPoint}?access_token=${accessToken}` + toPostData(urlParams);
+    let apiUrl = `${BASE_YOUTUBE_API_URL}${endPoint}?access_token=${accessToken}` + toPostData(urlParams);
 
     return axios({
         method: method,
@@ -32,6 +33,23 @@ function requestApi(
     })
         .then(response => {
             return response.data;
+        })
+        .catch(error => {
+            console.log('error', error);
+            throw error;
+        });
+}
+
+function requestUserInfoApi(accessToken: string) {
+    const headers = {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    };
+
+    return axios(BASE_USER_INFO_API, headers)
+        .then(response => {
+            return response;
         })
         .catch(error => {
             console.log('error', error);
@@ -55,7 +73,7 @@ export function getYoutubePlaylists(accessToken: string, pageToken?: string, pla
         urlParams.id = playlistIds.join(',');
     }
 
-    return requestApi(accessToken, RequestMethodEnum.GET, 'playlists', urlParams);
+    return requestYoutubeApi(accessToken, RequestMethodEnum.GET, 'playlists', urlParams);
 }
 
 export function updatePlaylistData(accessToken: string, playlistId: string, data: IApiUpdatePlaylistParams) {
@@ -74,7 +92,7 @@ export function updatePlaylistData(accessToken: string, playlistId: string, data
         }
     };
 
-    return requestApi(accessToken, RequestMethodEnum.PUT, 'playlists', urlParams, bodyParams);
+    return requestYoutubeApi(accessToken, RequestMethodEnum.PUT, 'playlists', urlParams, bodyParams);
 }
 
 export function getYoutubePlaylistsItems(accessToken: string, playlistId: string, pageToken?: string) {
@@ -88,7 +106,7 @@ export function getYoutubePlaylistsItems(accessToken: string, playlistId: string
         urlParams.pageToken = pageToken;
     }
 
-    return requestApi(accessToken, RequestMethodEnum.GET, 'playlistItems', urlParams);
+    return requestYoutubeApi(accessToken, RequestMethodEnum.GET, 'playlistItems', urlParams);
 }
 
 export function deleteItemFromPlaylist(accessToken: string, itemId: string) {
@@ -100,7 +118,7 @@ export function deleteItemFromPlaylist(accessToken: string, itemId: string) {
         id: itemId
     };
 
-    return requestApi(accessToken, RequestMethodEnum.DELETE, 'playlistItems', urlParams, bodyParams);
+    return requestYoutubeApi(accessToken, RequestMethodEnum.DELETE, 'playlistItems', urlParams, bodyParams);
 }
 
 export function insertItemToPlaylist(accessToken: string, resourceId: IResourceId, playlistId: string) {
@@ -115,5 +133,9 @@ export function insertItemToPlaylist(accessToken: string, resourceId: IResourceI
         }
     };
 
-    return requestApi(accessToken, RequestMethodEnum.POST, 'playlistItems', urlParams, bodyParams);
+    return requestYoutubeApi(accessToken, RequestMethodEnum.POST, 'playlistItems', urlParams, bodyParams);
+}
+
+export function getUserInfo(accessToken: string) {
+    return requestUserInfoApi(accessToken);
 }

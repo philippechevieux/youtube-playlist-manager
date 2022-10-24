@@ -8,7 +8,6 @@ export const userSlice = createSlice({
         setUserLogin: (state: any, action: PayloadAction<{googleLoginResponse: any}>) => {
             if (!state.isUserLogin) {
                 state.accessToken = action.payload.googleLoginResponse.accessToken;
-                state.googleId = action.payload.googleLoginResponse.googleId;
                 state.email = action.payload.googleLoginResponse.email;
                 state.avatar = action.payload.googleLoginResponse.avatar;
                 state.firstName = action.payload.googleLoginResponse.firstName;
@@ -20,7 +19,6 @@ export const userSlice = createSlice({
         },
         setUserLogout: (state: any) => {
             state.accessToken = userDefaultData.accessToken;
-            state.googleId = userDefaultData.googleId;
             state.email = userDefaultData.email;
             state.avatar = userDefaultData.avatar;
             state.firstName = userDefaultData.firstName;
