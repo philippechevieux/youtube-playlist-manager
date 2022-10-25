@@ -8,6 +8,7 @@ export const playlistsSlice = createSlice({
     reducers: {
         addPlaylists: (state: any, action: PayloadAction<{playlistsData: PlaylistsDataInterface}>) => {
             if (
+                Object.values(state.items).length === 0 ||
                 (!('nextPageToken' in action.payload.playlistsData) && state.nextPageToken !== undefined) ||
                 (state.nextPageToken === undefined && 'nextPageToken' in action.payload.playlistsData) ||
                 ('nextPageToken' in action.payload.playlistsData &&
