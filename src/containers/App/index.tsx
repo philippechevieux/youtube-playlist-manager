@@ -9,7 +9,6 @@ import store from '../../app/store';
 import React from 'react';
 import Header from '../Header';
 import Body from '../../containers/Body';
-import MetaWrapper from '../MetaWrapper';
 
 function App() {
     const theme = React.useMemo(
@@ -37,22 +36,19 @@ function App() {
     const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID ? process.env.REACT_APP_GOOGLE_CLIENT_ID : '';
 
     return (
-        <>
-            <MetaWrapper />
-            <GoogleOAuthProvider clientId={clientId}>
-                <ThemeProvider theme={theme}>
-                    <CssBaseline />
-                    <Router>
-                        <Provider store={store}>
-                            <div className="app-container">
-                                <Header />
-                                <Body />
-                            </div>
-                        </Provider>
-                    </Router>
-                </ThemeProvider>
-            </GoogleOAuthProvider>
-        </>
+        <GoogleOAuthProvider clientId={clientId}>
+            <ThemeProvider theme={theme}>
+                <CssBaseline />
+                <Router>
+                    <Provider store={store}>
+                        <div className="app-container">
+                            <Header />
+                            <Body />
+                        </div>
+                    </Provider>
+                </Router>
+            </ThemeProvider>
+        </GoogleOAuthProvider>
     );
 }
 
