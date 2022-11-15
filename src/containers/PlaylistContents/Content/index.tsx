@@ -15,15 +15,12 @@ import {
     AlertColor
 } from '@mui/material';
 
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined';
 
 import './styles.css';
 import {useState} from 'react';
 import {IResourceId} from '../../../utils/api/interface';
-import {IPlaylistItemsContent} from '../../../utils/context/interface';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import {selectUserAccessToken} from '../../../utils/arms/user/selectors';
 import {
@@ -39,6 +36,8 @@ import {
 } from '../../../utils/arms/playlistContents/middleware';
 import {useTranslation} from 'react-i18next';
 import ConfirmActionDialog from '../../../components/Dialog/ConfirmActionDialog';
+import YouTube, {YouTubeProps} from 'react-youtube';
+import VideoItem from '../../../components/VideoItem';
 
 enum ItemActionEnum {
     MOVE_TO = 'move_to',
@@ -180,16 +179,9 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
         setSelectPlaylistDialogVisible(true);
     };
 
-    const getThumbnailsFromItem = (Item: IPlaylistItemsContent): string => {
-        let pathOrUrlOfThumbnails = '';
-
-        if (Item.snippet.thumbnails !== undefined) {
-            if (Item.snippet.thumbnails.high !== undefined) {
-                pathOrUrlOfThumbnails = Item.snippet.thumbnails.high.url;
-            }
-        }
-
-        return pathOrUrlOfThumbnails;
+    const onPlayerReady: YouTubeProps['onReady'] = event => {
+        // access to player in all event handlers via event.target
+        event.target.pauseVideo();
     };
 
     return (
@@ -197,48 +189,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
             <List className="list-container">
                 {Object.values(playlistsListItems.items).map((Item, index) => (
                     <div className="item" key={Item.id}>
-                        <ListItem>
-                            <ListItemAvatar>
-                                <Avatar
-                                    sx={{width: 120, height: 85}}
-                                    alt={Item.snippet.title}
-                                    src={getThumbnailsFromItem(Item)}
-                                    variant="square"
-                                />
-                            </ListItemAvatar>
-                            <ListItemText
-                                className="list-item-text list-item-text-margin"
-                                primary={
-                                    <Typography className="primary" variant="h6" color="text.primary">
-                                        {Item.snippet.title}
-                                    </Typography>
-                                }
-                                secondary={
-                                    <Typography className="secondary" variant="body2" color="text.secondary">
-                                        {Item.snippet.videoOwnerChannelTitle}
-                                    </Typography>
-                                }
-                            />
-                            <Tooltip title={t('delete')}>
-                                <IconButton
-                                    size="large"
-                                    aria-haspopup="true"
-                                    onClick={() => handleDeleteClick(Item.id)}
-                                >
-                                    <DeleteOutlineOutlinedIcon />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title={t('other actions')}>
-                                <IconButton
-                                    size="large"
-                                    aria-haspopup="true"
-                                    aria-controls="menu-more"
-                                    onClick={event => handleMoreMenu(event, Item.snippet.resourceId, Item.id)}
-                                >
-                                    <MoreVertOutlinedIcon />
-                                </IconButton>
-                            </Tooltip>
-                        </ListItem>
+                        <VideoItem Item={Item} handleDeleteClick={handleDeleteClick} handleMoreMenu={handleMoreMenu} />
 
                         {index + 1 < playlistsListItems.items.length && (
                             <Divider className="divider" variant="middle" component="li" />
@@ -278,6 +229,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
                     <span className="header-menuitem-margin-left">{t('move to an other playlist')}</span>
                 </MenuItem>
             </Menu>
+            <YouTube videoId="2g811Eo7K8U" onReady={onPlayerReady} />
             <ConfirmActionDialog
                 visible={confirmDialogVisible}
                 content={confirmDialogContent}
