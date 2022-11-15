@@ -5,6 +5,7 @@ import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import {useTranslation} from 'react-i18next';
 import {ItemInterface} from '../../utils/arms/playlistContents/state';
 import {IPlaylistItemsContent} from '../../utils/context/interface';
+import './styles.css';
 
 function VideoItem({
     Item,
@@ -30,7 +31,7 @@ function VideoItem({
     };
 
     return (
-        <ListItem>
+        <ListItem className="item">
             <ListItemAvatar>
                 <Avatar
                     sx={{width: 120, height: 85}}

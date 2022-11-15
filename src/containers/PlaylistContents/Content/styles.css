@@ -30,28 +30,8 @@
     }
 }
 
-.list-item-text-margin {
-    margin-left: 20px;
-}
-
-.list-item-text-margin .primary {
-    font-weight: 400;
-}
-
-.list-item-text .primary,
-.list-item-text .secondary {
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    width: 85%;
-}
-
 .divider {
     margin: 5px 0px 5px 0px;
-}
-
-.list-container .item:hover {
-    background-color: rgba(255, 255, 255, 0.08);
 }
 
 ul.list-container {

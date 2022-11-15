@@ -188,7 +188,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
         <>
             <List className="list-container">
                 {Object.values(playlistsListItems.items).map((Item, index) => (
-                    <div className="item" key={Item.id}>
+                    <div key={Item.id}>
                         <VideoItem Item={Item} handleDeleteClick={handleDeleteClick} handleMoreMenu={handleMoreMenu} />
 
                         {index + 1 < playlistsListItems.items.length && (
@@ -229,7 +229,7 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
                     <span className="header-menuitem-margin-left">{t('move to an other playlist')}</span>
                 </MenuItem>
             </Menu>
-            <YouTube videoId="2g811Eo7K8U" onReady={onPlayerReady} />
+            <YouTube videoId="2g811Eo7K8U" onReady={onPlayerReady} opts={{height: '100px', width: '250px'}} />
             <ConfirmActionDialog
                 visible={confirmDialogVisible}
                 content={confirmDialogContent}
