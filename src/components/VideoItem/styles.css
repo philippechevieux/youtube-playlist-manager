@@ -1,8 +1,8 @@
-.list-item-text-margin {
+.item .list-item-text-margin {
     margin-left: 20px;
 }
 
-.list-item-text-margin .primary {
+.item .list-item-text-margin .primary {
     font-weight: 400;
 }
 
@@ -16,4 +16,28 @@
 
 .item:hover {
     background-color: rgba(255, 255, 255, 0.08);
+}
+
+.item:hover .avatar-wrapper .avatar-thumbnail {
+    filter: brightness(20%);
+}
+
+.item:hover .avatar-wrapper .avatar-play-icon {
+    display: block;
+    z-index: 1;
+}
+
+.item .avatar-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+.item .avatar-play-icon {
+    display: none;
+    position: absolute;
+    z-index: 0;
+    font-size: 36px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

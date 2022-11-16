@@ -37,7 +37,6 @@ import {
 } from '../../../utils/arms/playlistContents/middleware';
 import {useTranslation} from 'react-i18next';
 import ConfirmActionDialog from '../../../components/Dialog/ConfirmActionDialog';
-import YouTube, {YouTubeProps} from 'react-youtube';
 import VideoItem from '../../../components/VideoItem';
 import BottomPlayer from '../../../components/BottomPlayer';
 
@@ -191,11 +190,6 @@ function Content({
         setSelectPlaylistDialogVisible(true);
     };
 
-    const onPlayerReady: YouTubeProps['onReady'] = event => {
-        // access to player in all event handlers via event.target
-        event.target.pauseVideo();
-    };
-
     return (
         <>
             <List className="list-container">
@@ -253,7 +247,6 @@ function Content({
                     <span className="header-menuitem-margin-left">{t('move to an other playlist')}</span>
                 </MenuItem>
             </Menu>
-            {/* <YouTube videoId="2g811Eo7K8U" onReady={onPlayerReady} opts={{height: '100px', width: '250px'}} /> */}
             <BottomPlayer visible={true} />
             <ConfirmActionDialog
                 visible={confirmDialogVisible}

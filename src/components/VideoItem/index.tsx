@@ -6,6 +6,8 @@ import {useTranslation} from 'react-i18next';
 import {ItemInterface} from '../../utils/arms/playlistContents/state';
 import {IPlaylistItemsContent} from '../../utils/context/interface';
 import './styles.css';
+import {PlayArrowOutlined} from '@material-ui/icons';
+import {PlayArrow} from '@mui/icons-material';
 
 function VideoItem({
     Item,
@@ -33,12 +35,16 @@ function VideoItem({
     return (
         <ListItem className="item">
             <ListItemAvatar>
-                <Avatar
-                    sx={{width: 120, height: 85}}
-                    alt={Item.snippet.title}
-                    src={getThumbnailsFromItem(Item)}
-                    variant="square"
-                />
+                <div className="avatar-wrapper">
+                    <PlayArrow className="avatar-play-icon" />
+                    <Avatar
+                        className="avatar-thumbnail"
+                        sx={{width: 120, height: 85}}
+                        alt={Item.snippet.title}
+                        src={getThumbnailsFromItem(Item)}
+                        variant="square"
+                    />
+                </div>
             </ListItemAvatar>
             <ListItemText
                 className="list-item-text list-item-text-margin"
