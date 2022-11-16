@@ -19,6 +19,7 @@
         "@types/node": "^17.0.2",
         "@types/react": "^17.0.37",
         "@types/react-dom": "^17.0.11",
+        "@types/react-youtube": "^7.10.0",
         "axios": "^1.0.0",
         "i18next": "^22.0.1",
         "i18next-browser-languagedetector": "^6.1.8",

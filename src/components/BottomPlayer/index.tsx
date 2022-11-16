@@ -1,12 +1,17 @@
 import {PlayArrowOutlined, SkipNextOutlined, VolumeUpOutlined} from '@material-ui/icons';
-import {SkipPreviousOutlined} from '@mui/icons-material';
+import {PauseOutlined, SkipPreviousOutlined} from '@mui/icons-material';
 import {AppBar, IconButton, Toolbar} from '@mui/material';
-import YouTube, {YouTubeProps} from 'react-youtube';
+import {useState} from 'react';
+import {YouTubeEvent} from 'react-youtube';
+import YoutubeIFrame from './YoutubeIFrame';
 
 function BottomPlayer({playedVideoId}: {playedVideoId: string | undefined}) {
-    const onPlayerReady: YouTubeProps['onReady'] = event => {
-        // access to player in all event handlers via event.target
-        event.target.pauseVideo();
+    const [player, setPlayer] = useState<YouTubeEvent['target']>();
+    const [isVideoPaused, setIsVideoPaused] = useState(false);
+
+    const onPlayPauseClick = () => {
+        setIsVideoPaused(!isVideoPaused);
+        isVideoPaused ? player.playVideo() : player.pauseVideo();
     };
 
     return playedVideoId !== undefined ? (
@@ -17,8 +22,8 @@ function BottomPlayer({playedVideoId}: {playedVideoId: string | undefined}) {
                     <IconButton color="inherit">
                         <SkipPreviousOutlined />
                     </IconButton>
-                    <IconButton color="inherit">
-                        <PlayArrowOutlined />
+                    <IconButton color="inherit" onClick={onPlayPauseClick}>
+                        {isVideoPaused ? <PlayArrowOutlined /> : <PauseOutlined />}
                     </IconButton>
                     <IconButton color="inherit">
                         <SkipNextOutlined />
@@ -30,7 +35,7 @@ function BottomPlayer({playedVideoId}: {playedVideoId: string | undefined}) {
             </AppBar>
             <br />
             <br />
-            <YouTube videoId={playedVideoId} onReady={onPlayerReady} opts={{height: '100px', width: '250px'}} />
+            <YoutubeIFrame playedVideoId={playedVideoId} setPlayer={setPlayer} />
         </>
     ) : (
         <></>
