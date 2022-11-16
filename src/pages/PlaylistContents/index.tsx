@@ -56,7 +56,14 @@ function PlaylistContent() {
         let content, skeleton;
 
         if (playlistContentsItems.length > 0) {
-            content = <Content playlistId={playlistId} playlistsListItems={{items: playlistContentsItems}} />;
+            content = (
+                <Content
+                    playlistId={playlistId}
+                    playlistsListItems={{items: playlistContentsItems}}
+                    loadMorePlaylisContents={loadMorePlaylisContents}
+                    nextPageTokenInStore={nextPageTokenInStore}
+                />
+            );
         }
 
         if (arePlaylistContentsLoaded && playlistContentsItems.length === 0) {
@@ -113,19 +120,6 @@ function PlaylistContent() {
             </AppBar>
 
             {displayPlaylistContent()}
-
-            {playlistContentsItems.length > 0 && nextPageTokenInStore !== undefined && (
-                <div className="see-more-container">
-                    <Button
-                        variant="outlined"
-                        onClick={() => {
-                            loadMorePlaylisContents();
-                        }}
-                    >
-                        {t('see more')} ...
-                    </Button>
-                </div>
-            )}
 
             <EditPlaylistDialog
                 visible={isEditPlaylistDialogOpen}

@@ -12,7 +12,8 @@ import {
     Tooltip,
     Snackbar,
     Alert,
-    AlertColor
+    AlertColor,
+    Button
 } from '@mui/material';
 
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
@@ -38,13 +39,24 @@ import {useTranslation} from 'react-i18next';
 import ConfirmActionDialog from '../../../components/Dialog/ConfirmActionDialog';
 import YouTube, {YouTubeProps} from 'react-youtube';
 import VideoItem from '../../../components/VideoItem';
+import BottomPlayer from '../../../components/BottomPlayer';
 
 enum ItemActionEnum {
     MOVE_TO = 'move_to',
     SAVE_IN = 'save_in'
 }
 
-function Content({playlistId, playlistsListItems}: {playlistId: string; playlistsListItems: ContentsInterface}) {
+function Content({
+    playlistId,
+    playlistsListItems,
+    loadMorePlaylisContents,
+    nextPageTokenInStore
+}: {
+    playlistId: string;
+    playlistsListItems: ContentsInterface;
+    loadMorePlaylisContents: Function;
+    nextPageTokenInStore: string | undefined;
+}) {
     const dispatch = useAppDispatch();
 
     const {t} = useTranslation();
@@ -197,6 +209,18 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
                     </div>
                 ))}
             </List>
+            {playlistsListItems.items.length > 0 && nextPageTokenInStore !== undefined && (
+                <div className="see-more-container">
+                    <Button
+                        variant="outlined"
+                        onClick={() => {
+                            loadMorePlaylisContents();
+                        }}
+                    >
+                        {t('see more')} ...
+                    </Button>
+                </div>
+            )}
             <Menu
                 id="menu-more"
                 anchorEl={anchorEl}
@@ -229,7 +253,8 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
                     <span className="header-menuitem-margin-left">{t('move to an other playlist')}</span>
                 </MenuItem>
             </Menu>
-            <YouTube videoId="2g811Eo7K8U" onReady={onPlayerReady} opts={{height: '100px', width: '250px'}} />
+            {/* <YouTube videoId="2g811Eo7K8U" onReady={onPlayerReady} opts={{height: '100px', width: '250px'}} /> */}
+            <BottomPlayer visible={true} />
             <ConfirmActionDialog
                 visible={confirmDialogVisible}
                 content={confirmDialogContent}
