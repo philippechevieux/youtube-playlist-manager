@@ -19,7 +19,7 @@
 }
 
 .item:hover .avatar-wrapper .avatar-thumbnail {
-    filter: brightness(20%);
+    filter: brightness(30%);
 }
 
 .item:hover .avatar-wrapper .avatar-play-icon {

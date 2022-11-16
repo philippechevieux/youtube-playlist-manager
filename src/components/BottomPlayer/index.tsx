@@ -3,16 +3,17 @@ import {SkipPreviousOutlined} from '@mui/icons-material';
 import {AppBar, IconButton, Toolbar} from '@mui/material';
 import YouTube, {YouTubeProps} from 'react-youtube';
 
-function BottomPlayer({visible}: {visible: Boolean}) {
+function BottomPlayer({playedVideoId}: {playedVideoId: string | undefined}) {
     const onPlayerReady: YouTubeProps['onReady'] = event => {
         // access to player in all event handlers via event.target
         event.target.pauseVideo();
     };
 
-    return (
+    return playedVideoId !== undefined ? (
         <>
             <AppBar position="fixed" sx={{bottom: 0}}>
                 <Toolbar>
+                    {playedVideoId}
                     <IconButton color="inherit">
                         <SkipPreviousOutlined />
                     </IconButton>
@@ -29,8 +30,10 @@ function BottomPlayer({visible}: {visible: Boolean}) {
             </AppBar>
             <br />
             <br />
-            <YouTube videoId="2g811Eo7K8U" onReady={onPlayerReady} opts={{height: '100px', width: '250px'}} />
+            <YouTube videoId={playedVideoId} onReady={onPlayerReady} opts={{height: '100px', width: '250px'}} />
         </>
+    ) : (
+        <></>
     );
 }
 

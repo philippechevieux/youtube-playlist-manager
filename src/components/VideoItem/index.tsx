@@ -12,11 +12,13 @@ import {PlayArrow} from '@mui/icons-material';
 function VideoItem({
     Item,
     handleDeleteClick,
-    handleMoreMenu
+    handleMoreMenu,
+    handleAvatarClick
 }: {
     Item: ItemInterface;
     handleDeleteClick: Function;
     handleMoreMenu: Function;
+    handleAvatarClick: Function;
 }) {
     const {t} = useTranslation();
 
@@ -35,7 +37,7 @@ function VideoItem({
     return (
         <ListItem className="item">
             <ListItemAvatar>
-                <div className="avatar-wrapper">
+                <div className="avatar-wrapper" onClick={() => handleAvatarClick(Item.contentDetails.videoId)}>
                     <PlayArrow className="avatar-play-icon" />
                     <Avatar
                         className="avatar-thumbnail"

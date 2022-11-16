@@ -64,6 +64,7 @@ function Content({
     const [anchorCurrentIemResourceId, setAnchorCurrentIemResourceId] =
         useState<ResourceIdInterface>(defaultItemResourceId);
     const [anchorCurrentItemId, setAnchorCurrentItemId] = useState('');
+    const [playedVideoId, setPlayedVideoId] = useState<string | undefined>();
 
     const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
     const [confirmDialogContent, setConfirmDialogContent] = useState('');
@@ -195,7 +196,12 @@ function Content({
             <List className="list-container">
                 {Object.values(playlistsListItems.items).map((Item, index) => (
                     <div key={Item.id}>
-                        <VideoItem Item={Item} handleDeleteClick={handleDeleteClick} handleMoreMenu={handleMoreMenu} />
+                        <VideoItem
+                            Item={Item}
+                            handleDeleteClick={handleDeleteClick}
+                            handleMoreMenu={handleMoreMenu}
+                            handleAvatarClick={setPlayedVideoId}
+                        />
 
                         {index + 1 < playlistsListItems.items.length && (
                             <Divider className="divider" variant="middle" component="li" />
@@ -247,7 +253,7 @@ function Content({
                     <span className="header-menuitem-margin-left">{t('move to an other playlist')}</span>
                 </MenuItem>
             </Menu>
-            <BottomPlayer visible={true} />
+            <BottomPlayer playedVideoId={playedVideoId} />
             <ConfirmActionDialog
                 visible={confirmDialogVisible}
                 content={confirmDialogContent}

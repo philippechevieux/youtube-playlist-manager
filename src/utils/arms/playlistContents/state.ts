@@ -20,6 +20,9 @@ export interface ItemInterface {
         };
         resourceId: ResourceIdInterface;
     };
+    contentDetails: {
+        videoId: string;
+    };
 }
 
 export interface ContentsInterface {
