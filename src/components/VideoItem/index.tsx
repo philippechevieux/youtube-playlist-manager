@@ -6,7 +6,6 @@ import {useTranslation} from 'react-i18next';
 import {ItemInterface} from '../../utils/arms/playlistContents/state';
 import {IPlaylistItemsContent} from '../../utils/context/interface';
 import './styles.css';
-import {PlayArrowOutlined} from '@material-ui/icons';
 import {PlayArrow} from '@mui/icons-material';
 
 function VideoItem({
@@ -37,7 +36,7 @@ function VideoItem({
     return (
         <ListItem className="item">
             <ListItemAvatar>
-                <div className="avatar-wrapper" onClick={() => handleAvatarClick(Item.contentDetails.videoId)}>
+                <div className="avatar-wrapper" onClick={() => handleAvatarClick()}>
                     <PlayArrow className="avatar-play-icon" />
                     <Avatar
                         className="avatar-thumbnail"

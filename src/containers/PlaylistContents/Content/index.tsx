@@ -39,6 +39,8 @@ import {useTranslation} from 'react-i18next';
 import ConfirmActionDialog from '../../../components/Dialog/ConfirmActionDialog';
 import VideoItem from '../../../components/VideoItem';
 import BottomPlayer from '../../../components/BottomPlayer';
+import {YouTubeEvent} from 'react-youtube';
+import YoutubeIFrame from '../../../components/BottomPlayer/YoutubeIFrame';
 
 enum ItemActionEnum {
     MOVE_TO = 'move_to',
@@ -64,7 +66,7 @@ function Content({
     const [anchorCurrentIemResourceId, setAnchorCurrentIemResourceId] =
         useState<ResourceIdInterface>(defaultItemResourceId);
     const [anchorCurrentItemId, setAnchorCurrentItemId] = useState('');
-    const [playedVideoId, setPlayedVideoId] = useState<string | undefined>();
+    const [player, setPlayer] = useState<YouTubeEvent['target']>();
 
     const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
     const [confirmDialogContent, setConfirmDialogContent] = useState('');
@@ -200,7 +202,7 @@ function Content({
                             Item={Item}
                             handleDeleteClick={handleDeleteClick}
                             handleMoreMenu={handleMoreMenu}
-                            handleAvatarClick={setPlayedVideoId}
+                            handleAvatarClick={() => player.playVideoAt(index)}
                         />
 
                         {index + 1 < playlistsListItems.items.length && (
@@ -253,7 +255,8 @@ function Content({
                     <span className="header-menuitem-margin-left">{t('move to an other playlist')}</span>
                 </MenuItem>
             </Menu>
-            <BottomPlayer playedVideoId={playedVideoId} />
+            <BottomPlayer player={player} setPlayer={setPlayer} playlistId={playlistId} />
+
             <ConfirmActionDialog
                 visible={confirmDialogVisible}
                 content={confirmDialogContent}

@@ -1,13 +1,27 @@
 import YouTube from 'react-youtube';
 
-function YoutubeIFrame({playedVideoId, setPlayer}: {playedVideoId: string; setPlayer: Function}) {
+function YoutubeIFrame({
+    playlistId,
+    setPlayer,
+    setIsVideoPaused
+}: {
+    playlistId: string;
+    setPlayer: Function;
+    setIsVideoPaused: Function;
+}) {
     return (
         <YouTube
-            videoId={playedVideoId}
             onReady={e => {
                 setPlayer(e.target);
-                e.target.playVideo();
+
+                // Load the playlist in the iframe but doesn't play it
+                e.target.cuePlaylist({
+                    list: playlistId,
+                    listType: 'search'
+                });
             }}
+            onPlay={() => setIsVideoPaused(false)}
+            onPause={() => setIsVideoPaused(true)}
             opts={{height: '100px', width: '250px'}}
         />
     );
