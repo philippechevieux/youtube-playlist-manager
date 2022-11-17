@@ -13,6 +13,8 @@ function BottomPlayer({
     playlistId: string;
 }) {
     const [isVideoPaused, setIsVideoPaused] = useState(true);
+    const [volume, setVolume] = useState<number | number[]>(0);
+    const [isMuted, setIsMuted] = useState(false);
 
     return (
         <>
@@ -21,8 +23,17 @@ function BottomPlayer({
                 playlistId={playlistId}
                 isVideoPaused={isVideoPaused}
                 setIsVideoPaused={setIsVideoPaused}
+                volume={volume}
+                setVolume={setVolume}
+                isMuted={isMuted}
+                setIsMuted={setIsMuted}
             />
-            <YoutubeIFrame setPlayer={setPlayer} playlistId={playlistId} setIsVideoPaused={setIsVideoPaused} />
+            <YoutubeIFrame
+                setPlayer={setPlayer}
+                playlistId={playlistId}
+                setIsVideoPaused={setIsVideoPaused}
+                setVolume={setVolume}
+            />
         </>
     );
 }

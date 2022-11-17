@@ -3,16 +3,19 @@ import YouTube from 'react-youtube';
 function YoutubeIFrame({
     playlistId,
     setPlayer,
-    setIsVideoPaused
+    setIsVideoPaused,
+    setVolume
 }: {
     playlistId: string;
     setPlayer: Function;
     setIsVideoPaused: Function;
+    setVolume: Function;
 }) {
     return (
         <YouTube
             onReady={e => {
                 setPlayer(e.target);
+                setVolume(e.target.getVolume());
 
                 // Load the playlist in the iframe but doesn't play it
                 e.target.cuePlaylist({
