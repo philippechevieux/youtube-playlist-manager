@@ -40,6 +40,7 @@ span.volume-slider.hidden {
 
 .bottom-player-bar div.info {
     margin-left: 10px;
+    width: 100%;
 }
 
 .bottom-player-bar .progress-bar.MuiLinearProgress-root {
