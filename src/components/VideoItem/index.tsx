@@ -6,16 +6,18 @@ import {useTranslation} from 'react-i18next';
 import {ItemInterface} from '../../utils/arms/playlistContents/state';
 import {IPlaylistItemsContent} from '../../utils/context/interface';
 import './styles.css';
-import {PlayArrow} from '@mui/icons-material';
+import {PlayArrow, VolumeUpOutlined} from '@mui/icons-material';
 import {getThumbnailsFromItem} from '../../utils/Functions';
 
 function VideoItem({
     Item,
+    isVideoPlaying,
     handleDeleteClick,
     handleMoreMenu,
     handleAvatarClick
 }: {
     Item: ItemInterface;
+    isVideoPlaying: boolean;
     handleDeleteClick: Function;
     handleMoreMenu: Function;
     handleAvatarClick: Function;
@@ -23,10 +25,11 @@ function VideoItem({
     const {t} = useTranslation();
 
     return (
-        <ListItem className="item">
+        <ListItem className={`item ${isVideoPlaying ? 'video-playing' : ''}`}>
             <ListItemAvatar>
                 <div className="avatar-wrapper" onClick={() => handleAvatarClick()}>
-                    <PlayArrow className="avatar-play-icon" />
+                    {!isVideoPlaying && <PlayArrow className="avatar-play-icon" />}
+                    {isVideoPlaying && <VolumeUpOutlined className="avatar-volume-icon" />}
                     <Avatar
                         className="avatar-thumbnail"
                         sx={{width: 120, height: 85}}

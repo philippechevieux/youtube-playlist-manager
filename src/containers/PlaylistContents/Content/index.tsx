@@ -203,6 +203,7 @@ function Content({
                     <div key={Item.id}>
                         <VideoItem
                             Item={Item}
+                            isVideoPlaying={playerVideoIndex === index && displayBottomPlayer}
                             handleDeleteClick={handleDeleteClick}
                             handleMoreMenu={handleMoreMenu}
                             handleAvatarClick={() => {

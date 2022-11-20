@@ -18,6 +18,10 @@
     background-color: rgba(255, 255, 255, 0.08);
 }
 
+.item.video-playing {
+    background-color: rgb(169 169 169 / 8%);
+}
+
 .item:hover .avatar-wrapper .avatar-thumbnail {
     filter: brightness(30%);
 }
@@ -40,4 +44,18 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.item.video-playing .avatar-volume-icon {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    font-size: 36px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.item.video-playing .avatar-wrapper .avatar-thumbnail {
+    filter: brightness(30%);
 }
