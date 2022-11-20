@@ -15,6 +15,13 @@ span.volume-slider.hidden {
     margin-top: -24px;
 }
 
+.bottom-player-bar .video-info {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+}
+
 .bottom-player-bar .title {
     font-size: 1rem
 }

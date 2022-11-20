@@ -123,11 +123,15 @@ function BottomPlayerBar({
                                         variant="square"
                                     />
                                     <div className="info">
-                                        <Typography className="title" variant="h6" color="text.primary">
+                                        <Typography className="video-info title" variant="h6" color="text.primary">
                                             {contentItem.snippet.title}
                                         </Typography>
 
-                                        <Typography className="author" variant="body2" color="text.secondary">
+                                        <Typography
+                                            className="video-info author"
+                                            variant="body2"
+                                            color="text.secondary"
+                                        >
                                             {contentItem.snippet.videoOwnerChannelTitle}
                                         </Typography>
                                     </div>
