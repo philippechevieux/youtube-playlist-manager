@@ -13,6 +13,7 @@ function YoutubeIFrame({
 }) {
     return (
         <YouTube
+            className="youtube-iframe"
             onReady={e => {
                 setPlayer(e.target);
                 setVolume(e.target.getVolume());

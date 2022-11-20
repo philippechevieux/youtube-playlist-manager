@@ -7,6 +7,7 @@ import {ItemInterface} from '../../utils/arms/playlistContents/state';
 import {IPlaylistItemsContent} from '../../utils/context/interface';
 import './styles.css';
 import {PlayArrow} from '@mui/icons-material';
+import {getThumbnailsFromItem} from '../../utils/Functions';
 
 function VideoItem({
     Item,
@@ -20,18 +21,6 @@ function VideoItem({
     handleAvatarClick: Function;
 }) {
     const {t} = useTranslation();
-
-    const getThumbnailsFromItem = (Item: IPlaylistItemsContent): string => {
-        let pathOrUrlOfThumbnails = '';
-
-        if (Item.snippet.thumbnails !== undefined) {
-            if (Item.snippet.thumbnails.high !== undefined) {
-                pathOrUrlOfThumbnails = Item.snippet.thumbnails.high.url;
-            }
-        }
-
-        return pathOrUrlOfThumbnails;
-    };
 
     return (
         <ListItem className="item">

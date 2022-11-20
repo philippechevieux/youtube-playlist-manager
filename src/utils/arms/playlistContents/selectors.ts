@@ -11,3 +11,7 @@ export const selectPlaylistContentsNextPageToken = (state: RootState) => {
 export const selectPlaylistContentsItems = (state: RootState) => {
     return state.playlistContents.items;
 };
+
+export const selectPlaylistContentsItemsByIndex = (state: RootState, index: number | undefined) => {
+    return index !== undefined ? state.playlistContents.items[index] : undefined;
+};

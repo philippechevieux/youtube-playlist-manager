@@ -1,13 +1,29 @@
 import {PlayArrowOutlined, SkipNextOutlined, VolumeUpOutlined} from '@material-ui/icons';
 import {PauseOutlined, SkipPreviousOutlined, VolumeOffOutlined} from '@mui/icons-material';
-import {AppBar, Box, Grid, IconButton, Slider, Stack, Toolbar} from '@mui/material';
+import {
+    AppBar,
+    Avatar,
+    Box,
+    Grid,
+    IconButton,
+    ListItem,
+    ListItemAvatar,
+    ListItemText,
+    Slider,
+    Stack,
+    Toolbar,
+    Typography
+} from '@mui/material';
 import {useState} from 'react';
 import {YouTubeEvent} from 'react-youtube';
+import {ItemInterface} from '../../utils/arms/playlistContents/state';
+import {getThumbnailsFromItem} from '../../utils/Functions';
 import './styles.css';
 
 function BottomPlayerBar({
     playlistId,
     player,
+    contentItem,
     isVideoPaused,
     setIsVideoPaused,
     volume,
@@ -17,6 +33,7 @@ function BottomPlayerBar({
 }: {
     playlistId: string | undefined;
     player: YouTubeEvent['target'];
+    contentItem: ItemInterface | undefined;
     isVideoPaused: boolean;
     setIsVideoPaused: Function;
     volume: number | number[];
@@ -50,13 +67,32 @@ function BottomPlayerBar({
     };
 
     return playlistId !== undefined ? (
-        <AppBar position="fixed" sx={{bottom: 0}}>
+        <AppBar className="bottom-player-bar" position="fixed" sx={{bottom: 0}}>
             <Toolbar>
                 <Grid container spacing={3} alignItems="center" justifyContent="space-between">
-                    <Grid item xs={3}>
-                        <div>test</div>
+                    <Grid item xs={4}>
+                        {contentItem !== undefined && (
+                            <Stack direction="row" justifyContent="flex-start" alignItems="center">
+                                <Avatar
+                                    className="avatar-thumbnail"
+                                    sx={{width: 94, height: 64}}
+                                    alt={contentItem.snippet.title}
+                                    src={getThumbnailsFromItem(contentItem)}
+                                    variant="square"
+                                />
+                                <div className="info">
+                                    <Typography className="title" variant="h6" color="text.primary">
+                                        {contentItem.snippet.title}
+                                    </Typography>
+
+                                    <Typography className="author" variant="body2" color="text.secondary">
+                                        {contentItem.snippet.videoOwnerChannelTitle}
+                                    </Typography>
+                                </div>
+                            </Stack>
+                        )}
                     </Grid>
-                    <Grid item xs={6} textAlign={'center'}>
+                    <Grid item xs={4} textAlign={'center'}>
                         <IconButton color="inherit" onClick={onPreviousClick}>
                             <SkipPreviousOutlined />
                         </IconButton>
@@ -67,7 +103,7 @@ function BottomPlayerBar({
                             <SkipNextOutlined />
                         </IconButton>
                     </Grid>
-                    <Grid item xs={3} textAlign={'end'} width={'100%'}>
+                    <Grid item xs={4} textAlign={'end'} width={'100%'}>
                         <Stack direction="row" justifyContent="flex-end" alignItems="center">
                             <Slider
                                 className={`volume-slider ${!shouldSliderBeDisplayed ? 'hidden' : ''}`}

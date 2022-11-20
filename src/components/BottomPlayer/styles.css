@@ -1,4 +1,4 @@
-.volume-icon {
+button.volume-icon {
     margin-left: 10px;
 }
 
@@ -9,4 +9,20 @@ span.volume-slider {
 span.volume-slider.hidden {
     display: none;
     pointer-events: none;
+}
+
+.bottom-player-bar .title {
+    font-size: 1rem
+}
+
+.bottom-player-bar .author {
+    font-size: 0.75rem
+}
+
+.bottom-player-bar div.info {
+    margin-left: 10px;
+}
+
+.youtube-iframe {
+    display: none;
 }

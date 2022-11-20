@@ -66,7 +66,9 @@ function Content({
     const [anchorCurrentIemResourceId, setAnchorCurrentIemResourceId] =
         useState<ResourceIdInterface>(defaultItemResourceId);
     const [anchorCurrentItemId, setAnchorCurrentItemId] = useState('');
+
     const [player, setPlayer] = useState<YouTubeEvent['target']>();
+    const [playerVideoIndex, setPlayerVideoIndex] = useState<number | undefined>();
 
     const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
     const [confirmDialogContent, setConfirmDialogContent] = useState('');
@@ -202,7 +204,10 @@ function Content({
                             Item={Item}
                             handleDeleteClick={handleDeleteClick}
                             handleMoreMenu={handleMoreMenu}
-                            handleAvatarClick={() => player.playVideoAt(index)}
+                            handleAvatarClick={() => {
+                                setPlayerVideoIndex(index);
+                                player.playVideoAt(index);
+                            }}
                         />
 
                         {index + 1 < playlistsListItems.items.length && (
@@ -255,7 +260,12 @@ function Content({
                     <span className="header-menuitem-margin-left">{t('move to an other playlist')}</span>
                 </MenuItem>
             </Menu>
-            <BottomPlayer player={player} setPlayer={setPlayer} playlistId={playlistId} />
+            <BottomPlayer
+                player={player}
+                setPlayer={setPlayer}
+                playlistId={playlistId}
+                playerVideoIndex={playerVideoIndex}
+            />
 
             <ConfirmActionDialog
                 visible={confirmDialogVisible}
