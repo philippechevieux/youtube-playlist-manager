@@ -9,12 +9,14 @@ function BottomPlayer({
     player,
     setPlayer,
     playlistId,
-    playerVideoIndex
+    playerVideoIndex,
+    setPlayerVideoIndex
 }: {
     player: YouTubeEvent['target'];
     setPlayer: Function;
     playlistId: string;
     playerVideoIndex: number | undefined;
+    setPlayerVideoIndex: Function;
 }) {
     const [isVideoPaused, setIsVideoPaused] = useState(true);
     const [volume, setVolume] = useState<number | number[]>(0);
@@ -40,6 +42,7 @@ function BottomPlayer({
                 playlistId={playlistId}
                 setIsVideoPaused={setIsVideoPaused}
                 setVolume={setVolume}
+                setPlayerVideoIndex={setPlayerVideoIndex}
             />
         </>
     );

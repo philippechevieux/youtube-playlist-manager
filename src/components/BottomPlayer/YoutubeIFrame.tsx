@@ -4,12 +4,14 @@ function YoutubeIFrame({
     playlistId,
     setPlayer,
     setIsVideoPaused,
-    setVolume
+    setVolume,
+    setPlayerVideoIndex
 }: {
     playlistId: string;
     setPlayer: Function;
     setIsVideoPaused: Function;
     setVolume: Function;
+    setPlayerVideoIndex: Function;
 }) {
     return (
         <YouTube
@@ -23,6 +25,9 @@ function YoutubeIFrame({
                     list: playlistId,
                     listType: 'search'
                 });
+            }}
+            onStateChange={e => {
+                setPlayerVideoIndex(e.target.playerInfo.playlistIndex);
             }}
             onPlay={() => setIsVideoPaused(false)}
             onPause={() => setIsVideoPaused(true)}

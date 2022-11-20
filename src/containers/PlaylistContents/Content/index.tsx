@@ -265,6 +265,7 @@ function Content({
                 setPlayer={setPlayer}
                 playlistId={playlistId}
                 playerVideoIndex={playerVideoIndex}
+                setPlayerVideoIndex={setPlayerVideoIndex}
             />
 
             <ConfirmActionDialog
