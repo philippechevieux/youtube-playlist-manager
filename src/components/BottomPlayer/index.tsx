@@ -10,13 +10,15 @@ function BottomPlayer({
     setPlayer,
     playlistId,
     playerVideoIndex,
-    setPlayerVideoIndex
+    setPlayerVideoIndex,
+    visible
 }: {
     player: YouTubeEvent['target'];
     setPlayer: Function;
     playlistId: string;
     playerVideoIndex: number | undefined;
     setPlayerVideoIndex: Function;
+    visible: boolean;
 }) {
     const [isVideoPaused, setIsVideoPaused] = useState(true);
     const [volume, setVolume] = useState<number | number[]>(0);
@@ -25,7 +27,7 @@ function BottomPlayer({
     const contentItem = useAppSelector(state => selectPlaylistContentsItemsByIndex(state, playerVideoIndex));
 
     return (
-        <>
+        <div className={`bottom-player ${!visible ? 'hidden' : ''}`}>
             <BottomPlayerBar
                 player={player}
                 playlistId={playlistId}
@@ -44,7 +46,7 @@ function BottomPlayer({
                 setVolume={setVolume}
                 setPlayerVideoIndex={setPlayerVideoIndex}
             />
-        </>
+        </div>
     );
 }
 

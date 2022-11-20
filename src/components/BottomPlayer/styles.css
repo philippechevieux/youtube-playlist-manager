@@ -1,3 +1,11 @@
+.bottom-player.hidden {
+    display: none;
+}
+
+.bottom-player {
+    display: contents;
+}
+
 button.volume-icon {
     margin-left: 10px;
 }

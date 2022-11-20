@@ -69,6 +69,7 @@ function Content({
 
     const [player, setPlayer] = useState<YouTubeEvent['target']>();
     const [playerVideoIndex, setPlayerVideoIndex] = useState<number | undefined>();
+    const [displayBottomPlayer, setDisplayBottomPlayer] = useState(false);
 
     const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
     const [confirmDialogContent, setConfirmDialogContent] = useState('');
@@ -207,6 +208,7 @@ function Content({
                             handleAvatarClick={() => {
                                 setPlayerVideoIndex(index);
                                 player.playVideoAt(index);
+                                setDisplayBottomPlayer(true);
                             }}
                         />
 
@@ -266,8 +268,8 @@ function Content({
                 playlistId={playlistId}
                 playerVideoIndex={playerVideoIndex}
                 setPlayerVideoIndex={setPlayerVideoIndex}
+                visible={displayBottomPlayer}
             />
-
             <ConfirmActionDialog
                 visible={confirmDialogVisible}
                 content={confirmDialogContent}
