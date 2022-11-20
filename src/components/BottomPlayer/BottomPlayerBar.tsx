@@ -102,11 +102,22 @@ function BottomPlayerBar({
                 <Toolbar>
                     <Grid container spacing={3} alignItems="center" justifyContent="space-between">
                         <Grid item xs={4}>
+                            <IconButton color="inherit" onClick={onPreviousClick}>
+                                <SkipPreviousOutlined />
+                            </IconButton>
+                            <IconButton color="inherit" onClick={onPlayPauseClick}>
+                                {isVideoPaused ? <PlayArrowOutlined /> : <PauseOutlined />}
+                            </IconButton>
+                            <IconButton color="inherit" onClick={onNextClick}>
+                                <SkipNextOutlined />
+                            </IconButton>
+                        </Grid>
+                        <Grid item xs={4}>
                             {contentItem !== undefined && (
                                 <Stack direction="row" justifyContent="flex-start" alignItems="center">
                                     <Avatar
                                         className="avatar-thumbnail"
-                                        sx={{width: 94, height: 64}}
+                                        sx={{width: 79, height: 54}}
                                         alt={contentItem.snippet.title}
                                         src={getThumbnailsFromItem(contentItem)}
                                         variant="square"
@@ -122,17 +133,6 @@ function BottomPlayerBar({
                                     </div>
                                 </Stack>
                             )}
-                        </Grid>
-                        <Grid item xs={4} textAlign={'center'}>
-                            <IconButton color="inherit" onClick={onPreviousClick}>
-                                <SkipPreviousOutlined />
-                            </IconButton>
-                            <IconButton color="inherit" onClick={onPlayPauseClick}>
-                                {isVideoPaused ? <PlayArrowOutlined /> : <PauseOutlined />}
-                            </IconButton>
-                            <IconButton color="inherit" onClick={onNextClick}>
-                                <SkipNextOutlined />
-                            </IconButton>
                         </Grid>
                         <Grid item xs={4} textAlign={'end'} width={'100%'}>
                             <Stack direction="row" justifyContent="flex-end" alignItems="center">

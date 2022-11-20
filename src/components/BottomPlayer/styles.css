@@ -28,7 +28,7 @@ span.volume-slider.hidden {
 }
 
 .bottom-player-bar .progress-bar.MuiLinearProgress-root {
-    background-color: #fff;
+    background-color: rgb(94, 94, 94);
 }
 
 .youtube-iframe {
