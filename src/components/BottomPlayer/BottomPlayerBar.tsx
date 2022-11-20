@@ -18,7 +18,7 @@ import {
 import {useEffect, useRef, useState} from 'react';
 import {YouTubeEvent} from 'react-youtube';
 import {ItemInterface} from '../../utils/arms/playlistContents/state';
-import {getThumbnailsFromItem} from '../../utils/Functions';
+import {getThumbnailsFromItem, toHHMMSS} from '../../utils/Functions';
 import './styles.css';
 
 function BottomPlayerBar({
@@ -44,6 +44,8 @@ function BottomPlayerBar({
 }) {
     const [shouldSliderBeDisplayed, setShouldSliderBeDisplayed] = useState(false);
     const [progress, setProgress] = useState(0);
+    const [currentTime, setCurrentTime] = useState(0);
+    const [duration, setDuration] = useState(0);
 
     const progressRef = useRef(() => {});
     useEffect(() => {
@@ -51,8 +53,13 @@ function BottomPlayerBar({
             if (progress > 100) {
                 setProgress(0);
             } else {
-                const currentTime = player?.playerInfo.currentTime !== undefined ? player.playerInfo.currentTime : 0;
-                const duration = player?.playerInfo.duration !== undefined ? player.playerInfo.duration : 100;
+                if (player?.playerInfo.duration !== undefined && progress === 0) {
+                    setDuration(player.playerInfo.duration);
+                }
+
+                if (player?.playerInfo.currentTime !== undefined) {
+                    setCurrentTime(player.playerInfo.currentTime);
+                }
 
                 const newProgress = (currentTime / duration) * 100;
                 setProgress(newProgress);
@@ -111,6 +118,9 @@ function BottomPlayerBar({
                             <IconButton color="inherit" onClick={onNextClick}>
                                 <SkipNextOutlined />
                             </IconButton>
+                            <Typography className="timer" variant="body2" color="text.secondary">
+                                {toHHMMSS(currentTime)} / {toHHMMSS(duration)}
+                            </Typography>
                         </Grid>
                         <Grid item xs={4}>
                             {contentItem !== undefined && (

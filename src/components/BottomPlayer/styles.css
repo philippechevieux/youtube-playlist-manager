@@ -30,6 +30,12 @@ span.volume-slider.hidden {
     width: 100%;
 }
 
+.bottom-player-bar .timer {
+    font-size: 0.80rem;
+    margin-left: 10px;
+    display: inline-block;
+}
+
 .bottom-player-bar .title {
     font-size: 1rem
 }
