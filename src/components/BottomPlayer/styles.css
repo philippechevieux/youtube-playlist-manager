@@ -11,6 +11,10 @@ span.volume-slider.hidden {
     pointer-events: none;
 }
 
+.bottom-player-bar > div > div {
+    margin-top: -24px;
+}
+
 .bottom-player-bar .title {
     font-size: 1rem
 }
@@ -21,6 +25,10 @@ span.volume-slider.hidden {
 
 .bottom-player-bar div.info {
     margin-left: 10px;
+}
+
+.bottom-player-bar .progress-bar.MuiLinearProgress-root {
+    background-color: #fff;
 }
 
 .youtube-iframe {
