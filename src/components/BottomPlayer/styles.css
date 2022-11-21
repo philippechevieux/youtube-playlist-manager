@@ -36,6 +36,20 @@ span.volume-slider.hidden {
     display: inline-block;
 }
 
+.bottom-player-bar .timer > div{
+    display: inline-block;
+}
+
+.bottom-player-bar .timer > div:nth-child(1),
+.bottom-player-bar .timer > div:nth-child(3){
+    width: 30px;
+}
+
+.bottom-player-bar .timer > div:nth-child(2){
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
 .bottom-player-bar .title {
     font-size: 1rem
 }

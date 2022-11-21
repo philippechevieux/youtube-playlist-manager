@@ -70,7 +70,7 @@ function BottomPlayerBar({
     useEffect(() => {
         const timer = setInterval(() => {
             progressRef.current();
-        }, 500);
+        }, 250);
 
         return () => {
             clearInterval(timer);
@@ -119,7 +119,9 @@ function BottomPlayerBar({
                                 <SkipNextOutlined />
                             </IconButton>
                             <Typography className="timer" variant="body2" color="text.secondary">
-                                {toHHMMSS(currentTime)} / {toHHMMSS(duration)}
+                                <div>{toHHMMSS(currentTime)}</div>
+                                <div> / </div>
+                                <div>{toHHMMSS(duration)}</div>
                             </Typography>
                         </Grid>
                         <Grid item xs={4}>
