@@ -15,7 +15,7 @@ import {
     Toolbar,
     Typography
 } from '@mui/material';
-import {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {YouTubeEvent} from 'react-youtube';
 import {ItemInterface} from '../../utils/arms/playlistContents/state';
 import {getThumbnailsFromItem, toHHMMSS} from '../../utils/Functions';
@@ -90,9 +90,11 @@ function BottomPlayerBar({
         player.nextVideo();
     };
 
-    const onVolumeChange = (e: Event, value: number | number[]) => {
-        setVolume(value);
-        player.setVolume(volume);
+    const onVolumeChange = (event: Event, value: number | number[]) => {
+        if (typeof value === 'number') {
+            setVolume(value);
+            player.setVolume(volume);
+        }
     };
 
     const onMuteUnMuteClick = () => {
@@ -100,11 +102,30 @@ function BottomPlayerBar({
         isMuted ? player.unMute() : player.mute();
     };
 
+    const handleInputChange = (event: Event, value: number | number[]) => {
+        if (typeof value === 'number') {
+            player.seekTo(value);
+        }
+    };
+
+    function valuetext(value: string) {
+        return `${value}°C`;
+    }
+
     return playlistId !== undefined ? (
         <>
             <AppBar className="bottom-player-bar" position="fixed" sx={{bottom: 0}}>
-                <Box sx={{width: '100%'}}>
-                    <LinearProgress className="progress-bar" variant="determinate" value={progress} color="secondary" />
+                <Box className="seek-bar-wrapper" sx={{width: '100%'}}>
+                    <Slider
+                        className="seek-bar"
+                        value={currentTime}
+                        min={0}
+                        max={duration}
+                        color="secondary"
+                        onChange={handleInputChange}
+                        valueLabelDisplay="auto"
+                        valueLabelFormat={toHHMMSS}
+                    ></Slider>
                 </Box>
                 <Toolbar>
                     <Grid container spacing={3} alignItems="center" justifyContent="space-between">

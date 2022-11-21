@@ -63,8 +63,24 @@ span.volume-slider.hidden {
     width: 100%;
 }
 
-.bottom-player-bar .progress-bar.MuiLinearProgress-root {
-    background-color: rgb(94, 94, 94);
+.bottom-player-bar span.seek-bar {
+    border-radius: 0px;
+    height: 3px;
+}
+
+.bottom-player-bar div.seek-bar-wrapper {
+    position: absolute;
+    top: -13px;
+    z-index: 1;
+}
+
+.bottom-player-bar span.seek-bar span.MuiSlider-thumb {
+    height: 15px;
+    width: 15px;
+}
+
+.bottom-player-bar span.seek-bar span.MuiSlider-rail {
+    color: #fff
 }
 
 .youtube-iframe {
