@@ -70,13 +70,8 @@ span.volume-slider.hidden {
 
 .bottom-player-bar div.seek-bar-wrapper {
     position: absolute;
-    top: -13px;
+    top: -15px;
     z-index: 1;
-}
-
-.bottom-player-bar span.seek-bar span.MuiSlider-thumb {
-    height: 15px;
-    width: 15px;
 }
 
 .bottom-player-bar span.seek-bar span.MuiSlider-rail {
