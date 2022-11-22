@@ -53,6 +53,7 @@ function Content({
     const [player, setPlayer] = useState<YouTubeEvent['target']>();
     const [playerVideoIndex, setPlayerVideoIndex] = useState<number | undefined>();
     const [displayBottomPlayer, setDisplayBottomPlayer] = useState(false);
+    const [isVideoPaused, setIsVideoPaused] = useState(true);
 
     const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
     const [confirmDialogContent, setConfirmDialogContent] = useState('');
@@ -179,6 +180,18 @@ function Content({
         setSelectPlaylistDialogVisible(true);
     };
 
+    const handleAvatarClick = (videoIndex: number) => {
+        setPlayerVideoIndex(videoIndex);
+
+        if (videoIndex !== playerVideoIndex) {
+            player.playVideoAt(videoIndex);
+        } else {
+            isVideoPaused ? player.playVideo() : player.pauseVideo();
+        }
+
+        setDisplayBottomPlayer(true);
+    };
+
     return (
         <>
             <List className="list-container">
@@ -186,14 +199,11 @@ function Content({
                     <div key={Item.id}>
                         <VideoItem
                             Item={Item}
-                            isVideoPlaying={playerVideoIndex === index && displayBottomPlayer}
+                            isVideoCued={playerVideoIndex === index && displayBottomPlayer}
+                            isVideoPaused={isVideoPaused}
                             handleDeleteClick={handleDeleteClick}
                             handleMoreMenu={handleMoreMenu}
-                            handleAvatarClick={() => {
-                                setPlayerVideoIndex(index);
-                                player.playVideoAt(index);
-                                setDisplayBottomPlayer(true);
-                            }}
+                            handleAvatarClick={() => handleAvatarClick(index)}
                         />
 
                         {index + 1 < playlistsListItems.items.length && (
@@ -249,6 +259,8 @@ function Content({
             <BottomPlayer
                 player={player}
                 setPlayer={setPlayer}
+                isVideoPaused={isVideoPaused}
+                setIsVideoPaused={setIsVideoPaused}
                 playlistId={playlistId}
                 playerVideoIndex={playerVideoIndex}
                 setPlayerVideoIndex={setPlayerVideoIndex}

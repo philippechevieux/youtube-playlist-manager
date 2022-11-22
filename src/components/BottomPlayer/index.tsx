@@ -8,6 +8,8 @@ import YoutubeIFrame from './YoutubeIFrame';
 function BottomPlayer({
     player,
     setPlayer,
+    isVideoPaused,
+    setIsVideoPaused,
     playlistId,
     playerVideoIndex,
     setPlayerVideoIndex,
@@ -15,12 +17,13 @@ function BottomPlayer({
 }: {
     player: YouTubeEvent['target'];
     setPlayer: Function;
+    isVideoPaused: boolean;
+    setIsVideoPaused: Function;
     playlistId: string;
     playerVideoIndex: number | undefined;
     setPlayerVideoIndex: Function;
     visible: boolean;
 }) {
-    const [isVideoPaused, setIsVideoPaused] = useState(true);
     const [volume, setVolume] = useState<number | number[]>(0);
     const [isMuted, setIsMuted] = useState(false);
 

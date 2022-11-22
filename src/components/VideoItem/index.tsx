@@ -5,30 +5,51 @@ import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import {useTranslation} from 'react-i18next';
 import {ItemInterface} from '../../utils/arms/playlistContents/state';
 import './styles.css';
-import {PlayArrow, VolumeUpOutlined} from '@mui/icons-material';
+import {PauseOutlined, PlayArrow, VolumeUpOutlined} from '@mui/icons-material';
 import {getThumbnailsFromItem} from '../../utils/Functions';
+import {useState} from 'react';
 
 function VideoItem({
     Item,
-    isVideoPlaying,
+    isVideoCued,
+    isVideoPaused,
     handleDeleteClick,
     handleMoreMenu,
     handleAvatarClick
 }: {
     Item: ItemInterface;
-    isVideoPlaying: boolean;
-    handleDeleteClick: Function;
-    handleMoreMenu: Function;
-    handleAvatarClick: Function;
+    isVideoCued?: boolean;
+    isVideoPaused?: boolean;
+    handleDeleteClick?: Function;
+    handleMoreMenu?: Function;
+    handleAvatarClick?: Function;
 }) {
     const {t} = useTranslation();
 
+    const [isVideoHovered, setIsVideoHovered] = useState(false);
+
+    const displayAvatarIcon = () => {
+        if (isVideoHovered && isVideoCued && !isVideoPaused) {
+            return <PauseOutlined className="avatar-volume-icon" />;
+        }
+
+        if (isVideoCued && !isVideoPaused) {
+            return <VolumeUpOutlined className="avatar-volume-icon" />;
+        }
+
+        return <PlayArrow className={`avatar-play-icon ${isVideoCued && isVideoPaused ? 'video-paused' : ''}`} />;
+    };
+
     return (
-        <ListItem className={`item ${isVideoPlaying ? 'video-playing' : ''}`}>
+        <ListItem className={`item ${isVideoCued ? 'video-playing' : ''}`}>
             <ListItemAvatar>
-                <div className="avatar-wrapper" onClick={() => handleAvatarClick()}>
-                    {!isVideoPlaying && <PlayArrow className="avatar-play-icon" />}
-                    {isVideoPlaying && <VolumeUpOutlined className="avatar-volume-icon" />}
+                <div
+                    className="avatar-wrapper"
+                    onClick={() => handleAvatarClick && handleAvatarClick()}
+                    onMouseEnter={() => setIsVideoHovered(true)}
+                    onMouseLeave={() => setIsVideoHovered(false)}
+                >
+                    {displayAvatarIcon()}
                     <Avatar
                         className="avatar-thumbnail"
                         sx={{width: 120, height: 85}}
@@ -51,21 +72,26 @@ function VideoItem({
                     </Typography>
                 }
             />
-            <Tooltip title={t('delete')}>
-                <IconButton size="large" aria-haspopup="true" onClick={() => handleDeleteClick(Item.id)}>
-                    <DeleteOutlineOutlinedIcon />
-                </IconButton>
-            </Tooltip>
-            <Tooltip title={t('other actions')}>
-                <IconButton
-                    size="large"
-                    aria-haspopup="true"
-                    aria-controls="menu-more"
-                    onClick={event => handleMoreMenu(event, Item.snippet.resourceId, Item.id)}
-                >
-                    <MoreVertOutlinedIcon />
-                </IconButton>
-            </Tooltip>
+
+            {handleDeleteClick && (
+                <Tooltip title={t('delete')}>
+                    <IconButton size="large" aria-haspopup="true" onClick={() => handleDeleteClick(Item.id)}>
+                        <DeleteOutlineOutlinedIcon />
+                    </IconButton>
+                </Tooltip>
+            )}
+            {handleMoreMenu && (
+                <Tooltip title={t('other actions')}>
+                    <IconButton
+                        size="large"
+                        aria-haspopup="true"
+                        aria-controls="menu-more"
+                        onClick={event => handleMoreMenu(event, Item.snippet.resourceId, Item.id)}
+                    >
+                        <MoreVertOutlinedIcon />
+                    </IconButton>
+                </Tooltip>
+            )}
         </ListItem>
     );
 }

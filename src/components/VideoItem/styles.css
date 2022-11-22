@@ -26,7 +26,8 @@
     filter: brightness(30%);
 }
 
-.item:hover .avatar-wrapper .avatar-play-icon {
+.item:hover .avatar-wrapper .avatar-play-icon,
+.item .avatar-wrapper .avatar-play-icon.video-paused {
     display: block;
     z-index: 1;
 }
