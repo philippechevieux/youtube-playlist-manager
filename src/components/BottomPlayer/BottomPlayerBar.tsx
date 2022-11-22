@@ -1,21 +1,7 @@
 import {PlayArrowOutlined, SkipNextOutlined, VolumeUpOutlined} from '@material-ui/icons';
 import {PauseOutlined, SkipPreviousOutlined, VolumeOffOutlined} from '@mui/icons-material';
-import {
-    AppBar,
-    Avatar,
-    Box,
-    Grid,
-    IconButton,
-    LinearProgress,
-    ListItem,
-    ListItemAvatar,
-    ListItemText,
-    Slider,
-    Stack,
-    Toolbar,
-    Typography
-} from '@mui/material';
-import React, {useEffect, useRef, useState} from 'react';
+import {AppBar, Avatar, Box, Grid, IconButton, Slider, Stack, Toolbar, Typography} from '@mui/material';
+import {useEffect, useRef, useState} from 'react';
 import {YouTubeEvent} from 'react-youtube';
 import {ItemInterface} from '../../utils/arms/playlistContents/state';
 import {getThumbnailsFromItem, toHHMMSS} from '../../utils/Functions';
@@ -107,10 +93,6 @@ function BottomPlayerBar({
             player.seekTo(value);
         }
     };
-
-    function valuetext(value: string) {
-        return `${value}°C`;
-    }
 
     return playlistId !== undefined ? (
         <>

@@ -1,20 +1,4 @@
-import {
-    List,
-    ListItem,
-    ListItemAvatar,
-    ListItemText,
-    Avatar,
-    Divider,
-    Typography,
-    IconButton,
-    Menu,
-    MenuItem,
-    Tooltip,
-    Snackbar,
-    Alert,
-    AlertColor,
-    Button
-} from '@mui/material';
+import {List, Divider, Menu, MenuItem, Snackbar, Alert, AlertColor, Button} from '@mui/material';
 
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined';
@@ -40,7 +24,6 @@ import ConfirmActionDialog from '../../../components/Dialog/ConfirmActionDialog'
 import VideoItem from '../../../components/VideoItem';
 import BottomPlayer from '../../../components/BottomPlayer';
 import {YouTubeEvent} from 'react-youtube';
-import YoutubeIFrame from '../../../components/BottomPlayer/YoutubeIFrame';
 
 enum ItemActionEnum {
     MOVE_TO = 'move_to',

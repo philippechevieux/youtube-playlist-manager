@@ -4,7 +4,6 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import {useTranslation} from 'react-i18next';
 import {ItemInterface} from '../../utils/arms/playlistContents/state';
-import {IPlaylistItemsContent} from '../../utils/context/interface';
 import './styles.css';
 import {PlayArrow, VolumeUpOutlined} from '@mui/icons-material';
 import {getThumbnailsFromItem} from '../../utils/Functions';
