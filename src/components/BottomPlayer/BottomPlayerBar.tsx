@@ -1,8 +1,14 @@
 import {PlayArrowOutlined, SkipNextOutlined, VolumeUpOutlined} from '@material-ui/icons';
-import {PauseOutlined, SkipPreviousOutlined, VolumeOffOutlined} from '@mui/icons-material';
+import {
+    ArrowDropDownOutlined,
+    ArrowDropUpOutlined,
+    PauseOutlined,
+    SkipPreviousOutlined,
+    VolumeOffOutlined
+} from '@mui/icons-material';
 import {AppBar, Avatar, Box, Grid, IconButton, Slider, Stack, Toolbar, Typography} from '@mui/material';
 import {useEffect, useRef, useState} from 'react';
-import {YouTubeEvent} from 'react-youtube';
+import YouTube, {YouTubeEvent} from 'react-youtube';
 import {ItemInterface} from '../../utils/arms/playlistContents/state';
 import {getThumbnailsFromItem, toHHMMSS} from '../../utils/Functions';
 import './styles.css';
@@ -10,28 +16,27 @@ import './styles.css';
 function BottomPlayerBar({
     playlistId,
     player,
+    setPlayer,
+    setPlayerVideoIndex,
     contentItem,
     isVideoPaused,
-    setIsVideoPaused,
-    volume,
-    setVolume,
-    isMuted,
-    setIsMuted
+    setIsVideoPaused
 }: {
     playlistId: string | undefined;
     player: YouTubeEvent['target'];
+    setPlayer: Function;
+    setPlayerVideoIndex: Function;
     contentItem: ItemInterface | undefined;
     isVideoPaused: boolean;
     setIsVideoPaused: Function;
-    volume: number | number[];
-    setVolume: Function;
-    isMuted: boolean;
-    setIsMuted: Function;
 }) {
     const [shouldSliderBeDisplayed, setShouldSliderBeDisplayed] = useState(false);
     const [progress, setProgress] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
+    const [volume, setVolume] = useState<number | number[]>(0);
+    const [isMuted, setIsMuted] = useState(false);
+    const [isIFrameToggled, setIsIFrameToggled] = useState(false);
 
     const progressRef = useRef(() => {});
     useEffect(() => {
@@ -96,7 +101,32 @@ function BottomPlayerBar({
 
     return playlistId !== undefined ? (
         <>
-            <AppBar className="bottom-player-bar" position="fixed" sx={{bottom: 0}}>
+            <AppBar
+                className={`bottom-player-bar ${isIFrameToggled ? 'toggle' : ''}`}
+                position="fixed"
+                sx={{bottom: 0}}
+            >
+                <Box className="youtube-iframe-wrapper" sx={{width: '100%'}}>
+                    <YouTube
+                        className="youtube-iframe"
+                        onReady={e => {
+                            setPlayer(e.target);
+                            setVolume(e.target.getVolume());
+
+                            // Load the playlist in the iframe but doesn't play it
+                            e.target.cuePlaylist({
+                                list: playlistId,
+                                listType: 'search'
+                            });
+                        }}
+                        onStateChange={e => {
+                            setPlayerVideoIndex(e.target.playerInfo.playlistIndex);
+                        }}
+                        onPlay={() => setIsVideoPaused(false)}
+                        onPause={() => setIsVideoPaused(true)}
+                        opts={{height: '100%', width: '100%', playerVars: {controls: 0}}}
+                    />
+                </Box>
                 <Box className="seek-bar-wrapper" sx={{width: '100%'}}>
                     <Slider
                         className="seek-bar"
@@ -158,8 +188,6 @@ function BottomPlayerBar({
                                 <Slider
                                     className={`volume-slider ${!shouldSliderBeDisplayed ? 'hidden' : ''}`}
                                     size="small"
-                                    min={0}
-                                    max={100}
                                     value={volume}
                                     onChange={onVolumeChange}
                                     onMouseEnter={() => setShouldSliderBeDisplayed(true)}
@@ -173,6 +201,17 @@ function BottomPlayerBar({
                                     onMouseLeave={() => setShouldSliderBeDisplayed(false)}
                                 >
                                     {isMuted ? <VolumeOffOutlined /> : <VolumeUpOutlined />}
+                                </IconButton>{' '}
+                                <IconButton
+                                    className="toggle-iframe"
+                                    color="inherit"
+                                    onClick={() => setIsIFrameToggled(!isIFrameToggled)}
+                                >
+                                    {isIFrameToggled ? (
+                                        <ArrowDropDownOutlined fontSize="large" />
+                                    ) : (
+                                        <ArrowDropUpOutlined fontSize="large" />
+                                    )}
                                 </IconButton>
                             </Stack>
                         </Grid>
