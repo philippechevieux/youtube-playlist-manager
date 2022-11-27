@@ -20,10 +20,6 @@ span.volume-slider.hidden {
     pointer-events: none;
 }
 
-.bottom-player-bar > div > div {
-    /* margin-top: -24px; */
-}
-
 .bottom-player-bar .video-info {
     white-space: nowrap;
     text-overflow: ellipsis;

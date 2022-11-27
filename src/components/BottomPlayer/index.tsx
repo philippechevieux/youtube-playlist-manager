@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import {YouTubeEvent} from 'react-youtube';
 import {useAppSelector} from '../../app/hooks';
 import {selectPlaylistContentsItemsByIndex} from '../../utils/arms/playlistContents/selectors';
