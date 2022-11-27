@@ -94,3 +94,13 @@ span.volume-slider.hidden {
     height: 100%;
     width: 100%;
 }
+
+.bottom-player-bar .drop-down-up-icon {
+    transform: rotate(0deg);
+    transition: transform 250ms linear;
+}
+
+.bottom-player-bar.toggle .drop-down-up-icon{
+    transform: rotate(180deg);
+    transition: transform 250ms linear;
+}

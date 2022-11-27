@@ -201,17 +201,9 @@ function BottomPlayerBar({
                                     onMouseLeave={() => setShouldSliderBeDisplayed(false)}
                                 >
                                     {isMuted ? <VolumeOffOutlined /> : <VolumeUpOutlined />}
-                                </IconButton>{' '}
-                                <IconButton
-                                    className="toggle-iframe"
-                                    color="inherit"
-                                    onClick={() => setIsIFrameToggled(!isIFrameToggled)}
-                                >
-                                    {isIFrameToggled ? (
-                                        <ArrowDropDownOutlined fontSize="large" />
-                                    ) : (
-                                        <ArrowDropUpOutlined fontSize="large" />
-                                    )}
+                                </IconButton>
+                                <IconButton color="inherit" onClick={() => setIsIFrameToggled(!isIFrameToggled)}>
+                                    <ArrowDropDownOutlined className="drop-down-up-icon" fontSize="large" />
                                 </IconButton>
                             </Stack>
                         </Grid>
