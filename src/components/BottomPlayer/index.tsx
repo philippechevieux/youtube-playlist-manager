@@ -6,8 +6,8 @@ import BottomPlayerBar from './BottomPlayerBar';
 function BottomPlayer({
     player,
     setPlayer,
-    isVideoPaused,
-    setIsVideoPaused,
+    isPlayerPaused,
+    setIsPlayerPaused,
     playlistId,
     playerVideoIndex,
     setPlayerVideoIndex,
@@ -15,8 +15,8 @@ function BottomPlayer({
 }: {
     player: YouTubeEvent['target'];
     setPlayer: Function;
-    isVideoPaused: boolean;
-    setIsVideoPaused: Function;
+    isPlayerPaused: boolean;
+    setIsPlayerPaused: Function;
     playlistId: string;
     playerVideoIndex: number | undefined;
     setPlayerVideoIndex: Function;
@@ -32,8 +32,8 @@ function BottomPlayer({
                 setPlayerVideoIndex={setPlayerVideoIndex}
                 playlistId={playlistId}
                 contentItem={contentItem}
-                isVideoPaused={isVideoPaused}
-                setIsVideoPaused={setIsVideoPaused}
+                isPlayerPaused={isPlayerPaused}
+                setIsPlayerPaused={setIsPlayerPaused}
             />
         </div>
     );

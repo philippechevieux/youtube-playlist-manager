@@ -21,8 +21,25 @@ import EmptyIllustration from '../../components/Assets/EmptyIllustration';
 import {useTranslation} from 'react-i18next';
 import Content from '../../containers/PlaylistContents/Content';
 import ContentSkeleton from '../../containers/PlaylistContents/Content/Skeleton';
+import {YouTubeEvent} from 'react-youtube';
 
-function PlaylistContent() {
+function PlaylistContent({
+    player,
+    isPlayerPaused,
+    playerVideoIndex,
+    setPlayerVideoIndex,
+    setDisplayBottomPlayer,
+    currentCuePlaylistId,
+    setCurrentCuePlaylistId
+}: {
+    player: YouTubeEvent['target'];
+    isPlayerPaused: boolean;
+    playerVideoIndex: number | undefined;
+    setPlayerVideoIndex: Function;
+    setDisplayBottomPlayer: Function;
+    currentCuePlaylistId: string;
+    setCurrentCuePlaylistId: Function;
+}) {
     const {t} = useTranslation();
     const dispatch = useAppDispatch();
 
@@ -58,6 +75,13 @@ function PlaylistContent() {
         if (playlistContentsItems.length > 0) {
             content = (
                 <Content
+                    player={player}
+                    isPlayerPaused={isPlayerPaused}
+                    playerVideoIndex={playerVideoIndex}
+                    setPlayerVideoIndex={setPlayerVideoIndex}
+                    setDisplayBottomPlayer={setDisplayBottomPlayer}
+                    currentCuePlaylistId={currentCuePlaylistId}
+                    setCurrentCuePlaylistId={setCurrentCuePlaylistId}
                     playlistId={playlistId}
                     playlistsListItems={{items: playlistContentsItems}}
                     loadMorePlaylisContents={loadMorePlaylisContents}

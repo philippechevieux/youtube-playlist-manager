@@ -19,16 +19,16 @@ function BottomPlayerBar({
     setPlayer,
     setPlayerVideoIndex,
     contentItem,
-    isVideoPaused,
-    setIsVideoPaused
+    isPlayerPaused,
+    setIsPlayerPaused
 }: {
     playlistId: string | undefined;
     player: YouTubeEvent['target'];
     setPlayer: Function;
     setPlayerVideoIndex: Function;
     contentItem: ItemInterface | undefined;
-    isVideoPaused: boolean;
-    setIsVideoPaused: Function;
+    isPlayerPaused: boolean;
+    setIsPlayerPaused: Function;
 }) {
     const [shouldSliderBeDisplayed, setShouldSliderBeDisplayed] = useState(false);
     const [progress, setProgress] = useState(0);
@@ -69,8 +69,8 @@ function BottomPlayerBar({
     }, []);
 
     const onPlayPauseClick = () => {
-        setIsVideoPaused(!isVideoPaused);
-        isVideoPaused ? player.playVideo() : player.pauseVideo();
+        setIsPlayerPaused(!isPlayerPaused);
+        isPlayerPaused ? player.playVideo() : player.pauseVideo();
     };
 
     const onPreviousClick = () => {
@@ -100,117 +100,111 @@ function BottomPlayerBar({
     };
 
     return playlistId !== undefined ? (
-        <>
-            <AppBar
-                className={`bottom-player-bar ${isIFrameToggled ? 'toggle' : ''}`}
-                position="fixed"
-                sx={{bottom: 0}}
-            >
-                <Box className="youtube-iframe-wrapper" sx={{width: '100%'}}>
-                    <YouTube
-                        className="youtube-iframe"
-                        onReady={e => {
-                            setPlayer(e.target);
-                            setVolume(e.target.getVolume());
+        <AppBar className={`bottom-player-bar ${isIFrameToggled ? 'toggle' : ''}`} sx={{bottom: 0}}>
+            <Box className="youtube-iframe-wrapper" sx={{width: '100%'}}>
+                <YouTube
+                    className="youtube-iframe"
+                    onReady={e => {
+                        console.log('iframe ready');
+                        console.log('target : ', e.target);
+                        console.log('playlistId to cue : ', playlistId);
 
-                            // Load the playlist in the iframe but doesn't play it
-                            e.target.cuePlaylist({
-                                list: playlistId,
-                                listType: 'search'
-                            });
-                        }}
-                        onStateChange={e => {
-                            setPlayerVideoIndex(e.target.playerInfo.playlistIndex);
-                        }}
-                        onPlay={() => setIsVideoPaused(false)}
-                        onPause={() => setIsVideoPaused(true)}
-                        opts={{height: '100%', width: '100%', playerVars: {controls: 0}}}
-                    />
-                </Box>
-                <Box className="seek-bar-wrapper" sx={{width: '100%'}}>
-                    <Slider
-                        className="seek-bar"
-                        value={currentTime}
-                        min={0}
-                        max={duration}
-                        color="secondary"
-                        onChange={handleInputChange}
-                        valueLabelDisplay="auto"
-                        valueLabelFormat={toHHMMSS}
-                    ></Slider>
-                </Box>
-                <Toolbar>
-                    <Grid container spacing={3} alignItems="center" justifyContent="space-between">
-                        <Grid item xs={4}>
-                            <IconButton color="inherit" onClick={onPreviousClick}>
-                                <SkipPreviousOutlined />
-                            </IconButton>
-                            <IconButton color="inherit" onClick={onPlayPauseClick}>
-                                {isVideoPaused ? <PlayArrowOutlined /> : <PauseOutlined />}
-                            </IconButton>
-                            <IconButton color="inherit" onClick={onNextClick}>
-                                <SkipNextOutlined />
-                            </IconButton>
-                            <Typography className="timer" variant="body2" color="text.secondary">
-                                <div>{toHHMMSS(currentTime)}</div>
-                                <div> / </div>
-                                <div>{toHHMMSS(duration)}</div>
-                            </Typography>
-                        </Grid>
-                        <Grid item xs={4}>
-                            {contentItem !== undefined && (
-                                <Stack direction="row" justifyContent="flex-start" alignItems="center">
-                                    <Avatar
-                                        className="avatar-thumbnail"
-                                        sx={{width: 79, height: 54}}
-                                        alt={contentItem.snippet.title}
-                                        src={getThumbnailsFromItem(contentItem)}
-                                        variant="square"
-                                    />
-                                    <div className="info">
-                                        <Typography className="video-info title" variant="h6" color="text.primary">
-                                            {contentItem.snippet.title}
-                                        </Typography>
+                        setPlayer(e.target);
+                        setVolume(e.target.getVolume());
 
-                                        <Typography
-                                            className="video-info author"
-                                            variant="body2"
-                                            color="text.secondary"
-                                        >
-                                            {contentItem.snippet.videoOwnerChannelTitle}
-                                        </Typography>
-                                    </div>
-                                </Stack>
-                            )}
-                        </Grid>
-                        <Grid item xs={4} textAlign={'end'} width={'100%'}>
-                            <Stack direction="row" justifyContent="flex-end" alignItems="center">
-                                <Slider
-                                    className={`volume-slider ${!shouldSliderBeDisplayed ? 'hidden' : ''}`}
-                                    size="small"
-                                    value={volume}
-                                    onChange={onVolumeChange}
-                                    onMouseEnter={() => setShouldSliderBeDisplayed(true)}
-                                    onMouseLeave={() => setShouldSliderBeDisplayed(false)}
-                                />
-                                <IconButton
-                                    className="volume-icon"
-                                    color="inherit"
-                                    onClick={onMuteUnMuteClick}
-                                    onMouseEnter={() => setShouldSliderBeDisplayed(true)}
-                                    onMouseLeave={() => setShouldSliderBeDisplayed(false)}
-                                >
-                                    {isMuted ? <VolumeOffOutlined /> : <VolumeUpOutlined />}
-                                </IconButton>
-                                <IconButton color="inherit" onClick={() => setIsIFrameToggled(!isIFrameToggled)}>
-                                    <ArrowDropDownOutlined className="drop-down-up-icon" fontSize="large" />
-                                </IconButton>
-                            </Stack>
-                        </Grid>
+                        // // Load the playlist in the iframe but doesn't play it
+                        // e.target.cuePlaylist({
+                        //     list: playlistId,
+                        //     listType: 'search'
+                        // });
+                    }}
+                    onStateChange={e => {
+                        setPlayerVideoIndex(e.target.playerInfo.playlistIndex);
+                    }}
+                    onPlay={() => setIsPlayerPaused(false)}
+                    onPause={() => setIsPlayerPaused(true)}
+                    opts={{height: '100%', width: '100%', playerVars: {controls: 0}}}
+                />
+            </Box>
+            <Box className="seek-bar-wrapper" sx={{width: '100%'}}>
+                <Slider
+                    className="seek-bar"
+                    value={currentTime}
+                    min={0}
+                    max={duration}
+                    color="secondary"
+                    onChange={handleInputChange}
+                    valueLabelDisplay="auto"
+                    valueLabelFormat={toHHMMSS}
+                ></Slider>
+            </Box>
+            <Toolbar>
+                <Grid container spacing={3} alignItems="center" justifyContent="space-between">
+                    <Grid item xs={4}>
+                        <IconButton color="inherit" onClick={onPreviousClick}>
+                            <SkipPreviousOutlined />
+                        </IconButton>
+                        <IconButton color="inherit" onClick={onPlayPauseClick}>
+                            {isPlayerPaused ? <PlayArrowOutlined /> : <PauseOutlined />}
+                        </IconButton>
+                        <IconButton color="inherit" onClick={onNextClick}>
+                            <SkipNextOutlined />
+                        </IconButton>
+                        <Typography className="timer" variant="body2" color="text.secondary">
+                            <div>{toHHMMSS(currentTime)}</div>
+                            <div> / </div>
+                            <div>{toHHMMSS(duration)}</div>
+                        </Typography>
                     </Grid>
-                </Toolbar>
-            </AppBar>
-        </>
+                    <Grid item xs={4}>
+                        {contentItem !== undefined && (
+                            <Stack direction="row" justifyContent="flex-start" alignItems="center">
+                                <Avatar
+                                    className="avatar-thumbnail"
+                                    sx={{width: 79, height: 54}}
+                                    alt={contentItem.snippet.title}
+                                    src={getThumbnailsFromItem(contentItem)}
+                                    variant="square"
+                                />
+                                <div className="info">
+                                    <Typography className="video-info title" variant="h6" color="text.primary">
+                                        {contentItem.snippet.title}
+                                    </Typography>
+
+                                    <Typography className="video-info author" variant="body2" color="text.secondary">
+                                        {contentItem.snippet.videoOwnerChannelTitle}
+                                    </Typography>
+                                </div>
+                            </Stack>
+                        )}
+                    </Grid>
+                    <Grid item xs={4} textAlign={'end'} width={'100%'}>
+                        <Stack direction="row" justifyContent="flex-end" alignItems="center">
+                            <Slider
+                                className={`volume-slider ${!shouldSliderBeDisplayed ? 'hidden' : ''}`}
+                                size="small"
+                                value={volume}
+                                onChange={onVolumeChange}
+                                onMouseEnter={() => setShouldSliderBeDisplayed(true)}
+                                onMouseLeave={() => setShouldSliderBeDisplayed(false)}
+                            />
+                            <IconButton
+                                className="volume-icon"
+                                color="inherit"
+                                onClick={onMuteUnMuteClick}
+                                onMouseEnter={() => setShouldSliderBeDisplayed(true)}
+                                onMouseLeave={() => setShouldSliderBeDisplayed(false)}
+                            >
+                                {isMuted ? <VolumeOffOutlined /> : <VolumeUpOutlined />}
+                            </IconButton>
+                            <IconButton color="inherit" onClick={() => setIsIFrameToggled(!isIFrameToggled)}>
+                                <ArrowDropDownOutlined className="drop-down-up-icon" fontSize="large" />
+                            </IconButton>
+                        </Stack>
+                    </Grid>
+                </Grid>
+            </Toolbar>
+        </AppBar>
     ) : (
         <></>
     );

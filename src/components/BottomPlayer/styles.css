@@ -20,6 +20,11 @@ span.volume-slider.hidden {
     pointer-events: none;
 }
 
+header.bottom-player-bar {
+    position: sticky;
+    bottom: 0;
+}
+
 .bottom-player-bar .video-info {
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -75,19 +80,23 @@ span.volume-slider.hidden {
     z-index: 1;
 }
 
-.bottom-player-bar.toggle div.seek-bar-wrapper {
-    top: 335px;
-}
-
 .bottom-player-bar .youtube-iframe-wrapper {
     text-align: center;
-    display: none;
     height: 350px;
     margin-top: 0px;
+
+    display: none;
+    position: absolute;
+    bottom: -350px;
+    opacity: 0;
+    transition: display 1s ease-out;
 }
 
 .bottom-player-bar.toggle .youtube-iframe-wrapper{
     display: block;
+    bottom: 65px;
+    opacity: 1;
+    transition: display 1s ease-in;
 }
 
 .bottom-player-bar .youtube-iframe {

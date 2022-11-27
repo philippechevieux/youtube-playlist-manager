@@ -9,11 +9,19 @@ import Profile from '../../pages/Profile';
 
 import {useAppSelector} from '../../app/hooks';
 import {selectIsUserLogin} from '../../utils/arms/user/selectors';
+import BottomPlayer from '../../components/BottomPlayer';
+import {useState} from 'react';
+import {YouTubeEvent} from 'react-youtube';
 
 function Body() {
     let history = useHistory();
 
     const isUserLogin = useAppSelector(selectIsUserLogin);
+    const [player, setPlayer] = useState<YouTubeEvent['target']>();
+    const [playerVideoIndex, setPlayerVideoIndex] = useState<number | undefined>();
+    const [displayBottomPlayer, setDisplayBottomPlayer] = useState(false);
+    const [isPlayerPaused, setIsPlayerPaused] = useState(true);
+    const [currentCuePlaylistId, setCurrentCuePlaylistId] = useState('');
 
     if (!isUserLogin) {
         history.push('/');
@@ -35,12 +43,30 @@ function Body() {
                                 <Profile />
                             </Route>
                             <Route exact path="/playlist/:playlistId">
-                                <PlaylistContent />
+                                <PlaylistContent
+                                    player={player}
+                                    isPlayerPaused={isPlayerPaused}
+                                    playerVideoIndex={playerVideoIndex}
+                                    setPlayerVideoIndex={setPlayerVideoIndex}
+                                    setDisplayBottomPlayer={setDisplayBottomPlayer}
+                                    currentCuePlaylistId={currentCuePlaylistId}
+                                    setCurrentCuePlaylistId={setCurrentCuePlaylistId}
+                                />
                             </Route>
                         </Switch>
                     </>
                 )}
             </div>
+            <BottomPlayer
+                player={player}
+                setPlayer={setPlayer}
+                isPlayerPaused={isPlayerPaused}
+                setIsPlayerPaused={setIsPlayerPaused}
+                playlistId={currentCuePlaylistId}
+                playerVideoIndex={playerVideoIndex}
+                setPlayerVideoIndex={setPlayerVideoIndex}
+                visible={displayBottomPlayer}
+            />
         </div>
     );
 }

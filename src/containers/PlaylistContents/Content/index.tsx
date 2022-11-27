@@ -31,11 +31,25 @@ enum ItemActionEnum {
 }
 
 function Content({
+    player,
+    isPlayerPaused,
+    playerVideoIndex,
+    setPlayerVideoIndex,
+    setDisplayBottomPlayer,
+    currentCuePlaylistId,
+    setCurrentCuePlaylistId,
     playlistId,
     playlistsListItems,
     loadMorePlaylisContents,
     nextPageTokenInStore
 }: {
+    player: YouTubeEvent['target'];
+    isPlayerPaused: boolean;
+    playerVideoIndex: number | undefined;
+    setPlayerVideoIndex: Function;
+    setDisplayBottomPlayer: Function;
+    currentCuePlaylistId: string;
+    setCurrentCuePlaylistId: Function;
     playlistId: string;
     playlistsListItems: ContentsInterface;
     loadMorePlaylisContents: Function;
@@ -50,10 +64,10 @@ function Content({
         useState<ResourceIdInterface>(defaultItemResourceId);
     const [anchorCurrentItemId, setAnchorCurrentItemId] = useState('');
 
-    const [player, setPlayer] = useState<YouTubeEvent['target']>();
-    const [playerVideoIndex, setPlayerVideoIndex] = useState<number | undefined>();
-    const [displayBottomPlayer, setDisplayBottomPlayer] = useState(false);
-    const [isVideoPaused, setIsVideoPaused] = useState(true);
+    // const [player, setPlayer] = useState<YouTubeEvent['target']>();
+    // const [playerVideoIndex, setPlayerVideoIndex] = useState<number | undefined>();
+    // const [displayBottomPlayer, setDisplayBottomPlayer] = useState(false);
+    // const [isVideoPaused, setIsVideoPaused] = useState(true);
 
     const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
     const [confirmDialogContent, setConfirmDialogContent] = useState('');
@@ -183,10 +197,30 @@ function Content({
     const handleAvatarClick = (videoIndex: number) => {
         setPlayerVideoIndex(videoIndex);
 
-        if (videoIndex !== playerVideoIndex) {
-            player.playVideoAt(videoIndex);
+        console.log('playlistId : ', playlistId);
+        console.log('currentCuePlaylistId : ', currentCuePlaylistId);
+
+        if (playlistId !== currentCuePlaylistId) {
+            setCurrentCuePlaylistId(playlistId);
+
+            // player.cuePlaylist({
+            //     list: playlistId,
+            //     listType: 'search'
+            // });
+
+            console.log('-> new playlist id');
+
+            player.loadPlaylist({
+                list: playlistId,
+                index: videoIndex,
+                listType: 'playlist'
+            });
         } else {
-            isVideoPaused ? player.playVideo() : player.pauseVideo();
+            if (videoIndex !== playerVideoIndex) {
+                player.playVideoAt(videoIndex);
+            } else {
+                isPlayerPaused ? player.playVideo() : player.pauseVideo();
+            }
         }
 
         setDisplayBottomPlayer(true);
@@ -199,8 +233,9 @@ function Content({
                     <div key={Item.id}>
                         <VideoItem
                             Item={Item}
-                            isVideoCued={playerVideoIndex === index && displayBottomPlayer}
-                            isVideoPaused={isVideoPaused}
+                            isVideoCued={playerVideoIndex === index}
+                            // isVideoCued={playerVideoIndex === index && displayBottomPlayer}
+                            isPlayerPaused={isPlayerPaused}
                             handleDeleteClick={handleDeleteClick}
                             handleMoreMenu={handleMoreMenu}
                             handleAvatarClick={() => handleAvatarClick(index)}
@@ -256,7 +291,7 @@ function Content({
                     <span className="header-menuitem-margin-left">{t('move to an other playlist')}</span>
                 </MenuItem>
             </Menu>
-            <BottomPlayer
+            {/* <BottomPlayer
                 player={player}
                 setPlayer={setPlayer}
                 isVideoPaused={isVideoPaused}
@@ -265,7 +300,7 @@ function Content({
                 playerVideoIndex={playerVideoIndex}
                 setPlayerVideoIndex={setPlayerVideoIndex}
                 visible={displayBottomPlayer}
-            />
+            /> */}
             <ConfirmActionDialog
                 visible={confirmDialogVisible}
                 content={confirmDialogContent}

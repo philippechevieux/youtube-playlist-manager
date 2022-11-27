@@ -12,14 +12,14 @@ import {useState} from 'react';
 function VideoItem({
     Item,
     isVideoCued,
-    isVideoPaused,
+    isPlayerPaused,
     handleDeleteClick,
     handleMoreMenu,
     handleAvatarClick
 }: {
     Item: ItemInterface;
     isVideoCued?: boolean;
-    isVideoPaused?: boolean;
+    isPlayerPaused?: boolean;
     handleDeleteClick?: Function;
     handleMoreMenu?: Function;
     handleAvatarClick?: Function;
@@ -29,15 +29,15 @@ function VideoItem({
     const [isVideoHovered, setIsVideoHovered] = useState(false);
 
     const displayAvatarIcon = () => {
-        if (isVideoHovered && isVideoCued && !isVideoPaused) {
+        if (isVideoHovered && isVideoCued && !isPlayerPaused) {
             return <PauseOutlined className="avatar-volume-icon" />;
         }
 
-        if (isVideoCued && !isVideoPaused) {
+        if (isVideoCued && !isPlayerPaused) {
             return <VolumeUpOutlined className="avatar-volume-icon" />;
         }
 
-        return <PlayArrow className={`avatar-play-icon ${isVideoCued && isVideoPaused ? 'video-paused' : ''}`} />;
+        return <PlayArrow className={`avatar-play-icon ${isVideoCued && isPlayerPaused ? 'video-paused' : ''}`} />;
     };
 
     return (
