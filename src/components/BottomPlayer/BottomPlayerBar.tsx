@@ -1,11 +1,5 @@
 import {PlayArrowOutlined, SkipNextOutlined, VolumeUpOutlined} from '@material-ui/icons';
-import {
-    ArrowDropDownOutlined,
-    ArrowDropUpOutlined,
-    PauseOutlined,
-    SkipPreviousOutlined,
-    VolumeOffOutlined
-} from '@mui/icons-material';
+import {ArrowDropDownOutlined, PauseOutlined, SkipPreviousOutlined, VolumeOffOutlined} from '@mui/icons-material';
 import {AppBar, Avatar, Box, Grid, IconButton, Slider, Stack, Toolbar, Typography} from '@mui/material';
 import {useEffect, useRef, useState} from 'react';
 import YouTube, {YouTubeEvent} from 'react-youtube';
@@ -17,6 +11,7 @@ function BottomPlayerBar({
     playlistId,
     player,
     setPlayer,
+    playerVideoIndex,
     setPlayerVideoIndex,
     contentItem,
     isPlayerPaused,
@@ -25,6 +20,7 @@ function BottomPlayerBar({
     playlistId: string | undefined;
     player: YouTubeEvent['target'];
     setPlayer: Function;
+    playerVideoIndex: number | undefined;
     setPlayerVideoIndex: Function;
     contentItem: ItemInterface | undefined;
     isPlayerPaused: boolean;
@@ -112,18 +108,16 @@ function BottomPlayerBar({
                         setPlayer(e.target);
                         setVolume(e.target.getVolume());
 
-                        // // Load the playlist in the iframe but doesn't play it
-                        // e.target.cuePlaylist({
-                        //     list: playlistId,
-                        //     listType: 'search'
-                        // });
+                        if (playerVideoIndex) {
+                            e.target.playVideoAt(playerVideoIndex);
+                        }
                     }}
                     onStateChange={e => {
                         setPlayerVideoIndex(e.target.playerInfo.playlistIndex);
                     }}
                     onPlay={() => setIsPlayerPaused(false)}
                     onPause={() => setIsPlayerPaused(true)}
-                    opts={{height: '100%', width: '100%', playerVars: {controls: 0}}}
+                    opts={{height: '100%', width: '100%', playerVars: {controls: 0, list: playlistId}}}
                 />
             </Box>
             <Box className="seek-bar-wrapper" sx={{width: '100%'}}>

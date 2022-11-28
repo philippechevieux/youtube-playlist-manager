@@ -210,17 +210,17 @@ function Content({
 
             console.log('-> new playlist id');
 
-            player.loadPlaylist({
-                list: playlistId,
-                index: videoIndex,
-                listType: 'playlist'
-            });
+            // player.loadPlaylist({
+            //     list: playlistId,
+            //     index: videoIndex,
+            //     listType: 'playlist'
+            // });
+        }
+
+        if (videoIndex !== playerVideoIndex) {
+            player.playVideoAt(videoIndex);
         } else {
-            if (videoIndex !== playerVideoIndex) {
-                player.playVideoAt(videoIndex);
-            } else {
-                isPlayerPaused ? player.playVideo() : player.pauseVideo();
-            }
+            isPlayerPaused ? player.playVideo() : player.pauseVideo();
         }
 
         setDisplayBottomPlayer(true);

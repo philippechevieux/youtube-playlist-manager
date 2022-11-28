@@ -29,6 +29,7 @@ function BottomPlayer({
             <BottomPlayerBar
                 setPlayer={setPlayer}
                 player={player}
+                playerVideoIndex={playerVideoIndex}
                 setPlayerVideoIndex={setPlayerVideoIndex}
                 playlistId={playlistId}
                 contentItem={contentItem}
