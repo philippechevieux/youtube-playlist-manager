@@ -1,4 +1,4 @@
-import {List, Divider, Menu, MenuItem, Snackbar, Alert, AlertColor, Button} from '@mui/material';
+import {List, Divider, Menu, MenuItem, Snackbar, Alert, AlertColor} from '@mui/material';
 
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined';
@@ -22,7 +22,6 @@ import {
 import {useTranslation} from 'react-i18next';
 import ConfirmActionDialog from '../../../components/Dialog/ConfirmActionDialog';
 import VideoItem from '../../../components/VideoItem';
-import BottomPlayer from '../../../components/BottomPlayer';
 import {YouTubeEvent} from 'react-youtube';
 
 enum ItemActionEnum {
@@ -39,9 +38,7 @@ function Content({
     currentCuePlaylistId,
     setCurrentCuePlaylistId,
     playlistId,
-    playlistsListItems,
-    loadMorePlaylisContents,
-    nextPageTokenInStore
+    playlistsListItems
 }: {
     player: YouTubeEvent['target'];
     isPlayerPaused: boolean;
@@ -52,8 +49,6 @@ function Content({
     setCurrentCuePlaylistId: Function;
     playlistId: string;
     playlistsListItems: ContentsInterface;
-    loadMorePlaylisContents: Function;
-    nextPageTokenInStore: string | undefined;
 }) {
     const dispatch = useAppDispatch();
 
@@ -63,11 +58,6 @@ function Content({
     const [anchorCurrentIemResourceId, setAnchorCurrentIemResourceId] =
         useState<ResourceIdInterface>(defaultItemResourceId);
     const [anchorCurrentItemId, setAnchorCurrentItemId] = useState('');
-
-    // const [player, setPlayer] = useState<YouTubeEvent['target']>();
-    // const [playerVideoIndex, setPlayerVideoIndex] = useState<number | undefined>();
-    // const [displayBottomPlayer, setDisplayBottomPlayer] = useState(false);
-    // const [isVideoPaused, setIsVideoPaused] = useState(true);
 
     const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
     const [confirmDialogContent, setConfirmDialogContent] = useState('');
@@ -197,16 +187,9 @@ function Content({
     const handleAvatarClick = (videoIndex: number) => {
         setPlayerVideoIndex(videoIndex);
 
-        console.log('playlistId : ', playlistId);
-        console.log('currentCuePlaylistId : ', currentCuePlaylistId);
-
         if (playlistId !== currentCuePlaylistId) {
             setCurrentCuePlaylistId(playlistId);
-
-            console.log('-> new playlist id');
         }
-
-        console.log('player info : ', player.playerInfo);
 
         if (videoIndex !== playerVideoIndex) {
             player.playVideoAt(videoIndex);
@@ -225,7 +208,6 @@ function Content({
                         <VideoItem
                             Item={Item}
                             isVideoCued={playerVideoIndex === index}
-                            // isVideoCued={playerVideoIndex === index && displayBottomPlayer}
                             isPlayerPaused={isPlayerPaused}
                             handleDeleteClick={handleDeleteClick}
                             handleMoreMenu={handleMoreMenu}
@@ -238,18 +220,6 @@ function Content({
                     </div>
                 ))}
             </List>
-            {playlistsListItems.items.length > 0 && nextPageTokenInStore !== undefined && (
-                <div className="see-more-container">
-                    <Button
-                        variant="outlined"
-                        onClick={() => {
-                            loadMorePlaylisContents();
-                        }}
-                    >
-                        {t('see more')} ...
-                    </Button>
-                </div>
-            )}
             <Menu
                 id="menu-more"
                 anchorEl={anchorEl}
@@ -282,16 +252,6 @@ function Content({
                     <span className="header-menuitem-margin-left">{t('move to an other playlist')}</span>
                 </MenuItem>
             </Menu>
-            {/* <BottomPlayer
-                player={player}
-                setPlayer={setPlayer}
-                isVideoPaused={isVideoPaused}
-                setIsVideoPaused={setIsVideoPaused}
-                playlistId={playlistId}
-                playerVideoIndex={playerVideoIndex}
-                setPlayerVideoIndex={setPlayerVideoIndex}
-                visible={displayBottomPlayer}
-            /> */}
             <ConfirmActionDialog
                 visible={confirmDialogVisible}
                 content={confirmDialogContent}

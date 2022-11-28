@@ -1,20 +1,19 @@
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {AppBar, Toolbar, IconButton, Typography, Box, Tooltip} from '@mui/material';
+import {AppBar, Toolbar, IconButton, Typography, Box, Tooltip, Button} from '@mui/material';
 import {useHistory} from 'react-router-dom';
 
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 import './styles.css';
-import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {useAppSelector} from '../../app/hooks';
 import {selectUserAccessToken} from '../../utils/arms/user/selectors';
 import {useFetchPlaylistContents} from './hook';
 import {
     selectPlaylistContentsItems,
     selectPlaylistContentsNextPageToken
 } from '../../utils/arms/playlistContents/selectors';
-import {removePlaylistContents} from '../../utils/arms/playlistContents/reducer';
 import {selectPlaylistItem} from '../../utils/arms/playlists/selectors';
 import EditPlaylistDialog from '../../containers/Dialog/EditPlaylistDialog';
 import EmptyIllustration from '../../components/Assets/EmptyIllustration';
@@ -41,7 +40,6 @@ function PlaylistContent({
     setCurrentCuePlaylistId: Function;
 }) {
     const {t} = useTranslation();
-    const dispatch = useAppDispatch();
 
     let history = useHistory();
     const {playlistId} = useParams<{playlistId: string}>();
@@ -61,7 +59,6 @@ function PlaylistContent({
     );
 
     const handleHomeClick = () => {
-        // dispatch(removePlaylistContents({}));
         history.push('/playlists');
     };
 
@@ -70,7 +67,7 @@ function PlaylistContent({
     };
 
     const displayPlaylistContent = () => {
-        let content, skeleton;
+        let content, skeleton, loadMore;
 
         if (playlistContentsItems.length > 0) {
             content = (
@@ -84,8 +81,6 @@ function PlaylistContent({
                     setCurrentCuePlaylistId={setCurrentCuePlaylistId}
                     playlistId={playlistId}
                     playlistsListItems={{items: playlistContentsItems}}
-                    loadMorePlaylisContents={loadMorePlaylisContents}
-                    nextPageTokenInStore={nextPageTokenInStore}
                 />
             );
         }
@@ -98,10 +93,26 @@ function PlaylistContent({
             skeleton = <ContentSkeleton isFirstLoad={playlistContentsItems.length === 0} />;
         }
 
+        if (playlistContentsItems.length > 0 && nextPageTokenInStore !== undefined) {
+            loadMore = (
+                <div className="see-more-container">
+                    <Button
+                        variant="outlined"
+                        onClick={() => {
+                            loadMorePlaylisContents();
+                        }}
+                    >
+                        {t('see more')} ...
+                    </Button>
+                </div>
+            );
+        }
+
         return (
             <div>
                 {content}
                 {skeleton}
+                {loadMore}
             </div>
         );
     };

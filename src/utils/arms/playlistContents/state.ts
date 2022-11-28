@@ -44,8 +44,4 @@ export interface PlaylistsContentsDataInterface {
 
 export const playlistContentsDefaultData: PlaylistsContentsDataInterface = {
     playlists: {}
-    // playlistId: '',
-    // prevPageToken: undefined,
-    // nextPageToken: undefined,
-    // items: []
 };
