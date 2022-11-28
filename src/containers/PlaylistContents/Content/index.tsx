@@ -203,19 +203,10 @@ function Content({
         if (playlistId !== currentCuePlaylistId) {
             setCurrentCuePlaylistId(playlistId);
 
-            // player.cuePlaylist({
-            //     list: playlistId,
-            //     listType: 'search'
-            // });
-
             console.log('-> new playlist id');
-
-            // player.loadPlaylist({
-            //     list: playlistId,
-            //     index: videoIndex,
-            //     listType: 'playlist'
-            // });
         }
+
+        console.log('player info : ', player.playerInfo);
 
         if (videoIndex !== playerVideoIndex) {
             player.playVideoAt(videoIndex);

@@ -22,7 +22,9 @@ function BottomPlayer({
     setPlayerVideoIndex: Function;
     visible: boolean;
 }) {
-    const contentItem = useAppSelector(state => selectPlaylistContentsItemsByIndex(state, playerVideoIndex));
+    const contentItem = useAppSelector(state =>
+        selectPlaylistContentsItemsByIndex(state, playlistId, playerVideoIndex)
+    );
 
     return (
         <div className={`bottom-player ${!visible ? 'hidden' : ''}`}>

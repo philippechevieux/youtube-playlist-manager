@@ -48,8 +48,8 @@ function PlaylistContent({
 
     const playlistItem = useAppSelector(state => selectPlaylistItem(state, playlistId));
     const userAccessToken = useAppSelector(selectUserAccessToken);
-    const nextPageTokenInStore = useAppSelector(selectPlaylistContentsNextPageToken);
-    const playlistContentsItems = useAppSelector(selectPlaylistContentsItems);
+    const nextPageTokenInStore = useAppSelector(state => selectPlaylistContentsNextPageToken(state, playlistId));
+    const playlistContentsItems = useAppSelector(state => selectPlaylistContentsItems(state, playlistId));
 
     const [nextPageToken, setNextPageToken] = useState<string | undefined>(undefined);
     const [isEditPlaylistDialogOpen, setIsPlaylistDialogOpen] = useState(false);
@@ -61,7 +61,7 @@ function PlaylistContent({
     );
 
     const handleHomeClick = () => {
-        dispatch(removePlaylistContents({}));
+        // dispatch(removePlaylistContents({}));
         history.push('/playlists');
     };
 
