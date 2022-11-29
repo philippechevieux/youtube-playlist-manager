@@ -27,29 +27,18 @@ export const playlistContentsSlice = createSlice({
                 ? action.payload.playListContentsData.nextPageToken
                 : undefined;
 
+            // Remove duplicate items
+            const itemFiltered = action.payload.playListContentsData.items.filter(
+                item =>
+                    state.playlists[action.payload.playlistId].items.filter(
+                        (inStoreItem: ItemInterface) => inStoreItem.id === item.id
+                    ).length === 0
+            );
+
             state.playlists[action.payload.playlistId].items = [
                 ...state.playlists[action.payload.playlistId].items,
-                ...action.payload.playListContentsData.items
+                ...itemFiltered
             ];
-
-            // if (state.playlistId !== action.payload.playlistId) {
-            //     state.playlistId = action.payload.playlistId;
-            //     state.items = [];
-            // }
-            // state.prevPageToken = action.payload.playListContentsData.prevPageToken
-            //     ? action.payload.playListContentsData.prevPageToken
-            //     : undefined;
-            // state.nextPageToken = action.payload.playListContentsData.nextPageToken
-            //     ? action.payload.playListContentsData.nextPageToken
-            //     : undefined;
-            // state.items = [...state.items, ...action.payload.playListContentsData.items];
-        },
-        removePlaylistContents: (state: any, action: PayloadAction<{}>) => {
-            //TODO: supprimer l'action
-            // state.playlistId = playlistContentsDefaultData.playlistId;
-            // state.prevPageToken = playlistContentsDefaultData.prevPageToken;
-            // state.nextPageToken = playlistContentsDefaultData.nextPageToken;
-            // state.items = playlistContentsDefaultData.items;
         },
         removeContent: (state: any, action: PayloadAction<{id: string}>) => {
             state.items = state.items.filter((item: ItemInterface) => item.id !== action.payload.id);
@@ -57,6 +46,6 @@ export const playlistContentsSlice = createSlice({
     }
 });
 
-export const {addPlaylistContents, removePlaylistContents, removeContent} = playlistContentsSlice.actions;
+export const {addPlaylistContents, removeContent} = playlistContentsSlice.actions;
 
 export default playlistContentsSlice.reducer;

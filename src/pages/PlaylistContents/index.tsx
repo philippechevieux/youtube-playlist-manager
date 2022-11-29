@@ -93,7 +93,7 @@ function PlaylistContent({
             skeleton = <ContentSkeleton isFirstLoad={playlistContentsItems.length === 0} />;
         }
 
-        if (playlistContentsItems.length > 0 && nextPageTokenInStore !== undefined) {
+        if (nextPageTokenInStore !== undefined) {
             loadMore = (
                 <div className="see-more-container">
                     <Button
