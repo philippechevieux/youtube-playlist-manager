@@ -1,5 +1,11 @@
 import {PlayArrowOutlined, SkipNextOutlined, VolumeUpOutlined} from '@material-ui/icons';
-import {ArrowDropDownOutlined, PauseOutlined, SkipPreviousOutlined, VolumeOffOutlined} from '@mui/icons-material';
+import {
+    ArrowDropDownOutlined,
+    PauseOutlined,
+    ShuffleOutlined,
+    SkipPreviousOutlined,
+    VolumeOffOutlined
+} from '@mui/icons-material';
 import {
     AppBar,
     Avatar,
@@ -215,6 +221,9 @@ function BottomPlayerBar({
                                 onMouseLeave={() => setShouldSliderBeDisplayed(false)}
                             >
                                 {isMuted ? <VolumeOffOutlined /> : <VolumeUpOutlined />}
+                            </IconButton>
+                            <IconButton color="inherit" onClick={() => {}}>
+                                <ShuffleOutlined />
                             </IconButton>
                             <IconButton color="inherit" onClick={() => setIsIFrameToggled(!isIFrameToggled)}>
                                 <ArrowDropDownOutlined className="drop-down-up-icon" fontSize="large" />
