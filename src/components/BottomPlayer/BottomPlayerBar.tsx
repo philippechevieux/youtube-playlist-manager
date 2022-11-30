@@ -1,11 +1,27 @@
 import {PlayArrowOutlined, SkipNextOutlined, VolumeUpOutlined} from '@material-ui/icons';
 import {ArrowDropDownOutlined, PauseOutlined, SkipPreviousOutlined, VolumeOffOutlined} from '@mui/icons-material';
-import {AppBar, Avatar, Box, Grid, IconButton, Slider, Stack, Toolbar, Typography} from '@mui/material';
+import {
+    AppBar,
+    Avatar,
+    Box,
+    CircularProgress,
+    Grid,
+    IconButton,
+    Slider,
+    Stack,
+    Toolbar,
+    Typography
+} from '@mui/material';
 import {useEffect, useRef, useState} from 'react';
 import YouTube, {YouTubeEvent} from 'react-youtube';
 import {ItemInterface} from '../../utils/arms/playlistContents/state';
 import {getThumbnailsFromItem, toHHMMSS} from '../../utils/Functions';
 import './styles.css';
+
+enum playerStateEnum {
+    NOT_INICIATED = -1,
+    BUFFERING = 3
+}
 
 function BottomPlayerBar({
     playlistId,
@@ -35,6 +51,7 @@ function BottomPlayerBar({
     const [volume, setVolume] = useState<number | number[]>(0);
     const [isMuted, setIsMuted] = useState(false);
     const [isIFrameToggled, setIsIFrameToggled] = useState(false);
+    const [playerState, setPlayerState] = useState(-1);
 
     const progressRef = useRef(() => {});
     useEffect(() => {
@@ -97,6 +114,14 @@ function BottomPlayerBar({
         }
     };
 
+    const displayPlayButton = () => {
+        if ([playerStateEnum.NOT_INICIATED, playerStateEnum.BUFFERING].includes(playerState)) {
+            return <CircularProgress size={20} />;
+        }
+
+        return isPlayerPaused ? <PlayArrowOutlined /> : <PauseOutlined />;
+    };
+
     return playlistId !== undefined ? (
         <AppBar className={`bottom-player-bar ${isIFrameToggled ? 'toggle' : ''}`} sx={{bottom: 0}}>
             <Box className="youtube-iframe-wrapper" sx={{width: '100%'}}>
@@ -111,6 +136,7 @@ function BottomPlayerBar({
                         }
                     }}
                     onStateChange={e => {
+                        setPlayerState(e.target.playerInfo.playerState);
                         setPlayerVideoId(e.target.playerInfo.videoData.video_id);
                         setPlayerVideoIndex(e.target.playerInfo.playlistIndex);
                     }}
@@ -138,7 +164,7 @@ function BottomPlayerBar({
                             <SkipPreviousOutlined />
                         </IconButton>
                         <IconButton color="inherit" onClick={onPlayPauseClick}>
-                            {isPlayerPaused ? <PlayArrowOutlined /> : <PauseOutlined />}
+                            {displayPlayButton()}
                         </IconButton>
                         <IconButton color="inherit" onClick={onNextClick}>
                             <SkipNextOutlined />
