@@ -32,6 +32,7 @@ enum ItemActionEnum {
 function Content({
     player,
     isPlayerPaused,
+    playerVideoId,
     playerVideoIndex,
     setPlayerVideoIndex,
     setDisplayBottomPlayer,
@@ -42,6 +43,7 @@ function Content({
 }: {
     player: YouTubeEvent['target'];
     isPlayerPaused: boolean;
+    playerVideoId: string;
     playerVideoIndex: number | undefined;
     setPlayerVideoIndex: Function;
     setDisplayBottomPlayer: Function;
@@ -207,7 +209,7 @@ function Content({
                     <div key={Item.id}>
                         <VideoItem
                             Item={Item}
-                            isVideoCued={playerVideoIndex === index}
+                            isVideoCued={playerVideoIndex === index && playerVideoId === Item.contentDetails.videoId}
                             isPlayerPaused={isPlayerPaused}
                             handleDeleteClick={handleDeleteClick}
                             handleMoreMenu={handleMoreMenu}

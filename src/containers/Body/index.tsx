@@ -18,6 +18,7 @@ function Body() {
 
     const isUserLogin = useAppSelector(selectIsUserLogin);
     const [player, setPlayer] = useState<YouTubeEvent['target']>();
+    const [playerVideoId, setPlayerVideoId] = useState('');
     const [playerVideoIndex, setPlayerVideoIndex] = useState<number | undefined>();
     const [displayBottomPlayer, setDisplayBottomPlayer] = useState(false);
     const [isPlayerPaused, setIsPlayerPaused] = useState(true);
@@ -46,6 +47,7 @@ function Body() {
                                 <PlaylistContent
                                     player={player}
                                     isPlayerPaused={isPlayerPaused}
+                                    playerVideoId={playerVideoId}
                                     playerVideoIndex={playerVideoIndex}
                                     setPlayerVideoIndex={setPlayerVideoIndex}
                                     setDisplayBottomPlayer={setDisplayBottomPlayer}
@@ -62,6 +64,7 @@ function Body() {
                 setPlayer={setPlayer}
                 isPlayerPaused={isPlayerPaused}
                 setIsPlayerPaused={setIsPlayerPaused}
+                setPlayerVideoId={setPlayerVideoId}
                 playlistId={currentCuePlaylistId}
                 playerVideoIndex={playerVideoIndex}
                 setPlayerVideoIndex={setPlayerVideoIndex}

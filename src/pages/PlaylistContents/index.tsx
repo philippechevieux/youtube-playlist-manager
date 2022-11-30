@@ -25,6 +25,7 @@ import {YouTubeEvent} from 'react-youtube';
 function PlaylistContent({
     player,
     isPlayerPaused,
+    playerVideoId,
     playerVideoIndex,
     setPlayerVideoIndex,
     setDisplayBottomPlayer,
@@ -33,6 +34,7 @@ function PlaylistContent({
 }: {
     player: YouTubeEvent['target'];
     isPlayerPaused: boolean;
+    playerVideoId: string;
     playerVideoIndex: number | undefined;
     setPlayerVideoIndex: Function;
     setDisplayBottomPlayer: Function;
@@ -74,6 +76,7 @@ function PlaylistContent({
                 <Content
                     player={player}
                     isPlayerPaused={isPlayerPaused}
+                    playerVideoId={playerVideoId}
                     playerVideoIndex={playerVideoIndex}
                     setPlayerVideoIndex={setPlayerVideoIndex}
                     setDisplayBottomPlayer={setDisplayBottomPlayer}

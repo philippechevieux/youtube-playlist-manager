@@ -11,6 +11,7 @@ function BottomPlayer({
     playlistId,
     playerVideoIndex,
     setPlayerVideoIndex,
+    setPlayerVideoId,
     visible
 }: {
     player: YouTubeEvent['target'];
@@ -20,6 +21,7 @@ function BottomPlayer({
     playlistId: string;
     playerVideoIndex: number | undefined;
     setPlayerVideoIndex: Function;
+    setPlayerVideoId: Function;
     visible: boolean;
 }) {
     const contentItem = useAppSelector(state =>
@@ -37,6 +39,7 @@ function BottomPlayer({
                 contentItem={contentItem}
                 isPlayerPaused={isPlayerPaused}
                 setIsPlayerPaused={setIsPlayerPaused}
+                setPlayerVideoId={setPlayerVideoId}
             />
         </div>
     );

@@ -15,7 +15,8 @@ function BottomPlayerBar({
     setPlayerVideoIndex,
     contentItem,
     isPlayerPaused,
-    setIsPlayerPaused
+    setIsPlayerPaused,
+    setPlayerVideoId
 }: {
     playlistId: string | undefined;
     player: YouTubeEvent['target'];
@@ -25,6 +26,7 @@ function BottomPlayerBar({
     contentItem: ItemInterface | undefined;
     isPlayerPaused: boolean;
     setIsPlayerPaused: Function;
+    setPlayerVideoId: Function;
 }) {
     const [shouldSliderBeDisplayed, setShouldSliderBeDisplayed] = useState(false);
     const [progress, setProgress] = useState(0);
@@ -101,18 +103,15 @@ function BottomPlayerBar({
                 <YouTube
                     className="youtube-iframe"
                     onReady={e => {
-                        console.log('iframe ready');
-                        console.log('target : ', e.target);
-                        console.log('playlistId to cue : ', playlistId);
-
                         setPlayer(e.target);
                         setVolume(e.target.getVolume());
 
-                        if (playerVideoIndex) {
+                        if (playerVideoIndex !== undefined) {
                             e.target.playVideoAt(playerVideoIndex);
                         }
                     }}
                     onStateChange={e => {
+                        setPlayerVideoId(e.target.playerInfo.videoData.video_id);
                         setPlayerVideoIndex(e.target.playerInfo.playlistIndex);
                     }}
                     onPlay={() => setIsPlayerPaused(false)}
