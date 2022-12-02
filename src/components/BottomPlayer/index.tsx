@@ -1,13 +1,13 @@
-import {AppBar, Avatar, Box, Grid, Stack, Toolbar, Typography} from '@mui/material';
+import {AppBar, Box, Grid, Toolbar} from '@mui/material';
 import {useState} from 'react';
 import YouTube, {YouTubeEvent} from 'react-youtube';
 import {useAppSelector} from '../../app/hooks';
 import {selectPlaylistContentsItemsByIndex} from '../../utils/arms/playlistContents/selectors';
-import {getThumbnailsFromItem} from '../../utils/Functions';
 import SeekBar from './SeekBar';
 import './styles.css';
 import PlayerControlActions from './PlayerControlActions';
 import PlayerOtherActions from './PlayerOtherActions';
+import PlayerContentInfos from './PlayerContentInfos';
 
 export enum playerStateEnum {
     NOT_INICIATED = -1,
@@ -84,30 +84,7 @@ function BottomPlayer({
                                 />
                             </Grid>
                             <Grid item xs={4}>
-                                {contentItem !== undefined && (
-                                    <Stack direction="row" justifyContent="flex-start" alignItems="center">
-                                        <Avatar
-                                            className="avatar-thumbnail"
-                                            sx={{width: 79, height: 54}}
-                                            alt={contentItem.snippet.title}
-                                            src={getThumbnailsFromItem(contentItem)}
-                                            variant="square"
-                                        />
-                                        <div className="info">
-                                            <Typography className="video-info title" variant="h6" color="text.primary">
-                                                {contentItem.snippet.title}
-                                            </Typography>
-
-                                            <Typography
-                                                className="video-info author"
-                                                variant="body2"
-                                                color="text.secondary"
-                                            >
-                                                {contentItem.snippet.videoOwnerChannelTitle}
-                                            </Typography>
-                                        </div>
-                                    </Stack>
-                                )}
+                                {contentItem !== undefined && <PlayerContentInfos contentItem={contentItem} />}
                             </Grid>
                             <Grid item xs={4} textAlign={'end'} width={'100%'}>
                                 <PlayerOtherActions
