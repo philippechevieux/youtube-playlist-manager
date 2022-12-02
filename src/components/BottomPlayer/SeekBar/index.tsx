@@ -1,7 +1,7 @@
 import {Slider} from '@mui/material';
 import {useEffect, useRef, useState} from 'react';
 import {YouTubeEvent} from 'react-youtube';
-import {toHHMMSS} from '../../utils/Functions';
+import {toHHMMSS} from '../../../utils/Functions';
 
 function SeekBar({player}: {player: YouTubeEvent['target']}) {
     const [progress, setProgress] = useState(0);

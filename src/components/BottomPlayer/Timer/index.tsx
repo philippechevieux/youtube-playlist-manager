@@ -1,6 +1,6 @@
 import {useEffect, useRef, useState} from 'react';
 import {YouTubeEvent} from 'react-youtube';
-import {toHHMMSS} from '../../utils/Functions';
+import {toHHMMSS} from '../../../utils/Functions';
 
 function Timer({player}: {player: YouTubeEvent['target']}) {
     const [progress, setProgress] = useState(0);
