@@ -22,7 +22,9 @@ import {useEffect, useRef, useState} from 'react';
 import YouTube, {YouTubeEvent} from 'react-youtube';
 import {ItemInterface} from '../../utils/arms/playlistContents/state';
 import {getThumbnailsFromItem, toHHMMSS} from '../../utils/Functions';
+import SeekProgress from './SeekBar';
 import './styles.css';
+import Timer from './Timer';
 
 enum playerStateEnum {
     NOT_INICIATED = -1,
@@ -51,43 +53,10 @@ function BottomPlayerBar({
     setPlayerVideoId: Function;
 }) {
     const [shouldSliderBeDisplayed, setShouldSliderBeDisplayed] = useState(false);
-    const [progress, setProgress] = useState(0);
-    const [currentTime, setCurrentTime] = useState(0);
-    const [duration, setDuration] = useState(0);
     const [volume, setVolume] = useState<number | number[]>(0);
     const [isMuted, setIsMuted] = useState(false);
     const [isIFrameToggled, setIsIFrameToggled] = useState(false);
     const [playerState, setPlayerState] = useState(-1);
-
-    const progressRef = useRef(() => {});
-    useEffect(() => {
-        progressRef.current = () => {
-            if (progress > 100) {
-                setProgress(0);
-            } else {
-                if (player?.playerInfo.duration !== undefined && progress === 0) {
-                    setDuration(player.playerInfo.duration);
-                }
-
-                if (player?.playerInfo.currentTime !== undefined) {
-                    setCurrentTime(player.playerInfo.currentTime);
-                }
-
-                const newProgress = (currentTime / duration) * 100;
-                setProgress(newProgress);
-            }
-        };
-    });
-
-    useEffect(() => {
-        const timer = setInterval(() => {
-            progressRef.current();
-        }, 250);
-
-        return () => {
-            clearInterval(timer);
-        };
-    }, []);
 
     const onPlayPauseClick = () => {
         setIsPlayerPaused(!isPlayerPaused);
@@ -112,12 +81,6 @@ function BottomPlayerBar({
     const onMuteUnMuteClick = () => {
         setIsMuted(!isMuted);
         isMuted ? player.unMute() : player.mute();
-    };
-
-    const handleInputChange = (event: Event, value: number | number[]) => {
-        if (typeof value === 'number') {
-            player.seekTo(value);
-        }
     };
 
     const displayPlayButton = () => {
@@ -152,16 +115,7 @@ function BottomPlayerBar({
                 />
             </Box>
             <Box className="seek-bar-wrapper" sx={{width: '100%'}}>
-                <Slider
-                    className="seek-bar"
-                    value={currentTime}
-                    min={0}
-                    max={duration}
-                    color="secondary"
-                    onChange={handleInputChange}
-                    valueLabelDisplay="auto"
-                    valueLabelFormat={toHHMMSS}
-                ></Slider>
+                <SeekProgress player={player} />
             </Box>
             <Toolbar>
                 <Grid container spacing={3} alignItems="center" justifyContent="space-between">
@@ -176,9 +130,7 @@ function BottomPlayerBar({
                             <SkipNextOutlined />
                         </IconButton>
                         <Typography className="timer" variant="body2" color="text.secondary">
-                            <div>{toHHMMSS(currentTime)}</div>
-                            <div> / </div>
-                            <div>{toHHMMSS(duration)}</div>
+                            <Timer player={player} />
                         </Typography>
                     </Grid>
                     <Grid item xs={4}>
