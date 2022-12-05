@@ -49,5 +49,13 @@
     "video move success": "The video has been successfully moved from your playlist",
     "error occure while saving": "An error occurred while saving",
     "no video in your playlist": "No video in your playlist",
-    "no playlist found": "No playlist found"
+    "no playlist found": "No playlist found",
+    "play": "Play",
+    "pause": "Pause",
+    "previous title": "Previous title",
+    "next title": "Next title",
+    "classic playback": "Classic playback",
+    "shuffle playback": "Shuffle playback",
+    "mute": "Mute",
+    "unmute": "Unmute"
 }

@@ -1,5 +1,6 @@
 import {PauseOutlined, PlayArrowOutlined, SkipNextOutlined, SkipPreviousOutlined} from '@mui/icons-material';
-import {CircularProgress, IconButton, Typography} from '@mui/material';
+import {CircularProgress, IconButton, Tooltip, Typography} from '@mui/material';
+import {useTranslation} from 'react-i18next';
 import {YouTubeEvent} from 'react-youtube';
 import {playerStateEnum} from '..';
 import Timer from '../Timer';
@@ -15,6 +16,8 @@ function PlayerControlActions({
     isPlayerPaused: boolean;
     setIsPlayerPaused: Function;
 }) {
+    const {t} = useTranslation();
+
     const onPlayPauseClick = () => {
         setIsPlayerPaused(!isPlayerPaused);
         isPlayerPaused ? player.playVideo() : player.pauseVideo();
@@ -38,15 +41,21 @@ function PlayerControlActions({
 
     return (
         <>
-            <IconButton color="inherit" onClick={onPreviousClick}>
-                <SkipPreviousOutlined />
-            </IconButton>
-            <IconButton color="inherit" onClick={onPlayPauseClick}>
-                {displayPlayButton()}
-            </IconButton>
-            <IconButton color="inherit" onClick={onNextClick}>
-                <SkipNextOutlined />
-            </IconButton>
+            <Tooltip title={t('previous title')}>
+                <IconButton color="inherit" onClick={onPreviousClick}>
+                    <SkipPreviousOutlined />
+                </IconButton>
+            </Tooltip>
+            <Tooltip title={isPlayerPaused ? t('play') : t('pause')}>
+                <IconButton color="inherit" onClick={onPlayPauseClick}>
+                    {displayPlayButton()}
+                </IconButton>
+            </Tooltip>
+            <Tooltip title={t('next title')}>
+                <IconButton color="inherit" onClick={onNextClick}>
+                    <SkipNextOutlined />
+                </IconButton>
+            </Tooltip>
             <Typography className="timer" variant="body2" color="text.secondary">
                 <Timer player={player} />
             </Typography>

@@ -50,5 +50,13 @@
     "video move success": "La vidéo a été déplacé de votre playlist avec succès",
     "error occure while saving": "Une erreur est survenue lors de l'enregistrement",
     "no video in your playlist": "Aucune vidéo dans votre playlist",
-    "no playlist found": "Aucune playlist trouvée"
+    "no playlist found": "Aucune playlist trouvée",
+    "play": "Lire",
+    "pause": "Mettre en pause",
+    "previous title": "Titre précédant",
+    "next title": "Titre suivant",
+    "classic playback": "Lecture classique",
+    "shuffle playback": "Lecture aléatoire",
+    "mute": "Couper le son",
+    "unmute": "Réactiver le son"
 }

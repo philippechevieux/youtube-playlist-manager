@@ -5,8 +5,9 @@ import {
     VolumeOffOutlined,
     VolumeUpOutlined
 } from '@mui/icons-material';
-import {IconButton, Slider, Stack} from '@mui/material';
+import {IconButton, Slider, Stack, Tooltip} from '@mui/material';
 import {useState} from 'react';
+import {useTranslation} from 'react-i18next';
 import {YouTubeEvent} from 'react-youtube';
 
 function PlayerOtherActions({
@@ -18,6 +19,8 @@ function PlayerOtherActions({
     isIFrameToggled: boolean;
     setIsIFrameToggled: Function;
 }) {
+    const {t} = useTranslation();
+
     const [volume, setVolume] = useState<number | number[]>(100);
     const [shouldSliderBeDisplayed, setShouldSliderBeDisplayed] = useState(false);
     const [isMuted, setIsMuted] = useState(false);
@@ -59,10 +62,26 @@ function PlayerOtherActions({
                 onMouseEnter={() => setShouldSliderBeDisplayed(true)}
                 onMouseLeave={() => setShouldSliderBeDisplayed(false)}
             >
-                {isMuted ? <VolumeOffOutlined /> : <VolumeUpOutlined />}
+                {isMuted ? (
+                    <Tooltip title={t('unmute')}>
+                        <VolumeOffOutlined />
+                    </Tooltip>
+                ) : (
+                    <Tooltip title={t('mute')}>
+                        <VolumeUpOutlined />
+                    </Tooltip>
+                )}
             </IconButton>
             <IconButton color="inherit" onClick={onShuffleClick}>
-                {isShuffle ? <ShuffleOnOutlined /> : <ShuffleOutlined />}
+                {isShuffle ? (
+                    <Tooltip title={t('classic playback')}>
+                        <ShuffleOnOutlined />
+                    </Tooltip>
+                ) : (
+                    <Tooltip title={t('shuffle playback')}>
+                        <ShuffleOutlined />
+                    </Tooltip>
+                )}
             </IconButton>
             <IconButton color="inherit" onClick={() => setIsIFrameToggled(!isIFrameToggled)}>
                 <ArrowDropDownOutlined className="drop-down-up-icon" fontSize="large" />
