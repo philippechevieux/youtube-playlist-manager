@@ -99,7 +99,7 @@ header.bottom-player-bar {
 
 .bottom-player-bar.toggle .youtube-iframe-wrapper{
     display: block;
-    bottom: 65px;
+    bottom: 64px;
     opacity: 1;
     transition: display 1s ease-in;
 }

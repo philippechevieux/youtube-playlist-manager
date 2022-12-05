@@ -1,8 +1,6 @@
 import {AppBar, Box, Grid, Toolbar} from '@mui/material';
 import {useState} from 'react';
 import YouTube, {YouTubeEvent} from 'react-youtube';
-import {useAppSelector} from '../../app/hooks';
-import {selectPlaylistContentsItemsByIndex} from '../../utils/arms/playlistContents/selectors';
 import SeekBar from './SeekBar';
 import './styles.css';
 import PlayerControlActions from './PlayerControlActions';
@@ -26,6 +24,7 @@ function BottomPlayer({
     playlistId,
     playerVideoIndex,
     setPlayerVideoIndex,
+    playerVideoId,
     setPlayerVideoId,
     visible
 }: {
@@ -36,13 +35,10 @@ function BottomPlayer({
     playlistId: string;
     playerVideoIndex: number | undefined;
     setPlayerVideoIndex: Function;
+    playerVideoId: string;
     setPlayerVideoId: Function;
     visible: boolean;
 }) {
-    const contentItem = useAppSelector(state =>
-        selectPlaylistContentsItemsByIndex(state, playlistId, playerVideoIndex)
-    );
-
     const [isIFrameToggled, setIsIFrameToggled] = useState(false);
     const [playerState, setPlayerState] = useState(playerStateEnum.NOT_INICIATED);
 
@@ -84,7 +80,7 @@ function BottomPlayer({
                                 />
                             </Grid>
                             <Grid item xs={4}>
-                                {contentItem !== undefined && <PlayerContentInfos contentItem={contentItem} />}
+                                <PlayerContentInfos playerVideoId={playerVideoId} />
                             </Grid>
                             <Grid item xs={4} textAlign={'end'} width={'100%'}>
                                 <PlayerOtherActions

@@ -64,6 +64,7 @@ function Body() {
                 setPlayer={setPlayer}
                 isPlayerPaused={isPlayerPaused}
                 setIsPlayerPaused={setIsPlayerPaused}
+                playerVideoId={playerVideoId}
                 setPlayerVideoId={setPlayerVideoId}
                 playlistId={currentCuePlaylistId}
                 playerVideoIndex={playerVideoIndex}

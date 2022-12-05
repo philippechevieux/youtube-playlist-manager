@@ -13,6 +13,7 @@ export interface ItemInterface {
     snippet: {
         title: string;
         videoOwnerChannelTitle: string;
+        channelTitle?: string;
         thumbnails: {
             high: {
                 url: string;
