@@ -1,29 +1,11 @@
-import {
-    List,
-    ListItem,
-    ListItemAvatar,
-    ListItemText,
-    Avatar,
-    Divider,
-    Typography,
-    IconButton,
-    Menu,
-    MenuItem,
-    Tooltip,
-    Snackbar,
-    Alert,
-    AlertColor
-} from '@mui/material';
+import {List, Divider, Menu, MenuItem, Snackbar, Alert, AlertColor} from '@mui/material';
 
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined';
 
 import './styles.css';
 import {useState} from 'react';
 import {IResourceId} from '../../../utils/api/interface';
-import {IPlaylistItemsContent} from '../../../utils/context/interface';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import {selectUserAccessToken} from '../../../utils/arms/user/selectors';
 import {
@@ -39,13 +21,37 @@ import {
 } from '../../../utils/arms/playlistContents/middleware';
 import {useTranslation} from 'react-i18next';
 import ConfirmActionDialog from '../../../components/Dialog/ConfirmActionDialog';
+import VideoItem from '../../../components/VideoItem';
+import {YouTubeEvent} from 'react-youtube';
 
 enum ItemActionEnum {
     MOVE_TO = 'move_to',
     SAVE_IN = 'save_in'
 }
 
-function Content({playlistId, playlistsListItems}: {playlistId: string; playlistsListItems: ContentsInterface}) {
+function Content({
+    player,
+    isPlayerPaused,
+    playerVideoId,
+    playerVideoIndex,
+    setPlayerVideoIndex,
+    setDisplayBottomPlayer,
+    currentCuePlaylistId,
+    setCurrentCuePlaylistId,
+    playlistId,
+    playlistsListItems
+}: {
+    player: YouTubeEvent['target'];
+    isPlayerPaused: boolean;
+    playerVideoId: string;
+    playerVideoIndex: number | undefined;
+    setPlayerVideoIndex: Function;
+    setDisplayBottomPlayer: Function;
+    currentCuePlaylistId: string;
+    setCurrentCuePlaylistId: Function;
+    playlistId: string;
+    playlistsListItems: ContentsInterface;
+}) {
     const dispatch = useAppDispatch();
 
     const {t} = useTranslation();
@@ -180,65 +186,35 @@ function Content({playlistId, playlistsListItems}: {playlistId: string; playlist
         setSelectPlaylistDialogVisible(true);
     };
 
-    const getThumbnailsFromItem = (Item: IPlaylistItemsContent): string => {
-        let pathOrUrlOfThumbnails = '';
+    const handleAvatarClick = (videoIndex: number) => {
+        setPlayerVideoIndex(videoIndex);
 
-        if (Item.snippet.thumbnails !== undefined) {
-            if (Item.snippet.thumbnails.high !== undefined) {
-                pathOrUrlOfThumbnails = Item.snippet.thumbnails.high.url;
-            }
+        if (playlistId !== currentCuePlaylistId) {
+            setCurrentCuePlaylistId(playlistId);
         }
 
-        return pathOrUrlOfThumbnails;
+        if (videoIndex !== playerVideoIndex) {
+            player.playVideoAt(videoIndex);
+        } else {
+            isPlayerPaused ? player.playVideo() : player.pauseVideo();
+        }
+
+        setDisplayBottomPlayer(true);
     };
 
     return (
         <>
             <List className="list-container">
                 {Object.values(playlistsListItems.items).map((Item, index) => (
-                    <div className="item" key={Item.id}>
-                        <ListItem>
-                            <ListItemAvatar>
-                                <Avatar
-                                    sx={{width: 120, height: 85}}
-                                    alt={Item.snippet.title}
-                                    src={getThumbnailsFromItem(Item)}
-                                    variant="square"
-                                />
-                            </ListItemAvatar>
-                            <ListItemText
-                                className="list-item-text list-item-text-margin"
-                                primary={
-                                    <Typography className="primary" variant="h6" color="text.primary">
-                                        {Item.snippet.title}
-                                    </Typography>
-                                }
-                                secondary={
-                                    <Typography className="secondary" variant="body2" color="text.secondary">
-                                        {Item.snippet.videoOwnerChannelTitle}
-                                    </Typography>
-                                }
-                            />
-                            <Tooltip title={t('delete')}>
-                                <IconButton
-                                    size="large"
-                                    aria-haspopup="true"
-                                    onClick={() => handleDeleteClick(Item.id)}
-                                >
-                                    <DeleteOutlineOutlinedIcon />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title={t('other actions')}>
-                                <IconButton
-                                    size="large"
-                                    aria-haspopup="true"
-                                    aria-controls="menu-more"
-                                    onClick={event => handleMoreMenu(event, Item.snippet.resourceId, Item.id)}
-                                >
-                                    <MoreVertOutlinedIcon />
-                                </IconButton>
-                            </Tooltip>
-                        </ListItem>
+                    <div key={Item.id}>
+                        <VideoItem
+                            Item={Item}
+                            isVideoCued={playerVideoIndex === index && playerVideoId === Item.contentDetails.videoId}
+                            isPlayerPaused={isPlayerPaused}
+                            handleDeleteClick={handleDeleteClick}
+                            handleMoreMenu={handleMoreMenu}
+                            handleAvatarClick={() => handleAvatarClick(index)}
+                        />
 
                         {index + 1 < playlistsListItems.items.length && (
                             <Divider className="divider" variant="middle" component="li" />

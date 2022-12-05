@@ -13,12 +13,16 @@ export interface ItemInterface {
     snippet: {
         title: string;
         videoOwnerChannelTitle: string;
+        channelTitle?: string;
         thumbnails: {
             high: {
                 url: string;
             };
         };
         resourceId: ResourceIdInterface;
+    };
+    contentDetails: {
+        videoId: string;
     };
 }
 
@@ -33,9 +37,12 @@ export interface PlaylistContentsDataInterface {
     items: Array<ItemInterface>;
 }
 
-export const playlistContentsDefaultData: PlaylistContentsDataInterface = {
-    playlistId: '',
-    prevPageToken: undefined,
-    nextPageToken: undefined,
-    items: []
+export interface PlaylistsContentsDataInterface {
+    playlists: {
+        [playlistId: string]: PlaylistContentsDataInterface;
+    };
+}
+
+export const playlistContentsDefaultData: PlaylistsContentsDataInterface = {
+    playlists: {}
 };

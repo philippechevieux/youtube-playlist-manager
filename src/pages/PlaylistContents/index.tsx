@@ -1,38 +1,55 @@
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {AppBar, Toolbar, IconButton, Button, Typography, Box, Tooltip} from '@mui/material';
+import {AppBar, Toolbar, IconButton, Typography, Box, Tooltip, Button} from '@mui/material';
 import {useHistory} from 'react-router-dom';
 
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 import './styles.css';
-import {useAppDispatch, useAppSelector} from '../../app/hooks';
+import {useAppSelector} from '../../app/hooks';
 import {selectUserAccessToken} from '../../utils/arms/user/selectors';
 import {useFetchPlaylistContents} from './hook';
 import {
     selectPlaylistContentsItems,
     selectPlaylistContentsNextPageToken
 } from '../../utils/arms/playlistContents/selectors';
-import {removePlaylistContents} from '../../utils/arms/playlistContents/reducer';
 import {selectPlaylistItem} from '../../utils/arms/playlists/selectors';
 import EditPlaylistDialog from '../../containers/Dialog/EditPlaylistDialog';
 import EmptyIllustration from '../../components/Assets/EmptyIllustration';
 import {useTranslation} from 'react-i18next';
 import Content from '../../containers/PlaylistContents/Content';
 import ContentSkeleton from '../../containers/PlaylistContents/Content/Skeleton';
+import {YouTubeEvent} from 'react-youtube';
 
-function PlaylistContent() {
+function PlaylistContent({
+    player,
+    isPlayerPaused,
+    playerVideoId,
+    playerVideoIndex,
+    setPlayerVideoIndex,
+    setDisplayBottomPlayer,
+    currentCuePlaylistId,
+    setCurrentCuePlaylistId
+}: {
+    player: YouTubeEvent['target'];
+    isPlayerPaused: boolean;
+    playerVideoId: string;
+    playerVideoIndex: number | undefined;
+    setPlayerVideoIndex: Function;
+    setDisplayBottomPlayer: Function;
+    currentCuePlaylistId: string;
+    setCurrentCuePlaylistId: Function;
+}) {
     const {t} = useTranslation();
-    const dispatch = useAppDispatch();
 
     let history = useHistory();
     const {playlistId} = useParams<{playlistId: string}>();
 
     const playlistItem = useAppSelector(state => selectPlaylistItem(state, playlistId));
     const userAccessToken = useAppSelector(selectUserAccessToken);
-    const nextPageTokenInStore = useAppSelector(selectPlaylistContentsNextPageToken);
-    const playlistContentsItems = useAppSelector(selectPlaylistContentsItems);
+    const nextPageTokenInStore = useAppSelector(state => selectPlaylistContentsNextPageToken(state, playlistId));
+    const playlistContentsItems = useAppSelector(state => selectPlaylistContentsItems(state, playlistId));
 
     const [nextPageToken, setNextPageToken] = useState<string | undefined>(undefined);
     const [isEditPlaylistDialogOpen, setIsPlaylistDialogOpen] = useState(false);
@@ -44,7 +61,6 @@ function PlaylistContent() {
     );
 
     const handleHomeClick = () => {
-        dispatch(removePlaylistContents({}));
         history.push('/playlists');
     };
 
@@ -53,10 +69,23 @@ function PlaylistContent() {
     };
 
     const displayPlaylistContent = () => {
-        let content, skeleton;
+        let content, skeleton, loadMore;
 
         if (playlistContentsItems.length > 0) {
-            content = <Content playlistId={playlistId} playlistsListItems={{items: playlistContentsItems}} />;
+            content = (
+                <Content
+                    player={player}
+                    isPlayerPaused={isPlayerPaused}
+                    playerVideoId={playerVideoId}
+                    playerVideoIndex={playerVideoIndex}
+                    setPlayerVideoIndex={setPlayerVideoIndex}
+                    setDisplayBottomPlayer={setDisplayBottomPlayer}
+                    currentCuePlaylistId={currentCuePlaylistId}
+                    setCurrentCuePlaylistId={setCurrentCuePlaylistId}
+                    playlistId={playlistId}
+                    playlistsListItems={{items: playlistContentsItems}}
+                />
+            );
         }
 
         if (arePlaylistContentsLoaded && playlistContentsItems.length === 0) {
@@ -67,10 +96,26 @@ function PlaylistContent() {
             skeleton = <ContentSkeleton isFirstLoad={playlistContentsItems.length === 0} />;
         }
 
+        if (nextPageTokenInStore !== undefined) {
+            loadMore = (
+                <div className="see-more-container">
+                    <Button
+                        variant="outlined"
+                        onClick={() => {
+                            loadMorePlaylisContents();
+                        }}
+                    >
+                        {t('see more')} ...
+                    </Button>
+                </div>
+            );
+        }
+
         return (
             <div>
                 {content}
                 {skeleton}
+                {loadMore}
             </div>
         );
     };
@@ -113,19 +158,6 @@ function PlaylistContent() {
             </AppBar>
 
             {displayPlaylistContent()}
-
-            {playlistContentsItems.length > 0 && nextPageTokenInStore !== undefined && (
-                <div className="see-more-container">
-                    <Button
-                        variant="outlined"
-                        onClick={() => {
-                            loadMorePlaylisContents();
-                        }}
-                    >
-                        {t('see more')} ...
-                    </Button>
-                </div>
-            )}
 
             <EditPlaylistDialog
                 visible={isEditPlaylistDialogOpen}

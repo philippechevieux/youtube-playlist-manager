@@ -1,0 +1,120 @@
+.bottom-player.hidden {
+    display: none;
+}
+
+.bottom-player {
+    display: block;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    z-index: 2;
+}
+
+button.volume-icon {
+    margin-left: 10px;
+}
+
+span.volume-slider {
+    min-width: 75px;
+    max-width: 100px;
+}
+
+span.volume-slider.hidden {
+    display: none;
+    pointer-events: none;
+}
+
+header.bottom-player-bar {
+    position: sticky;
+    bottom: 0;
+}
+
+.bottom-player-bar .video-info {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 100%;
+}
+
+.bottom-player-bar .timer {
+    font-size: 0.80rem;
+    margin-left: 10px;
+    display: inline-block;
+}
+
+.bottom-player-bar .timer > div{
+    display: inline-block;
+}
+
+.bottom-player-bar .timer > div:nth-child(1),
+.bottom-player-bar .timer > div:nth-child(3){
+    width: 30px;
+}
+
+.bottom-player-bar .timer > div:nth-child(2){
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.bottom-player-bar .title {
+    font-size: 1rem
+}
+
+.bottom-player-bar .author {
+    font-size: 0.75rem
+}
+
+.bottom-player-bar div.info {
+    margin-left: 10px;
+    width: 100%;
+}
+
+.bottom-player-bar span.seek-bar {
+    border-radius: 0px;
+    height: 3px;
+}
+
+.bottom-player-bar span.seek-bar span.MuiSlider-rail {
+    color: #fff
+}
+
+.bottom-player-bar div.seek-bar-wrapper {
+    position: absolute;
+    top: -15px;
+    z-index: 1;
+}
+
+.bottom-player-bar .youtube-iframe-wrapper {
+    text-align: center;
+    height: 350px;
+    margin-top: 0px;
+
+    display: none;
+    position: absolute;
+    bottom: -350px;
+    opacity: 0;
+    transition: display 1s ease-out;
+}
+
+.bottom-player-bar.toggle .youtube-iframe-wrapper{
+    display: block;
+    bottom: 64px;
+    opacity: 1;
+    transition: display 1s ease-in;
+}
+
+.bottom-player-bar .youtube-iframe {
+    height: 100%;
+    width: 100%;
+}
+
+.bottom-player-bar .drop-down-up-icon {
+    transform: rotate(0deg);
+    transition: transform 250ms linear;
+}
+
+.bottom-player-bar.toggle .drop-down-up-icon{
+    transform: rotate(180deg);
+    transition: transform 250ms linear;
+}

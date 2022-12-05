@@ -57,11 +57,20 @@ function requestUserInfoApi(accessToken: string) {
         });
 }
 
+export function getYoutubeVideoData(accessToken: string, playerVideoId?: string) {
+    const urlParams: IApiUrlParams = {
+        part: 'snippet,contentDetails',
+        id: playerVideoId
+    };
+
+    return requestYoutubeApi(accessToken, RequestMethodEnum.GET, 'videos', urlParams);
+}
+
 export function getYoutubePlaylists(accessToken: string, pageToken?: string, playlistIds?: Array<String>) {
     const urlParams: IApiUrlParams = {
         part: 'snippet,contentDetails,id,localizations,player,snippet,status',
         mine: true,
-        maxResults: 10
+        maxResults: 50
     };
 
     if (pageToken !== undefined) {
