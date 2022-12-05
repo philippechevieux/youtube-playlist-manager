@@ -16,8 +16,8 @@ button.volume-icon {
 }
 
 span.volume-slider {
-    min-width: 100px;
-    max-width: 150px;
+    min-width: 75px;
+    max-width: 100px;
 }
 
 span.volume-slider.hidden {
