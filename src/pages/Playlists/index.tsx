@@ -6,7 +6,6 @@ import './styles.css';
 
 import ViewModuleOutlinedIcon from '@mui/icons-material/ViewModuleOutlined';
 import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
-import SortOutlinedIcon from '@mui/icons-material/SortOutlined';
 import {useHistory} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {selectUserAccessToken, selectUserPlaylistDisplayMode} from '../../utils/arms/user/selectors';
@@ -99,19 +98,6 @@ function PlaylistList() {
             <AppBar position="static">
                 <Box sx={{flexGrow: 1}}>
                     <Toolbar>
-                        <Typography variant="body1" color="text.primary">
-                            {t('sort')}
-                        </Typography>
-                        <IconButton
-                            className="button-filter"
-                            size="large"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={() => console.log('test')}
-                            color="inherit"
-                        >
-                            <SortOutlinedIcon />
-                        </IconButton>
                         <Box sx={{flexGrow: 1}} />
                         <Typography variant="body1" color="text.primary">
                             {t('display')}

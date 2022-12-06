@@ -6,7 +6,6 @@ import './styles.css';
 import PlayerControlActions from './PlayerControlActions';
 import PlayerOtherActions from './PlayerOtherActions';
 import PlayerContentInfos from './PlayerContentInfos';
-import {useTranslation} from 'react-i18next';
 
 export enum playerStateEnum {
     NOT_INICIATED = -1,
