@@ -11,6 +11,11 @@
     box-sizing: border-box;
 }
 
+.grid-container .card {
+    background-color: #0000001a;
+    border-color: #5656561f;
+}
+
 .grid-container .card:hover {
     border: 2px solid rgba(255, 255, 255, 0.08);
     box-sizing: border-box;

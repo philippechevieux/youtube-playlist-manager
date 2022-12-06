@@ -10,6 +10,7 @@
     right: 0px;
     z-index: 2;
     box-shadow: -0px -10px 10px #00000061;
+    background-image: linear-gradient(to right, #272727, #392a3c, #592544, #7a1938, #90161c);
 }
 
 button.volume-icon {
@@ -29,6 +30,7 @@ span.volume-slider.hidden {
 header.bottom-player-bar {
     position: sticky;
     bottom: 0;
+    background-color: #000000b3;
 }
 
 .bottom-player-bar .video-info {

@@ -1,10 +1,11 @@
 body {
-    background-color: #161616;
+    background-image: linear-gradient(to right, #272727, #392a3c, #592544, #7a1938, #90161c);
+    background-attachment: fixed;
     margin: 0;
 }
 
 .body-spacer {
-    background-color: #121212;
+    background-image: linear-gradient(to right, #272727, #392a3c, #592544, #7a1938, #90161c);
     height: 30px;
     width: 100%;
     margin-top: 64px;
@@ -14,9 +15,8 @@ body {
 }
 
 .body-container {
-    background-color: #272727;
+    background-color: #00000052;
     margin: auto;
-    margin-bottom: 95px;
     max-width: 80%;
 }
 
