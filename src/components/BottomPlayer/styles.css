@@ -9,8 +9,8 @@
     left: 0px;
     right: 0px;
     z-index: 2;
-    box-shadow: -0px -10px 10px #00000061;
-    background-image: linear-gradient(to right, #272727, #392a3c, #592544, #7a1938, #90161c);
+    box-shadow: -0px -5px 10px #00000061;
+    background-image: linear-gradient(to right, #272727, #2f2532, #402033, #511729, #5c1014);
 }
 
 button.volume-icon {

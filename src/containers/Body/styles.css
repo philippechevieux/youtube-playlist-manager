@@ -1,11 +1,11 @@
 body {
-    background-image: linear-gradient(to right, #272727, #392a3c, #592544, #7a1938, #90161c);
+    background-image: linear-gradient(to right, #272727, #2f2532, #402033, #511729, #5c1014);
     background-attachment: fixed;
     margin: 0;
 }
 
 .body-spacer {
-    background-image: linear-gradient(to right, #272727, #392a3c, #592544, #7a1938, #90161c);
+    background-image: linear-gradient(to right, #272727, #2f2532, #402033, #511729, #5c1014);
     height: 30px;
     width: 100%;
     margin-top: 64px;
