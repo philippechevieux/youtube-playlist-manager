@@ -2,7 +2,6 @@ div.login-screen-container {
     padding: 60px 30px;
     display: grid;
     grid-template-columns: 1.5fr 2fr;
-    background-color: #00000052;
     border-radius: 10px;
     border: 1px solid #ffffff17;
 }
