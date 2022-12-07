@@ -9,7 +9,7 @@ function PlayerContentInfos({playerVideoId}: {playerVideoId: string}) {
     const {areVideoDataLoading, areVideoDataLoaded, videoData} = useFetchVideoData(userAccessToken, playerVideoId);
 
     return (
-        <Stack direction="row" justifyContent="flex-start" alignItems="center">
+        <Stack direction="row" justifyContent="center" alignItems="center">
             {videoData && areVideoDataLoaded && (
                 <Avatar
                     className="avatar-thumbnail"

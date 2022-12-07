@@ -7,17 +7,17 @@
 }
 
 .grid-container .card {
-    border: 2px solid #1e1e1e;
+    border: 1px solid #1e1e1e;
     box-sizing: border-box;
 }
 
 .grid-container .card {
     background-color: #0000001a;
-    border-color: #5656561f;
+    border-color: #56565600;
 }
 
 .grid-container .card:hover {
-    border: 2px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     box-sizing: border-box;
     background-color: rgba(255, 255, 255, 0.08);
 }

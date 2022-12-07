@@ -5,12 +5,34 @@
 .bottom-player {
     display: block;
     position: fixed;
-    bottom: 0px;
+    bottom: 10px;
     left: 0px;
     right: 0px;
     z-index: 2;
     box-shadow: -0px -5px 10px #00000061;
+    border-radius: 10px;
+    width: 80%;
+    margin: auto;
+}
+
+.bottom-player header {
     background-image: linear-gradient(to right, #272727, #2f2532, #402033, #511729, #5c1014);
+}
+
+.bottom-player header > .MuiToolbar-root{
+    background-color: #0000005e;
+    border: 1px solid #ffffff17;
+}
+
+.bottom-player header,
+.bottom-player header> .MuiToolbar-root {
+    border-radius: 10px;
+    height: 95px;
+}
+
+.bottom-player header.bottom-player-bar.toggle ,
+.bottom-player header.bottom-player-bar.toggle > .MuiToolbar-root {
+    border-radius: 0px 0px 10px 10px;
 }
 
 button.volume-icon {
@@ -68,13 +90,17 @@ header.bottom-player-bar {
     font-size: 0.75rem
 }
 
+.bottom-player-bar .item-infos {
+    margin-top: 10px;
+}
+
 .bottom-player-bar div.info {
     margin-left: 10px;
-    width: 100%;
+    width: auto;
+    min-width: 100px;
 }
 
 .bottom-player-bar span.seek-bar {
-    border-radius: 0px;
     height: 3px;
 }
 
@@ -100,11 +126,17 @@ header.bottom-player-bar {
     transition: display 1s ease-out;
 }
 
-.bottom-player-bar.toggle .youtube-iframe-wrapper{
+.bottom-player-bar.toggle .youtube-iframe-wrapper {
     display: block;
-    bottom: 64px;
+    bottom: 94px;
     opacity: 1;
     transition: display 1s ease-in;
+}
+
+.bottom-player-bar.toggle .youtube-iframe-wrapper iframe {
+    border-radius: 10px 10px 0px 0px;
+    border: 1px solid #ffffff17;
+    box-shadow: -0px -5px 10px #00000061;
 }
 
 .bottom-player-bar .youtube-iframe {
