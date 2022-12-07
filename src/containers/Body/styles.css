@@ -19,14 +19,13 @@ body {
     max-width: 80%;
     background-color: #00000036;
     border-radius: 10px;
-    margin-bottom: 35px;
+    margin-bottom: 25px;
 }
 
 .body-container header {
     position: sticky;
     top: 94px;
     z-index: 2;
-    border-radius: 10px 10px 0px 0px;
     background-image: linear-gradient(to right, #272727, #2f2532, #402033, #511729, #5c1014);
 }
 
