@@ -43,7 +43,7 @@ function BottomPlayer({
     const [playerState, setPlayerState] = useState(playerStateEnum.NOT_INICIATED);
 
     return (
-        <div className={`bottom-player ${!visible ? 'hidden' : ''}`}>
+        <div className={`bottom-player mui-fixed ${!visible ? 'hidden' : ''}`}>
             {playlistId !== undefined && (
                 <div className={`bottom-player-bar ${isIFrameToggled ? 'toggle' : ''}`}>
                     <Box className="youtube-iframe-wrapper">

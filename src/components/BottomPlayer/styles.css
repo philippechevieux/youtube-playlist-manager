@@ -4,13 +4,13 @@
 
 .bottom-player {
     display: block;
-    position: sticky;
+    position: fixed;
     bottom: 0px;
     left: 0px;
     right: 0px;
     z-index: 2;
     border-radius: 10px;
-    width: calc(80% + 40px);
+    width: 82%;
     margin: auto;
     padding-bottom: 10px;
     background-image: linear-gradient(to right, #272727, #2f2532, #402033, #511729, #5c1014);
@@ -49,12 +49,6 @@ span.volume-slider {
 span.volume-slider.hidden {
     display: none;
     pointer-events: none;
-}
-
-div.bottom-player-bar {
-    position: sticky;
-    bottom: 0;
-    background-color: #000000b3;
 }
 
 .bottom-player-bar .video-info {
