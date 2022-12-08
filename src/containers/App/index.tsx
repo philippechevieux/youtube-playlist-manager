@@ -21,8 +21,8 @@ function App() {
                     },
                     secondary: {
                         light: '#eb6652',
-                        main: '#eb6652',
-                        dark: '#ff4b31',
+                        main: '#ff4b31',
+                        dark: '#b33321',
                         contrastText: '#fff'
                     }
                 },
