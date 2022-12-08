@@ -3,10 +3,6 @@
     font-weight: 200;
 }
 
-.app-container {
-    padding-bottom: 95px;
-}
-
 /* width */
 ::-webkit-scrollbar {
     width: 10px;

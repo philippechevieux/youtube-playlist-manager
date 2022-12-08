@@ -45,8 +45,8 @@ function BottomPlayer({
     return (
         <div className={`bottom-player ${!visible ? 'hidden' : ''}`}>
             {playlistId !== undefined && (
-                <AppBar className={`bottom-player-bar ${isIFrameToggled ? 'toggle' : ''}`} sx={{bottom: 0}}>
-                    <Box className="youtube-iframe-wrapper" sx={{width: '100%'}}>
+                <div className={`bottom-player-bar ${isIFrameToggled ? 'toggle' : ''}`}>
+                    <Box className="youtube-iframe-wrapper">
                         <YouTube
                             className="youtube-iframe"
                             onReady={e => {
@@ -89,7 +89,7 @@ function BottomPlayer({
                             </Grid>
                         </Grid>
                     </Toolbar>
-                </AppBar>
+                </div>
             )}
         </div>
     );

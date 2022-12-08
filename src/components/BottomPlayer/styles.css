@@ -4,7 +4,7 @@
 
 .bottom-player {
     display: block;
-    position: fixed;
+    position: sticky;
     bottom: 0px;
     left: 0px;
     right: 0px;
@@ -16,24 +16,24 @@
     background-image: linear-gradient(to right, #272727, #2f2532, #402033, #511729, #5c1014);
 }
 
-.bottom-player header {
+.bottom-player div.bottom-player-bar {
     box-shadow: -0px -5px 10px #00000061;
     background-image: linear-gradient(to right, #272727, #2f2532, #402033, #511729, #5c1014);
 }
 
-.bottom-player header > .MuiToolbar-root{
+.bottom-player div.bottom-player-bar > .MuiToolbar-root{
     background-color: #0000005e;
     border: 1px solid #ffffff17;
 }
 
-.bottom-player header,
-.bottom-player header> .MuiToolbar-root {
+.bottom-player div.bottom-player-bar,
+.bottom-player div.bottom-player-bar> .MuiToolbar-root {
     border-radius: 10px;
     height: 95px;
 }
 
-.bottom-player header.bottom-player-bar.toggle ,
-.bottom-player header.bottom-player-bar.toggle > .MuiToolbar-root {
+.bottom-player div.bottom-player-bar.toggle ,
+.bottom-player div.bottom-player-bar.toggle > .MuiToolbar-root {
     border-radius: 0px 0px 10px 10px;
 }
 
@@ -51,7 +51,7 @@ span.volume-slider.hidden {
     pointer-events: none;
 }
 
-header.bottom-player-bar {
+div.bottom-player-bar {
     position: sticky;
     bottom: 0;
     background-color: #000000b3;
