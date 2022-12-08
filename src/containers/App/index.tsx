@@ -28,6 +28,16 @@ function App() {
                 },
                 typography: {
                     fontFamily: 'Poppins, sans-serif'
+                },
+                components: {
+                    MuiCard: {
+                        styleOverrides: {
+                            root: {
+                                backgroundColor: '#00000021',
+                                border: '1px solid #5656562e'
+                            }
+                        }
+                    }
                 }
             }),
         []

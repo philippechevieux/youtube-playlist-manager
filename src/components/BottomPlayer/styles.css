@@ -124,7 +124,7 @@ span.volume-slider.hidden {
 
 .bottom-player-bar.toggle .youtube-iframe-wrapper {
     display: block;
-    bottom: 94px;
+    bottom: 104px;
     opacity: 1;
     transition: display 1s ease-in;
 }
