@@ -120,7 +120,7 @@ div.bottom-player-bar {
     text-align: center;
     height: 350px;
     margin-top: 0px;
-
+    width: 100%;
     display: none;
     position: absolute;
     bottom: -350px;
