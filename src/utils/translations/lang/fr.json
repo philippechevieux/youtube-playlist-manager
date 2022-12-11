@@ -58,5 +58,6 @@
     "classic playback": "Lecture classique",
     "shuffle playback": "Lecture aléatoire",
     "mute": "Couper le son",
-    "unmute": "Réactiver le son"
+    "unmute": "Réactiver le son",
+    "create playlist": "Créer une playlist"
 }

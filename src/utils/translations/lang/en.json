@@ -57,5 +57,6 @@
     "classic playback": "Classic playback",
     "shuffle playback": "Shuffle playback",
     "mute": "Mute",
-    "unmute": "Unmute"
+    "unmute": "Unmute",
+    "create playlist": "Create a playlist"
 }

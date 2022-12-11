@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import {AppBar, Toolbar, IconButton, Button, Box, Typography, Tooltip, CircularProgress} from '@mui/material';
+import {AppBar, Toolbar, IconButton, Button, Box, Typography, Tooltip, CircularProgress, Fab} from '@mui/material';
 
 import './styles.css';
 
@@ -23,6 +23,7 @@ import {useTranslation} from 'react-i18next';
 import MosaicMode from '../../components/Playlists/MosaicMode';
 import ListMode from '../../components/Playlists/ListMode';
 import MosaicModeSkeleton from '../../components/Playlists/MosaicMode/Skeleton';
+import {AddOutlined} from '@material-ui/icons';
 
 function PlaylistList() {
     let history = useHistory();
@@ -98,6 +99,9 @@ function PlaylistList() {
             <AppBar position="static">
                 <Box sx={{flexGrow: 1}}>
                     <Toolbar>
+                        <Button startIcon={<AddOutlined />} variant="text">
+                            {t('create playlist')}
+                        </Button>
                         <Box sx={{flexGrow: 1}} />
                         <Typography variant="body1" color="text.primary">
                             {t('display')}
@@ -147,7 +151,6 @@ function PlaylistList() {
                     </Button>
                 </div>
             )}
-
             {playlistIdToEdit !== undefined && (
                 <EditPlaylistDialog
                     visible={isEditPlaylistDialogOpen}
