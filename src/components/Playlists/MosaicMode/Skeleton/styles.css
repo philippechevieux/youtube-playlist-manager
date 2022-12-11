@@ -1,11 +1,5 @@
 .grid-container.skeleton {
-    padding-top: 0px;
-}
-
-.grid-container.skeleton .card:hover {
-    border: 2px solid #1e1e1e;
-    box-sizing: border-box;
-    background-color: #121212;
+    padding-top: 24px;
 }
 
 .grid-container.skeleton .mosaic-mode-skeleton-preview {

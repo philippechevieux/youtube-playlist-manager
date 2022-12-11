@@ -1,27 +1,36 @@
 body {
-    background-color: #161616;
+    background-attachment: fixed;
     margin: 0;
+    background-image: linear-gradient(to right, #272727, #2f2532, #402033, #511729, #5c1014);
 }
 
 .body-spacer {
-    background-color: #121212;
     height: 30px;
     width: 100%;
     margin-top: 64px;
     position: sticky;
     top: 64px;
     z-index: 2;
+    background-image: linear-gradient(to right, #272727, #2f2532, #402033, #511729, #5c1014);
 }
 
 .body-container {
-    background-color: #272727;
     margin: auto;
-    margin-bottom: 95px;
     max-width: 80%;
+    background-color: #00000036;
+    border-radius: 10px;
+    margin-bottom: 25px;
 }
 
 .body-container header {
     position: sticky;
     top: 94px;
     z-index: 2;
+    background-image: linear-gradient(to right, #272727, #2f2532, #402033, #511729, #5c1014);
+}
+
+.body-container header > .MuiBox-root{
+    background-color: #0000005e;
+    border: 1px solid #ffffff17;
+    border-radius: 10px 10px 0px 0px;
 }

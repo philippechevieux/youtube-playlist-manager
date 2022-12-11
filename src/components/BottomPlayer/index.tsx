@@ -43,10 +43,10 @@ function BottomPlayer({
     const [playerState, setPlayerState] = useState(playerStateEnum.NOT_INICIATED);
 
     return (
-        <div className={`bottom-player ${!visible ? 'hidden' : ''}`}>
+        <div className={`bottom-player mui-fixed ${!visible ? 'hidden' : ''}`}>
             {playlistId !== undefined && (
-                <AppBar className={`bottom-player-bar ${isIFrameToggled ? 'toggle' : ''}`} sx={{bottom: 0}}>
-                    <Box className="youtube-iframe-wrapper" sx={{width: '100%'}}>
+                <div className={`bottom-player-bar ${isIFrameToggled ? 'toggle' : ''}`}>
+                    <Box className="youtube-iframe-wrapper">
                         <YouTube
                             className="youtube-iframe"
                             onReady={e => {
@@ -66,9 +66,6 @@ function BottomPlayer({
                             opts={{height: '100%', width: '100%', playerVars: {controls: 0, list: playlistId}}}
                         />
                     </Box>
-                    <Box className="seek-bar-wrapper" sx={{width: '100%'}}>
-                        <SeekBar player={player} />
-                    </Box>
                     <Toolbar>
                         <Grid container spacing={3} alignItems="center" justifyContent="space-between">
                             <Grid item xs={4}>
@@ -79,8 +76,9 @@ function BottomPlayer({
                                     setIsPlayerPaused={setIsPlayerPaused}
                                 />
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item className="item-infos" xs={4}>
                                 <PlayerContentInfos playerVideoId={playerVideoId} />
+                                <SeekBar player={player} />
                             </Grid>
                             <Grid item xs={4} textAlign={'end'} width={'100%'}>
                                 <PlayerOtherActions
@@ -91,7 +89,7 @@ function BottomPlayer({
                             </Grid>
                         </Grid>
                     </Toolbar>
-                </AppBar>
+                </div>
             )}
         </div>
     );

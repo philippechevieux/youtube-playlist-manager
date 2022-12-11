@@ -21,13 +21,23 @@ function App() {
                     },
                     secondary: {
                         light: '#eb6652',
-                        main: '#eb6652',
-                        dark: '#ff4b31',
+                        main: '#ff4b31',
+                        dark: '#b33321',
                         contrastText: '#fff'
                     }
                 },
                 typography: {
                     fontFamily: 'Poppins, sans-serif'
+                },
+                components: {
+                    MuiCard: {
+                        styleOverrides: {
+                            root: {
+                                backgroundColor: '#00000021',
+                                border: '1px solid #5656562e'
+                            }
+                        }
+                    }
                 }
             }),
         []

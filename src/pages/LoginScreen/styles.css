@@ -1,8 +1,9 @@
 div.login-screen-container {
-    margin: 30px;
     padding: 60px 30px;
     display: grid;
     grid-template-columns: 1.5fr 2fr;
+    border-radius: 10px;
+    border: 1px solid #ffffff17;
 }
 
 div.login-screen-container div.left-col {

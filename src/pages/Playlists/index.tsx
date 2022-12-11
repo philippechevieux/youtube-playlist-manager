@@ -66,30 +66,30 @@ function PlaylistList() {
     };
 
     const displayPlaylists = () => {
-        if (playlistsItems.length > 0) {
-            if (userPlaylistDisplayMode === PlaylistDisplayModeEnum.MOSAIC) {
-                return (
-                    <MosaicMode
-                        playlistsListData={{items: playlistsItems}}
-                        onClickOnEditPlaylist={openEditPlaylistDialog}
-                        onClickOnOpenPlaylist={openPlaylist}
-                    />
-                );
-            } else if (userPlaylistDisplayMode === PlaylistDisplayModeEnum.LIST) {
-                return (
-                    <ListMode
-                        playlistsListData={{items: playlistsItems}}
-                        onClickOnEditPlaylist={openEditPlaylistDialog}
-                        onClickOnOpenPlaylist={openPlaylist}
-                    />
-                );
-            }
-        } else {
+        if (playlistsItems.length === 0) {
             if (arePlaylistsLoading) {
-                return <MosaicModeSkeleton />; // TODO: revoir l'affichage du skeleton pour matcher ce qui est fait dans playlistContents
-            } else {
-                return <EmptyIllustration title={t('no playlist found')} />;
+                return <MosaicModeSkeleton />;
             }
+
+            return <EmptyIllustration title={t('no playlist found')} />;
+        }
+
+        if (userPlaylistDisplayMode === PlaylistDisplayModeEnum.MOSAIC) {
+            return (
+                <MosaicMode
+                    playlistsListData={{items: playlistsItems}}
+                    onClickOnEditPlaylist={openEditPlaylistDialog}
+                    onClickOnOpenPlaylist={openPlaylist}
+                />
+            );
+        } else if (userPlaylistDisplayMode === PlaylistDisplayModeEnum.LIST) {
+            return (
+                <ListMode
+                    playlistsListData={{items: playlistsItems}}
+                    onClickOnEditPlaylist={openEditPlaylistDialog}
+                    onClickOnOpenPlaylist={openPlaylist}
+                />
+            );
         }
     };
 

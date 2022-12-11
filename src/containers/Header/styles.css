@@ -2,6 +2,12 @@
     margin-left: 10px;
 }
 
+header.appbar-wrapper {
+    background-image: linear-gradient(to right, #272727, #2f2532, #402033, #511729, #5c1014);
+    background-color: initial;
+    box-shadow: initial;
+}
+
 .appbar-wrapper .title-wrapper {
     width: 100%;
 }
