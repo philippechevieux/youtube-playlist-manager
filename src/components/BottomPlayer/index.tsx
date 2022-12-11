@@ -1,4 +1,4 @@
-import {AppBar, Box, Grid, Toolbar} from '@mui/material';
+import {Box, Grid, Toolbar} from '@mui/material';
 import {useState} from 'react';
 import YouTube, {YouTubeEvent} from 'react-youtube';
 import SeekBar from './SeekBar';
