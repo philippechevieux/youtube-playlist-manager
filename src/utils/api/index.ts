@@ -85,7 +85,7 @@ export function getYoutubePlaylists(accessToken: string, pageToken?: string, pla
     return requestYoutubeApi(accessToken, RequestMethodEnum.GET, 'playlists', urlParams);
 }
 
-export function updatePlaylistData(accessToken: string, playlistId: string, data: IApiUpdatePlaylistParams) {
+export function updatePlaylistItem(accessToken: string, playlistId: string, data: IApiUpdatePlaylistParams) {
     const urlParams: IApiUrlParams = {
         part: 'snippet,status'
     };
@@ -120,6 +120,18 @@ export function createPlaylistItem(accessToken: string, data: IApiUpdatePlaylist
     };
 
     return requestYoutubeApi(accessToken, RequestMethodEnum.POST, 'playlists', urlParams, bodyParams);
+}
+
+export function deletePlaylistItem(accessToken: string, playlistId: string) {
+    const urlParams: IApiUrlParams = {
+        part: 'id'
+    };
+
+    const bodyParams: IApiBodyParams = {
+        id: playlistId
+    };
+
+    return requestYoutubeApi(accessToken, RequestMethodEnum.DELETE, 'playlists', urlParams, bodyParams);
 }
 
 export function getYoutubePlaylistsItems(accessToken: string, playlistId: string, pageToken?: string) {

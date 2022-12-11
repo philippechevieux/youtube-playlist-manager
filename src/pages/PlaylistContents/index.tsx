@@ -1,13 +1,10 @@
 import {useState} from 'react';
 import {useParams} from 'react-router-dom';
-import {AppBar, Toolbar, IconButton, Typography, Box, Tooltip, Button} from '@mui/material';
+import {AppBar, Toolbar, IconButton, Typography, Box, Tooltip, Button, AlertColor} from '@mui/material';
 import {useHistory} from 'react-router-dom';
 
-import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
-import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-
 import './styles.css';
-import {useAppSelector} from '../../app/hooks';
+import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {selectUserAccessToken} from '../../utils/arms/user/selectors';
 import {useFetchPlaylistContents} from './hook';
 import {
@@ -21,6 +18,9 @@ import {useTranslation} from 'react-i18next';
 import Content from '../../containers/PlaylistContents/Content';
 import ContentSkeleton from '../../containers/PlaylistContents/Content/Skeleton';
 import {YouTubeEvent} from 'react-youtube';
+import {ChevronLeftOutlined, DeleteOutlineOutlined, EditOutlined} from '@material-ui/icons';
+import ConfirmActionDialog from '../../components/Dialog/ConfirmActionDialog';
+import {deletePlaylistAction} from '../../utils/arms/playlists/middleware';
 
 function PlaylistContent({
     player,
@@ -41,9 +41,10 @@ function PlaylistContent({
     currentCuePlaylistId: string;
     setCurrentCuePlaylistId: Function;
 }) {
-    const {t} = useTranslation();
-
     let history = useHistory();
+
+    const {t} = useTranslation();
+    const dispatch = useAppDispatch();
     const {playlistId} = useParams<{playlistId: string}>();
 
     const playlistItem = useAppSelector(state => selectPlaylistItem(state, playlistId));
@@ -51,8 +52,13 @@ function PlaylistContent({
     const nextPageTokenInStore = useAppSelector(state => selectPlaylistContentsNextPageToken(state, playlistId));
     const playlistContentsItems = useAppSelector(state => selectPlaylistContentsItems(state, playlistId));
 
+    const [isPlaylistDeleted, setIsPlaylistDeleted] = useState(false);
     const [nextPageToken, setNextPageToken] = useState<string | undefined>(undefined);
     const [isEditPlaylistDialogOpen, setIsPlaylistDialogOpen] = useState(false);
+    const [isConfirmDialogOpen, setIsConfirmDialogOpen] = useState(false);
+    const [snackbarVisible, setSnackbarVisible] = useState(false);
+    const [snackbarSeverity, setSnackbarSeverity] = useState<AlertColor | undefined>();
+    const [snackbarMessage, setSnackbarMessage] = useState('');
 
     const {arePlaylistContentsLoading, arePlaylistContentsLoaded} = useFetchPlaylistContents(
         userAccessToken,
@@ -88,8 +94,12 @@ function PlaylistContent({
             );
         }
 
-        if (arePlaylistContentsLoaded && playlistContentsItems.length === 0) {
+        if (arePlaylistContentsLoaded && playlistContentsItems.length === 0 && !isPlaylistDeleted) {
             content = <EmptyIllustration title={t('no video in your playlist')} />;
+        }
+
+        if (isPlaylistDeleted) {
+            content = <EmptyIllustration title={t('playlist deleted')} />;
         }
 
         if (arePlaylistContentsLoading) {
@@ -120,6 +130,28 @@ function PlaylistContent({
         );
     };
 
+    const confirmDeletePlaylist = async () => {
+        try {
+            await dispatch(
+                deletePlaylistAction({
+                    userAccessToken: userAccessToken,
+                    playlistId: playlistId
+                })
+            );
+
+            setIsPlaylistDeleted(true);
+            setIsConfirmDialogOpen(false);
+            setSnackbarMessage(t('playlist deleted success'));
+            setSnackbarSeverity('success');
+            setSnackbarVisible(true);
+        } catch {
+            setIsConfirmDialogOpen(false);
+            setSnackbarMessage(t('playlist deleted error'));
+            setSnackbarSeverity('error');
+            setSnackbarVisible(true);
+        }
+    };
+
     return (
         <div className="playlist-content">
             <AppBar position="static">
@@ -132,37 +164,63 @@ function PlaylistContent({
                                 aria-haspopup="true"
                                 onClick={() => handleHomeClick()}
                             >
-                                <ChevronLeftOutlinedIcon />
+                                <ChevronLeftOutlined />
                             </IconButton>
                         </Tooltip>
                         <Typography variant="body1" color="text.primary">
-                            {playlistItem.snippet.localized.title}
+                            {playlistItem && playlistItem.snippet.localized.title}
                         </Typography>
                         <Box sx={{flexGrow: 1}} />
-                        <Tooltip title={t('edit')}>
-                            <IconButton
-                                className="button-filter"
-                                size="large"
-                                aria-controls="menu-appbar"
-                                aria-haspopup="true"
-                                onClick={() => {
-                                    setIsPlaylistDialogOpen(true);
-                                }}
-                                color="inherit"
-                            >
-                                <EditOutlinedIcon />
-                            </IconButton>
-                        </Tooltip>
+                        {!isPlaylistDeleted && (
+                            <>
+                                <Tooltip title={t('edit')}>
+                                    <IconButton
+                                        size="large"
+                                        aria-controls="menu-appbar"
+                                        aria-haspopup="true"
+                                        onClick={() => {
+                                            setIsPlaylistDialogOpen(true);
+                                        }}
+                                    >
+                                        <EditOutlined />
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title={t('delete')}>
+                                    <IconButton
+                                        size="large"
+                                        aria-controls="menu-appbar"
+                                        aria-haspopup="true"
+                                        onClick={() => setIsConfirmDialogOpen(true)}
+                                    >
+                                        <DeleteOutlineOutlined />
+                                    </IconButton>
+                                </Tooltip>
+                            </>
+                        )}
                     </Toolbar>
                 </Box>
             </AppBar>
 
             {displayPlaylistContent()}
 
-            <EditPlaylistDialog
-                visible={isEditPlaylistDialogOpen}
-                playlistId={playlistId}
-                onCancel={() => setIsPlaylistDialogOpen(false)}
+            {playlistItem && (
+                <EditPlaylistDialog
+                    visible={isEditPlaylistDialogOpen}
+                    playlistId={playlistId}
+                    onCancel={() => setIsPlaylistDialogOpen(false)}
+                />
+            )}
+
+            <ConfirmActionDialog
+                visible={isConfirmDialogOpen}
+                content={t('confirm delete playlist')}
+                confirmButtonLabel={t('delete')}
+                onConfirm={confirmDeletePlaylist}
+                onCancel={() => setIsConfirmDialogOpen(false)}
+                snackbarVisible={snackbarVisible}
+                snackbarMessage={snackbarMessage}
+                snackbarSeverity={snackbarSeverity}
+                onCloseSnackBar={setSnackbarVisible}
             />
         </div>
     );
