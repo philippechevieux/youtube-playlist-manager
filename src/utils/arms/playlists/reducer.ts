@@ -36,10 +36,13 @@ export const playlistsSlice = createSlice({
                     item.status.privacyStatus = action.payload.dataToUpdate.privacyStatus;
                 }
             });
+        },
+        createPlaylist: (state: any, action: PayloadAction<{playlist: ItemInterface}>) => {
+            state.items = [action.payload.playlist, ...state.items];
         }
     }
 });
 
-export const {addPlaylists, updatePlaylist} = playlistsSlice.actions;
+export const {addPlaylists, updatePlaylist, createPlaylist} = playlistsSlice.actions;
 
 export default playlistsSlice.reducer;

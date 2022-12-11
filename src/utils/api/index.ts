@@ -104,6 +104,24 @@ export function updatePlaylistData(accessToken: string, playlistId: string, data
     return requestYoutubeApi(accessToken, RequestMethodEnum.PUT, 'playlists', urlParams, bodyParams);
 }
 
+export function createPlaylistItem(accessToken: string, data: IApiUpdatePlaylistParams) {
+    const urlParams: IApiUrlParams = {
+        part: 'snippet,status'
+    };
+
+    const bodyParams: IApiBodyParams = {
+        snippet: {
+            title: data.title,
+            description: data.description
+        },
+        status: {
+            privacyStatus: data.privacyStatus
+        }
+    };
+
+    return requestYoutubeApi(accessToken, RequestMethodEnum.POST, 'playlists', urlParams, bodyParams);
+}
+
 export function getYoutubePlaylistsItems(accessToken: string, playlistId: string, pageToken?: string) {
     const urlParams: IApiUrlParams = {
         part: 'snippet,contentDetails,id,status',

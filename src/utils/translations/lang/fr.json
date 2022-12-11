@@ -40,6 +40,8 @@
     "sign in": "Se connecter",
     "sign out": "Se déconnecter",
     "other actions": "Autres actions",
+    "playlist created success": "Votre playlist a bien été créée",
+    "playlist created error": "Une erreur est survenue lors de la création de votre playlist",
     "playlist data update success": "Les informations de votre playlist ont été mise à jour avec succès",
     "playlist data update error":
         "Une erreur est survenue lors de la mise à jour des informations de votre playlist",
@@ -59,5 +61,6 @@
     "shuffle playback": "Lecture aléatoire",
     "mute": "Couper le son",
     "unmute": "Réactiver le son",
+    "create": "Créer",
     "create playlist": "Créer une playlist"
 }

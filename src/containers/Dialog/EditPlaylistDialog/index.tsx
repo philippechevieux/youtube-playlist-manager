@@ -7,7 +7,6 @@ import {IApiUpdatePlaylistParams} from '../../../utils/api/interface';
 import {updatePlaylistDataAction} from '../../../utils/arms/playlists/middleware';
 import {useTranslation} from 'react-i18next';
 import CrudPlaylistDialog, {crudPlaylistMode} from '../../../components/Dialog/CrudPlaylistDialog';
-import './styles.css';
 
 function EditPlaylistDialog({
     visible = false,

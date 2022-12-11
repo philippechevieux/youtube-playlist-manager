@@ -17,6 +17,12 @@ export interface ItemInterface {
     selected?: boolean;
 }
 
+export enum privacyStatusEnum {
+    PUBLIC = 'public',
+    UNLISTED = 'unlisted',
+    PRIVATE = 'private'
+}
+
 export interface ItemsInterface {
     items: Array<ItemInterface>;
 }

@@ -40,6 +40,8 @@
     "sign in": "Sign in",
     "sign out": "Sign out",
     "other actions": "Other actions",
+    "playlist created success": "Your playlist has been created",
+    "playlist created error": "An error occurred while creating your playlist",
     "playlist data update success": "Your playlist information has been successfully updated",
     "playlist data update error": "An error occurred while updating your playlist information",
     "confirm delete video from playlist": "Are you sure you want to delete this video from your playlist?",
@@ -58,5 +60,6 @@
     "shuffle playback": "Shuffle playback",
     "mute": "Mute",
     "unmute": "Unmute",
+    "create": "Create",
     "create playlist": "Create a playlist"
 }

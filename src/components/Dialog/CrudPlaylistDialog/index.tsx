@@ -15,6 +15,7 @@ import {
 } from '@mui/material';
 import {useState, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
+import {privacyStatusEnum} from '../../../utils/arms/playlists/state';
 
 export enum crudPlaylistMode {
     CREATE = 'create',
@@ -26,7 +27,7 @@ function CrudPlaylistDialog({
     mode,
     playlistTitle = '',
     playlistDescription = '',
-    playlistStatus = '',
+    playlistStatus = privacyStatusEnum.PUBLIC,
     onCrud,
     onCancel,
     snackbarVisible,
@@ -36,9 +37,9 @@ function CrudPlaylistDialog({
 }: {
     visible: boolean;
     mode: crudPlaylistMode;
-    playlistTitle: string;
-    playlistDescription: string;
-    playlistStatus: string;
+    playlistTitle?: string;
+    playlistDescription?: string;
+    playlistStatus?: string;
     onCrud: Function;
     onCancel: Function;
     snackbarVisible: boolean;
@@ -129,7 +130,7 @@ function CrudPlaylistDialog({
                         required
                         id="edit-playlist-title"
                         margin="normal"
-                        color="secondary"
+                        color="primary"
                         label={t('title')}
                         value={title}
                         type="text"
@@ -140,7 +141,7 @@ function CrudPlaylistDialog({
                     <TextField
                         margin="normal"
                         id="edit-playlist-description"
-                        color="secondary"
+                        color="primary"
                         label={t('description')}
                         value={description}
                         type="text"
@@ -152,22 +153,22 @@ function CrudPlaylistDialog({
                         select
                         margin="normal"
                         id="edit-playlist-select-status"
-                        color="secondary"
+                        color="primary"
                         label={t('status')}
                         value={status}
                         fullWidth
                         onChange={handleStatusChange}
                         variant="outlined"
                     >
-                        <MenuItem key="public" value="public">
+                        <MenuItem key={privacyStatusEnum.PUBLIC} value={privacyStatusEnum.PUBLIC}>
                             <PublicOutlined />
                             <ListItemText className="select-item-text" primary={t('public')} />
                         </MenuItem>
-                        <MenuItem key="unlisted" value="unlisted">
+                        <MenuItem key={privacyStatusEnum.UNLISTED} value={privacyStatusEnum.UNLISTED}>
                             <VisibilityOffOutlined />
                             <ListItemText className="select-item-text" primary={t('not listed')} />
                         </MenuItem>
-                        <MenuItem key="private" value="private">
+                        <MenuItem key={privacyStatusEnum.PRIVATE} value={privacyStatusEnum.PRIVATE}>
                             <LockOutlined />
                             <ListItemText className="select-item-text" primary={t('private')} />
                         </MenuItem>

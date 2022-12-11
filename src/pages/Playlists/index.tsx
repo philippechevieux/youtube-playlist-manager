@@ -24,6 +24,7 @@ import MosaicMode from '../../components/Playlists/MosaicMode';
 import ListMode from '../../components/Playlists/ListMode';
 import MosaicModeSkeleton from '../../components/Playlists/MosaicMode/Skeleton';
 import {AddOutlined} from '@material-ui/icons';
+import CreatePlaylistDialog from '../../containers/Dialog/CreatePlaylistDialog';
 
 function PlaylistList() {
     let history = useHistory();
@@ -37,7 +38,8 @@ function PlaylistList() {
     const playlistsItems = useAppSelector(selectPlaylistsItems);
     const userPlaylistDisplayMode = useAppSelector(selectUserPlaylistDisplayMode);
 
-    const [isEditPlaylistDialogOpen, setIsPlaylistDialogOpen] = useState(false);
+    const [isEditPlaylistDialogOpen, setIsEditPlaylistDialogOpen] = useState(false);
+    const [isCreatePlaylistDialogOpen, setIsCreatePlaylistDialogOpen] = useState(false);
     const [playlistIdToEdit, setPlaylistIdToEdit] = useState<string | undefined>();
     const [nextPageToken, setNextPageToken] = useState<string | undefined>(currentPageToken);
 
@@ -55,11 +57,7 @@ function PlaylistList() {
 
     const openEditPlaylistDialog = (playlistId: string) => {
         setPlaylistIdToEdit(playlistId);
-        setIsPlaylistDialogOpen(true);
-    };
-
-    const closeEditPlaylistDialog = () => {
-        setIsPlaylistDialogOpen(false);
+        setIsEditPlaylistDialogOpen(true);
     };
 
     const loadMorePlaylistList = () => {
@@ -99,7 +97,11 @@ function PlaylistList() {
             <AppBar position="static">
                 <Box sx={{flexGrow: 1}}>
                     <Toolbar>
-                        <Button startIcon={<AddOutlined />} variant="text">
+                        <Button
+                            startIcon={<AddOutlined />}
+                            variant="text"
+                            onClick={() => setIsCreatePlaylistDialogOpen(true)}
+                        >
                             {t('create playlist')}
                         </Button>
                         <Box sx={{flexGrow: 1}} />
@@ -155,9 +157,14 @@ function PlaylistList() {
                 <EditPlaylistDialog
                     visible={isEditPlaylistDialogOpen}
                     playlistId={playlistIdToEdit}
-                    onCancel={closeEditPlaylistDialog}
+                    onCancel={() => setIsEditPlaylistDialogOpen(false)}
                 />
             )}
+
+            <CreatePlaylistDialog
+                visible={isCreatePlaylistDialogOpen}
+                onCancel={() => setIsCreatePlaylistDialogOpen(false)}
+            />
         </div>
     );
 }
