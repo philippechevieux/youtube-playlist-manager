@@ -40,10 +40,15 @@
     "sign in": "Se connecter",
     "sign out": "Se déconnecter",
     "other actions": "Autres actions",
+    "playlist created success": "Votre playlist a bien été créée",
+    "playlist created error": "Une erreur est survenue lors de la création de votre playlist",
+    "playlist deleted success": "Votre playlist a bien été supprimée",
+    "playlist deleted error": "Une erreur est survenue lors de la suppression de votre playlist",
     "playlist data update success": "Les informations de votre playlist ont été mise à jour avec succès",
     "playlist data update error":
         "Une erreur est survenue lors de la mise à jour des informations de votre playlist",
     "confirm delete video from playlist": "Etes-vous sûr de vouloir supprimer cette vidéo de votre playlist ?",
+    "confirm delete playlist": "Etes-vous sûr de vouloir supprimer cette playlist ?",
     "video delete success": "La vidéo a été supprimé de votre playlist avec succès",
     "video delete error": "Une erreur est survenue lors de la suppression de la video de votre playlist",
     "video add success": "La vidéo a été ajouté à votre playlist avec succès",
@@ -58,5 +63,7 @@
     "classic playback": "Lecture classique",
     "shuffle playback": "Lecture aléatoire",
     "mute": "Couper le son",
-    "unmute": "Réactiver le son"
+    "unmute": "Réactiver le son",
+    "create": "Créer",
+    "create playlist": "Créer une playlist"
 }

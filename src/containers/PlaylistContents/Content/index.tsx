@@ -1,4 +1,4 @@
-import {List, Divider, Menu, MenuItem, Snackbar, Alert, AlertColor} from '@mui/material';
+import {List, Divider, Menu, MenuItem, AlertColor} from '@mui/material';
 
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined';
@@ -259,6 +259,10 @@ function Content({
                 content={confirmDialogContent}
                 onCancel={confirmDialogOnCancel}
                 onConfirm={confirmDialogOnConfirm}
+                snackbarVisible={snackbarVisible}
+                snackbarSeverity={snackbarSeverity}
+                snackbarMessage={snackbarMessage}
+                onCloseSnackBar={setSnackbarVisible}
             />
             <SelectPlaylistDialog
                 visible={selectPlaylistDialogVisible}
@@ -271,14 +275,6 @@ function Content({
                 onConfirm={handleSaveSelectDialog}
                 onCancel={resetSelectPlaylistDialogStates}
             />
-            <Snackbar
-                open={snackbarVisible}
-                anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-                autoHideDuration={4000}
-                onClose={() => setSnackbarVisible(false)}
-            >
-                <Alert severity={snackbarSeverity}>{snackbarMessage}</Alert>
-            </Snackbar>
         </>
     );
 }

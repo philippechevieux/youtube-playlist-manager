@@ -40,9 +40,14 @@
     "sign in": "Sign in",
     "sign out": "Sign out",
     "other actions": "Other actions",
+    "playlist created success": "Your playlist has been created",
+    "playlist created error": "An error occurred while creating your playlist",
+    "playlist deleted success": "Your playlist has been deleted",
+    "playlist deleted error": "An error occurred while deleting your playlist",
     "playlist data update success": "Your playlist information has been successfully updated",
     "playlist data update error": "An error occurred while updating your playlist information",
-    "confirm delete video from playlist": "Are you sure you want to delete this video from your playlist?",
+    "confirm delete video from playlist": "Are you sure you want to delete this video from your playlist ?",
+    "confirm delete playlist": "Are you sure you want to delete this playlist?",
     "video delete success": "The video has been successfully removed from your playlist",
     "video delete error": "An error occurred while deleting the video from your playlist",
     "video add success": "The video has been added to your playlist successfully",
@@ -57,5 +62,7 @@
     "classic playback": "Classic playback",
     "shuffle playback": "Shuffle playback",
     "mute": "Mute",
-    "unmute": "Unmute"
+    "unmute": "Unmute",
+    "create": "Create",
+    "create playlist": "Create a playlist"
 }
