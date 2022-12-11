@@ -1,7 +1,7 @@
 import {AlertColor} from '@mui/material';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import {selectUserAccessToken} from '../../../utils/arms/user/selectors';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import {selectPlaylistItem} from '../../../utils/arms/playlists/selectors';
 import {IApiUpdatePlaylistParams} from '../../../utils/api/interface';
 import {updatePlaylistDataAction} from '../../../utils/arms/playlists/middleware';
@@ -58,38 +58,13 @@ function EditPlaylistDialog({
         }
     };
 
-    const [title, setTitle] = useState(playlistItem.snippet.localized.title);
-    const [description, setDescription] = useState(playlistItem.snippet.localized.description);
-    const [status, setStatus] = useState(playlistItem.status.privacyStatus);
-    const [titleError, setTitleError] = useState(false);
-    const [canSave, setCanSave] = useState(true);
-    const [isSaving, setIsSaving] = useState(false);
-
-    useEffect(() => {
-        setTitle(playlistItem.snippet.localized.title);
-        setDescription(playlistItem.snippet.localized.description);
-        setStatus(playlistItem.status.privacyStatus);
-        setTitleError(playlistItem.snippet.localized.title.length === 0);
-        setCanSave(playlistItem.snippet.localized.title.length === 0);
-        setIsSaving(false);
-    }, [playlistItem, visible]);
-
     return (
         <CrudPlaylistDialog
             visible={visible}
             mode={crudPlaylistMode.UPDATE}
-            playlistTitle={title}
-            playlistDescription={description}
-            playlistStatus={status}
-            setPlaylistTitle={setTitle}
-            setPlaylistDescription={setDescription}
-            setPlaylistStatus={setStatus}
-            titleError={titleError}
-            canSave={canSave}
-            isSaving={isSaving}
-            setTitleError={setTitleError}
-            setCanSave={setCanSave}
-            setIsSaving={setIsSaving}
+            playlistTitle={playlistItem.snippet.localized.title}
+            playlistDescription={playlistItem.snippet.localized.description}
+            playlistStatus={playlistItem.status.privacyStatus}
             onCrud={onSave}
             onCancel={onCancel}
             snackbarVisible={snackbarVisible}

@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import {AppBar, Toolbar, IconButton, Button, Box, Typography, Tooltip, CircularProgress, Fab} from '@mui/material';
+import {AppBar, Toolbar, IconButton, Button, Box, Typography, Tooltip, CircularProgress} from '@mui/material';
 
 import './styles.css';
 

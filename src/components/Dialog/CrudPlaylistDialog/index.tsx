@@ -27,15 +27,6 @@ function CrudPlaylistDialog({
     playlistTitle = '',
     playlistDescription = '',
     playlistStatus = '',
-    setPlaylistTitle,
-    setPlaylistDescription,
-    setPlaylistStatus,
-    titleError,
-    canSave,
-    isSaving,
-    setTitleError,
-    setCanSave,
-    setIsSaving,
     onCrud,
     onCancel,
     snackbarVisible,
@@ -48,15 +39,6 @@ function CrudPlaylistDialog({
     playlistTitle: string;
     playlistDescription: string;
     playlistStatus: string;
-    setPlaylistTitle: Function;
-    setPlaylistDescription: Function;
-    setPlaylistStatus: Function;
-    titleError: boolean;
-    canSave: boolean;
-    isSaving: boolean;
-    setTitleError: Function;
-    setCanSave: Function;
-    setIsSaving: Function;
     onCrud: Function;
     onCancel: Function;
     snackbarVisible: boolean;
@@ -64,6 +46,13 @@ function CrudPlaylistDialog({
     snackbarMessage: string;
     onCloseSnackBar: Function;
 }) {
+    const [title, setTitle] = useState(playlistTitle);
+    const [description, setDescription] = useState(playlistDescription);
+    const [status, setStatus] = useState(playlistStatus);
+    const [titleError, setTitleError] = useState(false);
+    const [canSave, setCanSave] = useState(true);
+    const [isSaving, setIsSaving] = useState(false);
+
     const {t} = useTranslation();
 
     const getDialogTitle = () => {
@@ -97,17 +86,17 @@ function CrudPlaylistDialog({
     };
 
     const handleTitleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPlaylistTitle(event.target.value);
+        setTitle(event.target.value);
         setTitleError(event.target.value.length === 0);
         setCanSave(event.target.value.length === 0);
     };
 
     const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPlaylistDescription(event.target.value);
+        setDescription(event.target.value);
     };
 
     const handleStatusChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setPlaylistStatus(event.target.value);
+        setStatus(event.target.value);
     };
 
     const executeOnCancel = () => {
@@ -118,8 +107,17 @@ function CrudPlaylistDialog({
 
     const executeOnCrud = () => {
         setIsSaving(true);
-        onCrud(playlistTitle, playlistDescription, playlistStatus);
+        onCrud(title, description, status);
     };
+
+    useEffect(() => {
+        setTitle(playlistTitle);
+        setDescription(playlistDescription);
+        setStatus(playlistStatus);
+        setTitleError(playlistTitle.length === 0);
+        setCanSave(playlistTitle.length === 0);
+        setIsSaving(false);
+    }, [playlistTitle, playlistDescription, playlistStatus, visible]);
 
     return (
         <>
@@ -133,7 +131,7 @@ function CrudPlaylistDialog({
                         margin="normal"
                         color="secondary"
                         label={t('title')}
-                        value={playlistTitle}
+                        value={title}
                         type="text"
                         fullWidth
                         onChange={handleTitleChange}
@@ -144,7 +142,7 @@ function CrudPlaylistDialog({
                         id="edit-playlist-description"
                         color="secondary"
                         label={t('description')}
-                        value={playlistDescription}
+                        value={description}
                         type="text"
                         fullWidth
                         onChange={handleDescriptionChange}
@@ -156,7 +154,7 @@ function CrudPlaylistDialog({
                         id="edit-playlist-select-status"
                         color="secondary"
                         label={t('status')}
-                        value={playlistStatus}
+                        value={status}
                         fullWidth
                         onChange={handleStatusChange}
                         variant="outlined"
