@@ -52,7 +52,6 @@ function VideoItem({
                     {displayAvatarIcon()}
                     <Avatar
                         className="avatar-thumbnail"
-                        sx={{width: 120, height: 85}}
                         alt={Item.snippet.title}
                         src={getThumbnailsFromItem(Item)}
                         variant="square"

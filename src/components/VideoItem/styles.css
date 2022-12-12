@@ -60,3 +60,50 @@
 .video-item.video-playing .avatar-wrapper .avatar-thumbnail {
     filter: brightness(30%);
 }
+
+/* MUI : xs size */
+@media (min-width: 0px) {
+    div.avatar-thumbnail {
+        width: 90px;
+        height: 64px;
+    }
+
+    .video-item {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
+
+/* MUI : sm size */
+@media (min-width: 600px) {
+    div.avatar-thumbnail {
+        width: 100px;
+        height: 71px;
+    }
+
+    .video-item {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+}
+
+/* MUI : md size */
+@media (min-width: 900px) {
+    div.avatar-thumbnail {
+        width: 125px;
+        height: 89px;
+    }
+
+    .video-item {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+}
+
+/* MUI : lg size */
+@media (min-width: 1200px) {
+    div.avatar-thumbnail {
+        width: 150px;
+        height: 106px;
+    }
+}
