@@ -41,7 +41,7 @@ function VideoItem({
     };
 
     return (
-        <ListItem className={`item ${isVideoCued ? 'video-playing' : ''}`}>
+        <ListItem className={`video-item ${isVideoCued ? 'video-playing' : ''}`}>
             <ListItemAvatar>
                 <div
                     className="avatar-wrapper"

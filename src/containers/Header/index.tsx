@@ -31,7 +31,9 @@ function Header() {
     };
 
     const handleClickOnGoHome = () => {
-        history.push('/playlists');
+        if (isUserLogin) {
+            history.push('/playlists');
+        }
     };
 
     const handleClickOnLogout = () => {
@@ -48,21 +50,13 @@ function Header() {
         <Box sx={{flexGrow: 1}}>
             <AppBar className="appbar-wrapper" position="fixed">
                 <Toolbar>
-                    {isUserLogin && (
-                        <Tooltip title={t('home')}>
-                            <IconButton
-                                size="large"
-                                edge="start"
-                                color="inherit"
-                                sx={{mr: 2}}
-                                onClick={() => handleClickOnGoHome()}
-                            >
-                                <HomeOutlinedIcon />
-                            </IconButton>
-                        </Tooltip>
-                    )}
                     <div className="title-wrapper">
-                        <Typography variant="h6" component="div" sx={{flexGrow: 1}}>
+                        <Typography
+                            variant="h6"
+                            component="div"
+                            sx={{flexGrow: 1}}
+                            onClick={() => handleClickOnGoHome()}
+                        >
                             {t('application name')}
                         </Typography>
                     </div>

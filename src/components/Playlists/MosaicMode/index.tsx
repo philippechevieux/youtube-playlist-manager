@@ -1,4 +1,4 @@
-import {Card, CardActions, CardContent, CardMedia, Grid, Tooltip, Typography} from '@mui/material';
+import {Card, CardActions, CardContent, CardHeader, CardMedia, Grid, Tooltip, Typography} from '@mui/material';
 
 import IconButton from '@mui/material/IconButton';
 import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
@@ -29,7 +29,7 @@ function MosaicMode({
             className="grid-container"
         >
             {playlistsListData.items?.map((PlaylistData, index) => (
-                <Grid key={PlaylistData.id} item xs={12} sm={6} md={4} lg={3}>
+                <Grid key={PlaylistData.id} item xs={12} sm={6} md={4} lg={4} xl={3}>
                     <Card className="card">
                         <CardMedia
                             className="open-playlist-pointer"
@@ -59,11 +59,6 @@ function MosaicMode({
                             <Tooltip title={t('edit')}>
                                 <IconButton onClick={() => onClickOnEditPlaylist(PlaylistData.id)}>
                                     <EditOutlinedIcon />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title={t('open playlist')}>
-                                <IconButton onClick={() => onClickOnOpenPlaylist(PlaylistData.id)}>
-                                    <LaunchOutlinedIcon />
                                 </IconButton>
                             </Tooltip>
                         </CardActions>
