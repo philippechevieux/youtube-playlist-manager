@@ -3,6 +3,10 @@
     margin: auto;
 }
 
+.footer-content {
+    margin: 20px 0px;
+}
+
 /* MUI : xs size */
 @media (min-width: 0px) {
     .footer {
