@@ -9,6 +9,7 @@ import store from '../../app/store';
 import React from 'react';
 import Header from '../Header';
 import Body from '../../containers/Body';
+import Footer from '../Footer';
 
 function App() {
     const theme = React.useMemo(
@@ -100,6 +101,7 @@ function App() {
                         <div className="app-container">
                             <Header />
                             <Body />
+                            <Footer />
                         </div>
                     </Provider>
                 </Router>

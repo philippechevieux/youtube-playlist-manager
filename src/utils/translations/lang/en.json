@@ -64,5 +64,8 @@
     "mute": "Mute",
     "unmute": "Unmute",
     "create": "Create",
-    "create playlist": "Create a playlist"
+    "create playlist": "Create a playlist",
+    "suggestion": "Any suggestions ?",
+    "report bug": "Report a bug",
+    "made with and by": "Made with ❤️ by Philippe Chevieux"
 }

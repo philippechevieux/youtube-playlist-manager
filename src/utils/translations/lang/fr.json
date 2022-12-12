@@ -65,5 +65,8 @@
     "mute": "Couper le son",
     "unmute": "Réactiver le son",
     "create": "Créer",
-    "create playlist": "Créer une playlist"
+    "create playlist": "Créer une playlist",
+    "suggestion": "Une suggestion ?",
+    "report bug": "Signaler un bug",
+    "made with and by": "Made with ❤️ by Philippe Chevieux"
 }

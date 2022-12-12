@@ -1,0 +1,36 @@
+.footer {
+    height: 100px;
+    margin: auto;
+}
+
+.footer-content {
+    margin: 20px 0px;
+}
+
+/* MUI : xs size */
+@media (min-width: 0px) {
+    .footer {
+        max-width: 95%;
+    }
+}
+
+/* MUI : sm size */
+@media (min-width: 600px) {
+    .footer {
+        max-width: 90%;
+    }
+}
+
+/* MUI : md size */
+@media (min-width: 900px) {
+    .footer {
+        max-width: 85%;
+    }
+}
+
+/* MUI : lg size */
+@media (min-width: 1200px) {
+    .footer {
+        max-width: 80%;
+    }
+}
