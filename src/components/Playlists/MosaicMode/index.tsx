@@ -42,14 +42,14 @@ function MosaicMode({
                         <CardContent>
                             <Typography
                                 gutterBottom
-                                variant="h5"
+                                variant="h3"
                                 component="div"
                                 className="card-title open-playlist-pointer"
                                 onClick={() => onClickOnOpenPlaylist(PlaylistData.id)}
                             >
                                 {PlaylistData.snippet.localized.title}
                             </Typography>
-                            <Typography variant="body2" color="text.secondary" className="card-description">
+                            <Typography variant="body2" className="card-description">
                                 {PlaylistData.snippet.localized.description === ''
                                     ? t('no description')
                                     : PlaylistData.snippet.localized.description}

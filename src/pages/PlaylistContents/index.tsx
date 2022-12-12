@@ -167,7 +167,7 @@ function PlaylistContent({
                                 <ChevronLeftOutlined />
                             </IconButton>
                         </Tooltip>
-                        <Typography variant="body1" color="text.primary">
+                        <Typography variant="subtitle1">
                             {playlistItem && playlistItem.snippet.localized.title}
                         </Typography>
                         <Box sx={{flexGrow: 1}} />

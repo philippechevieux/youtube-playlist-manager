@@ -15,18 +15,6 @@ div.login-screen-container div.right-col {
     grid-row: 1;
 }
 
-div.login-screen-container h1.title {
-    text-transform: uppercase;
-    line-height: 50px;
-    color: #fff;
-    font-size: 45px;
-    font-weight: 500;
-    background-image: linear-gradient(90deg, #ffeaea  0%, #ff4b31 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
 div.login-screen-container div.login-button {
     margin-top: 30px;
     text-align: end;
@@ -47,11 +35,6 @@ div.login-screen-container div.login-button {
         grid-row: 1;
         justify-self: center;
     }
-
-    div.login-screen-container h1.title {
-        font-size: 25px;
-        font-weight: 600;
-    }
 }
 
 /* MUI : sm size */
@@ -68,11 +51,6 @@ div.login-screen-container div.login-button {
     div.login-screen-container div.right-col {
         grid-row: 1;
         justify-self: center;
-    }
-
-    div.login-screen-container h1.title {
-        font-size: 30px;
-        font-weight: 600;
     }
 }
 
@@ -91,11 +69,6 @@ div.login-screen-container div.login-button {
         grid-row: 1;
         justify-self: center;
     }
-
-    div.login-screen-container h1.title {
-        font-size: 35px;
-        font-weight: 500;
-    }
 }
 
 /* MUI : lg size */
@@ -112,11 +85,6 @@ div.login-screen-container div.login-button {
     div.login-screen-container div.right-col {
         grid-row: 1;
         justify-self: end;
-    }
-
-    div.login-screen-container h1.title {
-        font-size: 45px;
-        font-weight: 500;
     }
 }
 

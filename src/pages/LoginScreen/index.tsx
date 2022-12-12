@@ -7,7 +7,7 @@ import {AvailableLangague, UserDataInterface, userDefaultData} from '../../utils
 import {setUserLogin} from '../../utils/arms/user/reducer';
 import LoginIllustration from '../../components/Assets/LoginIllustration';
 import {useTranslation} from 'react-i18next';
-import {Button} from '@mui/material';
+import {Button, Typography} from '@mui/material';
 import {getUserInfo} from '../../utils/api';
 import GoogleIcon from '@mui/icons-material/Google';
 
@@ -46,12 +46,10 @@ function Login() {
     return (
         <div className="login-screen-container">
             <div className="left-col">
-                <h1 className="title">{t('login screen title')}</h1>
-                {/* <Typography variant="h1" color="text.primary" className="profile-options-title">
-                            {t('welcome')} {userFullName}
-                        </Typography> */}
-
-                <span>{t('login screen subtitle')}</span>
+                <Typography variant="h1" className="title">
+                    {t('login screen title')}
+                </Typography>
+                <Typography variant="subtitle2">{t('login screen subtitle')}</Typography>
                 <div className="login-button">
                     <Button startIcon={<GoogleIcon />} variant="contained" color="secondary" onClick={() => login()}>
                         {t('sign in')}

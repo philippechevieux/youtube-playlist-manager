@@ -61,7 +61,7 @@ function VideoItem({
             <ListItemText
                 className="list-item-text list-item-text-margin"
                 primary={
-                    <Typography className="primary" variant="h6" color="text.primary">
+                    <Typography className="primary" variant="h6">
                         {Item.snippet.title}
                     </Typography>
                 }

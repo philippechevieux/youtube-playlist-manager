@@ -105,9 +105,7 @@ function PlaylistList() {
                             {t('create playlist')}
                         </Button>
                         <Box sx={{flexGrow: 1}} />
-                        <Typography variant="body1" color="text.primary">
-                            {t('display')}
-                        </Typography>
+                        <Typography variant="body1">{t('display')}</Typography>
                         <Tooltip title={t('mosaic')}>
                             <IconButton
                                 size="large"

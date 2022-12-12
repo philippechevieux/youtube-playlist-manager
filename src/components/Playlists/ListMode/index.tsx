@@ -132,7 +132,6 @@ function ListMode({
                                 <Typography
                                     className="primary open-playlist-pointer"
                                     variant="h6"
-                                    color="text.primary"
                                     onClick={() =>
                                         mode === DisplayListModeEnum.DEFAULT &&
                                         onClickOnOpenPlaylist &&
