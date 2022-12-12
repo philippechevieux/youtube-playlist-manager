@@ -47,6 +47,10 @@ function Login() {
         <div className="login-screen-container">
             <div className="left-col">
                 <h1 className="title">{t('login screen title')}</h1>
+                {/* <Typography variant="h1" color="text.primary" className="profile-options-title">
+                            {t('welcome')} {userFullName}
+                        </Typography> */}
+
                 <span>{t('login screen subtitle')}</span>
                 <div className="login-button">
                     <Button startIcon={<GoogleIcon />} variant="contained" color="secondary" onClick={() => login()}>

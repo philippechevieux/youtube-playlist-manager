@@ -52,7 +52,7 @@ function Header() {
                 <Toolbar>
                     <div className="title-wrapper">
                         <Typography
-                            variant="h6"
+                            variant="h1"
                             component="div"
                             sx={{flexGrow: 1}}
                             onClick={() => handleClickOnGoHome()}

@@ -27,7 +27,22 @@ function App() {
                     }
                 },
                 typography: {
-                    fontFamily: 'Poppins, sans-serif'
+                    fontFamily: 'Poppins, sans-serif',
+                    h1: {
+                        fontSize: '1.5rem',
+                        textTransform: 'uppercase',
+                        maxWidth: 'fit-content',
+                        color: '#fff',
+                        backgroundImage: 'linear-gradient(90deg, #ffeaea  0%, #ff4b31 100%)',
+                        backgroundClip: 'text',
+                        '-webkitBackgroundClip': 'text',
+                        '-webkitTextFillColor': '#00000000',
+                        fontWeight: '500'
+                    },
+                    h2: {
+                        fontSize: '1.5rem',
+                        fontWeight: '500'
+                    }
                 },
                 components: {
                     MuiCard: {

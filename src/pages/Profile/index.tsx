@@ -57,9 +57,7 @@ function Profile() {
                                 <ChevronLeftOutlinedIcon />
                             </IconButton>
                         </Tooltip>
-                        <Typography variant="body1" color="text.primary">
-                            {t('my profile')}
-                        </Typography>
+                        <Typography variant="body1">{t('my profile')}</Typography>
                     </Toolbar>
                 </Box>
             </AppBar>
@@ -67,14 +65,14 @@ function Profile() {
                 <div>
                     <Grid container direction="column" alignItems="center" justifyContent="center">
                         <AvatarCustom title={userFullName} source={userAvatar} size={AvatarSizeEnum.XL} />
-                        <Typography variant="h5" color="text.primary" className="profile-options-title">
+                        <Typography variant="h1" className="profile-options-title">
                             {t('welcome')} {userFullName}
                         </Typography>
                     </Grid>
                 </div>
                 <Card sx={{minWidth: 275}}>
                     <CardContent>
-                        <Typography variant="h5" color="text.primary" className="profile-options-subtitle">
+                        <Typography variant="h2" className="profile-options-subtitle">
                             {t('my preferences')}
                         </Typography>
                         <TextField

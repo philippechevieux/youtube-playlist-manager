@@ -11,13 +11,3 @@ header.appbar-wrapper {
 .appbar-wrapper .title-wrapper {
     width: 100%;
 }
-
-.appbar-wrapper .MuiTypography-h6 {
-    text-transform: uppercase;
-    max-width: fit-content;
-    color: #fff;
-    background-image: linear-gradient(90deg, #ffeaea  0%, #ff4b31 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
