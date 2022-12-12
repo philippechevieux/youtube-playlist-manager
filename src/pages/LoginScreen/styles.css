@@ -35,16 +35,16 @@ div.login-screen-container div.login-button {
 /* MUI : xs size */
 @media (min-width: 0px) {
     div.login-screen-container {
-        padding: 0px;
+        padding: 30px 15px;
         grid-template-columns: 1fr;
     }
 
     div.login-screen-container div.left-col {
-        grid-row: 1;
+        grid-row: 2;
     }
 
     div.login-screen-container div.right-col {
-        grid-row: 2;
+        grid-row: 1;
         justify-self: center;
     }
 
@@ -62,16 +62,16 @@ div.login-screen-container div.login-button {
     }
 
     div.login-screen-container div.left-col {
-        grid-row: 1;
+        grid-row: 2;
     }
 
     div.login-screen-container div.right-col {
-        grid-row: 2;
+        grid-row: 1;
         justify-self: center;
     }
 
     div.login-screen-container h1.title {
-        font-size: 35px;
+        font-size: 30px;
         font-weight: 600;
     }
 }
@@ -84,16 +84,16 @@ div.login-screen-container div.login-button {
     }
 
     div.login-screen-container div.left-col {
-        grid-row: 1;
+        grid-row: 2;
     }
 
     div.login-screen-container div.right-col {
-        grid-row: 2;
+        grid-row: 1;
         justify-self: center;
     }
 
     div.login-screen-container h1.title {
-        font-size: 45px;
+        font-size: 35px;
         font-weight: 500;
     }
 }

@@ -23,7 +23,7 @@
 }
 
 /* MUI : lg size */
-@media (min-width: 1200px) {
+@media (min-width: 1400px) {
     img.login-screen-illustration {
         height: 390px;
         width: 550px;
