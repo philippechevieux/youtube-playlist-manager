@@ -1,32 +1,45 @@
 import {Route, Switch, useHistory} from 'react-router-dom';
-
+import {useAppSelector} from '../../app/hooks';
+import {selectIsUserLogin} from '../../utils/arms/user/selectors';
+import {useEffect, useState} from 'react';
+import {YouTubeEvent} from 'react-youtube';
 import LoginScreen from '../../pages/LoginScreen/index';
 import PlaylistContent from '../../pages/PlaylistContents/index';
 import PlaylistList from '../../pages/Playlists/index';
-
-import './styles.css';
 import Profile from '../../pages/Profile';
-
-import {useAppSelector} from '../../app/hooks';
-import {selectIsUserLogin} from '../../utils/arms/user/selectors';
 import BottomPlayer from '../../components/BottomPlayer';
-import {useState} from 'react';
-import {YouTubeEvent} from 'react-youtube';
+import './styles.css';
+
+const defaultPlayer = undefined;
+const defaultPlayerVideoId = '';
+const defaultPlayerVideoIndex = undefined;
+const defaultDisplayBottomPlayer = false;
+const defaultIsPlayerPaused = true;
+const defaultCurrentCuePlaylistId = '';
 
 function Body() {
     let history = useHistory();
 
     const isUserLogin = useAppSelector(selectIsUserLogin);
     const [player, setPlayer] = useState<YouTubeEvent['target']>();
-    const [playerVideoId, setPlayerVideoId] = useState('');
-    const [playerVideoIndex, setPlayerVideoIndex] = useState<number | undefined>();
-    const [displayBottomPlayer, setDisplayBottomPlayer] = useState(false);
-    const [isPlayerPaused, setIsPlayerPaused] = useState(true);
-    const [currentCuePlaylistId, setCurrentCuePlaylistId] = useState('');
+    const [playerVideoId, setPlayerVideoId] = useState(defaultPlayerVideoId);
+    const [playerVideoIndex, setPlayerVideoIndex] = useState<number | undefined>(defaultPlayerVideoIndex);
+    const [displayBottomPlayer, setDisplayBottomPlayer] = useState(defaultDisplayBottomPlayer);
+    const [isPlayerPaused, setIsPlayerPaused] = useState(defaultIsPlayerPaused);
+    const [currentCuePlaylistId, setCurrentCuePlaylistId] = useState(defaultCurrentCuePlaylistId);
 
     if (!isUserLogin) {
         history.push('/');
     }
+
+    useEffect(() => {
+        setPlayer(defaultPlayer);
+        setPlayerVideoId(defaultPlayerVideoId);
+        setPlayerVideoIndex(defaultPlayerVideoIndex);
+        setDisplayBottomPlayer(defaultDisplayBottomPlayer);
+        setIsPlayerPaused(defaultIsPlayerPaused);
+        setCurrentCuePlaylistId(defaultCurrentCuePlaylistId);
+    }, [isUserLogin]);
 
     return (
         <div>
@@ -59,18 +72,20 @@ function Body() {
                     </>
                 )}
             </div>
-            <BottomPlayer
-                player={player}
-                setPlayer={setPlayer}
-                isPlayerPaused={isPlayerPaused}
-                setIsPlayerPaused={setIsPlayerPaused}
-                playerVideoId={playerVideoId}
-                setPlayerVideoId={setPlayerVideoId}
-                playlistId={currentCuePlaylistId}
-                playerVideoIndex={playerVideoIndex}
-                setPlayerVideoIndex={setPlayerVideoIndex}
-                visible={displayBottomPlayer}
-            />
+            {isUserLogin && (
+                <BottomPlayer
+                    player={player}
+                    setPlayer={setPlayer}
+                    isPlayerPaused={isPlayerPaused}
+                    setIsPlayerPaused={setIsPlayerPaused}
+                    playerVideoId={playerVideoId}
+                    setPlayerVideoId={setPlayerVideoId}
+                    playlistId={currentCuePlaylistId}
+                    playerVideoIndex={playerVideoIndex}
+                    setPlayerVideoIndex={setPlayerVideoIndex}
+                    visible={displayBottomPlayer}
+                />
+            )}
         </div>
     );
 }
