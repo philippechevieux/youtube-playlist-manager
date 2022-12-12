@@ -40,13 +40,13 @@ function Timer({player}: {player: YouTubeEvent['target']}) {
 
     return (
         <div className="timer-wrapper">
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="text.secondary" align="right">
                 {toHHMMSS(currentTime)}
             </Typography>
             <Typography variant="body2" color="text.secondary">
                 /
             </Typography>
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="text.secondary" align="left">
                 {toHHMMSS(duration)}
             </Typography>
         </div>
