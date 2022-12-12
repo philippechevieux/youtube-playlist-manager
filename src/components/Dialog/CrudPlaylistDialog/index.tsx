@@ -16,6 +16,7 @@ import {
 import {useState, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {privacyStatusEnum} from '../../../utils/arms/playlists/state';
+import './styles.css';
 
 export enum crudPlaylistMode {
     CREATE = 'create',
@@ -122,13 +123,13 @@ function CrudPlaylistDialog({
 
     return (
         <>
-            <Dialog open={visible} fullWidth maxWidth="sm">
+            <Dialog className="crud-playlist" open={visible} fullWidth maxWidth="sm">
                 <DialogTitle id="alert-dialog-title">{getDialogTitle()}</DialogTitle>
                 <DialogContent>
                     <TextField
                         error={titleError}
                         required
-                        id="edit-playlist-title"
+                        id="playlist-title"
                         margin="normal"
                         color="primary"
                         label={t('title')}
@@ -140,7 +141,7 @@ function CrudPlaylistDialog({
                     />
                     <TextField
                         margin="normal"
-                        id="edit-playlist-description"
+                        id="playlist-description"
                         color="primary"
                         label={t('description')}
                         value={description}
@@ -152,7 +153,7 @@ function CrudPlaylistDialog({
                     <TextField
                         select
                         margin="normal"
-                        id="edit-playlist-select-status"
+                        id="playlist-select-status"
                         color="primary"
                         label={t('status')}
                         value={status}

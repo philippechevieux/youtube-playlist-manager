@@ -1,17 +1,29 @@
-.list-container .item .margin {
+.playlist-item .list-item-text-margin {
+    margin-left: 20px;
+}
+
+.playlist-item .list-item-text .primary,
+.playlist-item .list-item-text .secondary {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 80%;
+}
+
+.list-container .playlist-item .margin {
     margin-right: 5px;
 }
 
-.item.item-selectable {
+.playlist-item.item-selectable {
     border: 2px solid #41414100;
     cursor: pointer;
 }
 
-.item.item-selectable:hover {
+.playlist-item:hover {
     background-color: rgba(255, 255, 255, 0.08);
 }
 
-.item.item-selectable.item-selected {
+.playlist-item.item-selectable.item-selected {
     position: sticky;
     top: 0px;
     z-index: 10;
@@ -27,4 +39,51 @@
 
 .divider {
     margin: 5px 0px 5px 0px;
+}
+
+/* MUI : xs size */
+@media (min-width: 0px) {
+    .playlist-item  div.list-item-avatar {
+        width: 90px;
+        height: 64px;
+    }
+
+    .playlist-item .list-item {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
+
+/* MUI : sm size */
+@media (min-width: 600px) {
+    .playlist-item  div.list-item-avatar {
+        width: 100px;
+        height: 71px;
+    }
+
+    .playlist-item .list-item {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+}
+
+/* MUI : md size */
+@media (min-width: 900px) {
+    .playlist-item  div.list-item-avatar {
+        width: 125px;
+        height: 89px;
+    }
+
+    .playlist-item .list-item {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+}
+
+/* MUI : lg size */
+@media (min-width: 1200px) {
+    .playlist-item  div.list-item-avatar {
+        width: 125px;
+        height: 89px;
+    }
 }

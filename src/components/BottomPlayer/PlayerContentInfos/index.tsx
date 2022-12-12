@@ -21,12 +21,12 @@ function PlayerContentInfos({playerVideoId}: {playerVideoId: string}) {
             )}
             {areVideoDataLoading && <Skeleton variant="rectangular" width={80} height={50} />}
             <div className="info">
-                <Typography className="video-info title" variant="h6" color="text.primary">
+                <Typography className="video-info" variant="body1">
                     {videoData && areVideoDataLoaded && videoData.snippet.title}
                     {areVideoDataLoading && <Skeleton variant="text" />}
                 </Typography>
 
-                <Typography className="video-info author" variant="body2" color="text.secondary">
+                <Typography className="video-info" variant="body2" color="text.secondary">
                     {videoData && areVideoDataLoaded && videoData.snippet.channelTitle}
                     {areVideoDataLoading && <Skeleton variant="text" />}
                 </Typography>

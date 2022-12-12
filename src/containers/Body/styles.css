@@ -34,3 +34,32 @@ body {
     border: 1px solid #ffffff17;
     border-radius: 10px 10px 0px 0px;
 }
+
+/* MUI : xs size */
+@media (min-width: 0px) {
+    .body-container {
+        max-width: 95%;
+    }
+}
+
+/* MUI : sm size */
+@media (min-width: 600px) {
+    .body-container {
+        max-width: 90%;
+    }
+}
+
+/* MUI : md size */
+@media (min-width: 900px) {
+    .body-container {
+        max-width: 85%;
+    }
+}
+
+/* MUI : lg size */
+@media (min-width: 1200px) {
+    .body-container {
+        max-width: 80%;
+    }
+}
+

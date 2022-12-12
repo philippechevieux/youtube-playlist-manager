@@ -32,3 +32,31 @@
 .divider {
     margin: 5px 0px 5px 0px;
 }
+
+/* MUI : xs size */
+@media (min-width: 0px) {
+    .grid-container {
+        padding: 15px;
+    }
+}
+
+/* MUI : sm size */
+@media (min-width: 600px) {
+    .grid-container {
+        padding: 18px;
+    }
+}
+
+/* MUI : md size */
+@media (min-width: 900px) {
+    .grid-container {
+        padding: 22px;
+    }
+}
+
+/* MUI : lg size */
+@media (min-width: 1200px) {
+    .grid-container {
+        padding: 27px;
+    }
+}

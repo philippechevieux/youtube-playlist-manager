@@ -1,3 +1,4 @@
+import {Typography} from '@mui/material';
 import {useEffect, useRef, useState} from 'react';
 import {YouTubeEvent} from 'react-youtube';
 import {toHHMMSS} from '../../../utils/Functions';
@@ -38,11 +39,17 @@ function Timer({player}: {player: YouTubeEvent['target']}) {
     }, []);
 
     return (
-        <>
-            <div>{toHHMMSS(currentTime)}</div>
-            <div> / </div>
-            <div>{toHHMMSS(duration)}</div>
-        </>
+        <div className="timer-wrapper">
+            <Typography variant="body2" color="text.secondary" align="right">
+                {toHHMMSS(currentTime)}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+                /
+            </Typography>
+            <Typography variant="body2" color="text.secondary" align="left">
+                {toHHMMSS(duration)}
+            </Typography>
+        </div>
     );
 }
 

@@ -56,9 +56,7 @@ function PlayerControlActions({
                     <SkipNextOutlined />
                 </IconButton>
             </Tooltip>
-            <Typography className="timer" variant="body2" color="text.secondary">
-                <Timer player={player} />
-            </Typography>
+            <Timer player={player} />
         </>
     );
 }

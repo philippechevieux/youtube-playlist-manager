@@ -41,7 +41,7 @@ function VideoItem({
     };
 
     return (
-        <ListItem className={`item ${isVideoCued ? 'video-playing' : ''}`}>
+        <ListItem className={`video-item ${isVideoCued ? 'video-playing' : ''}`}>
             <ListItemAvatar>
                 <div
                     className="avatar-wrapper"
@@ -52,7 +52,6 @@ function VideoItem({
                     {displayAvatarIcon()}
                     <Avatar
                         className="avatar-thumbnail"
-                        sx={{width: 120, height: 85}}
                         alt={Item.snippet.title}
                         src={getThumbnailsFromItem(Item)}
                         variant="square"
@@ -62,7 +61,7 @@ function VideoItem({
             <ListItemText
                 className="list-item-text list-item-text-margin"
                 primary={
-                    <Typography className="primary" variant="h6" color="text.primary">
+                    <Typography className="primary" variant="h6">
                         {Item.snippet.title}
                     </Typography>
                 }
