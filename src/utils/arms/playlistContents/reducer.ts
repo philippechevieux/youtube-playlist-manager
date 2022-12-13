@@ -42,10 +42,13 @@ export const playlistContentsSlice = createSlice({
         },
         removeContent: (state: any, action: PayloadAction<{id: string}>) => {
             state.items = state.items.filter((item: ItemInterface) => item.id !== action.payload.id);
+        },
+        setEmptyPlaylistContents: (state: any) => {
+            state.playlists = playlistContentsDefaultData;
         }
     }
 });
 
-export const {addPlaylistContents, removeContent} = playlistContentsSlice.actions;
+export const {addPlaylistContents, removeContent, setEmptyPlaylistContents} = playlistContentsSlice.actions;
 
 export default playlistContentsSlice.reducer;

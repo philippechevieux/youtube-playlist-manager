@@ -44,10 +44,16 @@ export const playlistsSlice = createSlice({
             state.items = state.items.filter((item: ItemInterface) => {
                 return item.id !== action.payload.playlistId;
             });
+        },
+        setEmptyPlaylists: (state: any) => {
+            state.items = playlistsDefaultData.items;
+            state.currentPageToken = playlistsDefaultData.currentPageToken;
+            state.prevPageToken = playlistsDefaultData.prevPageToken;
+            state.nextPageToken = playlistsDefaultData.nextPageToken;
         }
     }
 });
 
-export const {addPlaylists, updatePlaylist, createPlaylist, deletePlaylist} = playlistsSlice.actions;
+export const {addPlaylists, updatePlaylist, createPlaylist, deletePlaylist, setEmptyPlaylists} = playlistsSlice.actions;
 
 export default playlistsSlice.reducer;
