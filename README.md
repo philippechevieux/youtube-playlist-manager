@@ -26,6 +26,13 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
 
+[![GitHub contributors](https://img.shields.io/github/contributors/philippechevieux/youtube-playlist-manager?style=for-the-badge)](https://github.com/philippechevieux/youtube-playlist-manager/graphs/contributors/)
+[![GitHub issues](https://img.shields.io/github/issues/philippechevieux/youtube-playlist-manager?style=for-the-badge)](https://github.com/philippechevieux/youtube-playlist-manager/issues/)
+
+
+
+
+
 
 <!-- PROJECT LOGO -->
 <br />
@@ -102,10 +109,16 @@ Use the `BLANK_README.md` to get started.
 
 ### Built With
 
-* [![React][React.js]][React-url]
-* [![Typescript][Typescript]][Typescript-url]
-* [![Redux][Redux]][Redux-url]
-* [![Mui][Mui]][Mui-url]
+* ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+* ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+* ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+* ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+* ![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
+
+### API Used
+
+* ![Google Identity API](https://img.shields.io/badge/google-4285F4?style=for-the-badge&logo=google&logoColor=white)
+* ![YouTube Data API](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -234,7 +247,7 @@ Use this space to list resources you find helpful and would like to give credit 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=for-the-badge
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
+[contributors-url]: https://github.com/philippechevieux/youtube-playlist-manager/graphs/contributors
 [forks-shield]: https://img.shields.io/github/forks/othneildrew/Best-README-Template.svg?style=for-the-badge
 [forks-url]: https://github.com/othneildrew/Best-README-Template/network/members
 [stars-shield]: https://img.shields.io/github/stars/othneildrew/Best-README-Template.svg?style=for-the-badge
