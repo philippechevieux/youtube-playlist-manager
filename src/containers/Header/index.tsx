@@ -11,6 +11,8 @@ import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {setUserLogout} from '../../utils/arms/user/reducer';
 import {selectIsUserLogin, selectUserFullName, selectUserAvatar} from '../../utils/arms/user/selectors';
 import {useTranslation} from 'react-i18next';
+import {setEmptyPlaylists} from '../../utils/arms/playlists/reducer';
+import {setEmptyPlaylistContents} from '../../utils/arms/playlistContents/reducer';
 
 function Header() {
     let history = useHistory();
@@ -37,6 +39,8 @@ function Header() {
     };
 
     const handleClickOnLogout = () => {
+        dispatch(setEmptyPlaylists());
+        dispatch(setEmptyPlaylistContents());
         dispatch(setUserLogout());
         setAnchorEl(null);
     };

@@ -92,7 +92,9 @@ function Content({
 
     const executeDeleteClick = async (itemId: string) => {
         try {
-            await dispatch(deleteItemFromPlaylistAction({userAccessToken: userAccessToken, itemId: itemId}));
+            await dispatch(
+                deleteItemFromPlaylistAction({userAccessToken: userAccessToken, itemId: itemId, playlistId: playlistId})
+            );
             resetConfirmDialogStates();
 
             setSnackbarMessage(t('video delete success'));
