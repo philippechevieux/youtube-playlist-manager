@@ -57,11 +57,20 @@ function requestUserInfoApi(accessToken: string) {
         });
 }
 
+export function getYoutubeVideoData(accessToken: string, playerVideoId?: string) {
+    const urlParams: IApiUrlParams = {
+        part: 'snippet,contentDetails',
+        id: playerVideoId
+    };
+
+    return requestYoutubeApi(accessToken, RequestMethodEnum.GET, 'videos', urlParams);
+}
+
 export function getYoutubePlaylists(accessToken: string, pageToken?: string, playlistIds?: Array<String>) {
     const urlParams: IApiUrlParams = {
         part: 'snippet,contentDetails,id,localizations,player,snippet,status',
         mine: true,
-        maxResults: 10
+        maxResults: 50
     };
 
     if (pageToken !== undefined) {
@@ -76,7 +85,7 @@ export function getYoutubePlaylists(accessToken: string, pageToken?: string, pla
     return requestYoutubeApi(accessToken, RequestMethodEnum.GET, 'playlists', urlParams);
 }
 
-export function updatePlaylistData(accessToken: string, playlistId: string, data: IApiUpdatePlaylistParams) {
+export function updatePlaylistItem(accessToken: string, playlistId: string, data: IApiUpdatePlaylistParams) {
     const urlParams: IApiUrlParams = {
         part: 'snippet,status'
     };
@@ -93,6 +102,36 @@ export function updatePlaylistData(accessToken: string, playlistId: string, data
     };
 
     return requestYoutubeApi(accessToken, RequestMethodEnum.PUT, 'playlists', urlParams, bodyParams);
+}
+
+export function createPlaylistItem(accessToken: string, data: IApiUpdatePlaylistParams) {
+    const urlParams: IApiUrlParams = {
+        part: 'snippet,status'
+    };
+
+    const bodyParams: IApiBodyParams = {
+        snippet: {
+            title: data.title,
+            description: data.description
+        },
+        status: {
+            privacyStatus: data.privacyStatus
+        }
+    };
+
+    return requestYoutubeApi(accessToken, RequestMethodEnum.POST, 'playlists', urlParams, bodyParams);
+}
+
+export function deletePlaylistItem(accessToken: string, playlistId: string) {
+    const urlParams: IApiUrlParams = {
+        part: 'id'
+    };
+
+    const bodyParams: IApiBodyParams = {
+        id: playlistId
+    };
+
+    return requestYoutubeApi(accessToken, RequestMethodEnum.DELETE, 'playlists', urlParams, bodyParams);
 }
 
 export function getYoutubePlaylistsItems(accessToken: string, playlistId: string, pageToken?: string) {

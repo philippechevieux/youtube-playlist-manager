@@ -1,0 +1,105 @@
+.video-item .list-item-text-margin {
+    margin-left: 20px;
+}
+
+.video-item .list-item-text .primary,
+.video-item .list-item-text .secondary {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    width: 80%;
+}
+
+.video-item:hover {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.video-item.video-playing {
+    background-color: rgb(169 169 169 / 8%);
+}
+
+.video-item:hover .avatar-wrapper .avatar-thumbnail {
+    filter: brightness(30%);
+}
+
+.video-item:hover .avatar-wrapper .avatar-play-icon,
+.video-item .avatar-wrapper .avatar-play-icon.video-paused {
+    display: block;
+    z-index: 1;
+}
+
+.video-item .avatar-wrapper {
+    position: relative;
+    cursor: pointer;
+}
+
+.video-item .avatar-play-icon {
+    display: none;
+    position: absolute;
+    z-index: 0;
+    font-size: 36px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.video-item.video-playing .avatar-volume-icon {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    font-size: 36px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.video-item.video-playing .avatar-wrapper .avatar-thumbnail {
+    filter: brightness(30%);
+}
+
+/* MUI : xs size */
+@media (min-width: 0px) {
+    .video-item div.avatar-thumbnail {
+        width: 90px;
+        height: 64px;
+    }
+
+    .video-item {
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
+
+/* MUI : sm size */
+@media (min-width: 600px) {
+    .video-item div.avatar-thumbnail {
+        width: 100px;
+        height: 71px;
+    }
+
+    .video-item {
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+}
+
+/* MUI : md size */
+@media (min-width: 900px) {
+    .video-item div.avatar-thumbnail {
+        width: 125px;
+        height: 89px;
+    }
+
+    .video-item {
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+}
+
+/* MUI : lg size */
+@media (min-width: 1200px) {
+    .video-item div.avatar-thumbnail {
+        width: 125px;
+        height: 89px;
+    }
+}

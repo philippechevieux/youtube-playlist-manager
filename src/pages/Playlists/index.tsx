@@ -6,7 +6,6 @@ import './styles.css';
 
 import ViewModuleOutlinedIcon from '@mui/icons-material/ViewModuleOutlined';
 import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
-import SortOutlinedIcon from '@mui/icons-material/SortOutlined';
 import {useHistory} from 'react-router-dom';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
 import {selectUserAccessToken, selectUserPlaylistDisplayMode} from '../../utils/arms/user/selectors';
@@ -24,6 +23,8 @@ import {useTranslation} from 'react-i18next';
 import MosaicMode from '../../components/Playlists/MosaicMode';
 import ListMode from '../../components/Playlists/ListMode';
 import MosaicModeSkeleton from '../../components/Playlists/MosaicMode/Skeleton';
+import {AddOutlined} from '@material-ui/icons';
+import CreatePlaylistDialog from '../../containers/Dialog/CreatePlaylistDialog';
 
 function PlaylistList() {
     let history = useHistory();
@@ -37,7 +38,8 @@ function PlaylistList() {
     const playlistsItems = useAppSelector(selectPlaylistsItems);
     const userPlaylistDisplayMode = useAppSelector(selectUserPlaylistDisplayMode);
 
-    const [isEditPlaylistDialogOpen, setIsPlaylistDialogOpen] = useState(false);
+    const [isEditPlaylistDialogOpen, setIsEditPlaylistDialogOpen] = useState(false);
+    const [isCreatePlaylistDialogOpen, setIsCreatePlaylistDialogOpen] = useState(false);
     const [playlistIdToEdit, setPlaylistIdToEdit] = useState<string | undefined>();
     const [nextPageToken, setNextPageToken] = useState<string | undefined>(currentPageToken);
 
@@ -55,11 +57,7 @@ function PlaylistList() {
 
     const openEditPlaylistDialog = (playlistId: string) => {
         setPlaylistIdToEdit(playlistId);
-        setIsPlaylistDialogOpen(true);
-    };
-
-    const closeEditPlaylistDialog = () => {
-        setIsPlaylistDialogOpen(false);
+        setIsEditPlaylistDialogOpen(true);
     };
 
     const loadMorePlaylistList = () => {
@@ -67,30 +65,30 @@ function PlaylistList() {
     };
 
     const displayPlaylists = () => {
-        if (playlistsItems.length > 0) {
-            if (userPlaylistDisplayMode === PlaylistDisplayModeEnum.MOSAIC) {
-                return (
-                    <MosaicMode
-                        playlistsListData={{items: playlistsItems}}
-                        onClickOnEditPlaylist={openEditPlaylistDialog}
-                        onClickOnOpenPlaylist={openPlaylist}
-                    />
-                );
-            } else if (userPlaylistDisplayMode === PlaylistDisplayModeEnum.LIST) {
-                return (
-                    <ListMode
-                        playlistsListData={{items: playlistsItems}}
-                        onClickOnEditPlaylist={openEditPlaylistDialog}
-                        onClickOnOpenPlaylist={openPlaylist}
-                    />
-                );
-            }
-        } else {
+        if (playlistsItems.length === 0) {
             if (arePlaylistsLoading) {
-                return <MosaicModeSkeleton />; // TODO: revoir l'affichage du skeleton pour matcher ce qui est fait dans playlistContents
-            } else {
-                return <EmptyIllustration title={t('no playlist found')} />;
+                return <MosaicModeSkeleton />;
             }
+
+            return <EmptyIllustration title={t('no playlist found')} />;
+        }
+
+        if (userPlaylistDisplayMode === PlaylistDisplayModeEnum.MOSAIC) {
+            return (
+                <MosaicMode
+                    playlistsListData={{items: playlistsItems}}
+                    onClickOnEditPlaylist={openEditPlaylistDialog}
+                    onClickOnOpenPlaylist={openPlaylist}
+                />
+            );
+        } else if (userPlaylistDisplayMode === PlaylistDisplayModeEnum.LIST) {
+            return (
+                <ListMode
+                    playlistsListData={{items: playlistsItems}}
+                    onClickOnEditPlaylist={openEditPlaylistDialog}
+                    onClickOnOpenPlaylist={openPlaylist}
+                />
+            );
         }
     };
 
@@ -99,23 +97,15 @@ function PlaylistList() {
             <AppBar position="static">
                 <Box sx={{flexGrow: 1}}>
                     <Toolbar>
-                        <Typography variant="body1" color="text.primary">
-                            {t('sort')}
-                        </Typography>
-                        <IconButton
-                            className="button-filter"
-                            size="large"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
-                            onClick={() => console.log('test')}
-                            color="inherit"
+                        <Button
+                            startIcon={<AddOutlined />}
+                            variant="text"
+                            onClick={() => setIsCreatePlaylistDialogOpen(true)}
                         >
-                            <SortOutlinedIcon />
-                        </IconButton>
+                            {t('create playlist')}
+                        </Button>
                         <Box sx={{flexGrow: 1}} />
-                        <Typography variant="body1" color="text.primary">
-                            {t('display')}
-                        </Typography>
+                        <Typography variant="body1">{t('display')}</Typography>
                         <Tooltip title={t('mosaic')}>
                             <IconButton
                                 size="large"
@@ -161,14 +151,18 @@ function PlaylistList() {
                     </Button>
                 </div>
             )}
-
             {playlistIdToEdit !== undefined && (
                 <EditPlaylistDialog
                     visible={isEditPlaylistDialogOpen}
                     playlistId={playlistIdToEdit}
-                    onCancel={closeEditPlaylistDialog}
+                    onCancel={() => setIsEditPlaylistDialogOpen(false)}
                 />
             )}
+
+            <CreatePlaylistDialog
+                visible={isCreatePlaylistDialogOpen}
+                onCancel={() => setIsCreatePlaylistDialogOpen(false)}
+            />
         </div>
     );
 }

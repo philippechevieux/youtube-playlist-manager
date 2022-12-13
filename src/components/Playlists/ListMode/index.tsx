@@ -57,11 +57,6 @@ function ListMode({
                             <EditOutlinedIcon />
                         </IconButton>
                     </Tooltip>
-                    <Tooltip title={t('open playlist')}>
-                        <IconButton edge="end" onClick={() => onClickOnOpenPlaylist(PlaylistData.id)}>
-                            <LaunchOutlinedIcon />
-                        </IconButton>
-                    </Tooltip>
                 </div>
             );
         }
@@ -71,8 +66,7 @@ function ListMode({
         if (mode === DisplayListModeEnum.DEFAULT && onClickOnOpenPlaylist) {
             return (
                 <Avatar
-                    className="open-playlist-pointer"
-                    sx={{width: 120, height: 85}}
+                    className="open-playlist-pointer list-item-avatar"
                     alt={PlaylistData.snippet.localized.title}
                     src={PlaylistData.snippet.thumbnails.high.url}
                     variant="square"
@@ -123,13 +117,13 @@ function ListMode({
         <List className={`${mode === DisplayListModeEnum.DEFAULT ? 'list-container' : ''}`}>
             {playlistsListData.items?.map((PlaylistData, index) => (
                 <div
-                    className={`item ${mode === DisplayListModeEnum.SELECTION ? 'item-selectable' : ''} ${
+                    className={`playlist-item ${mode === DisplayListModeEnum.SELECTION ? 'item-selectable' : ''} ${
                         selectedPlaylist === PlaylistData.id ? 'item-selected' : ''
                     }`}
                     key={PlaylistData.id}
                     onClick={() => handleClickOnItem(PlaylistData)}
                 >
-                    <ListItem secondaryAction={handleListItemSecondaryActionByMode(PlaylistData)}>
+                    <ListItem className="list-item" secondaryAction={handleListItemSecondaryActionByMode(PlaylistData)}>
                         {handleRadioButtonByMode(PlaylistData)}
                         <ListItemAvatar>{handleListItemAvatarByMode(PlaylistData)}</ListItemAvatar>
                         <ListItemText
@@ -138,7 +132,6 @@ function ListMode({
                                 <Typography
                                     className="primary open-playlist-pointer"
                                     variant="h6"
-                                    color="text.primary"
                                     onClick={() =>
                                         mode === DisplayListModeEnum.DEFAULT &&
                                         onClickOnOpenPlaylist &&

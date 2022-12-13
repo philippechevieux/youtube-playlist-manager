@@ -28,8 +28,8 @@
 }
 
 /* MUI : lg size */
-@media (min-width: 1200px) {
-    img.empty-illustration {
+@media (min-width: 1400px) {
+    img.login-screen-illustration {
         height: 392px;
         width: 500px;
     }

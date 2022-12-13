@@ -1,8 +1,9 @@
 div.login-screen-container {
-    margin: 30px;
     padding: 60px 30px;
     display: grid;
     grid-template-columns: 1.5fr 2fr;
+    border-radius: 10px;
+    border: 1px solid #ffffff17;
 }
 
 div.login-screen-container div.left-col {
@@ -14,18 +15,6 @@ div.login-screen-container div.right-col {
     grid-row: 1;
 }
 
-div.login-screen-container h1.title {
-    text-transform: uppercase;
-    line-height: 50px;
-    color: #fff;
-    font-size: 45px;
-    font-weight: 500;
-    background-image: linear-gradient(90deg, #ffeaea  0%, #ff4b31 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
 div.login-screen-container div.login-button {
     margin-top: 30px;
     text-align: end;
@@ -34,22 +23,17 @@ div.login-screen-container div.login-button {
 /* MUI : xs size */
 @media (min-width: 0px) {
     div.login-screen-container {
-        padding: 0px;
+        padding: 30px 15px;
         grid-template-columns: 1fr;
     }
 
     div.login-screen-container div.left-col {
-        grid-row: 1;
+        grid-row: 2;
     }
 
     div.login-screen-container div.right-col {
-        grid-row: 2;
+        grid-row: 1;
         justify-self: center;
-    }
-
-    div.login-screen-container h1.title {
-        font-size: 25px;
-        font-weight: 600;
     }
 }
 
@@ -61,17 +45,12 @@ div.login-screen-container div.login-button {
     }
 
     div.login-screen-container div.left-col {
-        grid-row: 1;
+        grid-row: 2;
     }
 
     div.login-screen-container div.right-col {
-        grid-row: 2;
+        grid-row: 1;
         justify-self: center;
-    }
-
-    div.login-screen-container h1.title {
-        font-size: 35px;
-        font-weight: 600;
     }
 }
 
@@ -83,17 +62,12 @@ div.login-screen-container div.login-button {
     }
 
     div.login-screen-container div.left-col {
-        grid-row: 1;
+        grid-row: 2;
     }
 
     div.login-screen-container div.right-col {
-        grid-row: 2;
+        grid-row: 1;
         justify-self: center;
-    }
-
-    div.login-screen-container h1.title {
-        font-size: 45px;
-        font-weight: 500;
     }
 }
 
@@ -111,11 +85,6 @@ div.login-screen-container div.login-button {
     div.login-screen-container div.right-col {
         grid-row: 1;
         justify-self: end;
-    }
-
-    div.login-screen-container h1.title {
-        font-size: 45px;
-        font-weight: 500;
     }
 }
 

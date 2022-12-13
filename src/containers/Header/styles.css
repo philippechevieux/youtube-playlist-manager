@@ -2,16 +2,12 @@
     margin-left: 10px;
 }
 
-.appbar-wrapper .title-wrapper {
-    width: 100%;
+header.appbar-wrapper {
+    background-image: linear-gradient(to right, #272727, #2f2532, #402033, #511729, #5c1014);
+    background-color: initial;
+    box-shadow: initial;
 }
 
-.appbar-wrapper .MuiTypography-h6 {
-    text-transform: uppercase;
-    max-width: fit-content;
-    color: #fff;
-    background-image: linear-gradient(90deg, #ffeaea  0%, #ff4b31 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+.appbar-wrapper .title-wrapper {
+    width: 100%;
 }
