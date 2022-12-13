@@ -123,20 +123,26 @@ To get a local copy up and running follow these simple example steps.
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/philippechevieux/youtube-playlist-manager.git
    ```
-3. Install requiered packages
+2. Install requiered packages
    ```sh
    yarn install
    ```
-4. Create an environnement file `.env`
-5. Enter your API in `.env`
+3. Create a project in the [Google Developpers Console](https://developers.google.com/youtube/v3/getting-started#:~:text=Google%20Developers%20Console)
+4. Get your [authorization credentials](https://developers.google.com/youtube/registering_an_application) so the application can submit API requests
+5. _(Optional) Read Youtube Data API [documentation](https://developers.google.com/youtube/v3/getting-started)_
+6. Create an environnement file `.env`
+7. Enter your API in `.env`
    ```js
    REACT_APP_GOOGLE_CLIENT_ID = MY_KEY.apps.googleusercontent.com;
    ```
+8. Start the application
+```sh
+   yarn start
+```
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
