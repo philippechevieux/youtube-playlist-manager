@@ -5,11 +5,15 @@
 *** PROJECT SHIELDS
 *** Template for Github Stats : https://github.com/Naereen/badges
 -->
+<div align="center">
+
 [![GitHub contributors](https://img.shields.io/github/contributors/philippechevieux/youtube-playlist-manager?style=for-the-badge)](https://github.com/philippechevieux/youtube-playlist-manager/)
 [![GitHub forks](https://img.shields.io/github/forks/philippechevieux/youtube-playlist-manager?style=for-the-badge)](https://github.com/philippechevieux/youtube-playlist-manager/)
 [![GitHub stars](https://img.shields.io/github/stars/philippechevieux/youtube-playlist-manager?style=for-the-badge)](https://github.com/philippechevieux/youtube-playlist-manager/)
 [![GitHub issues](https://img.shields.io/github/issues/philippechevieux/youtube-playlist-manager?style=for-the-badge)](https://github.com/philippechevieux/youtube-playlist-manager/)
 [![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/philippe-chevieux-287829141/)
+   
+</div>
 
 <!-- PROJECT LOGO -->
 <br />
