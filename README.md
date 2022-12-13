@@ -1,70 +1,161 @@
-# Getting Started with Create React App
+<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+<a name="readme-top"></a>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+<!-- 
+*** PROJECT SHIELDS
+*** Template for Github Stats : https://github.com/Naereen/badges
+-->
+<div align="center">
 
-In the project directory, you can run:
+[![GitHub contributors](https://img.shields.io/github/contributors/philippechevieux/youtube-playlist-manager?style=for-the-badge)](https://github.com/philippechevieux/youtube-playlist-manager/)
+[![GitHub forks](https://img.shields.io/github/forks/philippechevieux/youtube-playlist-manager?style=for-the-badge)](https://github.com/philippechevieux/youtube-playlist-manager/)
+[![GitHub stars](https://img.shields.io/github/stars/philippechevieux/youtube-playlist-manager?style=for-the-badge)](https://github.com/philippechevieux/youtube-playlist-manager/)
+[![GitHub issues](https://img.shields.io/github/issues/philippechevieux/youtube-playlist-manager?style=for-the-badge)](https://github.com/philippechevieux/youtube-playlist-manager/)
+[![LinkedIn](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/philippe-chevieux-287829141/)
+   
+</div>
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+   <img src="https://github.com/philippechevieux/youtube-playlist-manager/blob/master/public/logo192.png" alt="Logo" width="100" height="100">
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+  <h3 align="center">Youtube Playlist Manager</h3>
 
-### `npm test`
+  <p align="center">
+    A great tool to manage your playlists
+    <br />
+    <br />
+    <a href="https://youtubeplaylistmanager.philintel.com/">View Demo</a>
+    ·
+    <a href="https://github.com/philippechevieux/youtube-playlist-manager/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/philippechevieux/youtube-playlist-manager/issues">Request Feature</a>
+  </p>
+</div>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+        <li><a href="#api-used">API Used</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+  </ol>
+</details>
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<!-- ABOUT THE PROJECT -->
+## About The Project
 
-### `npm run eject`
+<div align="center">
+   <img src="https://github.com/philippechevieux/youtube-playlist-manager/blob/master/public/screenshots/1.1.0/loginscreen.png" alt="Logo" width="900" height="453">
+   <img src="https://github.com/philippechevieux/youtube-playlist-manager/blob/master/public/screenshots/1.1.0/bottom-player.png" alt="Logo" width="900" height="453">
+</div>
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+<!-- 
+*** Template for badges : https://github.com/Ileriayo/markdown-badges
+-->
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Built With
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+* ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+* ![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+* ![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+* ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+* ![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
 
-## Learn More
+### API Used
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* ![Google Identity API](https://img.shields.io/badge/google-4285F4?style=for-the-badge&logo=google&logoColor=white)
+* ![YouTube Data API](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
 
-### Code Splitting
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+<!-- GETTING STARTED -->
+## Getting Started
+To get a local copy up and running follow these simple example steps.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Prerequisites
 
-### Making a Progressive Web App
+* npm
+  ```sh
+  npm install npm@latest -g
+  ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+* yarn
+  ```sh
+  npm install yarn -g
+  ```
 
-### Advanced Configuration
+### Installation
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. Clone the repo
+   ```sh
+   git clone https://github.com/philippechevieux/youtube-playlist-manager.git
+   ```
+2. Install requiered packages
+   ```sh
+   yarn install
+   ```
+3. Create a project in the [Google Developpers Console](https://developers.google.com/youtube/v3/getting-started#:~:text=Google%20Developers%20Console)
+4. Get your [authorization credentials](https://developers.google.com/youtube/registering_an_application) so the application can submit API requests
+5. _(Optional) Read Youtube Data API [documentation](https://developers.google.com/youtube/v3/getting-started)_
+6. Create an environnement file `.env`
+7. Enter your API in `.env`
+   ```js
+   REACT_APP_GOOGLE_CLIENT_ID = MY_KEY.apps.googleusercontent.com;
+   ```
+8. Start the application
+   ```sh
+   yarn start
+   ```
 
-### Deployment
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
 
-### `npm run build` fails to minify
+<!-- CONTRIBUTING -->
+## Contributing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the appropriate tag.
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Branch from `develop` (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
