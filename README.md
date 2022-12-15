@@ -97,7 +97,11 @@
 
 <!-- GETTING STARTED -->
 ## Getting Started
-To get a local copy up and running follow these simple example steps.
+
+TODO:
+3. Create a project in the [Google Developpers Console](https://developers.google.com/youtube/v3/getting-started#:~:text=Google%20Developers%20Console)
+4. Get your [authorization credentials](https://developers.google.com/youtube/registering_an_application) so the application can submit API requests
+5. _(Optional) Read Youtube Data API [documentation](https://developers.google.com/youtube/v3/getting-started)_
 
 ### Prerequisites
 
@@ -113,26 +117,28 @@ To get a local copy up and running follow these simple example steps.
 
 ### Installation
 
-1. Clone the repo
+1. Create a folder for this repo
+   ```sh
+   mkdir YoutubePlaylistManager
+   ```
+2. Clone the repo
    ```sh
    git clone https://github.com/philippechevieux/youtube-playlist-manager.git
    ```
-2. Install requiered packages
+3. Install requiered packages
    ```sh
    yarn install
    ```
-3. Create a project in the [Google Developpers Console](https://developers.google.com/youtube/v3/getting-started#:~:text=Google%20Developers%20Console)
-4. Get your [authorization credentials](https://developers.google.com/youtube/registering_an_application) so the application can submit API requests
-5. _(Optional) Read Youtube Data API [documentation](https://developers.google.com/youtube/v3/getting-started)_
-6. Create an environnement file `.env`
-7. Enter your API in `.env`
-   ```js
-   REACT_APP_GOOGLE_CLIENT_ID = MY_KEY.apps.googleusercontent.com;
+4. Create an environnement file `.env` at the root of the directory
+5. Enter your YouTube Data API key in `.env`
+   ```env
+   REACT_APP_GOOGLE_CLIENT_ID = MY_KEY;
    ```
-8. Start the application
+6. Start the application
    ```sh
    yarn start
    ```
+7. Once the installation is complete, you can access to the application at http://localhost:3000. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -142,14 +148,13 @@ To get a local copy up and running follow these simple example steps.
 
 Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the appropriate tag.
+If you have a suggestion that would make this better, please create a pull request. You can also simply open an issue with the appropriate tag.
 Don't forget to give the project a star! Thanks again!
 
-1. Fork the Project
-2. Create your Branch from `develop` (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1. Create your Branch from `develop` (`git checkout -b feature/AmazingFeature`)
+2. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+3. Push to the Branch (`git push origin feature/AmazingFeature`)
+4. Open a Pull Request
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
