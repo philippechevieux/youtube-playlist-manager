@@ -94,6 +94,9 @@
 
 ## Changelog
 
+[Click here](https://github.com/philippechevieux/youtube-playlist-manager/wiki/changelog)
+
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
