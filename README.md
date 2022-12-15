@@ -87,9 +87,9 @@
 
 |  | Name | Description | Library |
 |---|---|---|---|
-|![Google Identity API](https://img.shields.io/badge/google-4285F4?style=for-the-badge&logo=google&logoColor=white)| [Google Identity Services SDK](https://developers.google.com/identity/gsi/web/guides/overview) | Used for authentification | [React OAuth2 - Google](https://github.com/MomenSherif/react-oauth)
+|![Google Identity API](https://img.shields.io/badge/google-4285F4?style=for-the-badge&logo=google&logoColor=white)| [Google Identity Services SDK](https://developers.google.com/identity/gsi/web/guides/overview) | Used for authentification | [react-oauth](https://github.com/MomenSherif/react-oauth)
 |![YouTube Data API](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)| [YouTube Data API](https://developers.google.com/youtube/v3/getting-started) | Used to retrieve playlists and their contents| No library used |
-
+|![YouTube API iFrame](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)| [YouTube API iFrame](https://developers.google.com/youtube/iframe_api_reference) | Used to play videos in playlists| [react-youtube](https://github.com/tjallingt/react-youtube) |
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
