@@ -66,7 +66,6 @@
 ## About The Project
 
 <div align="center">
-   <img src="https://github.com/philippechevieux/youtube-playlist-manager/blob/master/public/screenshots/1.1.0/loginscreen.png" alt="Logo" width="900" height="453">
    <img src="https://github.com/philippechevieux/youtube-playlist-manager/blob/master/public/screenshots/1.1.0/bottom-player.png" alt="Logo" width="900" height="453">
 </div>
 
@@ -86,8 +85,11 @@
 
 ### API Used
 
-* ![Google Identity API](https://img.shields.io/badge/google-4285F4?style=for-the-badge&logo=google&logoColor=white)
-* ![YouTube Data API](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)
+| API | Description |
+|---|---|
+|![Google Identity API](https://img.shields.io/badge/google-4285F4?style=for-the-badge&logo=google&logoColor=white)| Used for authentification |
+|![YouTube Data API](https://img.shields.io/badge/YouTube-%23FF0000.svg?style=for-the-badge&logo=YouTube&logoColor=white)| Used to retrieve playlists and their contents|
+
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
