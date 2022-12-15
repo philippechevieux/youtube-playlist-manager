@@ -97,14 +97,7 @@
 
 <!-- GETTING STARTED -->
 ## Getting Started
-
-TODO:
-3. Create a project in the [Google Developpers Console](https://developers.google.com/youtube/v3/getting-started#:~:text=Google%20Developers%20Console)
-4. Get your [authorization credentials](https://developers.google.com/youtube/registering_an_application) so the application can submit API requests
-5. _(Optional) Read Youtube Data API [documentation](https://developers.google.com/youtube/v3/getting-started)_
-
 ### Prerequisites
-
 * npm
   ```sh
   npm install npm@latest -g
@@ -114,6 +107,12 @@ TODO:
   ```sh
   npm install yarn -g
   ```
+  
+### API's setup
+1. Create a project in the [Google Developpers Console](https://console.cloud.google.com/)
+2. In your project menu go to "API and services"
+3. Then find and activate Youtube Data API
+4. Finaly create an ID for this API and save it for later
 
 ### Installation
 
@@ -130,7 +129,7 @@ TODO:
    yarn install
    ```
 4. Create an environnement file `.env` at the root of the directory
-5. Enter your YouTube Data API key in `.env`
+5. Enter your YouTube Data API ID (that you have previously saved) in `.env`
    ```env
    REACT_APP_GOOGLE_CLIENT_ID = MY_KEY;
    ```
