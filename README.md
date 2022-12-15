@@ -49,9 +49,13 @@
       </ul>
     </li>
     <li>
+       <a href="#changelog">Changelog</a>
+    </li>
+    <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
+         <li><a href="#api-setup">API Setup</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
@@ -112,7 +116,7 @@
   npm install yarn -g
   ```
   
-### API's setup
+### API Setup
 1. Create a project in the [Google Developpers Console](https://console.cloud.google.com/)
 2. In your project menu go to "API and services"
 3. Then find and activate Youtube Data API
