@@ -69,8 +69,6 @@
    <img src="https://github.com/philippechevieux/youtube-playlist-manager/blob/master/public/screenshots/1.1.0/bottom-player.png" alt="Logo" width="900" height="453">
 </div>
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 <!-- 
 *** Template for badges : https://github.com/Ileriayo/markdown-badges
 -->
@@ -94,6 +92,9 @@
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+## Changelog
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
