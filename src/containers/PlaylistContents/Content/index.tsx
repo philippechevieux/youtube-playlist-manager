@@ -23,6 +23,7 @@ import {useTranslation} from 'react-i18next';
 import ConfirmActionDialog from '../../../components/Dialog/ConfirmActionDialog';
 import VideoItem from '../../../components/VideoItem';
 import {YouTubeEvent} from 'react-youtube';
+import {ItemInterface, privacyStatusEnum} from '../../../utils/arms/playlists/state';
 
 enum ItemActionEnum {
     MOVE_TO = 'move_to',
@@ -39,6 +40,7 @@ function Content({
     currentCuePlaylistId,
     setCurrentCuePlaylistId,
     playlistId,
+    playlistItem,
     playlistsListItems
 }: {
     player: YouTubeEvent['target'];
@@ -50,6 +52,7 @@ function Content({
     currentCuePlaylistId: string;
     setCurrentCuePlaylistId: Function;
     playlistId: string;
+    playlistItem: ItemInterface;
     playlistsListItems: ContentsInterface;
 }) {
     const dispatch = useAppDispatch();
@@ -189,19 +192,26 @@ function Content({
     };
 
     const handleAvatarClick = (videoIndex: number) => {
-        setPlayerVideoIndex(videoIndex);
-
-        if (playlistId !== currentCuePlaylistId) {
-            setCurrentCuePlaylistId(playlistId);
-        }
-
-        if (videoIndex !== playerVideoIndex) {
-            player.playVideoAt(videoIndex);
+        if (playlistItem.status.privacyStatus === privacyStatusEnum.PRIVATE) {
+            setConfirmDialogContent(t('cannot play video from private playlist message'));
+            setConfirmDialogOnCancel(() => resetConfirmDialogStates);
+            setConfirmDialogOnConfirm(() => {});
+            setConfirmDialogVisible(true);
         } else {
-            isPlayerPaused ? player.playVideo() : player.pauseVideo();
-        }
+            setPlayerVideoIndex(videoIndex);
 
-        setDisplayBottomPlayer(true);
+            if (playlistId !== currentCuePlaylistId) {
+                setCurrentCuePlaylistId(playlistId);
+            }
+
+            if (videoIndex !== playerVideoIndex) {
+                player.playVideoAt(videoIndex);
+            } else {
+                isPlayerPaused ? player.playVideo() : player.pauseVideo();
+            }
+
+            setDisplayBottomPlayer(true);
+        }
     };
 
     return (
