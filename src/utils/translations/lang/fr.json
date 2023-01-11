@@ -42,6 +42,7 @@
     "other actions": "Autres actions",
     "playlist created success": "Votre playlist a bien été créée",
     "playlist created error": "Une erreur est survenue lors de la création de votre playlist",
+    "playlist deleted": "Votre playlist est supprimée",
     "playlist deleted success": "Votre playlist a bien été supprimée",
     "playlist deleted error": "Une erreur est survenue lors de la suppression de votre playlist",
     "playlist data update success": "Les informations de votre playlist ont été mise à jour avec succès",

@@ -42,6 +42,7 @@
     "other actions": "Other actions",
     "playlist created success": "Your playlist has been created",
     "playlist created error": "An error occurred while creating your playlist",
+    "playlist deleted": "Your playlist is deleted",
     "playlist deleted success": "Your playlist has been deleted",
     "playlist deleted error": "An error occurred while deleting your playlist",
     "playlist data update success": "Your playlist information has been successfully updated",
