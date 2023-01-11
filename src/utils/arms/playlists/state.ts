@@ -12,7 +12,7 @@ export interface ItemInterface {
         };
     };
     status: {
-        privacyStatus: string;
+        privacyStatus: privacyStatusEnum;
     };
     selected?: boolean;
 }

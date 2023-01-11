@@ -1,6 +1,8 @@
 import {Dialog, DialogTitle, DialogActions, Button, DialogContent, Snackbar, AlertColor, Alert} from '@mui/material';
 import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import {useTranslation} from 'react-i18next';
+import {LoadingButton} from '@mui/lab';
+import {SaveOutlined} from '@material-ui/icons';
 
 function ConfirmActionDialog({
     visible = false,
@@ -9,6 +11,7 @@ function ConfirmActionDialog({
     confirmButtonLabel,
     onConfirm,
     onCancel,
+    isConfirming = false,
     snackbarVisible,
     snackbarSeverity,
     snackbarMessage,
@@ -20,6 +23,7 @@ function ConfirmActionDialog({
     confirmButtonLabel?: string;
     onConfirm: Function;
     onCancel: Function;
+    isConfirming?: boolean;
     snackbarVisible: boolean;
     snackbarSeverity: AlertColor | undefined;
     snackbarMessage: string;
@@ -34,14 +38,16 @@ function ConfirmActionDialog({
                 <DialogContent>{content}</DialogContent>
                 <DialogActions>
                     <Button onClick={() => onCancel()}>{t('close')}</Button>
-                    <Button
+                    <LoadingButton
+                        loading={isConfirming}
+                        disabled={isConfirming}
                         variant="contained"
-                        color="error"
-                        startIcon={<SaveOutlinedIcon />}
+                        color="secondary"
+                        startIcon={<SaveOutlined />}
                         onClick={() => onConfirm()}
                     >
                         {confirmButtonLabel ? confirmButtonLabel : t('confirm')}
-                    </Button>
+                    </LoadingButton>
                 </DialogActions>
             </Dialog>
             <Snackbar

@@ -69,5 +69,7 @@
     "create playlist": "Créer une playlist",
     "suggestion": "Une suggestion ?",
     "report bug": "Signaler un bug",
-    "made with and by": "Made with ❤️ by Philippe Chevieux"
+    "made with and by": "Made with ❤️ by Philippe Chevieux",
+    "cannot play video from private playlist message": "Il est impossible de lire des vidéos d'une playlist avec le status \"Privée\" en dehors de YouTube.",
+    "would you like to change status": "Souhaitez vous changer le status de votre playlist pour \"Non répertoriée\"?"
 }

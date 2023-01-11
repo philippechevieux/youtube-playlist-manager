@@ -89,7 +89,6 @@ function PlaylistContent({
                     currentCuePlaylistId={currentCuePlaylistId}
                     setCurrentCuePlaylistId={setCurrentCuePlaylistId}
                     playlistId={playlistId}
-                    playlistItem={playlistItem}
                     playlistsListItems={{items: playlistContentsItems}}
                 />
             );
