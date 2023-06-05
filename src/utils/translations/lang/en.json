@@ -42,6 +42,7 @@
     "other actions": "Other actions",
     "playlist created success": "Your playlist has been created",
     "playlist created error": "An error occurred while creating your playlist",
+    "playlist deleted": "Your playlist is deleted",
     "playlist deleted success": "Your playlist has been deleted",
     "playlist deleted error": "An error occurred while deleting your playlist",
     "playlist data update success": "Your playlist information has been successfully updated",
@@ -67,5 +68,7 @@
     "create playlist": "Create a playlist",
     "suggestion": "Any suggestions ?",
     "report bug": "Report a bug",
-    "made with and by": "Made with ❤️ by Philippe Chevieux"
+    "made with and by": "Made with ❤️ by Philippe Chevieux",
+    "cannot play video from private playlist message": "It is impossible to play videos from a playlist with the status \"Private\" outside YouTube.",
+    "would you like to change status": "Would you like to change the status of your playlist to \"Unlisted\"?"
 }

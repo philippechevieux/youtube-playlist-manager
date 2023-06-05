@@ -5,7 +5,7 @@ import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlin
 
 import './styles.css';
 import {useState} from 'react';
-import {IResourceId} from '../../../utils/api/interface';
+import {IApiUpdatePlaylistParams, IResourceId} from '../../../utils/api/interface';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import {selectUserAccessToken} from '../../../utils/arms/user/selectors';
 import {
@@ -23,6 +23,9 @@ import {useTranslation} from 'react-i18next';
 import ConfirmActionDialog from '../../../components/Dialog/ConfirmActionDialog';
 import VideoItem from '../../../components/VideoItem';
 import {YouTubeEvent} from 'react-youtube';
+import {ItemInterface, privacyStatusEnum} from '../../../utils/arms/playlists/state';
+import {updatePlaylistDataAction} from '../../../utils/arms/playlists/middleware';
+import {selectPlaylistItem} from '../../../utils/arms/playlists/selectors';
 
 enum ItemActionEnum {
     MOVE_TO = 'move_to',
@@ -54,6 +57,8 @@ function Content({
 }) {
     const dispatch = useAppDispatch();
 
+    const playlistItem = useAppSelector(state => selectPlaylistItem(state, playlistId));
+
     const {t} = useTranslation();
     const userAccessToken = useAppSelector(selectUserAccessToken);
     const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
@@ -63,6 +68,7 @@ function Content({
 
     const [confirmDialogVisible, setConfirmDialogVisible] = useState(false);
     const [confirmDialogContent, setConfirmDialogContent] = useState('');
+    const [confirmDialogIsConfirming, setConfirmDialogIsConfirming] = useState(false);
     const [confirmDialogOnConfirm, setConfirmDialogOnConfirm] = useState<Function>(() => {});
     const [confirmDialogOnCancel, setConfirmDialogOnCancel] = useState<Function>(() => {});
 
@@ -81,6 +87,7 @@ function Content({
         setConfirmDialogContent('');
         setConfirmDialogOnConfirm(() => {});
         setConfirmDialogOnCancel(() => {});
+        setConfirmDialogIsConfirming(false);
     };
 
     const handleDeleteClick = (itemId: string) => {
@@ -188,20 +195,60 @@ function Content({
         setSelectPlaylistDialogVisible(true);
     };
 
-    const handleAvatarClick = (videoIndex: number) => {
-        setPlayerVideoIndex(videoIndex);
+    const updatePlaylistStatusAndPlayVideo = async (videoIndex: number) => {
+        setConfirmDialogIsConfirming(true);
 
-        if (playlistId !== currentCuePlaylistId) {
-            setCurrentCuePlaylistId(playlistId);
+        try {
+            const dataToSave: IApiUpdatePlaylistParams = {
+                title: playlistItem.snippet.localized.title,
+                description: playlistItem.snippet.localized.description,
+                privacyStatus: privacyStatusEnum.UNLISTED
+            };
+
+            await dispatch(
+                updatePlaylistDataAction({
+                    userAccessToken: userAccessToken,
+                    playlistId: playlistId,
+                    data: dataToSave
+                })
+            );
+
+            setSnackbarMessage(t('playlist data update success'));
+            setSnackbarSeverity('success');
+            setSnackbarVisible(true);
+            resetConfirmDialogStates();
+            handleAvatarClick(videoIndex, privacyStatusEnum.UNLISTED);
+        } catch {
+            resetConfirmDialogStates();
+            setSnackbarMessage(t('playlist data update error'));
+            setSnackbarSeverity('error');
+            setSnackbarVisible(true);
         }
+    };
 
-        if (videoIndex !== playerVideoIndex) {
-            player.playVideoAt(videoIndex);
+    const handleAvatarClick = (videoIndex: number, status: privacyStatusEnum) => {
+        if (status === privacyStatusEnum.PRIVATE) {
+            setConfirmDialogContent(
+                t('cannot play video from private playlist message') + ' ' + t('would you like to change status')
+            );
+            setConfirmDialogOnCancel(() => resetConfirmDialogStates);
+            setConfirmDialogOnConfirm(() => () => updatePlaylistStatusAndPlayVideo(videoIndex));
+            setConfirmDialogVisible(true);
         } else {
-            isPlayerPaused ? player.playVideo() : player.pauseVideo();
-        }
+            setPlayerVideoIndex(videoIndex);
 
-        setDisplayBottomPlayer(true);
+            if (playlistId !== currentCuePlaylistId) {
+                setCurrentCuePlaylistId(playlistId);
+            }
+
+            if (videoIndex !== playerVideoIndex) {
+                player.playVideoAt(videoIndex);
+            } else {
+                isPlayerPaused ? player.playVideo() : player.pauseVideo();
+            }
+
+            setDisplayBottomPlayer(true);
+        }
     };
 
     return (
@@ -215,7 +262,7 @@ function Content({
                             isPlayerPaused={isPlayerPaused}
                             handleDeleteClick={handleDeleteClick}
                             handleMoreMenu={handleMoreMenu}
-                            handleAvatarClick={() => handleAvatarClick(index)}
+                            handleAvatarClick={() => handleAvatarClick(index, playlistItem.status.privacyStatus)}
                         />
 
                         {index + 1 < playlistsListItems.items.length && (
@@ -261,6 +308,7 @@ function Content({
                 content={confirmDialogContent}
                 onCancel={confirmDialogOnCancel}
                 onConfirm={confirmDialogOnConfirm}
+                isConfirming={confirmDialogIsConfirming}
                 snackbarVisible={snackbarVisible}
                 snackbarSeverity={snackbarSeverity}
                 snackbarMessage={snackbarMessage}
