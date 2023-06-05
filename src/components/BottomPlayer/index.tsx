@@ -63,7 +63,11 @@ function BottomPlayer({
                             }}
                             onPlay={() => setIsPlayerPaused(false)}
                             onPause={() => setIsPlayerPaused(true)}
-                            opts={{height: '100%', width: '100%', playerVars: {controls: 0, list: playlistId}}}
+                            opts={{
+                                height: '100%',
+                                width: '100%',
+                                playerVars: {controls: 0, list: playlistId, listType: 'playlist'}
+                            }}
                         />
                     </Box>
                     <Toolbar>

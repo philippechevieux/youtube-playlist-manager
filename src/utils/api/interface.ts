@@ -1,3 +1,5 @@
+import {privacyStatusEnum} from '../arms/playlists/state';
+
 export interface IApiUrlParams {
     part?: string;
     maxResults?: number;
@@ -16,14 +18,14 @@ export interface IApiBodyParams {
         playlistId?: string;
     };
     status?: {
-        privacyStatus: string;
+        privacyStatus: privacyStatusEnum;
     };
 }
 
 export interface IApiUpdatePlaylistParams {
     title: string;
     description: string;
-    privacyStatus: string;
+    privacyStatus: privacyStatusEnum;
 }
 
 export interface IResourceId {
