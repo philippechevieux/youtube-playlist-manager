@@ -6,7 +6,7 @@ interface EmptyIllustrationProps {
     title?: string;
 }
 
-const EmptyIllustration: React.FC<EmptyIllustrationProps> = title => {
+const EmptyIllustration: React.FC<EmptyIllustrationProps> = ({title}) => {
     return (
         <div className="empty-illustration-wrapper">
             <a target="_blank" rel="noopener noreferrer" href="https://storyset.com/web">
