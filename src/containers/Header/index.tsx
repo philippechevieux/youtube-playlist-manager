@@ -1,8 +1,7 @@
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
-import {Menu, MenuItem, IconButton, Typography, Toolbar, Box, AppBar, Divider, Tooltip} from '@mui/material';
+import {Menu, MenuItem, IconButton, Typography, Toolbar, Box, AppBar, Divider} from '@mui/material';
 
-import AvatarCustom, {AvatarSizeEnum} from '../../components/AvatarCustom';
+import AvatarCustom from '../../components/AvatarCustom';
 import './styles.css';
 
 import {useState} from 'react';
@@ -13,8 +12,9 @@ import {selectIsUserLogin, selectUserFullName, selectUserAvatar} from '../../uti
 import {useTranslation} from 'react-i18next';
 import {setEmptyPlaylists} from '../../utils/arms/playlists/reducer';
 import {setEmptyPlaylistContents} from '../../utils/arms/playlistContents/reducer';
+import {AvatarSizeEnum} from '../../components/AvatarCustom/enums';
 
-function Header() {
+const Header: React.FC = () => {
     let history = useHistory();
 
     const {t} = useTranslation();
@@ -107,6 +107,6 @@ function Header() {
             </AppBar>
         </Box>
     );
-}
+};
 
 export default Header;

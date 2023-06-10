@@ -6,19 +6,10 @@ import {getYoutubePlaylists} from '../../../utils/api/index';
 import {ItemsInterface} from '../../../utils/arms/playlists/state';
 import {LoadingButton} from '@mui/lab';
 import {useTranslation} from 'react-i18next';
-import ListMode, {DisplayListModeEnum} from '../../../components/Playlists/ListMode';
+import ListMode from '../../../components/Playlists/ListMode';
+import {DisplayListModeEnum} from '../../../components/Playlists/ListMode/enums';
 
-function SelectPlaylistDialog({
-    visible,
-    userAccessToken,
-    currentPlaylistId = '',
-    hideCurrentPlaylist = false,
-    title = '',
-    confirmText = '',
-    confirmIcon,
-    onConfirm,
-    onCancel
-}: {
+interface SelectPlaylistDialogProps {
     visible: boolean;
     userAccessToken: string;
     currentPlaylistId?: string;
@@ -28,7 +19,19 @@ function SelectPlaylistDialog({
     confirmIcon?: ReactElement;
     onConfirm: Function;
     onCancel: Function;
-}) {
+}
+
+const SelectPlaylistDialog: React.FC<SelectPlaylistDialogProps> = ({
+    visible,
+    userAccessToken,
+    currentPlaylistId = '',
+    hideCurrentPlaylist = false,
+    title = '',
+    confirmText = '',
+    confirmIcon,
+    onConfirm,
+    onCancel
+}) => {
     const {t} = useTranslation();
     const [playlistsListData, setPlaylistsListData] = useState<ItemsInterface>({items: []});
     const [isLoading, setIsLoading] = useState(false);
@@ -137,6 +140,6 @@ function SelectPlaylistDialog({
             </DialogActions>
         </Dialog>
     );
-}
+};
 
 export default SelectPlaylistDialog;

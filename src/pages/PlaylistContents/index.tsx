@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {Dispatch, SetStateAction, useState} from 'react';
 import {useParams} from 'react-router-dom';
 import {AppBar, Toolbar, IconButton, Typography, Box, Tooltip, Button, AlertColor} from '@mui/material';
 import {useHistory} from 'react-router-dom';
@@ -17,30 +17,17 @@ import EmptyIllustration from '../../components/Assets/EmptyIllustration';
 import {useTranslation} from 'react-i18next';
 import Content from '../../containers/PlaylistContents/Content';
 import ContentSkeleton from '../../containers/PlaylistContents/Content/Skeleton';
-import {YouTubeEvent} from 'react-youtube';
 import {ChevronLeftOutlined, DeleteOutlineOutlined, EditOutlined} from '@material-ui/icons';
 import ConfirmActionDialog from '../../components/Dialog/ConfirmActionDialog';
 import {deletePlaylistAction} from '../../utils/arms/playlists/middleware';
+import {playerStateInterface} from '../../containers/Body/types';
 
-function PlaylistContent({
-    player,
-    isPlayerPaused,
-    playerVideoId,
-    playerVideoIndex,
-    setPlayerVideoIndex,
-    setDisplayBottomPlayer,
-    currentCuePlaylistId,
-    setCurrentCuePlaylistId
-}: {
-    player: YouTubeEvent['target'];
-    isPlayerPaused: boolean;
-    playerVideoId: string;
-    playerVideoIndex: number | undefined;
-    setPlayerVideoIndex: Function;
-    setDisplayBottomPlayer: Function;
-    currentCuePlaylistId: string;
-    setCurrentCuePlaylistId: Function;
-}) {
+interface PlaylistContentProps {
+    playerState: playerStateInterface;
+    setPlayerState: Dispatch<SetStateAction<playerStateInterface>>;
+}
+
+const PlaylistContent: React.FC<PlaylistContentProps> = ({playerState, setPlayerState}) => {
     let history = useHistory();
 
     const {t} = useTranslation();
@@ -80,14 +67,8 @@ function PlaylistContent({
         if (playlistContentsItems.length > 0) {
             content = (
                 <Content
-                    player={player}
-                    isPlayerPaused={isPlayerPaused}
-                    playerVideoId={playerVideoId}
-                    playerVideoIndex={playerVideoIndex}
-                    setPlayerVideoIndex={setPlayerVideoIndex}
-                    setDisplayBottomPlayer={setDisplayBottomPlayer}
-                    currentCuePlaylistId={currentCuePlaylistId}
-                    setCurrentCuePlaylistId={setCurrentCuePlaylistId}
+                    playerState={playerState}
+                    setPlayerState={setPlayerState}
                     playlistId={playlistId}
                     playlistsListItems={{items: playlistContentsItems}}
                 />
@@ -224,6 +205,6 @@ function PlaylistContent({
             />
         </div>
     );
-}
+};
 
 export default PlaylistContent;

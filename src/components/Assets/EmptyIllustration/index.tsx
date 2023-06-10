@@ -2,7 +2,11 @@
 import emptyState from '../../../assets/empty-state.png';
 import './styles.css';
 
-function EmptyIllustration({title}: {title?: string}) {
+interface EmptyIllustrationProps {
+    title?: string;
+}
+
+const EmptyIllustration: React.FC<EmptyIllustrationProps> = title => {
     return (
         <div className="empty-illustration-wrapper">
             <a target="_blank" rel="noopener noreferrer" href="https://storyset.com/web">
@@ -11,6 +15,6 @@ function EmptyIllustration({title}: {title?: string}) {
             {title && <p>{title}</p>}
         </div>
     );
-}
+};
 
 export default EmptyIllustration;

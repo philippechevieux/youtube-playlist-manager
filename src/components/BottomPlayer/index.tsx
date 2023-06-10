@@ -1,72 +1,62 @@
 import {Box, Grid, Toolbar} from '@mui/material';
-import {useState} from 'react';
-import YouTube, {YouTubeEvent} from 'react-youtube';
+import {Dispatch, SetStateAction, useState} from 'react';
+import YouTube from 'react-youtube';
 import SeekBar from './SeekBar';
 import './styles.css';
 import PlayerControlActions from './PlayerControlActions';
 import PlayerOtherActions from './PlayerOtherActions';
 import PlayerContentInfos from './PlayerContentInfos';
+import {playerStateInterface} from '../../containers/Body/types';
+import {playerStateEnum} from './enums';
 
-export enum playerStateEnum {
-    NOT_INICIATED = -1,
-    ENDED = 0,
-    PLAYING = 1,
-    PAUSED = 2,
-    BUFFERING = 3,
-    CUED = 5
+interface BottomPlayerProps {
+    playerState: playerStateInterface;
+    setPlayerState: Dispatch<SetStateAction<playerStateInterface>>;
 }
 
-function BottomPlayer({
-    player,
-    setPlayer,
-    isPlayerPaused,
-    setIsPlayerPaused,
-    playlistId,
-    playerVideoIndex,
-    setPlayerVideoIndex,
-    playerVideoId,
-    setPlayerVideoId,
-    visible
-}: {
-    player: YouTubeEvent['target'];
-    setPlayer: Function;
-    isPlayerPaused: boolean;
-    setIsPlayerPaused: Function;
-    playlistId: string;
-    playerVideoIndex: number | undefined;
-    setPlayerVideoIndex: Function;
-    playerVideoId: string;
-    setPlayerVideoId: Function;
-    visible: boolean;
-}) {
+const BottomPlayer: React.FC<BottomPlayerProps> = ({playerState, setPlayerState}) => {
     const [isIFrameToggled, setIsIFrameToggled] = useState(false);
-    const [playerState, setPlayerState] = useState(playerStateEnum.NOT_INICIATED);
+    const [youtubePlayerState, setYoutubePlayerState] = useState(playerStateEnum.NOT_INICIATED);
 
     return (
-        <div className={`bottom-player mui-fixed ${!visible ? 'hidden' : ''}`}>
-            {playlistId !== undefined && (
+        <div className={`bottom-player mui-fixed ${!playerState.shouldDisplayBottomBatar ? 'hidden' : ''}`}>
+            {playerState.cuePlaylistId !== undefined && (
                 <div className={`bottom-player-bar ${isIFrameToggled ? 'toggle' : ''}`}>
                     <Box className="youtube-iframe-wrapper">
                         <YouTube
                             className="youtube-iframe"
                             onReady={e => {
-                                setPlayer(e.target);
+                                setPlayerState({...playerState, player: e.target});
 
-                                if (playerVideoIndex !== undefined) {
-                                    e.target.playVideoAt(playerVideoIndex);
+                                if (playerState.videoIndex !== undefined) {
+                                    e.target.playVideoAt(playerState.videoIndex);
                                 }
                             }}
                             onStateChange={e => {
-                                setPlayerState(e.target.playerInfo.playerState);
-                                setPlayerVideoId(e.target.playerInfo.videoData.video_id);
-                                setPlayerVideoIndex(e.target.playerInfo.playlistIndex);
+                                setYoutubePlayerState(e.target.playerInfo.playerState);
+
+                                setPlayerState({
+                                    ...playerState,
+                                    videoId: e.target.playerInfo.videoData.video_id,
+                                    videoIndex: e.target.playerInfo.playlistIndex
+                                });
                             }}
-                            onPlay={() => setIsPlayerPaused(false)}
-                            onPause={() => setIsPlayerPaused(true)}
+                            onPlay={() =>
+                                setPlayerState({
+                                    ...playerState,
+                                    isPlayerPaused: false
+                                })
+                            }
+                            onPause={() =>
+                                setPlayerState({
+                                    ...playerState,
+                                    isPlayerPaused: true
+                                })
+                            }
                             opts={{
                                 height: '100%',
                                 width: '100%',
-                                playerVars: {controls: 0, list: playlistId, listType: 'playlist'}
+                                playerVars: {controls: 0, list: playerState.cuePlaylistId, listType: 'playlist'}
                             }}
                         />
                     </Box>
@@ -74,19 +64,18 @@ function BottomPlayer({
                         <Grid container spacing={3} alignItems="center" justifyContent="space-between">
                             <Grid item xs={4}>
                                 <PlayerControlActions
-                                    player={player}
                                     playerState={playerState}
-                                    isPlayerPaused={isPlayerPaused}
-                                    setIsPlayerPaused={setIsPlayerPaused}
+                                    setPlayerState={setPlayerState}
+                                    youtubePlayerState={youtubePlayerState}
                                 />
                             </Grid>
                             <Grid item className="item-infos" xs={4}>
-                                <PlayerContentInfos playerVideoId={playerVideoId} />
-                                <SeekBar player={player} />
+                                <PlayerContentInfos playerVideoId={playerState.videoId} />
+                                <SeekBar playerState={playerState} />
                             </Grid>
                             <Grid item xs={4} textAlign={'end'} width={'100%'}>
                                 <PlayerOtherActions
-                                    player={player}
+                                    playerState={playerState}
                                     isIFrameToggled={isIFrameToggled}
                                     setIsIFrameToggled={setIsIFrameToggled}
                                 />
@@ -97,6 +86,6 @@ function BottomPlayer({
             )}
         </div>
     );
-}
+};
 
 export default BottomPlayer;

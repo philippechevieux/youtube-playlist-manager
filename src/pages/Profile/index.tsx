@@ -14,7 +14,7 @@ import {
 } from '@mui/material';
 import './styles.css';
 import ChevronLeftOutlinedIcon from '@mui/icons-material/ChevronLeftOutlined';
-import AvatarCustom, {AvatarSizeEnum} from '../../components/AvatarCustom';
+import AvatarCustom from '../../components/AvatarCustom';
 
 import {useHistory} from 'react-router';
 import {useAppDispatch, useAppSelector} from '../../app/hooks';
@@ -22,8 +22,9 @@ import {setUserLanguage} from '../../utils/arms/user/reducer';
 import {selectUserFullName, selectUserAvatar, selectUserLanguage} from '../../utils/arms/user/selectors';
 import {useTranslation} from 'react-i18next';
 import {AvailableLangague} from '../../utils/arms/user/state';
+import {AvatarSizeEnum} from '../../components/AvatarCustom/enums';
 
-function Profile() {
+const Profile: React.FC = () => {
     let history = useHistory();
 
     const {t, i18n} = useTranslation();
@@ -114,6 +115,6 @@ function Profile() {
             </div>
         </div>
     );
-}
+};
 
 export default Profile;

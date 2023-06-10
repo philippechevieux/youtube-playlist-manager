@@ -1,24 +1,14 @@
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Avatar from '@mui/material/Avatar';
+import {AvatarSizeEnum} from './enums';
 
-export enum AvatarSizeEnum {
-    XXXL = 120,
-    XXL = 100,
-    XL = 80,
-    L = 60,
-    MD = 40,
-    SM = 25
-}
-
-function AvatarCustom({
-    title,
-    source,
-    size = AvatarSizeEnum.MD
-}: {
+interface AvatarCustomProps {
     title: string;
     source?: string;
     size?: AvatarSizeEnum;
-}) {
+}
+
+const AvatarCustom: React.FC<AvatarCustomProps> = ({title, source, size = AvatarSizeEnum.MD}) => {
     function getAvatarSize(paramSize: AvatarSizeEnum) {
         switch (paramSize) {
             case AvatarSizeEnum.XXXL:
@@ -46,6 +36,6 @@ function AvatarCustom({
             )}
         </div>
     );
-}
+};
 
 export default AvatarCustom;

@@ -2,7 +2,7 @@ import {Grid, Card} from '@mui/material';
 import './styles.css';
 import '../styles.css';
 
-function displaySkeletonContent() {
+const displaySkeletonContent: React.FC = () => {
     return (
         <Grid
             container
@@ -27,10 +27,10 @@ function displaySkeletonContent() {
             ))}
         </Grid>
     );
-}
+};
 
-function MosaicModeSkeleton() {
-    return <div>{displaySkeletonContent()}</div>;
-}
+const MosaicModeSkeleton: React.FC = () => {
+    return <div>{displaySkeletonContent}</div>;
+};
 
 export default MosaicModeSkeleton;

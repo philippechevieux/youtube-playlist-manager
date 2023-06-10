@@ -1,9 +1,13 @@
 import {Typography} from '@mui/material';
 import {useEffect, useRef, useState} from 'react';
-import {YouTubeEvent} from 'react-youtube';
 import {toHHMMSS} from '../../../utils/Functions';
+import {playerStateInterface} from '../../../containers/Body/types';
 
-function Timer({player}: {player: YouTubeEvent['target']}) {
+interface TimerProps {
+    playerState: playerStateInterface;
+}
+
+const Timer: React.FC<TimerProps> = ({playerState}) => {
     const [progress, setProgress] = useState(0);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
@@ -14,12 +18,12 @@ function Timer({player}: {player: YouTubeEvent['target']}) {
             if (progress > 100) {
                 setProgress(0);
             } else {
-                if (player?.playerInfo.duration !== undefined && progress === 0) {
-                    setDuration(player.playerInfo.duration);
+                if (playerState.player?.playerInfo.duration !== undefined && progress === 0) {
+                    setDuration(playerState.player.playerInfo.duration);
                 }
 
-                if (player?.playerInfo.currentTime !== undefined) {
-                    setCurrentTime(player.playerInfo.currentTime);
+                if (playerState.player?.playerInfo.currentTime !== undefined) {
+                    setCurrentTime(playerState.player.playerInfo.currentTime);
                 }
 
                 const newProgress = (currentTime / duration) * 100;
@@ -51,6 +55,6 @@ function Timer({player}: {player: YouTubeEvent['target']}) {
             </Typography>
         </div>
     );
-}
+};
 
 export default Timer;

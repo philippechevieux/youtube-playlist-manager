@@ -17,25 +17,9 @@ import {useState, useEffect} from 'react';
 import {useTranslation} from 'react-i18next';
 import {privacyStatusEnum} from '../../../utils/arms/playlists/state';
 import './styles.css';
+import {crudPlaylistMode} from './enums';
 
-export enum crudPlaylistMode {
-    CREATE = 'create',
-    UPDATE = 'update'
-}
-
-function CrudPlaylistDialog({
-    visible = false,
-    mode,
-    playlistTitle = '',
-    playlistDescription = '',
-    playlistStatus = privacyStatusEnum.PUBLIC,
-    onCrud,
-    onCancel,
-    snackbarVisible,
-    snackbarSeverity,
-    snackbarMessage,
-    onCloseSnackBar
-}: {
+interface CrudPlaylistDialogProps {
     visible: boolean;
     mode: crudPlaylistMode;
     playlistTitle?: string;
@@ -47,7 +31,21 @@ function CrudPlaylistDialog({
     snackbarSeverity: AlertColor | undefined;
     snackbarMessage: string;
     onCloseSnackBar: Function;
-}) {
+}
+
+const CrudPlaylistDialog: React.FC<CrudPlaylistDialogProps> = ({
+    visible = false,
+    mode,
+    playlistTitle = '',
+    playlistDescription = '',
+    playlistStatus = privacyStatusEnum.PUBLIC,
+    onCrud,
+    onCancel,
+    snackbarVisible,
+    snackbarSeverity,
+    snackbarMessage,
+    onCloseSnackBar
+}) => {
     const [title, setTitle] = useState(playlistTitle);
     const [description, setDescription] = useState(playlistDescription);
     const [status, setStatus] = useState(playlistStatus);
@@ -199,6 +197,6 @@ function CrudPlaylistDialog({
             </Snackbar>
         </>
     );
-}
+};
 
 export default CrudPlaylistDialog;

@@ -4,7 +4,11 @@ import {selectUserAccessToken} from '../../../utils/arms/user/selectors';
 import {getThumbnailsFromItem} from '../../../utils/Functions';
 import {useFetchVideoData} from '../hook';
 
-function PlayerContentInfos({playerVideoId}: {playerVideoId: string}) {
+interface PlayerContentInfosProps {
+    playerVideoId: string;
+}
+
+const PlayerContentInfos: React.FC<PlayerContentInfosProps> = ({playerVideoId}) => {
     const userAccessToken = useAppSelector(selectUserAccessToken);
     const {areVideoDataLoading, areVideoDataLoaded, videoData} = useFetchVideoData(userAccessToken, playerVideoId);
 
@@ -33,6 +37,6 @@ function PlayerContentInfos({playerVideoId}: {playerVideoId: string}) {
             </div>
         </Stack>
     );
-}
+};
 
 export default PlayerContentInfos;

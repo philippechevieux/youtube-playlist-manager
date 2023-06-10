@@ -8,17 +8,15 @@ import {
 import {IconButton, Slider, Stack, Tooltip} from '@mui/material';
 import {useState} from 'react';
 import {useTranslation} from 'react-i18next';
-import {YouTubeEvent} from 'react-youtube';
+import {playerStateInterface} from '../../../containers/Body/types';
 
-function PlayerOtherActions({
-    player,
-    isIFrameToggled,
-    setIsIFrameToggled
-}: {
-    player: YouTubeEvent['target'];
+interface PlayerOtherActionsProps {
+    playerState: playerStateInterface;
     isIFrameToggled: boolean;
     setIsIFrameToggled: Function;
-}) {
+}
+
+const PlayerOtherActions: React.FC<PlayerOtherActionsProps> = ({playerState, isIFrameToggled, setIsIFrameToggled}) => {
     const {t} = useTranslation();
 
     const [volume, setVolume] = useState<number | number[]>(100);
@@ -29,20 +27,20 @@ function PlayerOtherActions({
     const onVolumeChange = (event: Event, value: number | number[]) => {
         if (typeof value === 'number') {
             setVolume(value);
-            player.setVolume(volume);
+            playerState.player.setVolume(volume);
         }
     };
 
     const onMuteUnMuteClick = () => {
         setIsMuted(!isMuted);
-        isMuted ? player.unMute() : player.mute();
+        isMuted ? playerState.player.unMute() : playerState.player.mute();
     };
 
     const onShuffleClick = () => {
         const newIsShuffle = !isShuffle;
 
         setIsShuffle(newIsShuffle);
-        player.setShuffle(newIsShuffle);
+        playerState.player.setShuffle(newIsShuffle);
     };
 
     return (
@@ -88,6 +86,6 @@ function PlayerOtherActions({
             </IconButton>
         </Stack>
     );
-}
+};
 
 export default PlayerOtherActions;

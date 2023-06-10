@@ -1,22 +1,19 @@
-import {Card, CardActions, CardContent, CardHeader, CardMedia, Grid, Tooltip, Typography} from '@mui/material';
+import {Card, CardActions, CardContent, CardMedia, Grid, Tooltip, Typography} from '@mui/material';
 
 import IconButton from '@mui/material/IconButton';
-import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 
 import './styles.css';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 import {ItemsInterface} from '../../../utils/arms/playlists/state';
 import {useTranslation} from 'react-i18next';
 
-function MosaicMode({
-    playlistsListData,
-    onClickOnEditPlaylist,
-    onClickOnOpenPlaylist
-}: {
+interface MosaicModeProps {
     playlistsListData: ItemsInterface;
     onClickOnEditPlaylist: Function;
     onClickOnOpenPlaylist: Function;
-}) {
+}
+
+const MosaicMode: React.FC<MosaicModeProps> = ({playlistsListData, onClickOnEditPlaylist, onClickOnOpenPlaylist}) => {
     const {t} = useTranslation();
 
     return (
@@ -67,6 +64,6 @@ function MosaicMode({
             ))}
         </Grid>
     );
-}
+};
 
 export default MosaicMode;
