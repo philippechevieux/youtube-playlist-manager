@@ -4,7 +4,7 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import SendAndArchiveOutlinedIcon from '@mui/icons-material/SendAndArchiveOutlined';
 
 import './styles.css';
-import {useState} from 'react';
+import {Dispatch, SetStateAction, useState} from 'react';
 import {IApiUpdatePlaylistParams, IResourceId} from '../../../utils/api/interface';
 import {useAppDispatch, useAppSelector} from '../../../app/hooks';
 import {selectUserAccessToken} from '../../../utils/arms/user/selectors';
@@ -22,39 +22,24 @@ import {
 import {useTranslation} from 'react-i18next';
 import ConfirmActionDialog from '../../../components/Dialog/ConfirmActionDialog';
 import VideoItem from '../../../components/VideoItem';
-import {YouTubeEvent} from 'react-youtube';
-import {ItemInterface, privacyStatusEnum} from '../../../utils/arms/playlists/state';
+import {privacyStatusEnum} from '../../../utils/arms/playlists/state';
 import {updatePlaylistDataAction} from '../../../utils/arms/playlists/middleware';
 import {selectPlaylistItem} from '../../../utils/arms/playlists/selectors';
+import {playerStateInterface} from '../../Body/types';
 
 enum ItemActionEnum {
     MOVE_TO = 'move_to',
     SAVE_IN = 'save_in'
 }
 
-function Content({
-    player,
-    isPlayerPaused,
-    playerVideoId,
-    playerVideoIndex,
-    setPlayerVideoIndex,
-    setDisplayBottomPlayer,
-    currentCuePlaylistId,
-    setCurrentCuePlaylistId,
-    playlistId,
-    playlistsListItems
-}: {
-    player: YouTubeEvent['target'];
-    isPlayerPaused: boolean;
-    playerVideoId: string;
-    playerVideoIndex: number | undefined;
-    setPlayerVideoIndex: Function;
-    setDisplayBottomPlayer: Function;
-    currentCuePlaylistId: string;
-    setCurrentCuePlaylistId: Function;
+interface ContentProps {
+    playerState: playerStateInterface;
+    setPlayerState: Dispatch<SetStateAction<playerStateInterface>>;
     playlistId: string;
     playlistsListItems: ContentsInterface;
-}) {
+}
+
+const Content: React.FC<ContentProps> = ({playerState, setPlayerState, playlistId, playlistsListItems}) => {
     const dispatch = useAppDispatch();
 
     const playlistItem = useAppSelector(state => selectPlaylistItem(state, playlistId));
@@ -235,19 +220,17 @@ function Content({
             setConfirmDialogOnConfirm(() => () => updatePlaylistStatusAndPlayVideo(videoIndex));
             setConfirmDialogVisible(true);
         } else {
-            setPlayerVideoIndex(videoIndex);
+            setPlayerState({...playerState, videoIndex: videoIndex, shouldDisplayBottomBatar: true});
 
-            if (playlistId !== currentCuePlaylistId) {
-                setCurrentCuePlaylistId(playlistId);
+            if (playlistId !== playerState.cuePlaylistId) {
+                setPlayerState({...playerState, cuePlaylistId: playlistId});
             }
 
-            if (videoIndex !== playerVideoIndex) {
-                player.playVideoAt(videoIndex);
+            if (videoIndex !== playerState.videoIndex) {
+                playerState.player.playVideoAt(videoIndex);
             } else {
-                isPlayerPaused ? player.playVideo() : player.pauseVideo();
+                playerState.isPlayerPaused ? playerState.player.playVideo() : playerState.player.pauseVideo();
             }
-
-            setDisplayBottomPlayer(true);
         }
     };
 
@@ -258,8 +241,10 @@ function Content({
                     <div key={Item.id}>
                         <VideoItem
                             Item={Item}
-                            isVideoCued={playerVideoIndex === index && playerVideoId === Item.contentDetails.videoId}
-                            isPlayerPaused={isPlayerPaused}
+                            isVideoCued={
+                                playerState.videoIndex === index && playerState.videoId === Item.contentDetails.videoId
+                            }
+                            isPlayerPaused={playerState.isPlayerPaused}
                             handleDeleteClick={handleDeleteClick}
                             handleMoreMenu={handleMoreMenu}
                             handleAvatarClick={() => handleAvatarClick(index, playlistItem.status.privacyStatus)}
@@ -327,6 +312,6 @@ function Content({
             />
         </>
     );
-}
+};
 
 export default Content;

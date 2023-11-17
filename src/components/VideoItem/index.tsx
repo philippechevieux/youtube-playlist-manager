@@ -9,21 +9,23 @@ import {PauseOutlined, PlayArrow, VolumeUpOutlined} from '@mui/icons-material';
 import {getThumbnailsFromItem} from '../../utils/Functions';
 import {useState} from 'react';
 
-function VideoItem({
-    Item,
-    isVideoCued,
-    isPlayerPaused,
-    handleDeleteClick,
-    handleMoreMenu,
-    handleAvatarClick
-}: {
+interface VideoItemProps {
     Item: ItemInterface;
     isVideoCued?: boolean;
     isPlayerPaused?: boolean;
     handleDeleteClick?: Function;
     handleMoreMenu?: Function;
     handleAvatarClick?: Function;
-}) {
+}
+
+const VideoItem: React.FC<VideoItemProps> = ({
+    Item,
+    isVideoCued,
+    isPlayerPaused,
+    handleDeleteClick,
+    handleMoreMenu,
+    handleAvatarClick
+}) => {
     const {t} = useTranslation();
 
     const [isVideoHovered, setIsVideoHovered] = useState(false);
@@ -93,6 +95,6 @@ function VideoItem({
             )}
         </ListItem>
     );
-}
+};
 
 export default VideoItem;

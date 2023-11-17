@@ -1,22 +1,9 @@
 import {Dialog, DialogTitle, DialogActions, Button, DialogContent, Snackbar, AlertColor, Alert} from '@mui/material';
-import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import {useTranslation} from 'react-i18next';
 import {LoadingButton} from '@mui/lab';
 import {SaveOutlined} from '@material-ui/icons';
 
-function ConfirmActionDialog({
-    visible = false,
-    title,
-    content,
-    confirmButtonLabel,
-    onConfirm,
-    onCancel,
-    isConfirming = false,
-    snackbarVisible,
-    snackbarSeverity,
-    snackbarMessage,
-    onCloseSnackBar
-}: {
+interface ConfirmActionDialogProps {
     visible: boolean;
     title?: string;
     content: string;
@@ -28,7 +15,21 @@ function ConfirmActionDialog({
     snackbarSeverity: AlertColor | undefined;
     snackbarMessage: string;
     onCloseSnackBar: Function;
-}) {
+}
+
+const ConfirmActionDialog: React.FC<ConfirmActionDialogProps> = ({
+    visible = false,
+    title,
+    content,
+    confirmButtonLabel,
+    onConfirm,
+    onCancel,
+    isConfirming = false,
+    snackbarVisible,
+    snackbarSeverity,
+    snackbarMessage,
+    onCloseSnackBar
+}) => {
     const {t} = useTranslation();
 
     return (
@@ -60,6 +61,6 @@ function ConfirmActionDialog({
             </Snackbar>
         </>
     );
-}
+};
 
 export default ConfirmActionDialog;

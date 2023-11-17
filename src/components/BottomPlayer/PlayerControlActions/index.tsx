@@ -1,42 +1,44 @@
 import {PauseOutlined, PlayArrowOutlined, SkipNextOutlined, SkipPreviousOutlined} from '@mui/icons-material';
-import {CircularProgress, IconButton, Tooltip, Typography} from '@mui/material';
+import {CircularProgress, IconButton, Tooltip} from '@mui/material';
 import {useTranslation} from 'react-i18next';
-import {YouTubeEvent} from 'react-youtube';
-import {playerStateEnum} from '..';
 import Timer from '../Timer';
+import {playerStateInterface} from '../../../containers/Body/types';
+import {Dispatch, SetStateAction} from 'react';
+import {playerStateEnum} from '../enums';
 
-function PlayerControlActions({
-    player,
+interface PlayerControlActionsProps {
+    playerState: playerStateInterface;
+    setPlayerState: Dispatch<SetStateAction<playerStateInterface>>;
+    youtubePlayerState: playerStateEnum;
+}
+
+const PlayerControlActions: React.FC<PlayerControlActionsProps> = ({
     playerState,
-    isPlayerPaused,
-    setIsPlayerPaused
-}: {
-    player: YouTubeEvent['target'];
-    playerState: playerStateEnum;
-    isPlayerPaused: boolean;
-    setIsPlayerPaused: Function;
-}) {
+    setPlayerState,
+    youtubePlayerState
+}) => {
     const {t} = useTranslation();
 
     const onPlayPauseClick = () => {
-        setIsPlayerPaused(!isPlayerPaused);
-        isPlayerPaused ? player.playVideo() : player.pauseVideo();
+        setPlayerState({...playerState, isPlayerPaused: !playerState.isPlayerPaused});
+
+        playerState.isPlayerPaused ? playerState.player.playVideo() : playerState.player.pauseVideo();
     };
 
     const onPreviousClick = () => {
-        player.previousVideo();
+        playerState.player.previousVideo();
     };
 
     const onNextClick = () => {
-        player.nextVideo();
+        playerState.player.nextVideo();
     };
 
     const displayPlayButton = () => {
-        if ([playerStateEnum.NOT_INICIATED, playerStateEnum.BUFFERING].includes(playerState)) {
+        if ([playerStateEnum.NOT_INICIATED, playerStateEnum.BUFFERING].includes(youtubePlayerState)) {
             return <CircularProgress size={20} />;
         }
 
-        return isPlayerPaused ? <PlayArrowOutlined /> : <PauseOutlined />;
+        return playerState.isPlayerPaused ? <PlayArrowOutlined /> : <PauseOutlined />;
     };
 
     return (
@@ -46,7 +48,7 @@ function PlayerControlActions({
                     <SkipPreviousOutlined />
                 </IconButton>
             </Tooltip>
-            <Tooltip title={isPlayerPaused ? t('play') : t('pause')}>
+            <Tooltip title={playerState.isPlayerPaused ? t('play') : t('pause')}>
                 <IconButton color="inherit" onClick={onPlayPauseClick}>
                     {displayPlayButton()}
                 </IconButton>
@@ -56,9 +58,9 @@ function PlayerControlActions({
                     <SkipNextOutlined />
                 </IconButton>
             </Tooltip>
-            <Timer player={player} />
+            <Timer playerState={playerState} />
         </>
     );
-}
+};
 
 export default PlayerControlActions;

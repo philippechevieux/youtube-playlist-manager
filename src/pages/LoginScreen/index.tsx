@@ -11,7 +11,7 @@ import {Button, Typography} from '@mui/material';
 import {getUserInfo} from '../../utils/api';
 import GoogleIcon from '@mui/icons-material/Google';
 
-function Login() {
+const Login: React.FC = () => {
     let history = useHistory();
 
     const {t, i18n} = useTranslation();
@@ -61,6 +61,6 @@ function Login() {
             </div>
         </div>
     );
-}
+};
 
 export default Login;

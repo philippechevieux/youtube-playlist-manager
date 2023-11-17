@@ -2,7 +2,11 @@ import {List, ListItem, Divider} from '@mui/material';
 import './styles.css';
 import '../styles.css';
 
-function displaySkeletonContent(isFirstLoad: boolean) {
+interface displaySkeletonContentProps {
+    isFirstLoad: boolean;
+}
+
+const displaySkeletonContent: React.FC<displaySkeletonContentProps> = isFirstLoad => {
     return (
         <div>
             <List className="list-container skeleton">
@@ -25,10 +29,10 @@ function displaySkeletonContent(isFirstLoad: boolean) {
             </List>
         </div>
     );
-}
+};
 
-function ContentSkeleton({isFirstLoad}: {isFirstLoad: boolean}) {
+const ContentSkeleton: React.FC<displaySkeletonContentProps> = isFirstLoad => {
     return <div>{displaySkeletonContent(isFirstLoad)}</div>;
-}
+};
 
 export default ContentSkeleton;

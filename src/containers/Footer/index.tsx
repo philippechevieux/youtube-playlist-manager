@@ -2,7 +2,7 @@ import {Box, Divider, Grid, Link} from '@mui/material';
 import {useTranslation} from 'react-i18next';
 import './styles.css';
 
-function Footer() {
+const Footer: React.FC = () => {
     const {t} = useTranslation();
 
     return (
@@ -47,6 +47,6 @@ function Footer() {
             </Box>
         </div>
     );
-}
+};
 
 export default Footer;

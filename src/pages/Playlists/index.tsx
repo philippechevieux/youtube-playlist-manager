@@ -26,7 +26,7 @@ import MosaicModeSkeleton from '../../components/Playlists/MosaicMode/Skeleton';
 import {AddOutlined} from '@material-ui/icons';
 import CreatePlaylistDialog from '../../containers/Dialog/CreatePlaylistDialog';
 
-function PlaylistList() {
+const PlaylistList: React.FC = () => {
     let history = useHistory();
 
     const {t} = useTranslation();
@@ -165,6 +165,6 @@ function PlaylistList() {
             />
         </div>
     );
-}
+};
 
 export default PlaylistList;

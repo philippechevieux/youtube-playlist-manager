@@ -3,32 +3,29 @@ import React, {useState} from 'react';
 
 import IconButton from '@mui/material/IconButton';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import LaunchOutlinedIcon from '@mui/icons-material/LaunchOutlined';
 
 import './styles.css';
 import {ItemInterface, ItemsInterface} from '../../../utils/arms/playlists/state';
 import {useTranslation} from 'react-i18next';
+import {DisplayListModeEnum} from './enums';
 
-export enum DisplayListModeEnum {
-    DEFAULT = 'default',
-    SELECTION = 'selection'
-}
-
-function ListMode({
-    playlistsListData,
-    setCanExecuteAfterSelect,
-    setSelectedPlaylistId,
-    mode = DisplayListModeEnum.DEFAULT,
-    onClickOnEditPlaylist,
-    onClickOnOpenPlaylist
-}: {
+interface ListModeProps {
     playlistsListData: ItemsInterface;
     setCanExecuteAfterSelect?: Function;
     setSelectedPlaylistId?: Function;
     mode?: DisplayListModeEnum;
     onClickOnEditPlaylist?: Function;
     onClickOnOpenPlaylist?: Function;
-}) {
+}
+
+const ListMode: React.FC<ListModeProps> = ({
+    playlistsListData,
+    setCanExecuteAfterSelect,
+    setSelectedPlaylistId,
+    mode = DisplayListModeEnum.DEFAULT,
+    onClickOnEditPlaylist,
+    onClickOnOpenPlaylist
+}) => {
     const {t} = useTranslation();
     const [selectedPlaylist, setSelectedPlaylist] = useState('');
 
@@ -158,6 +155,6 @@ function ListMode({
             ))}
         </List>
     );
-}
+};
 
 export default ListMode;

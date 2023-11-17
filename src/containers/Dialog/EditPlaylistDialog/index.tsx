@@ -6,18 +6,17 @@ import {selectPlaylistItem} from '../../../utils/arms/playlists/selectors';
 import {IApiUpdatePlaylistParams} from '../../../utils/api/interface';
 import {updatePlaylistDataAction} from '../../../utils/arms/playlists/middleware';
 import {useTranslation} from 'react-i18next';
-import CrudPlaylistDialog, {crudPlaylistMode} from '../../../components/Dialog/CrudPlaylistDialog';
+import CrudPlaylistDialog from '../../../components/Dialog/CrudPlaylistDialog';
 import {privacyStatusEnum} from '../../../utils/arms/playlists/state';
+import {crudPlaylistMode} from '../../../components/Dialog/CrudPlaylistDialog/enums';
 
-function EditPlaylistDialog({
-    visible = false,
-    playlistId,
-    onCancel
-}: {
+interface EditPlaylistDialogProps {
     visible: boolean;
     playlistId: string | undefined;
     onCancel: Function;
-}) {
+}
+
+const EditPlaylistDialog: React.FC<EditPlaylistDialogProps> = ({visible = false, playlistId, onCancel}) => {
     const {t} = useTranslation();
 
     const dispatch = useAppDispatch();
@@ -73,6 +72,6 @@ function EditPlaylistDialog({
             onCloseSnackBar={setSnackbarVisible}
         />
     );
-}
+};
 
 export default EditPlaylistDialog;
