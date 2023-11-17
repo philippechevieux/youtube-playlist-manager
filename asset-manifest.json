@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/youtube-playlist-manager/static/css/main.bd2cde02.css",
+    "main.js": "/youtube-playlist-manager/static/js/main.3d24b71e.js",
+    "static/media/media-player.png": "/youtube-playlist-manager/static/media/media-player.4e14d8d04398f2fcbfa4.png",
+    "static/media/empty-state.png": "/youtube-playlist-manager/static/media/empty-state.015a12ae75a1522e5852.png",
+    "index.html": "/youtube-playlist-manager/index.html",
+    "main.bd2cde02.css.map": "/youtube-playlist-manager/static/css/main.bd2cde02.css.map",
+    "main.3d24b71e.js.map": "/youtube-playlist-manager/static/js/main.3d24b71e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bd2cde02.css",
+    "static/js/main.3d24b71e.js"
+  ]
+}
